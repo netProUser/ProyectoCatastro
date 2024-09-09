@@ -1,0 +1,1490 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.ConsultaHistoricaUnidades.FiltrarHistoricoUnidadCatastralViewModel
+@{
+    ViewBag.Title = "Historico de Unidad Catastral";
+}
+@*quinta*@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="overflow:hidden">
+                <div class="row">
+                    <div class="col-md-6 col-xs-12"><strong>Historico Unidad Catastral</strong></div><div class="col-md-4"></div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="">
+                    <div class="row">
+                        <div class="col-xl-6 ">
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <div class="form-group">
+                                        <label class="control-label">Código Catastral</label>
+                                        <input type="text" id="CodigoCatastralMask" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    <div class="form-group">
+                                        <br />
+                                        <button id="btnBuscarEstatico2" onclick="buscarUnidadEstatico()" type="button" value="" class="btn btn-default btn-block glyphicon glyphicon-search" style="margin-top: 5px"></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <table border="0">
+                                <tr>
+                                    <td width="12%"><label class="form-label">Dist.</label></td>
+                                    <td width="12%"><label class="form-label">Sec</label></td>
+                                    <td width="12%"><label class="form-label">Mz</label></td>
+                                    <td width="12%"><label class="form-label">Lote</label></td>
+                                    <td width="12%"><label class="form-label">Ed</label></td>
+                                    <td width="12%"><label class="form-label">Entr</label></td>
+                                    <td width="12%"><label class="form-label">Piso</label></td>
+                                    <td width="12%"><label class="form-label">Unidad</label></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoDistrito, new { @class = "form-control text-center px-3", @readonly = "true" })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoSector, new { @class = "form-control text-center px-3", maxlength = 2, @onkeypress = "if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoManzana, new { @class = "form-control text-center px-3", maxlength = 3, @onkeypress = "if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoLote, new { @class = "form-control text-center px-3", maxlength = 3, @onkeypress = "if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarEd, new { @class = "form-control text-center block px-3", maxlength = 2 })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarEntrada, new { @class = "form-control text-center block px-3", maxlength = 2 })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarPiso, new { @class = "form-control text-center block px-3", maxlength = 2 })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarUnidad, new { @class = "form-control text-center block px-3", maxlength = 3 })</td>
+                                    <td>
+                                        <div class="">
+                                            <button id="btnBuscarEstatico" onclick="buscarUnidadEstatico()" type="button" value="" class="btn btn-default glyphicon glyphicon-search" style="padding: 6px 35px"></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5">
+                                        <div class="has-error ml-3 mt-2">
+                                            <ul id="msgErrores"></ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <table id="tablaHistoricaUnidadCatastralEstatico" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th width="1%">Dist</th>
+                                        <th width="1%">Sec</th>
+                                        <th width="1%">Mz</th>
+                                        <th width="1%">Lote</th>
+                                        <th width="1%">Ed</th>
+                                        <th width="1%">Entr</th>
+                                        <th width="1%">Piso</th>
+                                        <th width="1%">Unidad</th>
+                                        <th width="1%">Versión</th>
+                                        <th width="1%">Llenado</th>
+                                        <th width="15%">Ubicación</th>
+                                        <th width="5%">Tipo Interior</th>
+                                        <th width="1%">N° Interior</th>
+                                        <th width="1%">% Bien Comun</th>
+                                        <th width="2%">A. T. Verificada</th>
+                                        <th width="2%">A. T. Comùn</th>
+                                        <th width="2%">A. T. Total</th>
+                                        <th width="15%">Inscripción</th>
+                                    </tr>
+                                </thead>
+
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="tabs" id="TabUC">
+                        <ul>
+                            <li><a href="#tab-1">Información <br> General</a></li>
+                            <li><a href="#tab-2">Numeración <br> &nbsp </a></li>
+                            <li><a href="#tab-11">Interiores <br> Especiales</a></li>
+                            <li><a href="#tab-3">Construcciones <br> Instalaciones</a></li>
+                            <li><a href="#tab-10">Linderos de <br> Edificación</a></li>
+                            <li><a href="#tab-4">Areas de Terreno <br> Areas Construidas</a></li>
+                            <li><a href="#tab-5">Actividad <br> Económica</a></li>
+                            <li><a href="#tab-6">Titularidad  <br> Cotitularidad</a></li>
+                            <li><a href="#tab-7">Documentación <br>  &nbsp</a></li>
+                            <li><a href="#tab-8">Observaciones <br> &nbsp </a></li>
+
+
+                        </ul>
+                        <div id="tab-1">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label">CUC</label>
+                                                    <input type="text" class="form-control" disabled id="Cuc" />
+                                                    <span class="" data-valmsg-for="Cuc" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label">Código Predial</label>
+                                                    <input type="text" class="form-control" id="CodigoPredial" disabled="disabled" />
+                                                    <span class="" data-valmsg-for="CodigoPredial" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label">Código Único</label>
+                                                    <input type="text" class="form-control" id="CodigoUnidadCatastral" disabled="disabled" />
+                                                    <span class="" data-valmsg-for="CodigoUnico" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label">Tipo de Llenado</label>
+                                                    <input type="text" class="form-control" id="CodigoTipoLlenado" disabled="disabled" />
+                                                    <span class="" data-valmsg-for="CodigoTipoLlenado" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label">Código Inscripción Catastral</label>
+                                                    @Html.DropDownList("CodigoCodInscripcionCatastral", Model.ListCodigoInscripcionCatastral, "- Seleccione...", new { @class = "form-control chosen-seleccionar" })
+                                                    <span class="" data-valmsg-for="CodigoCodInscripcionCatastral" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label">Inscripción Catastral</label>
+                                                    @Html.DropDownList("CodigoInscripcionCatastral", Model.ListInscripcionCatastral, "- Seleccione...", new { @class = "form-control chosen-seleccionar" })
+                                                    <span class="" data-valmsg-for="CodigoInscripcionCatastral" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label">Fuente Inscripción Catastral</label>
+                                                    @Html.DropDownList("CodigoFuenteInscripcionCatastral", Model.ListFuenteInscripcionCatastral, "- Seleccione...", new { @class = "form-control" })
+                                                    <span class="" data-valmsg-for="CodigoFuenteInscripcionCatastral" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label">Carga Registral</label>
+                                                    @Html.DropDownList("CodigoCargaRegistral", new SelectList(ViewBag.ListVBTipoSiNo, "value", "text"), "- Seleccione...", new { @class = "form-control" })
+                                                    <span class="" data-valmsg-for="CodigoCargaRegistral" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label">Versión Unidad</label>
+                                                    <input type="text" class="form-control" id="NumVersionUnidad" disabled="disabled" />
+                                                    <span class="" data-valmsg-for="NumVersionUnidad" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label">Denominación</label>
+                                                    <input type="text" class="form-control" id="Denominacion" disabled="disabled" />
+                                                    <span class="" data-valmsg-for="Denominacion" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label">Uso Predio CIIU</label>
+                                                    @Html.DropDownList("CodgiUsoPredio", Model.ListUsoPredio, "- Seleccione...", new { @class = "form-control chosen-seleccionar" })
+                                                    <span class="" data-valmsg-for="CodigoEstadoUsoPredio" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label">Clasificación</label>
+                                                    @Html.DropDownList("CodigoClasificacionPredio", Model.ListClasificacionPredio, "- Seleccione...", new { @class = "form-control" })
+                                                    <span class="" data-valmsg-for="CodigoClasificacionPredio" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <div class="form-group" id="DivTipoDepartamento">
+                                                    <label class="control-label" id="LabelTipoDepartamento">Tipo de...</label>
+                                                    @Html.DropDownList("CodigoDepartamentoPredio", Model.ListDepartamentoPredio, "- Seleccione...", new { @class = "form-control" })
+                                                    <span class="" data-valmsg-for="CodigoDepartamentoPredio" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label">Estado de Construcción</label>
+                                                    @Html.DropDownList("CodigoEstadoConstruccion", Model.ListEstadoContruccion, "- Seleccione...", new { @class = "form-control" })
+                                                    <span class="" data-valmsg-for="CodigoEstadoConstruccion" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label">% Avance</label>
+                                                    <input type="text" class="form-control numero" id="AvanceConstruccion" disabled="disabled" style="text-align: right;" />
+                                                    <span class="" data-valmsg-for="AvanceConstruccion" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label">Fecha Última Inspección</label>
+                                                    <input type="text" autocomplete="off" class="form-control" id="FechaUltimaInspeccion" maxlength="10" disabled="disabled" />
+                                                    <span class="" data-valmsg-for="FechaUltimaInspeccion" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label">Fecha Actualización</label>
+                                                    <input type="text" autocomplete="off" class="form-control" id="FechaActualizacion" maxlength="10" disabled="disabled" />
+                                                    <span class="" data-valmsg-for="FechaActualizacion" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <img id="imglote" class="img-rounded img-responsive" src="" alt="Responsive image" />
+                                </div>
+                            </div>
+                        </div>
+                        <div id='tab-2'>
+                            <div class="row">
+                                <fieldset class="formulario">
+                                    <legend>Interiores del Predio</legend>
+                                    <br />
+                                    <table id="tablaMunicipalAsignado" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Nro.</th>
+                                                <th>Asignación</th>
+                                                <th>Vía</th>
+                                                <th>Cda.</th>
+                                                <th>Edificación</th>
+                                                <th>Puerta</th>
+                                                <th>Estado Interior</th>
+                                                <th>Tipo Interior</th>
+                                                <th>Numero Interior</th>
+                                                <th>Letra Interior</th>
+                                                <th>Inscripcion</th>
+                                                <th>Área</th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div id='tab-11'>
+                            <div class="row">
+                                <fieldset class="formulario">
+                                    <legend>Interiores Especiales del Predio</legend>
+                                    <br />
+                                    <table id="tablaMunicipalAsignado2" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Nro.</th>
+                                                <th>Asignación</th>
+                                                <th>Vía</th>
+                                                <th>Cda.</th>
+                                                <th>Edificación</th>
+                                                <th>Puerta</th>
+                                                <th>Estado Interior</th>
+                                                <th>Tipo Interior</th>
+                                                <th>Numero Interior</th>
+                                                <th>Letra Interior</th>
+                                                <th>Inscripcion</th>
+                                                <th>Área</th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div  id='tab-3'>
+                            <div class="row">
+                                <fieldset class="formulario">
+                                    <legend>Líneas Constructivas (m2)</legend>
+                                    <div >
+                                        <div  id="panelLineasContructivas">
+                                            <div class="col-md-12">
+                                                <table id="tablaConstruccionesUnidades" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="5%">Nro.</th>
+                                                            <th width="5%">Nivel</th>
+                                                            <th width="5%">Mes</th>
+                                                            <th width="5%">Año</th>
+                                                            <th width="5%">Material Estructural</th>
+                                                            <th width="5%">Estado de Conservación</th>
+                                                            <th width="5%">Muro</th>
+                                                            <th width="5%">Techo</th>
+                                                            <th width="5%">Piso</th>
+                                                            <th width="5%">Puertas Ventana</th>
+                                                            <th width="5%">Revestimiento</th>
+                                                            <th width="5%">Baño</th>
+                                                            <th width="5%">Instalaciones Electricas y Sanitarias</th>
+                                                            <th width="5%">Área Verificada</th>
+                                                            <th width="5%">Área Declarada</th>
+                                                        </tr>
+                                                    </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <div class="row">
+                                <fieldset class="formulario">
+                                    <legend>Otras Instalaciones</legend>
+                                    <div>
+                                        <div id="panelLineasContructivas">
+                                            <div class="col-md-12">
+                                                <table id="tablaOtrasInstalacionesUnidades" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="5%">Nro.</th>
+                                                            <th width="40%">Tipo de Instalación</th>
+                                                            <th width="5%">Unidad</th>
+                                                            <th width="5%">Capacidad</th>
+                                                            <th width="5%">Cantidad</th>
+                                                            <th width="10%">Mes</th>
+                                                            <th width="5%">Año</th>
+                                                            <th width="5%">Estado de Conservacion</th>
+                                                        </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div id='tab-10'>
+                            <div class="row">
+                                <fieldset class="formulario">
+                                    <legend>Linderos</legend>
+                                    <br />
+                                    <table id="tablaLinderosEdificacion" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Lado</th>
+                                                <th>Medida Lado Campo</th>
+                                                <th>Medida Lado Oficial</th>
+                                                <th>Tipo de Colindante</th>
+                                                <th>Colindante</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div id='tab-8'>
+                            <div class="row">
+                                <fieldset class="formulario">
+                                    <legend>Observaciones Generales</legend>
+                                    <div class="relative">
+                                        <button data-toggle="collapse" href="#panel4" class="btn btn-xs btn-success fa fa-caret-down absolute"></button>
+                                        <div class="row collapse in" id="panel4">
+                                            <div class="col-md-12">
+                                                <br />
+                                                <table id="TablaObservacionGeneral" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="5%">Item</th>
+                                                            <th width="12%">Fecha</th>
+                                                            <th width="75%">Observación</th>
+                                                        </tr>
+                                                    </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="row">
+                                <fieldset class="formulario">
+                                    <legend>Cargas Inscritas en SUNARP</legend>
+                                    <div class="relative">
+                                        <button data-toggle="collapse" href="#panel5" class="btn btn-xs btn-success fa fa-caret-down absolute"></button>
+                                        <div class="row collapse in" id="panel5">
+                                            <div class="col-md-12">
+                                                <br />
+                                                <table id="TablaCargasInscritas" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="5%">Item</th>
+                                                            <th width="12%">Fecha</th>
+                                                            <th width="75%">Detalle</th>
+                                                        </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="row">
+                                <fieldset class="formulario">
+                                    <legend>Observaciones Respecto a las Cargas</legend>
+                                    <div class="relative">
+                                        <button data-toggle="collapse" href="#panel6" class="btn btn-xs btn-success fa fa-caret-down absolute"></button>
+                                        <div class="row collapse in" id="panel6">
+                                            <div class="col-md-12">
+                                                <br />
+                                                <table id="TablaObservacionCarga" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="5%">Item</th>
+                                                            <th width="12%">Fecha</th>
+                                                            <th width="75%">Detalle</th>
+                                                        </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div id='tab-7'>
+                            <div class="row">
+                                <fieldset class="formulario">
+                                    <legend>Documentos RRPP</legend>
+                                    <div class="relative">
+                                        <button data-toggle="collapse" href="#panel9" class="btn btn-xs btn-success fa fa-caret-down absolute"></button>
+                                        <div class="row collapse in" id="panel9">
+                                            <div class="col-md-12">
+                                                <br />
+                                                <table id="TablaDocumentosRRPP" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="5%">Nro</th>
+                                                            <th width="12%">Tipo de Documento</th>
+                                                            <th width="35%">Partida Electronica</th>
+                                                            <th width="10%">Tomo Ficha</th>
+                                                            <th width="10%">Folio</th>
+                                                            <th width="10%">Asiento</th>
+                                                            <th width="10%">Fecha Documento RRPP</th>
+                                                        </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="row">
+                                <fieldset class="formulario">
+                                    <legend>Expedientes y/o Documentos Simples</legend>
+                                    <div class="relative">
+                                        <button data-toggle="collapse" href="#panel10" class="btn btn-xs btn-success fa fa-caret-down absolute"></button>
+                                        <div class="row collapse in" id="panel10">
+                                            <div class="col-md-12">
+                                                <br />
+                                                <table id="TablaDocumentosExpedientes" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="5%">Nro</th>
+                                                            <th width="15%">Solicitante</th>
+                                                            <th width="15%">Documento</th>
+                                                            <th width="10%">Número</th>
+                                                            <th width="10%">Fecha</th>
+                                                            <th width="10%">Observación</th>
+                                                        </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="row">
+                                <fieldset class="formulario">
+                                    <legend>Licencias de Funcionamiento</legend>
+                                    <div class="relative">
+                                        <button data-toggle="collapse" href="#panel11" class="btn btn-xs btn-success fa fa-caret-down absolute"></button>
+                                        <div class="row collapse in" id="panel11">
+                                            <div class="col-md-12">
+                                                <br />
+                                                <table id="TablaLicenciaFuncionamiento" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="5%">Nro</th>
+                                                            <th width="8%">Nro Licencia</th>
+                                                            <th width="25%">Solicitante</th>
+                                                            <th width="25%">Beneficirario</th>
+                                                            <th width="15%">Giro</th>
+                                                            <th width="15%">Fecha de Licencia</th>
+                                                        </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="row">
+                                <fieldset class="formulario">
+                                    <legend>Obras Privadas</legend>
+                                    <div class="relative">
+                                        <button data-toggle="collapse" href="#panel12" class="btn btn-xs btn-success fa fa-caret-down absolute"></button>
+                                        <div class="row collapse in" id="panel12">
+                                            <div class="col-md-12">
+                                                <br />
+                                                <table id="TablaObrasPrivadas" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="5%">Nro</th>
+                                                            <th width="8%">Nro Licencia</th>
+                                                            <th width="25%">Solicitante</th>
+                                                            <th width="25%">Beneficirario</th>
+                                                            <th width="15%">Tipo de Obra</th>
+                                                            <th width="15%">Fecha de Licencia</th>
+                                                        </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div id='tab-6'>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table style="width:23%" class="table responsive display table-striped table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th width="32%">Condición Propiedad</th>
+                                                <td width="68%" id="tdCondicionPropiedad"></td>
+                                            </tr>
+
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table id="tablaUnidadTitular" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:15%" width="15%">Tipo Documento <br /> Identidad</th>
+                                                <th style="width:15%" width="15%">Nro. Documento <br /> Identidad</th>
+                                                <th style="width:25%" width="25%">Nombre o Razón Social</th>
+                                                <th style="width:10%" width="10%">Codigo de <br /> Contribuyente</th>
+                                                <th style="width:10%" width="10%">% Condominio</th>
+                                                <th style="width:10%" width="10%">Tipo de <br /> Propietario</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div id='tab-5'>
+                            <div class="row">
+                                <fieldset class="formulario">
+                                    <legend>Actividad Economica</legend>
+                                    <div class="relative">
+                                        <button data-toggle="collapse" href="#panelActividadEconomica" class="btn btn-xs btn-success fa fa-caret-down absolute"></button>
+                                        <div class="row collapse in" id="panelActividadEconomica">
+                                            <div class="col-md-12">
+                                                <table id="TablaActividadEconomica" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="5%"><label class="control-label">Nro.</label></th>
+                                                            <th width="9%"><label class="control-label">Código Uso CIIU</label></th>
+                                                            <th width="30%"><label class="control-label">Uso CIIU</label></th>
+                                                            <th width="8%"><label class="control-label">m2</label></th>
+                                                            <th width="9%"><label class="control-label">Fecha</label></th>
+                                                            <th width="10%"><label class="control-label">Uso de Retiro</label></th>
+                                                            <th width="10%"><label class="control-label">Anuncio</label></th>
+                                                            <th width="10%"><label class="control-label">Tipo de Anuncio</label></th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div  id='tab-4'>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <fieldset class="formulario">
+                                        <legend> Área de Terreno</legend>
+                                        <div class="col-md-12 mb-3">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-6 px-1"> Área Terreno Propia (m2)</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control numero" disabled id="AreaTerrenoVerificada" style="text-align: right;" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 mb-3">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-6 px-1"> Área Terreno Común (m2)</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control numero" disabled id="AreaTerrenoComun" style="text-align: right;" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 mb-3">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-6 px-1"> Área Terreno Total (m2)</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control numero" id="AreaTerrenoTotal" disabled="disabled" style="text-align: right;" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mb-3">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-6 px-1"> Área Terreno Declarada (m2)</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control numero" id="AreaTerrenoDeclarada" disabled style="text-align: right;" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 mb-3">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-6 px-1"> Área Terreno Sub Valuada (m2)</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" id="AreaTerrenoSubValuada" disabled="disabled" style="text-align: right;" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 mb-3">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-6 px-1"> Área Terreno Sobre Valuada (m2)</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" id="AreaTerrenoSobreValuada" disabled="disabled" style="text-align: right;" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-4">
+                                    <fieldset class="formulario">
+                                        <legend> Área Construida</legend>
+                                        <div class="col-md-12 mb-3">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-6 px-1"> Área Construida Total Verificada(m2)</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control numero" readonly="readonly" id="AreaConstruidaTotalVerificada" disabled="disabled" style="text-align: right;" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 mb-3">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-6 px-1"> Área Construida Total Declarada(m2)</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control numero" id="AreaConstruidaTotalDeclarada" disabled="disabled" style="text-align: right;" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 mb-3">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-6 px-1"> Área Construida Sub Valuada(m2)</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control numero" readonly="readonly" id="AreaConstruidaSubValuada" disabled="disabled" style="text-align: right;" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 mb-3">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-6 px-1"> Área Construida Sobre Valuada(m2)</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control numero" readonly="readonly" id="AreaConstruidaSobreValuada" disabled="disabled" style="text-align: right;" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 mb-3">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-6 px-1"> Área Ocupada(estac.)(m2)</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control numero" id="AreaOcupada" disabled style="text-align: right;" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </fieldset>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+           
+        </div>
+
+    </div>
+
+</div>
+@section datatables {
+    <script>
+        var ROOT = '@Url.Content("~")';
+        $('#CodigoCatastralMask').inputmask('31-99-999-999-**-**-**-999',);
+        $('#FiltrarCodigoDistrito').val('31');
+        $('#TabUC').hide();
+        $('.tabs').tabslet();
+        var Consultas = 'true';
+        var deshabilitar = 'disabled';
+        var lblTd = '<td class="pr-4">';
+        var lblTdSpan = '<td>';
+
+
+        $('#CodigoCodInscripcionCatastral').attr('disabled', 'disabled');
+        $('#CodigoInscripcionCatastral').attr('disabled', 'disabled');
+        $('#CodigoFuenteInscripcionCatastral').attr('disabled', 'disabled');
+        $('#CodigoCargaRegistral').attr('disabled', 'disabled');
+        $('#CodgiUsoPredio').attr('disabled', 'disabled');
+        $('#CodigoClasificacionPredio').attr('disabled', 'disabled');
+        $('#CodigoEstadoConstruccion').attr('disabled', 'disabled');
+        $('#CodigoDepartamentoPredio').attr('disabled', 'disabled');
+
+
+    </script>
+    <script src="@Url.Content("~/Scripts/dcalendar.picker.js")"></script>
+
+
+    <script>
+        /// PARA QUE FUNCIONE LA MASCARA DE LA CAJA DE TEXTO
+        function replaceAll(str, find, replace) {
+            return str.replace(new RegExp(find, 'g'), replace);
+        }
+        $('#CodigoCatastralMask').change(function () {
+            $('#FiltrarCodigoSector').val(replaceAll(this.value.substring(3, 5),"_",""));
+            $('#FiltrarCodigoManzana').val(replaceAll(this.value.substring(6, 9),"_",""));
+            $('#FiltrarCodigoLote').val(replaceAll(this.value.substring(10, 13),"_",""));
+            $('#FiltrarEd').val(replaceAll(this.value.substring(14, 16),"_",""));
+            $('#FiltrarEntrada').val(replaceAll(this.value.substring(17,19),"_",""));
+            $('#FiltrarPiso').val(replaceAll(this.value.substring(20, 22),"_",""));
+            $('#FiltrarUnidad').val(replaceAll(this.value.substring(23, 26),"_",""));
+            console.log(this.value)
+        });
+        $('#FiltrarCodigoSector').change(function () {
+            var texto;
+            texto = ZeroIzqCaracter($('#FiltrarCodigoSector').val(), 2);
+            $('#FiltrarCodigoSector').val(texto);
+        });
+        $('#FiltrarCodigoManzana').change(function () {
+            var texto;
+            texto = ZeroIzqCaracter($('#FiltrarCodigoManzana').val(), 3);
+            $('#FiltrarCodigoManzana').val(texto);
+        });
+        $('#FiltrarCodigoLote').change(function () {
+            var texto;
+            texto = ZeroIzqCaracter($('#FiltrarCodigoLote').val(), 3);
+            $('#FiltrarCodigoLote').val(texto);
+        });
+        $('#FiltrarEd').change(function () {
+            var texto;
+            texto = ZeroIzqCaracter($('#FiltrarEd').val(), 2);
+            $('#FiltrarEd').val(texto);
+        });
+        $('#FiltrarEntrada').change(function () {
+            var texto;
+            texto = ZeroIzqCaracter($('#FiltrarEntrada').val(), 2);
+            $('#FiltrarEntrada').val(texto);
+        });
+        $('#FiltrarPiso').change(function () {
+            var texto;
+            texto = ZeroIzqCaracter($('#FiltrarPiso').val(), 2);
+            $('#FiltrarPiso').val(texto);
+        });
+        $('#FiltrarUnidad').change(function () {
+            var texto;
+            texto = ZeroIzqCaracter($('#FiltrarUnidad').val(), 3);
+            $('#FiltrarUnidad').val(texto);
+        });
+
+
+        function buscarUnidadEstatico (){
+            var codSect = $('#FiltrarCodigoSector').val();
+            var codManz = $('#FiltrarCodigoManzana').val();
+            var codLote = $('#FiltrarCodigoLote').val();
+            var codEdif = $('#FiltrarEd').val();
+            var codEntr = $('#FiltrarEntrada').val();
+            var codPiso = $('#FiltrarPiso').val();
+            var codUnid = $('#FiltrarUnidad').val();
+            var cont;
+
+            if (!$('#FiltrarCodigoSector').val()) {
+                $('#msgErrores').append("<li>Ingrese el código del sector</li>"); cont = true;
+            }
+            if (!$('#FiltrarCodigoManzana').val()) {
+                $('#msgErrores').append("<li>Ingrese el código de la manzana</li>"); cont = true;
+            }
+            if (!$('#FiltrarCodigoLote').val()) {
+                $('#msgErrores').append("<li>Ingrese el código del lote</li>"); cont = true;
+            }
+            if (!$('#FiltrarEd').val()) {
+                $('#msgErrores').append("<li>Ingrese el código del Edificación</li>"); cont = true;
+            }
+
+            if (!$('#FiltrarEntrada').val()) {
+                $('#msgErrores').append("<li>Ingrese el código del Entrada</li>"); cont = true;
+            }
+            if (!$('#FiltrarPiso').val()) {
+                $('#msgErrores').append("<li>Ingrese el código del Piso</li>"); cont = true;
+            }
+            if (!$('#FiltrarUnidad').val()) {
+                $('#msgErrores').append("<li>Ingrese el código del Unidad</li>"); cont = true;
+            }
+
+            if (!cont) {
+                $.LoadingOverlay("show");
+                $('#msgErrores').html("");
+                $.ajax({
+                    url: ROOT + "HistoricoUnidad/BuscarSolicitudHistoricoEstatico", type: "POST", dataType: "json",
+                    data: {
+                        FiltrarCodigoSector: codSect, FiltrarCodigoManzana: codManz, FiltrarCodigoLote: codLote,
+                        FiltrarEd: codEdif, FiltrarEntrada: codEntr, FiltrarPiso: codPiso, FiltrarUnidad: codUnid, Estatico: true
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            $('#TabUC').hide();
+                            $('.tabs').trigger('show', '#tab-1');
+                            tablaHistoricaUnidadCatastralEstatico.ajax.reload(function (res) {
+                                //console.log('2', res.data)
+                                tablaHistoricaUnidadCatastralEstatico.columns.adjust().draw();
+                                var alto = $('#tablaHistoricaUnidadCatastralEstatico_wrapper .dataTables_scrollBody').height();
+                                if (alto < 399) {
+                                    $('#tablaHistoricaUnidadCatastralEstatico_wrapper .dataTables_scrollHead').removeClass('pr-4');
+
+                                } else {
+                                    $('#tablaHistoricaUnidadCatastralEstatico_wrapper .dataTables_scrollHead').addClass('pr-4');
+                                }
+                            });
+                        } else {
+                            $('#tabLotes').hide();
+                            tablaHistoricaUnidadCatastralEstatico.clear().draw();
+                            toastr.error("No se ha encontrado la unidad", "Mensaje del Sistema", { "progressBar": true });
+                        }
+                    },
+                    complete: function (response) {
+                        $.LoadingOverlay("hide");
+                    }
+                });
+            }
+            //});
+        }
+
+
+        var tablaHistoricaUnidadCatastralEstatico = $("#tablaHistoricaUnidadCatastralEstatico").DataTable({
+            "ajax": {
+                "url": "@Url.Content("~/HistoricoUnidad/BuscarSolicitudHistoricoEstatico")", "type": "POST", "datatype": "json",
+
+            "data": function (d) {
+                d.FiltrarCodigoSector = $('#FiltrarCodigoSector').val();
+                d.FiltrarCodigoManzana = $('#FiltrarCodigoManzana').val();
+                d.FiltrarCodigoLote = $('#FiltrarCodigoLote').val();
+                d.FiltrarEd = $('#FiltrarEd').val();
+                d.FiltrarEntrada = $('#FiltrarEntrada').val();
+                d.FiltrarPiso = $('#FiltrarPiso').val();
+                d.FiltrarUnidad = $('#FiltrarUnidad').val();
+                d.Estatico = true;
+            }
+                },
+          "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+                "processing": true,
+                "serverSide": false,
+                "scrollY": "400px",
+                "scrollCollapse": true,
+                "paging": false,
+                "columns": [
+              { "data": "CodigoDistrito", "className": "text-center" },
+              { "data": "CodigoSector", "className": "text-center" },
+              { "data": "CodigoManzana", "className": "text-center" },
+              { "data": "CodigoLote", "className": "text-center" },
+              { "data": "Ed", "className": "text-center" },
+              { "data": "Entrada", "className": "text-center" },
+              { "data": "Piso", "className": "text-center" },
+              { "data": "Unidad", "className": "text-center" },
+              { "data": "Numversion", "className": "text-center" },
+              { "data": "TipoLlenado", "className": "text-center" },
+              { "data": "ViaPrincipal", "className": "text-center" },
+              { "data": "TipoInterior", "className": "text-center" },
+              { "data": "NumeroPrincipal", "className": "text-center" },
+              { "data": "NumPorcentajeBienComun", "name": "Ancho de Vía", "autoWidth": true },
+              { "data": "NumAreaTerrenoVerificada", "name": "Ancho de Vía", "autoWidth": true },
+              { "data": "NumAreaTerrenoComun", "name": "Ancho de Vía", "autoWidth": true },
+              { "data": "NumAreaTerrenoTotal", "name": "Ancho de Vía", "autoWidth": true },
+              { "data": "Inscripcion", "className": "text-center" }
+                ]
+        });
+
+        $('#tablaHistoricaUnidadCatastralEstatico tbody').on('click', 'tr', function () {
+            var row = $(this);
+            var data = tablaHistoricaUnidadCatastralEstatico.row(row).data();
+            var codcastral = data.CodigoDistrito + "-" + data.CodigoSector + "-" + data.CodigoManzana + "-" + data.CodigoLote + "-" + data.Ed + "-" + data.Entrada + "-" + data.Piso + "-" + data.Unidad
+            //console.log(data);
+            $.LoadingOverlay("show");
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+                $('#GenFicha').attr('disabled', 'disabled');
+                $('#TabUC').hide();
+                $.LoadingOverlay("hide");
+            }
+            else {
+                $.post("@Url.Content("~/HistoricoUnidad/RecuperarHistoricoUnidadCatastralEST")", {
+                    CodUniCat: data.CodigoUni,
+                    NumVersion: data.Numversion
+
+                },
+                function (response) {
+                    RecuperarUnidadCatastral(response.resultado);
+                    //RecuperandoLineasConstructivas(response.ListLineasConstructivas);
+                });
+            }
+        });
+        function RecuperarUnidadCatastral(resultado) {
+            $("#Cuc").val(resultado.Cuc);
+            $("#CodigoUnidadCatastral").val(resultado.CodigoUnico);
+            $("#CodigoTipoLlenado").val(resultado.codigollenado);
+            $("#CodigoPredial").val(resultado.CodigoPredial);
+            $("#CodigoInscripcionCatastral").val(resultado.CodigoInscripcionCatastral);
+            $("#CodigoCodInscripcionCatastral").val(resultado.CodigoCodInscripcionCatastral);
+            $("#CodigoFuenteInscripcionCatastral").val(resultado.CodigoFuenteInscripcionCatastral);
+            $("#CodigoCargaRegistral").val(resultado.CodigoCargaRegistral);
+            $("#Denominacion").val(resultado.Denominacion);
+            $("#CodgiUsoPredio").val(resultado.CodgiUsoPredio);
+            $("#CodigoClasificacionPredio").val(resultado.CodigoClasificacionPredio);
+            $("#CodigoEstadoConstruccion").val(resultado.CodigoEstadoConstruccion);
+            $("#AvanceConstruccion").val(resultado.AvanceConstruccion);
+            $("#FechaUltimaInspeccion").val(resultado.FechaUltimaInspeccion);
+            $("#FechaActualizacion").val(resultado.FechaActualizacion);
+            $("#NumVersionUnidad").val(resultado.version);
+
+            $("#AreaTerrenoVerificada").val(resultado.AreaTerrenoVerificada);
+            $("#AreaTerrenoComun").val(resultado.AreaTerrenoComun);
+            $("#AreaTerrenoTotal").val(resultado.AreaTerrenoTotal);
+            $("#AreaOcupada").val(resultado.AreaOcupada);
+            $("#AreaTerrenoDeclarada").val(resultado.AreaTerrenoDeclarada);
+            $("#AreaConstruidaTotalDeclarada").val(resultado.AreaConstruidaTotalDeclarada);
+            $("#AreaTerrenoSubValuada").val(resultado.AreaTerrenoSubValuada);
+            $("#AreaTerrenoSobreValuada").val(resultado.AreaTerrenoSobreValuada);
+         
+            $("#AreaConstruidaSubValuada").val(resultado.AreaConstruidaSubValuada);
+            $("#AreaConstruidaSobreValuada").val(resultado.AreaConstruidaSobreValuada);
+
+            $("#AreaConstruidaTotalVerificada").val(resultado.AreaConstruidaTotalVerificada);
+            
+
+
+            $.LoadingOverlay("hide");
+            $('#TabUC').show();
+
+            tablaMunicipalAsignado.ajax.reload();
+            tablaMunicipalAsignado2.ajax.reload();
+            tablaConstruccionesUnidades.ajax.reload();
+            tablaOtrasInstalacionesUnidades.ajax.reload();
+            TablaObservacionGeneral.ajax.reload();
+            TablaCargasInscritas.ajax.reload();
+            TablaObservacionCarga.ajax.reload();
+            TablaDocumentosRRPP.ajax.reload();
+            TablaDocumentosExpedientes.ajax.reload();
+            TablaLicenciaFuncionamiento.ajax.reload();
+            TablaObrasPrivadas.ajax.reload();
+            tablaLinderosEdificacion.ajax.reload();
+            tablaUnidadTitular.ajax.reload(function (json) {
+                //console.log("json");
+                //console.log(json);
+                //console.log(json.data.length);
+                if (json.data.length > 0) {
+                    $("#tdCondicionPropiedad").text(json.data[0].CondicionPropiedad);
+                } else {
+                    $("#tdCondicionPropiedad").text("");
+                }
+            });
+            TablaActividadEconomica.ajax.reload();
+            //ipoDepartamentoAction(resultado.CodigoClasificacionPredio, resultado.CodigoDepartamentoPredio);
+
+            CargarImagen();
+
+        };
+        function CargarImagen() {
+            var urlAction = "@Url.Action("CargarImagen")?CodigoUnidadCatastral=" + $("#CodigoUnidadCatastral").val() + "&version=" + $("#NumVersionUnidad").val();
+            $.post(urlAction, function (response) {
+                if (response === 'false') {
+                    imagen = '';
+                }
+                $("#imglote").attr("src", response.imagen);
+            });
+
+        };
+
+        
+        tablaMunicipalAsignado = $("#tablaMunicipalAsignado").DataTable({
+            "ajax": {
+                "url": "@Url.Content("~/HistoricoUnidad/CargarDireccionHistoricaUnidad")",
+            "type": "POST",
+            "datatype": "json",
+            "data": function (d) {
+                d.CodigoUniCat = $('#CodigoUnidadCatastral').val();
+                d.flgindirec = 1;
+                d.Numversion = $("#NumVersionUnidad").val();
+            }
+        },
+        "columns": [
+            { "data": "Item", "name": "Item", "className": "text-center" },
+            { "data": "NombreAsignacion", "name": "NombreAsignacion", "className": "text-center" },
+            { "data": "NombreVia", "name": "NombreVia", "className": "text-center" },
+            { "data": "NumeroCuadra", "name": "NumeroCuadra", "autoWidth": true, "className": "text-center" },
+            { "data": "NombreTipoEdificacion", "name": "TipoEdificacionNombreTipoEdificacion", "autoWidth": true, "className": "text-center" },
+            { "data": "NumeroPuerta", "name": "NumeroPuerta", "autoWidth": true, "className": "text-center" },
+            { "data": "NombreEstadoInterior", "name": "NombreEstadoInterior", "autoWidth": true, "className": "text-center" },
+            { "data": "NombreTipoInterior", "name": "NombreTipoInterior", "autoWidth": true, "className": "text-center" },
+            { "data": "NumeroInterior", "name": "NumeroPuerta", "autoWidth": true, "className": "text-center" },
+            { "data": "LetraInterior", "name": "LetraInterior", "autoWidth": true, "className": "text-center" },
+            { "data": "NombreInscripcion", "name": "NombreInscripcion", "autoWidth": true, "className": "text-center" },
+            { "data": "txtArea", "name": "txtArea", "autoWidth": true, "className": "text-center" },
+            { "data": "CodigoCorrDirecUnidad", "name": "Codigo", "autoWidth": true, "className": "hide_column" },
+            { "data": "CodigoVia", "name": "Codigo", "autoWidth": true, "className": "hide_column" },
+            { "data": "CodigoCorrManzVia", "name": "Codigo", "autoWidth": true, "className": "hide_column" },
+            { "data": "CodigoCorrLoteDirecc", "name": "Codigo", "autoWidth": true, "className": "hide_column" },
+            { "data": "CodigoLado", "name": "Codigo", "autoWidth": true, "className": "hide_column" }
+        ],
+        "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+                    "processing": true,
+                    "serverSide": false,
+                    "paging": false,
+        });
+
+        tablaMunicipalAsignado2 = $("#tablaMunicipalAsignado2").DataTable({
+            "ajax": {
+                "url": "@Url.Content("~/HistoricoUnidad/CargarDireccionHistoricaUnidad")",
+            "type": "POST",
+            "datatype": "json",
+            "data": function (d) {
+                d.CodigoUniCat = $('#CodigoUnidadCatastral').val();
+                d.flgindirec = 2;
+                d.Numversion = $("#NumVersionUnidad").val();
+            }
+        },
+        "columns": [
+            { "data": "Item", "name": "Item", "className": "text-center" },
+            { "data": "NombreAsignacion", "name": "NombreAsignacion", "className": "text-center" },
+            { "data": "NombreVia", "name": "NombreVia", "className": "text-center" },
+            { "data": "NumeroCuadra", "name": "NumeroCuadra", "autoWidth": true, "className": "text-center" },
+            { "data": "NombreTipoEdificacion", "name": "TipoEdificacionNombreTipoEdificacion", "autoWidth": true, "className": "text-center" },
+            { "data": "NumeroPuerta", "name": "NumeroPuerta", "autoWidth": true, "className": "text-center" },
+            { "data": "NombreEstadoInterior", "name": "NombreEstadoInterior", "autoWidth": true, "className": "text-center" },
+            { "data": "NombreTipoInterior", "name": "NombreTipoInterior", "autoWidth": true, "className": "text-center" },
+            { "data": "NumeroInterior", "name": "NumeroPuerta", "autoWidth": true, "className": "text-center" },
+            { "data": "LetraInterior", "name": "LetraInterior", "autoWidth": true, "className": "text-center" },
+            { "data": "NombreInscripcion", "name": "NombreInscripcion", "autoWidth": true, "className": "text-center" },
+            { "data": "txtArea", "name": "txtArea", "autoWidth": true, "className": "text-center" },
+            { "data": "CodigoCorrDirecUnidad", "name": "Codigo", "autoWidth": true, "className": "hide_column" },
+            { "data": "CodigoVia", "name": "Codigo", "autoWidth": true, "className": "hide_column" },
+            { "data": "CodigoCorrManzVia", "name": "Codigo", "autoWidth": true, "className": "hide_column" },
+            { "data": "CodigoCorrLoteDirecc", "name": "Codigo", "autoWidth": true, "className": "hide_column" },
+            { "data": "CodigoLado", "name": "Codigo", "autoWidth": true, "className": "hide_column" }
+        ],
+        "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+                "processing": true,
+                "serverSide": false,
+                "paging": false,
+                });
+
+        
+        tablaConstruccionesUnidades = $("#tablaConstruccionesUnidades").DataTable({
+            "ajax": {
+                "url": "@Url.Content("~/HistoricoUnidad/RecuperarUnidadConstruccionHistoricas")",
+            "type": "POST",
+            "datatype": "json",
+            "data": function (d) {
+                d.CodigoUniCat = $('#CodigoUnidadCatastral').val();
+                d.Numversion = $("#NumVersionUnidad").val();
+            }
+        },
+       "columns": [
+           { "data": "NumOrden", "name": "NumOrden", "className": "text-center" },
+           { "data": "txtPiso", "name": "txtPiso", "className": "text-center" },
+           { "data": "Mes", "name": "Mes", "className": "text-center" },
+           { "data": "Ano", "name": "Ano", "className": "text-center" },
+           { "data": "Material", "name": "Material", "className": "text-center" },
+           { "data": "EstadoConst", "name": "EstadoConst", "className": "text-center" },
+           { "data": "Muro", "name": "Muro", "className": "text-center" },
+           { "data": "Techo", "name": "Techo", "className": "text-center" },
+           { "data": "Piso", "name": "Piso", "className": "text-center" },
+           { "data": "Puerta", "name": "Puerta", "className": "text-center" },
+           { "data": "Revest", "name": "Revest", "className": "text-center" },
+           { "data": "Bano", "name": "Bano", "className": "text-center" },
+           { "data": "Electricas", "name": "Electricas", "className": "text-center" },
+           { "data": "Verificada", "name": "Verificada", "className": "text-center" },
+           { "data": "Declarada", "name": "Declarada", "className": "text-center" }   
+          ],
+           "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+                    "processing": true,
+                    "serverSide": false,
+                    "paging": false,
+            });
+
+        tablaOtrasInstalacionesUnidades = $("#tablaOtrasInstalacionesUnidades").DataTable({
+            "ajax": {
+                "url": "@Url.Content("~/HistoricoUnidad/RecuperaInstalacionesHistoricasUnidades")",
+            "type": "POST",
+            "datatype": "json",
+            "data": function (d) {
+                d.CodigoUniCat = $('#CodigoUnidadCatastral').val();
+                d.Numversion = $("#NumVersionUnidad").val();
+            }
+        },
+        "columns": [
+            { "data": "NumOrden", "name": "NumOrden", "className": "text-center" },
+            { "data": "CodigoTipoInstalacion", "name": "CodigoTipoInstalacion", "className": "text-center" },
+            { "data": "CodigoUnidad", "name": "CodigoUnidad", "className": "text-center" },
+            { "data": "Capacidad", "name": "Capacidad", "className": "text-center" },
+            { "data": "Cantidad", "name": "Cantidad", "className": "text-center" },
+            { "data": "Mes", "name": "Mes", "className": "text-center" },
+            { "data": "Ano", "name": "Ano", "className": "text-center" },
+            { "data": "EstadoConserva", "name": "EstadoConserva", "className": "text-center" }
+
+
+        ],
+            "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+                    "processing": true,
+                    "serverSide": false,
+                    "paging": false,
+        });
+        
+         TablaObservacionGeneral = $("#TablaObservacionGeneral").DataTable({
+                "ajax": {
+                    "url": "@Url.Content("~/HistoricoUnidad/BuscarHistoricoObservacion")",
+                "type": "POST",
+                "datatype": "json",
+                "data": function (d) {
+                    d.CodigoUniCat = $('#CodigoUnidadCatastral').val();
+                    d.Numversion = $("#NumVersionUnidad").val();
+                    d.tipObs ="010001";
+
+                }
+            },
+            "columns": [
+                { "data": "NumOrden", "name": "NumOrden", "className": "text-center" },
+                { "data": "Fecha", "name": "Fecha", "className": "text-center" },
+                { "data": "Observacion", "name": "Observacion", "className": "text-center" }
+            ],
+                "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+                                "processing": true,
+                                "serverSide": false,
+                                "paging": false,
+         });
+
+        TablaCargasInscritas = $("#TablaCargasInscritas").DataTable({
+            "ajax": {
+                "url": "@Url.Content("~/HistoricoUnidad/BuscarHistoricoObservacion")",
+            "type": "POST",
+            "datatype": "json",
+            "data": function (d) {
+                d.CodigoUniCat = $('#CodigoUnidadCatastral').val();
+                d.Numversion = $("#NumVersionUnidad").val();
+                d.tipObs ="010002";
+
+            }
+        },
+           "columns": [
+               { "data": "NumOrden", "name": "NumOrden", "className": "text-center" },
+               { "data": "Fecha", "name": "Fecha", "className": "text-center" },
+               { "data": "Observacion", "name": "Observacion", "className": "text-center" }
+           ],
+               "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+                                "processing": true,
+                                "serverSide": false,
+                                "paging": false,
+        });
+        
+        TablaObservacionCarga = $("#TablaObservacionCarga").DataTable({
+            "ajax": {
+                "url": "@Url.Content("~/HistoricoUnidad/BuscarHistoricoObservacion")",
+            "type": "POST",
+            "datatype": "json",
+            "data": function (d) {
+                d.CodigoUniCat = $('#CodigoUnidadCatastral').val();
+                d.Numversion = $("#NumVersionUnidad").val();
+                d.tipObs ="010003";
+
+                    }
+                },
+           "columns": [
+               { "data": "NumOrden", "name": "NumOrden", "className": "text-center" },
+               { "data": "Fecha", "name": "Fecha", "className": "text-center" },
+               { "data": "Observacion", "name": "Observacion", "className": "text-center" }
+           ],
+               "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+                                        "processing": true,
+                                        "serverSide": false,
+                                "paging": false,
+        });
+        TablaDocumentosRRPP = $("#TablaDocumentosRRPP").DataTable({
+            "ajax": {
+                "url": "@Url.Content("~/HistoricoUnidad/CargarUnidadRRPPHistorica")",
+            "type": "POST",
+            "datatype": "json",
+            "data": function (d) {
+                d.CodigoUniCat = $('#CodigoUnidadCatastral').val();
+                d.Numversion = $("#NumVersionUnidad").val();
+
+            }
+        },
+           "columns": [
+               { "data": "Item", "name": "Item", "className": "text-center" },
+               { "data": "TipoDocumento", "name": "TipoDocumento", "className": "text-center" },
+               { "data": "PartidaElectronica", "name": "PartidaElectronica", "className": "text-center" },
+               { "data": "TomoFicha", "name": "TomoFicha", "className": "text-center" },
+               { "data": "Folio", "name": "Folio", "className": "text-center" },
+               { "data": "Asiento", "name": "Asiento", "className": "text-center" },
+               { "data": "Fecha", "name": "Fecha", "className": "text-center" }
+           ],
+               "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+                                        "processing": true,
+                                        "serverSide": false,
+                                "paging": false,
+        });
+        TablaDocumentosExpedientes = $("#TablaDocumentosExpedientes").DataTable({
+            "ajax": {
+                "url": "@Url.Content("~/HistoricoUnidad/CargarUnidadExpedienteDocHistorica")",
+            "type": "POST",
+            "datatype": "json",
+            "data": function (d) {
+                d.CodigoUniCat = $('#CodigoUnidadCatastral').val();
+                d.Numversion = $("#NumVersionUnidad").val();
+            }
+        },
+
+               "columns": [
+                   { "data": "Item", "name": "Item", "className": "text-center" },
+                   { "data": "Solicitante", "name": "Solicitante", "autoWidth": true, "className": "text-center" },
+                   { "data": "Documento", "name": "Documento", "autoWidth": true, "className": "text-center" },
+                   { "data": "Numero", "name": "Numero", "autoWidth": true, "className": "text-center" },
+                   { "data": "Fecha", "name": "Fecha", "autoWidth": true, "className": "text-center" },
+                   { "data": "Detalle", "name": "Detalle", "className": "text-center" },
+                  
+
+                 
+               ],
+               "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+                "processing": true,
+                "serverSide": false,
+                "paging": false,
+        });
+
+        TablaLicenciaFuncionamiento = $("#TablaLicenciaFuncionamiento").DataTable({
+            "ajax": {
+                "url": "@Url.Content("~/HistoricoUnidad/CargarUnidadLicenciasFuncHistorica")",
+            "type": "POST",
+            "datatype": "json",
+            "data": function (d) {
+                d.CodigoUniCat = $('#CodigoUnidadCatastral').val();
+                d.Numversion = $("#NumVersionUnidad").val();
+            }
+        },
+
+               "columns": [
+                   { "data": "Item", "name": "Item", "className": "text-center" },
+                   { "data": "NumeroLicencia", "name": "TipoDocumento", "className": "text-center" },
+                   { "data": "Solicitante", "name": "PartidaElectronica", "autoWidth": true, "className": "text-center" },
+                   { "data": "Beneficiario", "name": "TomoFicha", "autoWidth": true, "className": "text-center" },
+                   { "data": "Giros", "name": "Folio", "autoWidth": true, "className": "text-center" },
+                   { "data": "FechaLicencia", "name": "Asiento", "autoWidth": true, "className": "text-center" },
+               ],
+               "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+                "processing": true,
+                "serverSide": false,
+                "paging": false,
+        });
+        
+        TablaObrasPrivadas = $("#TablaObrasPrivadas").DataTable({
+            "ajax": {
+                "url": "@Url.Content("~/HistoricoUnidad/CargarUnidadObrasPrivadasHistoricas")",
+            "type": "POST",
+            "datatype": "json",
+            "data": function (d) {
+                d.CodigoUniCat = $('#CodigoUnidadCatastral').val();
+                d.Numversion = $("#NumVersionUnidad").val();
+            }
+        },
+
+       "columns": [
+           { "data": "Item", "name": "Item", "className": "text-center" },
+           { "data": "NumeroLicencia", "name": "TipoDocumento", "className": "text-center" },
+           { "data": "Solicitante", "name": "PartidaElectronica", "autoWidth": true, "className": "text-center" },
+           { "data": "Beneficiario", "name": "TomoFicha", "autoWidth": true, "className": "text-center" },
+           { "data": "TipoObra", "name": "TipoObra", "autoWidth": true, "className": "text-center" },
+           { "data": "FechaLicencia", "name": "FechaLicencia", "autoWidth": true, "className": "text-center" },
+       ],
+
+
+       "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+                "processing": true,
+                "serverSide": false,
+                "paging": false,
+        });
+        tablaUnidadTitular = $("#tablaUnidadTitular").DataTable({
+            "ajax": {
+                "url": "@Url.Content("~/HistoricoUnidad/CargarUnidadTitularHistoricas")",
+            "type": "POST",
+            "datatype": "json",
+            "data": function (d) {
+                d.CodigoUniCat = $('#CodigoUnidadCatastral').val();
+                d.Numversion = $("#NumVersionUnidad").val();
+                    }
+                },
+
+            "columns": [
+                { "data": "TipoDocumento", "name": "TipoDocumento", "className": "text-center" },
+                { "data": "NumeroDocumento", "name": "NumeroDocumento", "className": "text-center" },
+                { "data": "RasonSocial", "name": "RasonSocial", "autoWidth": true, "className": "text-center" },
+                { "data": "CodigoContribuyente", "name": "CodigoContribuyente", "autoWidth": true, "className": "text-center" },
+                { "data": "PorcentajeTitularidad", "name": "PorcentajeTitularidad", "autoWidth": true, "className": "text-center" },
+                { "data": "TipoPropietario", "name": "TipoPropietario", "autoWidth": true, "className": "text-center" },
+            ],
+            "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+                        "processing": true,
+                        "serverSide": false,
+                        "paging": false,
+
+          
+        });
+        TablaActividadEconomica = $("#TablaActividadEconomica").DataTable({
+            "ajax": {
+                "url": "@Url.Content("~/HistoricoUnidad/CargarUnidadActividadEconomicaHistoricas")",
+            "type": "POST",
+            "datatype": "json",
+            "data": function (d) {
+                d.CodigoUniCat = $('#CodigoUnidadCatastral').val();
+                d.Numversion = $("#NumVersionUnidad").val();
+            }
+            },
+
+        "columns": [
+            { "data": "CodigoCorrelativo", "name": "CodigoCorrelativo", "className": "text-center" },
+            { "data": "CodigoUso", "name": "CodigoUso", "className": "text-center" },
+            { "data": "NombreUso", "name": "NombreUso", "autoWidth": true, "className": "text-center" },
+            { "data": "Metro", "name": "Metro", "autoWidth": true, "className": "text-center" },
+            { "data": "Retiro", "name": "Retiro", "autoWidth": true, "className": "text-center" },
+            { "data": "Anuncio", "name": "Anuncio", "autoWidth": true, "className": "text-center" },
+            { "data": "TipoAnuncio", "name": "TipoAnuncio", "autoWidth": true, "className": "text-center" },
+        ],
+        "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+                            "processing": true,
+                            "serverSide": false,
+                            "paging": false,
+
+          
+        });
+        
+        tablaLinderosEdificacion = $("#tablaLinderosEdificacion").DataTable({
+            "ajax": {
+                "url": "@Url.Content("~/HistoricoUnidad/BuscarHistoricoLoteLinderos")",
+            "type": "POST",
+            "datatype": "json",
+            "data": function (d) {
+                d.CodigoUniCat = $('#CodigoUnidadCatastral').val();
+                d.Numversion = $("#NumVersionUnidad").val();
+            }
+        },
+
+        "columns": [
+            { "data": "CodigoLado", "name": "CodigoLado", "className": "text-center" },
+            { "data": "MedidaLadoCam", "name": "MedidaLadoCam", "className": "text-center" },
+            { "data": "MedidaLadoOfi", "name": "MedidaLadoOfi", "autoWidth": true, "className": "text-center" },
+            { "data": "CodigoTipoColind", "name": "CodigoTipoColind", "autoWidth": true, "className": "text-center" },
+            { "data": "Colindante", "name": "Colindante", "autoWidth": true, "className": "text-center" },
+
+        ],
+        "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+                            "processing": true,
+                            "serverSide": false,
+                            "paging": false,
+
+          
+        });
+        function InicializarValoresTab1() {
+
+            $('#CodigoUnidadCatastral').val('');
+            $('#CodigoDistrito').val('');
+            $('#CodigoSector').val('');
+            $('#CodigoManzana').val('');
+            $('#CodigoLote').val('');
+            $('#CodigoEdificacion').val('');
+            $('#CodigoEntrada').val('');
+            $('#CodigoPiso').val('');
+            $('#CodigoUnidad').val('');
+            tablaMunicipalAsignado.ajax.reload();
+            //tablaMunicipalAsignado2.ajax.reload();
+            //CargarImagen();
+            $("#Cuc").val('');
+            $("#CodigoInscripcionCatastral").val('');
+            $("#CodigoCodInscripcionCatastral").val('');
+            $("#CodigoFuenteInscripcionCatastral").val('');
+            $("#Denominacion").val('');
+            $("#CodigoEstadoConstruccion").val('');
+            $("#CodigoClasificacionPredio").val('');
+            $("#CodigoDepartamentoPredio").val('');
+            $("#CodigoCargaRegistral").val('');
+            $("#CodgiUsoPredio").val('');
+            $("#CodigoPredial").val('');
+            $("#AvanceConstruccion").val('');
+            $("#AreaComunesCalculado").val('');
+
+
+        }
+
+    </script>
+}

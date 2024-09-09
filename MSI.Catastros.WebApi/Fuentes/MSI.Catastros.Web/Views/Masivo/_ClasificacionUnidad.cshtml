@@ -1,0 +1,115 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Masivo.ClasificacionUnidadViewModel
+
+<div id="RegistrarViasContainer">
+    @Html.AntiForgeryToken()
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-hidden="true">
+                    &times;
+                </button>
+                <h4 id="TituloGeneral">Clasificación de Unidad</h4>
+            </div>
+            <div class="modal-body">
+                @Html.AntiForgeryToken()
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="table-responsive">
+                            <table id="TablaUnidadPaso2" class="display table table-bordered" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Dist</th>
+                                        <th>Sec</th>
+                                        <th>Mz</th>
+                                        <th>Lote</th>
+                                        <th>Ed</th>
+                                        <th>Entr</th>
+                                        <th>Piso</th>
+                                        <th>Unidad</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label class="control-label">Clasificación</label>
+                                @Html.DropDownList("CodigoClasificacionPredio", Model.ListClasificacionPredio, "- Seleccione...", new { @class = "form-control" })
+                                <span class="" data-valmsg-for="CodigoClasificacionPredio" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-offset-2 col-md-10">
+                    <input id="btnSubmitClasificacion" type="submit" value="Grabar" class="btn btn-success" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        tablaUnidadPaso2 = $("#TablaUnidadPaso2").DataTable({
+            "processing": false,
+            "serverSide": false,
+            "paging": false,
+            "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+            "columns": [
+                { "data": "Distrito", "className": "text-center" },
+                { "data": "Sec", "className": "text-center" },
+                { "data": "Manzana", "className": "text-center" },
+                { "data": "Lote", "className": "text-center" },
+                { "data": "Ed", "className": "text-center" },
+                { "data": "Entr", "className": "text-center" },
+                { "data": "Piso", "className": "text-center" },
+                { "data": "Unidad", "className": "text-center" }
+            ]
+        });
+        debugger;
+        tablaUnidadPaso2.clear().draw();
+        $.each(ListunidadCatastralDireccion, function (index, entry) {
+            tablaUnidadPaso2.row.add(entry).draw();
+        });
+        $("#btnSubmitClasificacion").on("click", function (event) {
+            debugger;
+            $.each(tablaCodigoCatastralMasivo.rows().data(), function (index, entry) {
+                console.log(entry);
+                var modelo = {
+                    CODUNI: entry.CODUNI,
+                    CodigoClasificacionPredio: $("#CodigoClasificacionPredio").val()
+                };
+                $.ajax({
+                    url: "@Url.Content("~/Masivo/RegistrarClasificacionUnidad")",
+                    type: "POST",
+                    data: modelo,
+                    dataType: "json",
+                    success: function (response) {
+                        console.log(response);
+                        if (response.success) {
+                            CagarListadoMasivo();
+                        } else {
+                        }
+                    },
+                    complete: function () {
+                    }
+                });
+            });
+            //setTimeout(function () {
+            //  }, 3000);
+
+            $('#modalClasificacionUnidad').modal('hide');
+            var mensaje = "Registro grabado correctamente";
+            toastr.success(mensaje, "Mensaje del Sistema", { "progressBar": true });
+        });
+    });
+</script>

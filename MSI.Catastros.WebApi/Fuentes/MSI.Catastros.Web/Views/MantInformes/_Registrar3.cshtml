@@ -1,0 +1,137 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.MantInformes.InformesConfigViewModel
+
+<div id="RegistroMantenimientoCarta">
+    @using (Html.BeginForm("Registrar", "PrimeraAsignacion", FormMethod.Post, new { id = "frmPrimeraAsignacion", name = "frmPrimeraAsignacion" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal mt-4  ">
+            <div id="divSub0" class="form-group">
+
+                <label class="control-label col-md-1" id="lblSubtitulo1" for="TituloGeneral">Titulo General</label>
+                <div class="col-md-3">
+                    @Html.TextAreaFor(m => m.TituloGeneral, new { @class = "form-control change md", rows = "1" })
+                </div>
+            </div>
+            
+            <div id="divSub1" class="form-group">
+
+                <label class="control-label col-md-1" id="lblSubtitulo1" for="Subtitulo1">Subtitulo1</label>
+                <div class="col-md-3">
+                    @Html.TextAreaFor(m => m.ConfSubtitulo1, new { @class = "form-control change md", rows = "1" })
+                </div>
+            </div>
+            <div id="divSub2" class="form-group">
+
+                <label class="control-label col-md-1" id="lblSubtitulo2" for="Subtitulo2">Subtitulo2</label>
+                <div class="col-md-3">
+                    @Html.TextAreaFor(m => m.ConfSubtitulo2, new { @class = "form-control change md", rows = "1" })
+                </div>
+            </div>
+            <div id="divSub3" class="form-group">
+                <label class="control-label col-md-1" id="lblSubtitulo3" for="Subtitulo3">Subtitulo3</label>
+                <div class="col-md-3">
+                    @Html.TextAreaFor(m => m.ConfSubtitulo3, new { @class = "form-control change md", rows = "1" })
+                </div>
+            </div>
+            <div id="divSub4" class="form-group">
+                <label class="control-label col-md-1" id="lblSubtitulo4" for="Subtitulo4">Subtitulo4</label>
+                <div class="col-md-3">
+                    @Html.TextAreaFor(m => m.ConfSubtitulo4, new { @class = "form-control change md", rows = "1" })
+                </div>
+            </div>
+            <div id="divSub5" class="form-group">
+                <label class="control-label col-md-1" id="lblSubtitulo5" for="Subtitulo5">Subtitulo5</label>
+                <div class="col-md-3">
+                    @Html.TextAreaFor(m => m.ConfSubtitulo5, new { @class = "form-control change md", rows = "1" })
+                </div>
+            </div>
+            <div id="divSub6" class="form-group">
+                <label class="control-label col-md-1" id="lblSubtitulo6" for="Subtitulo6">Subtitulo6</label>
+                <div class="col-md-3">
+                    @Html.TextAreaFor(m => m.ConfSubtitulo6, new { @class = "form-control change md", rows = "1" })
+                </div>
+            </div>
+        </div>
+        <hr class="" />
+        <div class="form-horizontal ">
+            <div id="divParrafo1" class="form-group">
+                <label class="control-label col-md-1" id="lblParrafo1" for="Parrafo1">Parrafo1</label>
+                <div class="col-md-3">
+                    @Html.TextAreaFor(m => m.ConfParrafo1, new { @class = "form-control change md", rows = "1" })
+                </div>
+            </div>
+            <div id="divParrafo2" class="form-group">
+
+                <label class="control-label col-md-1" id="lblParrafo2" for="Parrafo2">Parrafo2</label>
+                <div class="col-md-11">
+                    @Html.TextAreaFor(m => m.ConfParrafo2, new { @class = "form-control change md" })
+                </div>
+            </div>
+            <div id="divParrafo3" class="form-group">
+                <label class="control-label col-md-1" id="lblParrafo3" for="Parrafo3">Parrafo3</label>
+                <div class="col-md-11">
+                    @Html.TextAreaFor(m => m.ConfParrafo3, new { @class = "form-control change md" })
+                </div>
+            </div>
+            <div id="divParrafo4" class="form-group">
+                <label class="control-label col-md-1" id="lblParrafo4" for="Parrafo1">Parrafo4</label>
+                <div class="col-md-11">
+                    @Html.TextAreaFor(m => m.ConfParrafo4, new { @class = "form-control change md" })
+                </div>
+            </div>
+            <div id="divParrafo5" class="form-group">
+                <label class="control-label col-md-1" id="lblParrafo5" for="Parrafo5">Parrafo5</label>
+                <div class="col-md-11">
+                    @Html.TextAreaFor(m => m.ConfParrafo5, new { @class = "form-control change md" })
+                </div>
+            </div>
+            
+        </div>
+        <hr class="" />
+
+        <div class="form-horizontal  px-3">
+            <div class="form-group">
+                <label class="control-label col-md-1" id="lblConfPiePagina" for="ConfPiePagina">Pie Página</label>
+                <div class="col-md-11">
+                    @Html.TextAreaFor(m => m.ConfPiePagina, new { @class = "form-control change md", rows="1" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-1" id="lblNombreAnio" for="NombreAnio">Nombre del Año</label>
+                <div class="col-md-11">
+                    @Html.TextAreaFor(m => m.NombreAnio, new { @class = "form-control md", rows="1" })
+                </div>
+            </div>
+
+        </div>
+        <hr class="mx-3 mt-1 mb-0" />
+    }
+</div>
+<script>
+    if ($('#NombreAreaSolicitante').val() == "") {
+        $('#NombreTipoDocumento').val("");
+    }
+    
+
+    //Clase agregada para el cambio de color
+    function toggleClass() {
+        this.parentElement.previousElementSibling.classList.toggle('label-color-md');
+    }
+    var inputs = document.getElementsByClassName('md');
+    for (var i = 0; i < inputs.length; i++) {
+        var input = inputs[i];
+
+        input.addEventListener('focus', toggleClass);
+        input.addEventListener('blur', toggleClass);
+    }
+    //$('textarea').keyup(function () { this.value = this.value.toLocaleUpperCase() });
+    $('#CodigoResponsable').change(function () {
+        if (this.value) {
+            $('#PuestoResponsable').val('Analista');
+        } else {
+            $('#PuestoResponsable').val('');
+        }
+
+    });
+
+</script>

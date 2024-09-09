@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="direcmuni" targetNamespace="http://tempuri.org/FichaLoteCatas.xsd" xmlns:mstns="http://tempuri.org/FichaLoteCatas.xsd" xmlns="http://tempuri.org/FichaLoteCatas.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="direcmuni" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="direcmuni" msprop:Generator_UserDSName="direcmuni">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Direcmuni" msprop:Generator_TableClassName="DirecmuniDataTable" msprop:Generator_TableVarName="tableDirecmuni" msprop:Generator_RowChangedName="DirecmuniRowChanged" msprop:Generator_TablePropName="Direcmuni" msprop:Generator_RowDeletingName="DirecmuniRowDeleting" msprop:Generator_RowChangingName="DirecmuniRowChanging" msprop:Generator_RowEvHandlerName="DirecmuniRowChangeEventHandler" msprop:Generator_RowDeletedName="DirecmuniRowDeleted" msprop:Generator_RowClassName="DirecmuniRow" msprop:Generator_UserTableName="Direcmuni" msprop:Generator_RowEvArgName="DirecmuniRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CODVIA" msprop:Generator_ColumnVarNameInTable="columnCODVIA" msprop:Generator_ColumnPropNameInRow="CODVIA" msprop:Generator_ColumnPropNameInTable="CODVIAColumn" msprop:Generator_UserColumnName="CODVIA" type="xs:string" minOccurs="0" />
+              <xs:element name="TIPOVIA" msprop:Generator_ColumnVarNameInTable="columnTIPOVIA" msprop:Generator_ColumnPropNameInRow="TIPOVIA" msprop:Generator_ColumnPropNameInTable="TIPOVIAColumn" msprop:Generator_UserColumnName="TIPOVIA" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTVIA" msprop:Generator_ColumnVarNameInTable="columnTXTVIA" msprop:Generator_ColumnPropNameInRow="TXTVIA" msprop:Generator_ColumnPropNameInTable="TXTVIAColumn" msprop:Generator_UserColumnName="TXTVIA" type="xs:string" minOccurs="0" />
+              <xs:element name="NUMCUADRA" msprop:Generator_ColumnVarNameInTable="columnNUMCUADRA" msprop:Generator_ColumnPropNameInRow="NUMCUADRA" msprop:Generator_ColumnPropNameInTable="NUMCUADRAColumn" msprop:Generator_UserColumnName="NUMCUADRA" type="xs:string" minOccurs="0" />
+              <xs:element name="LADO" msprop:Generator_ColumnVarNameInTable="columnLADO" msprop:Generator_ColumnPropNameInRow="LADO" msprop:Generator_ColumnPropNameInTable="LADOColumn" msprop:Generator_UserColumnName="LADO" type="xs:string" minOccurs="0" />
+              <xs:element name="BLOQUEEDIF" msprop:Generator_ColumnVarNameInTable="columnBLOQUEEDIF" msprop:Generator_ColumnPropNameInRow="BLOQUEEDIF" msprop:Generator_ColumnPropNameInTable="BLOQUEEDIFColumn" msprop:Generator_UserColumnName="BLOQUEEDIF" type="xs:string" minOccurs="0" />
+              <xs:element name="TIPOPUERTA" msprop:Generator_ColumnVarNameInTable="columnTIPOPUERTA" msprop:Generator_ColumnPropNameInRow="TIPOPUERTA" msprop:Generator_ColumnPropNameInTable="TIPOPUERTAColumn" msprop:Generator_UserColumnName="TIPOPUERTA" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTNUMERO" msprop:Generator_ColumnVarNameInTable="columnTXTNUMERO" msprop:Generator_ColumnPropNameInRow="TXTNUMERO" msprop:Generator_ColumnPropNameInTable="TXTNUMEROColumn" msprop:Generator_UserColumnName="TXTNUMERO" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTLETRA" msprop:Generator_ColumnVarNameInTable="columnTXTLETRA" msprop:Generator_ColumnPropNameInRow="TXTLETRA" msprop:Generator_ColumnPropNameInTable="TXTLETRAColumn" msprop:Generator_UserColumnName="TXTLETRA" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

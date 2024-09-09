@@ -1,0 +1,220 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Certificados.CertificadosViewModel
+<style>
+    input.form-control {
+        text-transform: uppercase;
+    }
+</style>
+<fieldset class="formulario p-3">
+    <legend id="legInforme" style="margin-bottom:-10px;">Hoja Informativa</legend>
+    @using (Html.BeginForm("Registrar", "Certificado", FormMethod.Post, new { id = "frmCertificadosJuri", name = "frmCertificadosJuri" }))
+    {
+        @Html.TextBoxFor(m => m.FiltrarCodigoCertificado, new { @class = "form-control change", type = "hidden" })
+        @Html.AntiForgeryToken()
+        <div class="px-3 mt-3">
+            <table class="table editable table-bordered table-striped ">
+                <thead><tr><th width="240px">Código Catastral</th><th>Ubicación</th><th width="28%">Titular</th></tr></thead>
+                <tbody class="CamposCatastrales"></tbody>
+            </table>
+        </div>
+        <div class="row mt-3 px-3">
+            <div class=" col-md-2">
+                <div class="form-group">
+                    <label class="control-label" id="lblCodigoUnico" for="CodigoUnico">Código Unico Catastral</label>
+                    @Html.TextBoxFor(m => m.CUC, new { @class = "form-control change", disabled = true })
+                </div>
+            </div>
+            <div class=" col-md-2" style="display:none;">
+                <div class="form-group">
+                    <label class="control-label" id="lblCodigoUnico" for="CodigoUnico">Código Unico Catastral</label>
+                    @Html.TextBoxFor(m => m.CodigoUnico, new { @class = "form-control change", disabled = true })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="control-label" id="lblCodigoHojaCatastral" for="Urbanizacion">Código Hoja Catastral</label>
+                    @Html.TextBoxFor(m => m.CodigoHojaCatastral, new { @class = "form-control change", @maxlength = "10" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="control-label" id="lblCodigoCatastral" for="CodigoCatastral">Código Catastral</label>
+                    <input type="text" class="form-control" style="width: 83%; display: inline;" id="CodigoCatastralVer" name="CodigoCatastralVer" disabled />
+                    @Html.TextBoxFor(m => m.CodigoCatastral, new { @class = "form-control change", type="hidden", disabled = true, @style = "width:83%;display: inline;" })
+                    <input type="text" class="form-control" disabled value="0" style="width:15%;display: inline;text-align:center;" />
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="control-label" id="lblFechaGeneracion" for="FechaGeneracion">Fecha de Emisión</label>
+                    @Html.TextBoxFor(m => m.FechaGeneracion, new { @class = "form-control change", type = "date", disabled = true })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="control-label" id="lblNumeroSolicitud" for="NumeroSolicitud">N° Expediente</label>
+                    @Html.TextBoxFor(m => m.NumeroSolicitud, new { @class = "form-control change", disabled = true })
+                </div>
+            </div>
+            <div class="col-md-4" style="display:none;">
+                <div class="form-group">
+                    <label class="control-label" id="lblUrbanizacion" for="Urbanizacion">Urbanizacion</label>
+                    @Html.TextBoxFor(m => m.Urbanizacion, new { @class = "form-control change", disabled = true })
+                </div>
+            </div>
+        </div>
+        <hr class="mx-3 mt-0 mb-0" />
+        <div class="row  px-3 mt-2">
+            <div class="col-md-4">
+                <label class="control-label" id="lblPartida" for="Partida">Ubicacion Principal</label>
+                <select id="Direccion" class="form-control select-table">
+                    <option value=""> - Seleccione la ubicación - </option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label class="control-label" id="lblHojaPlano" for="HojaPlano">Hoja de Plano:</label>
+                @*<input type="text" class="form-control" id="HojaPlano" />*@
+                @Html.TextBoxFor(m => m.HojaPlano, new { @class = "form-control", @style = "text-transform:none;" })
+            </div>
+            <div class="col-md-2">
+                <label class="control-label" id="lblEscalaPlano" for="EscalaPlano">Escala del Plano:</label>
+                @*<input type="text" class="form-control" id="EscalaPlano" />*@
+                @Html.TextBoxFor(m => m.EscalaPlano, new { @class = "form-control", @style = "text-transform:none;" })
+            </div>
+        </div>
+        <div class="row  px-3 mt-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label" id="lblAnotaciones" for="Anotaciones">Observaciones</label>
+                    @Html.TextAreaFor(m => m.Anotaciones, new { @class = "form-control change", rows = "3" })
+                </div>
+            </div>
+            <div class="col-md-2" style="display:none;">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ListTipoPersona, htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownListFor(m => m.TipoPersonas, Model.ListTipoPersona, "- Tipo Destinatario -", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Solicitante, htmlAttributes: new { @class = "control-label" })@Html.TextAreaFor(m => m.Solicitante, new { @class = "form-control change", rows = "2" })
+                </div>
+            </div>
+        </div>
+        <div class="row  px-3">
+            <div id="divSub1" class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label" id="lblPartida" for="Partida">Antecedentes del predio</label>
+                    <select id="Partida" class="" multiple="multiple"></select>
+                </div>
+            </div>
+        </div>
+        <hr class="mx-3 mt-0 mb-3" />
+    }
+</fieldset>
+
+
+
+<script src="~/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js"></script>
+<script>
+    if ($('#NombreAreaSolicitante').val() == "") {
+        $('#NombreTipoDocumento').val("");
+    }
+    var enlaceDocu = "@Url.Content("~/Certificados/CargarUnidadRRPP")";
+    var codCat = $('#CodigoCatastral').val();
+    $('#CodigoCatastralVer').val(codCat.slice(0, 2) + "-" + codCat.slice(2, 4) + "-" + codCat.slice(4, 7) + "-" + codCat.slice(7, 10) + "-" + codCat.slice(10, 12) + "-" + codCat.slice(12, 14) + "-" + codCat.slice(14, 16) + "-" + codCat.slice(16, 19))
+    RecuperarUbicacionHoja();
+    $.post(enlaceDocu, { CodigoUnico: $('#CodigoUnico').val(), Tipo: '1' }, function (r) {
+        $('#Partida').children('option:not(:first)').remove();
+        $.each(r.data, function (ind, item) {
+            $('#Partida').append($('<option>').text(item.Text).attr('value', item.Value));
+        });
+        $('#Partida').multiselect({
+            buttonWidth: '100%',
+            allSelectedText: "Todos los documentos seleccionados",
+            buttonClass: 'btn btn-default btn-sm',
+            nonSelectedText: 'Seleccione una o más Partidas',
+        });
+
+        var ListaPartida;
+        if ("@Model.PartidaString") {
+            ListaPartida = "@Model.PartidaString".split("/");
+            console.log('Partida', ListaPartida);
+            $('#Partida').multiselect('select', ListaPartida);
+        }
+    });
+
+    $('#TipoPersonas').change(function () {
+        if (this.value == '010003') {
+            var Titulares = '';
+            $('.CamposCatastrales').find('tr').each(function (index) {
+                var ind = (index + 1);
+                Titulares = Titulares + '\n' + $('#Titular' + ind).val();
+            });
+            $('#Solicitante').val(Titulares.substring(1));
+        } else {
+            $.post("@Url.Content("~/Informes/BuscarSolicitudPersona")", { model: RetornarBusqueda() },
+            function (r) {
+                console.log('1.', r);
+                if ($('#TipoPersonas').val() === '010001') {
+                    if (r.Solicitud.NombreSolicitante) {
+                        $('#Solicitante').val(r.Solicitud.NombreSolicitante);
+                    }
+                } else {
+                    if (r.Solicitud.NombreRepresentante) {
+                        $('#Solicitante').val(r.Solicitud.NombreRepresentante);
+                    }
+                }
+            });
+        }
+    });
+
+    function RecuperarUbicacionHoja() {
+        var codigo = $('#CodigoCatastral').val();
+        var URLObservacion = "@Url.Content("~/Certificados/BuscarUbicacionSel")";
+        $.post(URLObservacion, {
+            FiltrarCodigoTipoInforme: $('#FiltrarCodigoTipoCertificado').val(), FiltrarCodigoTipoSolicitud: $('#FiltrarCodigoTipoSolicitud').val(),
+            FiltrarCodigoTipoDocumentoReg: $('#FiltrarCodigoTipoDocumentoReg').val(), FiltrarNumeroSolicitud: $('#FiltrarNumeroSolicitud').val(),
+            CodigoSector: codigo.substring(2, 4), CodigoManzana: codigo.substring(4, 7), CodigoLote: codigo.substring(7, 10),
+            CodigoEdificacion: codigo.substring(10, 12), CodigoEntrada: codigo.substring(12, 14), CodigoPiso: codigo.substring(14, 16), CodigoUnidad: codigo.substring(16, 19)
+        },
+        function (r) {
+            $('#Direccion').children('option:not(:first)').remove();
+            $.each(r.SolicitudUnidad, function (ind, item) {
+                $('#Direccion').append($('<option>').text(item.Ubicacion).attr('value', item.Unidad));
+            });
+
+            if ('@Model.Direccion') {
+                $('#Direccion').val(@Html.Raw(Json.Encode(@Model.Direccion)));
+            }
+
+        })
+    }
+    RecuperarUrbanizacion();
+    function RecuperarUrbanizacion(ubicacion) {
+        var URLObservacion = "@Url.Content("~/Certificados/BuscarUrbanizacion")";
+        var Codigo = $('#CodigoCatastral').val();
+        console.log(Codigo);
+        $.post(URLObservacion, {
+            CodigoSector: Codigo.substring(2, 4), CodigoManzana: Codigo.substring(4, 7), CodigoLote: Codigo.substring(7, 10),
+            CodigoUnico: $('#CodigoUnico').val()
+        },
+        function (r) {
+            $('#NombreViaEsq').children('option:not(:first)').remove();
+            if (r.SolicitudUnidad) {
+                var datos = r.SolicitudUnidad;
+                var ind1 = datos.indexOf("|") + 1; var ind2 = datos.indexOf("|", ind1) + 1; var ind3 = datos.indexOf("|", ind2) + 1;
+                var ind4 = datos.indexOf("|", ind3) + 1;
+                $('#Urbanizacion').val(datos.substring(0, ind1 - 1));
+                $('#ManzanaUrbana').val(datos.substring(ind1, ind2 - 1));
+                //var loteurb = "PARTE DEL LOTE " + datos.substring(ind2, ind3 - 1);
+                var loteurb = datos.substring(ind2, ind3 - 1);
+                $('#LoteUrbano').val(loteurb)
+                var sublote = datos.substring(ind3,ind4 -1);
+                $('#SubLoteUrbano').val((sublote) ? sublote : "---");
+                $('#InscripcionCatastral').val(datos.substring(ind4));
+
+            }
+        });
+    }
+
+</script>

@@ -1,0 +1,71 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Manzana.FiltrarManzanaViewModel
+
+@if (Model.listManzana != null || Model.listManzana.Count() > 0)
+{
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Acciones</th>
+                    <th>Código Sector</th>
+                    <th>Sector</th>
+                    <th>Código Manzana</th>
+                    <th>Manzana</th>
+                    <th>Temática</th>
+                    <th>Manzana Urbana</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.listManzana)
+                {
+                    <tr>
+                        <td align="center">
+                            @Ajax.ActionLink(" ", "Editar", "Manzana"
+                             , new { idCodManzana = item.CodigoManzana, idCodSector = item.CodigoSector }
+                                , new AjaxOptions
+                                        {
+                                            HttpMethod = "Get",
+                                            InsertionMode = InsertionMode.Replace,
+                                            UpdateTargetId = "modalManzana"
+                                        }
+                                ,
+                                new
+                                {
+                                    @class = "btn btn-default glyphicon glyphicon-edit",
+                                    @type = "button",
+                                    data_toggle = "modal",
+                                    data_target = "#modalManzana"
+
+                                }
+                           )
+                            @Ajax.ActionLink(" ", "Eliminar", "Manzana"
+                                , new { idCodManzana = item.CodigoManzana, idCodSector= item.CodigoSector }
+                                , new AjaxOptions
+                                        {
+                                            HttpMethod = "Get",
+                                            UpdateTargetId = "modalEliminarManzana"
+                                        }
+                                ,
+                                new
+                                {
+                                    @class = "btn btn-danger glyphicon glyphicon-remove",
+                                    @type = "button",
+                                    data_toggle = "modal",
+                                    data_target = "#modalEliminarManzana"
+
+                                }
+                           )
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.CodigoSector)</td>
+                        <td>@item.NombreSector</td>
+                        <td>@Html.DisplayFor(modelItem => item.CodigoManzana)</td>
+                        <td>@item.NombreManzana</td>
+                        <td>@Html.DisplayFor(modelItem => item.NombreTematica)</td>
+                        <td>@Html.DisplayFor(modelItem => item.NombreManzanaUrbana)</td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

@@ -1,0 +1,900 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Informes.InformesViewModel
+@{
+    ViewBag.Title = "Informes";
+}
+<style>
+    .tdColapse {
+        height:55px;
+    }
+</style>
+<div class="row" id="Informes">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="overflow: hidden">
+                <div class="row">
+                    <div class="col-md-6 col-xs-12"><strong><a href="../MantInformes">-</a>Informes</strong></div><div class="col-md-4"></div>
+                    <div class="col-md-2 col-xs-12">
+                        <span><button id="GrabarGeneral" type="button" disabled class="btn btn-green mr-2 btn-block" style="float:right" onclick="GrabarInforme()"><span class="glyphicon glyphicon-ok mr-2"></span> Grabar</button></span>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    
+                </div>
+                <input type="hidden" id="FiltrarCodigoInforme" />
+                <input type="hidden" id="FiltrarCodigoPeriodo" />
+                <input type="hidden" id="FiltrarCodigoCorrelativo" />
+                <input type="hidden" id="CodigoOficina" />
+                <input type="hidden" id="CodigoCatastralH" />
+                <input type="hidden" id="CodigoUnicoH" />
+                <input type="hidden" id="TitularCatastralH" />
+                
+
+                <fieldset class="formulario p-3">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ListTipoInforme, htmlAttributes: new { @class = "control-label" })
+                                @Html.DropDownListFor(m => m.FiltrarCodigoTipoInforme, Model.ListTipoInforme, "- Seleccione el tipo de informe -", new { @class = "form-control searchFilter" })
+                                <span class="field-validation-valid inputUtil" data-valmsg-for="ListTipoInforme" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ListTipoSolicitud, htmlAttributes: new { @class = "control-label" })
+                                @Html.DropDownListFor(m => m.FiltrarCodigoTipoSolicitud, Model.ListTipoSolicitud, "- Seleccione el tipo de solicitud -", new { @class = "form-control searchFilter" })
+                                <span class="field-validation-valid inputUtil" data-valmsg-for="FiltrarCodigoTipoSolicitud" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-3" id="divTipoDocumento" style="display:none;">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ListTipoDocumento, htmlAttributes: new { @class = "control-label" })
+                                @Html.DropDownListFor(m => m.FiltrarCodigoTipoDocumentoReg, Model.ListTipoDocumento, "- Seleccione el tipo de documento -", new { @class = "chosen-seleccionar form-control searchFilter", autofocus = "true" })
+                                <span class="field-validation-valid" data-valmsg-for="FiltrarCodigoTipoDocumentoReg" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.FiltrarNumeroSolicitud, htmlAttributes: new { @class = "control-label" })
+                                @Html.TextBoxFor(model => model.FiltrarNumeroSolicitud, new { @class = "form-control searchFilter px-2" })
+                                <span class="field-validation-valid inputUtil" data-valmsg-for="FiltrarNumeroSolicitud" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-1 text-center">
+                            <div class="form-group"><br /><button id="btnBuscar" type="button" value="" class="btn btn-default btn-block glyphicon glyphicon-search" style="margin-top: 5px"></button></div>
+                        </div>
+                        
+                    </div>
+                </fieldset>
+                <div id="tabInforme" style="display:none;">
+                    <div class="row mt-3">
+                        <div class="col-md-2">
+                            <button id="btnAgregarInforme" type="button" class="btn btn-success mb-2 btn-sm btn-block glyphicon glyphicon-plus-sign">
+                                <span style="font-family:'Open Sans'"> Agregar</span>
+                            </button>
+                        </div>
+                        <div class="col-md-12">
+                            <table id="tablaInforme" style="width:100%" class="table responsive display table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Acciones</th>
+                                        <th>Item</th>
+                                        <th>Nro. Solicitud</th>
+                                        <th>Tipo Informe</th>
+                                        <th>Nro. Informe</th>
+                                        <th>Codigos Catastrales</th>
+                                        <th>Ubicacion</th>
+                                        <th>Asunto</th>
+                                        <th>Fecha Generacion</th>
+                                        <th>Usuario</th>
+                                        <th>Documento</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="cuerpoInforme" style="display:none;">
+                        <fieldset class="formulario p-3 mt-3">
+                            <legend id="legInforme" style="margin-bottom:-10px;">Informe de Verificación Catastral</legend>
+                            <div class="row" style="display:none">
+                                <div class="col-md-2 mr-3 pull-right">
+                                    <button type="button" id="GenFicha" disabled class="btn pull-right btn-success btn-sm glyphicon glyphicon-print btn-block" style="float:right" onclick="GenerarInforme()"><span style="font-family:'Open Sans'"> Generar Informe</span></button>
+                                    <button type="button" id="GenFicha2" class="btn  btn-success btn-sm glyphicon glyphicon-print" style="float:right" onclick="GenerarInforme2()"><span style="font-family:'Open Sans'"> Generar Informe2</span></button>
+                                </div>
+                            </div>
+                            <div class=" mt-3 px-3 fonts11">
+                                <table class="table editable table-bordered table-striped ">
+                                    <thead><tr><th width="35px"><input type="checkbox" id="Check0" class="form-control tablecheck input-table"></th><th width="240px">Código Catastral</th><th width="120px">Código Unico</th><th>Ubicación</th><th width="28%">Titular</th></tr></thead>
+                                    <tbody class="CamposCatastrales"></tbody>
+                                </table>
+                            </div>
+                            <div class="row fonts11 px-3">
+                                <div class="col-md-2">
+                                    <div class="">
+                                        @*@Html.LabelFor(m => m.CodigoCatastral, htmlAttributes: new { @class = "control-label" })*@
+                                        @Html.TextBoxFor(m => m.CodigoCatastral, new { @class = "form-control", type = "hidden", rows = "3", disabled = true })
+                                        <input type="hidden" id="CodigoCatastralSelect" />
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="">
+                                        @*@Html.LabelFor(m => m.CodigoUnico, htmlAttributes: new { @class = "control-label" })*@
+                                        @Html.TextBoxFor(m => m.CodigoUnico, new { @class = "form-control", type = "hidden", rows = "3", disabled = true })
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="">
+                                        @*@Html.LabelFor(m => m.UbicacionPredio, htmlAttributes: new { @class = "control-label" })*@
+                                        @Html.TextBoxFor(m => m.UbicacionPredio, new { @class = "form-control", type = "hidden", rows = "3", disabled = true })
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="">
+                                        @*@Html.LabelFor(m => m.TitularCatastral, htmlAttributes: new { @class = "control-label" })*@
+                                        @Html.TextBoxFor(m => m.TitularCatastral, new { @class = "form-control", type = "hidden", rows = "3", disabled = true })
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.NombreTipoLlenado, htmlAttributes: new { @class = "control-label" })@Html.TextBoxFor(m => m.NombreTipoLlenado, new { @class = "form-control", disabled = true })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.FechaInspeccion, htmlAttributes: new { @class = "control-label" })@Html.TextBoxFor(m => m.FechaInspeccion, new { @class = "form-control", type = "date", disabled = true })
+                                    </div>
+                                </div>
+                                <div class="col-md-3" id="divNroCalidadVerificacion">
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.NroCalidadVerificacion, htmlAttributes: new { @class = "control-label" })@Html.TextBoxFor(m => m.NroCalidadVerificacion, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="display:none;">
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.NombreSigla, htmlAttributes: new { @class = "control-label" })@Html.TextBoxFor(m => m.NombreSigla, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="mx-3 mt-1 mb-0" />
+                            <div class="px-3 pt-3 ">
+                                <div style="width:99%;">
+                                    <div class="row fonts11">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.ListTipoPersona, htmlAttributes: new { @class = "control-label" })
+                                                @Html.DropDownListFor(m => m.TipoPersonas, Model.ListTipoPersona, "- Tipo Destinatario -", new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.Solicitante, htmlAttributes: new { @class = "control-label" })@Html.TextAreaFor(m => m.Solicitante, new { @class = "form-control change", rows = "2" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4" style="display:none;">
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.DescripcionInforme, htmlAttributes: new { @class = "control-label" })@Html.TextBoxFor(m => m.DescripcionInforme, new { @class = "form-control change" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.Asunto, htmlAttributes: new { @class = "control-label" })@Html.TextAreaFor(m => m.Asunto, new { @class = "form-control change", rows = "2" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4" style="display:none;">
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.NombreAnio, htmlAttributes: new { @class = "control-label" })@Html.TextAreaFor(m => m.NombreAnio, new { @class = "form-control change", rows = "1" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.NombreFirma, htmlAttributes: new { @class = "control-label" })@Html.TextBoxFor(m => m.NombreFirma, new { @class = "form-control change", disabled = "true" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4" style="display:none;">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.NombreOficina, htmlAttributes: new { @class = "control-label" })
+                                                @Html.TextBoxFor(model => model.NombreOficina, new { @class = "form-control change" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-2 col-lg-2 col-md-2">
+                                            <button id="btnAgregarDetalle" type="button" class="btn btn-success mb-2 btn-sm btn-block glyphicon glyphicon-plus-sign">
+                                                <span style="font-family:'Open Sans'"> Agregar</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 fonts11">
+                                            <table class="table responsive display table-striped table-bordered table-hover" style="width:100%;" id="tablaInformeDetalle">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Acciones</th>
+                                                        <th>Item</th>
+                                                        <th>Titulo</th>
+                                                        <th>Detalle</th>
+                                                        <th></th>
+                                                        <th></th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="mx-3 mt-0 mb-3" />
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="modalRegistrarDetalle" class="modal fade" tabindex="-1" role="dialog"></div>
+
+@section datatables {
+
+    <script src="~/assets/vendor/ckeditor/ckeditor.js"></script>
+    <script src="~/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js"></script>
+    <script>
+        //$('#page-wrapper').removeClass('pt-5').addClass('pt-1'); $('#periodoGlobal').show();
+        $('.tabs').tabslet();
+        $('#FiltrarCodigoPeriodo').val((new Date()).getFullYear())
+        var nombreFirmaTemp = '@Model.NombreFirma';
+        //DATA DE PRUEBA
+        //$('#FiltrarCodigoTipoSolicitud').val('010003');
+        //$('#FiltrarNumeroSolicitud').val('000451');
+        //$('#FiltrarCodigoTipoInforme').val('010002').trigger('change');
+        var codigosTemp = '';
+        var ubicacionTemp = '';
+
+        $(document).on('show.bs.modal', '.modal', function (event) {
+            var zIndex = 1040 + (10 * $('.modal:visible').length);
+            $(this).css('z-index', zIndex);
+            setTimeout(function () {
+                $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
+            }, 0);
+        });
+        $(document).on('hidden.bs.modal', function () {
+            if ($('.modal:visible').length > 0) {
+                $('body').addClass('modal-open');
+            } else {
+                //console.log('CK', CKEDITOR.instances['Detalle']);
+                if (CKEDITOR.instances['Detalle']) {
+                    CKEDITOR.instances['Detalle'].destroy();
+                }
+            }
+        });
+
+        //Eventos Globales
+        $('#FiltrarCodigoTipoSolicitud').change(function () {
+            if (this.value === "010003") {
+                $('#divTipoDocumento').hide(); $('#FiltrarCodigoTipoDocumentoReg').find('option:not(:first)').remove();
+            } else {
+                $('#divTipoDocumento').show();
+                //var URL = (this.value === "010001") ? "/RecepcionDocumentos/DocExterno" : "/RecepcionDocumentos/DocInterno";
+                var URL = (this.value === "010001") ? "@Url.Content("~/RecepcionDocumentos/DocExterno")" : "@Url.Content("~/RecepcionDocumentos/DocInterno")";
+                $.post(URL, function (data) {
+                    $('#FiltrarCodigoTipoDocumentoReg').find('option:not(:first)').remove(); var items = '<option value="">Seleccione el tipo de documento</option>';
+                    $.each(data, function (i, item) { items += "<option value='" + item.Value + "'>" + item.Text + "</option>"; }); $('#FiltrarCodigoTipoDocumentoReg').html(items).trigger("chosen:updated");
+                });
+            }
+        });
+        $('.searchFilter').change(function () {
+            $('#tabInforme').hide();
+            $('#FiltrarCodigoCorrelativo').val('');
+        });
+        $('input.change').change(function () {
+            $('#GenFicha').attr('disabled', 'disabled')
+        });
+        $('#TipoPersonas').change(function () {
+            $('#Solicitante').val('');
+            if (!this.value) {
+                $('#Solicitante').val("");
+            } else if (this.value == '010003') {
+                var Titulares = ''; var tempTitu = '';
+                $('.CamposCatastrales').find('tr').each(function (index) {
+                    var ind = (index + 1);
+                    if ($('#Check' + ind).is(":checked")) {
+                        if (tempTitu != $('#Titular' + ind).val()) {
+                            Titulares = Titulares + '\n' + $('#Titular' + ind).val();
+                        }
+                        tempTitu = $('#Titular' + ind).val();
+                    }
+                });
+                $('#Solicitante').val(Titulares.substring(1));
+            } else {
+                //console.log(this.value);
+                $.post("@Url.Content("~/Informes/BuscarSolicitudPersona")", { model: RetornarBusqueda() },
+                function (r) {
+                    //console.log('1.', r);
+                    if ($('#TipoPersonas').val() === '010001') {
+                        if (r.Solicitud.NombreSolicitante) {
+                            $('#Solicitante').val(r.Solicitud.NombreSolicitante);
+                        }
+                    } else {
+                        if (r.Solicitud.NombreRepresentante) {
+                            $('#Solicitante').val(r.Solicitud.NombreRepresentante);
+                        }
+                    }
+                });
+            }
+        });
+
+        //Tablas
+        var tablaInformeDetalle = $("#tablaInformeDetalle").DataTable({
+            "ajax": {
+                // "url": "/Informes/CargarInformeDetalle", "type": "POST", "datatype": "json",
+                "url": "@Url.Content("~/Informes/CargarInformeDetalle")", "type": "POST", "datatype": "json",
+                "data": function (d) {
+                    d.FiltrarCodigoTipoInforme = $('#FiltrarCodigoTipoInforme').val(); d.FiltrarCodigoInforme = $('#FiltrarCodigoInforme').val();
+                    d.FiltrarCodigoPeriodo = $('#FiltrarCodigoPeriodo').val(); d.FiltrarCodigoCorrelativo = $('#FiltrarCodigoCorrelativo').val();
+                }
+            },
+            altEditor: true,
+            "language": { "lengthMenu": "", "info": "", "emptyTable": "" }, "processing": true, "serverSide": false, "paging": false,
+            "columns": [
+                {
+                    'render': function (data, type, full, meta) {
+                        return '<button data-toggle="tooltip" title="Editar" class="btn mr-1 text-center btnEditHabil btn-default btn-xs glyphicon glyphicon-edit" type="button" ></button>' +
+                        '<button data-toggle="tooltip" title="Eliminar" class="btn mr-1 text-center btnDeleteHabil btn-default btn-xs glyphicon glyphicon-trash" type="button" ></button>';
+                    }, "className": "text-center"
+                },
+                { "data": "Item", "className": "text-center" }, { "data": "Titulo", "className": "text-center" }, { "data": "Detalle", type: "select", "className": "" }, { "data": "SubTitulo", "className": "hide_column" },
+                { "data": "CodigoTipoDetalle", "className": "hide_column" },
+                { "data": "CodigoCorrelativo", "className": "hide_column" },
+            ]
+        });
+        $("#tablaInformeDetalle tbody").on('click', 'button.btnEditHabil', function (event) {
+            var data = tablaInformeDetalle.row($(this).parents('tr')).data();
+            //var enlace = '/Informes/EditarDetalle';
+            var enlace = "@Url.Content("~/Informes/EditarDetalle")";
+            $.post(enlace, { CodigoInforme: $('#FiltrarCodigoInforme').val(), CodigoTipoInforme: $('#FiltrarCodigoTipoInforme').val(), CodigoCorrelativo: $('#FiltrarCodigoCorrelativo').val(), CodigoSubCorrelativo: data.CodigoCorrelativo }, function (response) {
+                var id = "#modalRegistrarDetalle"; $(id).modal().html(response);
+            });
+        });
+        $("#tablaInformeDetalle tbody").on('click', 'button.btnDeleteHabil', function (event) {
+            var data = tablaInformeDetalle.row($(this).parents('tr')).data();
+            // var enlace = '/Informes/EliminarDetalle';
+            var enlace = "@Url.Content("~/Informes/EliminarDetalle")";
+            bootbox.confirm({
+                title: "Mensaje del Sistema", message: "¿Esta seguro de borrar el registro?",
+                buttons: { confirm: { label: '<i class="fa fa-trash"></i> Eliminar ', className: "btn btn-danger" }, cancel: { label: '<i class="fa fa-times"></i> Cancelar' } },
+                callback: function (result) {
+                    if (result) {
+                        $.post(enlace, { CodigoInforme: $('#FiltrarCodigoInforme').val(), CodigoTipoInforme: $('#FiltrarCodigoTipoInforme').val(), CodigoCorrelativo: $('#FiltrarCodigoCorrelativo').val(), CodigoSubCorrelativo: data.CodigoCorrelativo }, function (response) {
+
+                            tablaInformeDetalle.ajax.reload(function (json) {
+                                listaCodigoTipoDetalle = [];
+                                json.data.forEach(function (item) {
+                                    if (item.CodigoTipoDetalle) {
+                                        listaCodigoTipoDetalle.push(item.CodigoTipoDetalle);
+                                    }
+                                    //console.log(item)
+                                });
+                            });
+                        });
+                    }
+                }
+            });
+
+        });
+
+
+        var tablaInforme = $("#tablaInforme").DataTable({
+            "ajax": {
+                //"url": "/Informes/CargarInformes", "type": "POST", "datatype": "json",
+                "url": "@Url.Content("~/Informes/CargarInformes")", "type": "POST", "datatype": "json",
+                "data": function (d) {
+                    d.FiltrarCodigoTipoSolicitud = $('#FiltrarCodigoTipoSolicitud').val(); d.FiltrarNumeroSolicitud = $('#FiltrarNumeroSolicitud').val();
+                    d.FiltrarCodigoPeriodo = $('#FiltrarCodigoPeriodo').val(); d.FiltrarCodigoTipoInforme = $('#FiltrarCodigoTipoInforme').val();
+                    d.FiltrarCodigoTipoDocumentoReg = $('#FiltrarCodigoTipoDocumentoReg').val();
+                }
+            },
+            "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+            "processing": true, "serverSide": false, "paging": false,
+            "columns": [
+                {
+                    'render': function (data, type, full, meta) {
+                        return '<button data-toggle="tooltip" title="Editar" class="btn mr-1 text-center btnEditInforme btn-default btn-xs glyphicon glyphicon-edit" type="button" ></button>' +
+                        '<button data-toggle="tooltip" title="Eliminar" class="btn mr-1 text-center btnDeleteInforme btn-default btn-xs glyphicon glyphicon-trash" type="button" ></button>';
+                    }, "className": "text-center"
+                },
+                { "data": "Item", "className": "text-center" }, { "data": "FiltrarNumeroSolicitud", "className": "text-center" },
+                { "data": "FiltrarCodigoTipoInforme", "className": "text-center" },
+                { "data": "CodigoCorrelativoTramite", "className": "text-center" },
+                { //"data": "CodigoCatastral", "className": "text-center" },
+                    'render': function (data, type, full, meta) {
+                        if (full.CodigoCatastral.length > 86) {
+                            return "<div id='divHid" + full.FiltrarCodigoCorrelativo + "' onclick='$(\"#divHid" + full.FiltrarCodigoCorrelativo + "\").toggleClass(\"tdColapse\")' class='tdColapse' style='overflow: hidden; cursor:pointer;'>" +
+                                full.CodigoCatastral + "</div>" + "<button type='button' onclick='$(\"#divHid" + full.FiltrarCodigoCorrelativo + "\").toggleClass(\"tdColapse\")'  class='btn btn-default btn-xs'> Ver todos los códigos ...</button>";
+                        } else {
+                            return full.CodigoCatastral;
+                        }
+                    }, "className": "text-center"
+                },
+                { "data": "UbicacionPredio", "className": "hide_column" },
+                { "data": "Asunto", "className": "text-center" },
+                { "data": "FechaGeneracion", "className": "text-center" },
+                // { "data": "Documento", "className": "text-center" },
+                { "data": "CodigoUsuario", "className": "text-center" },
+                {
+                    'render': function (data, type, full, meta) {
+                        if (full.CodigoDocumentoGenerado) {
+                            return '<button data-toggle="tooltip" title="Imprimir" class="btn mr-1 text-center btnPrint btn-default btn-xs glyphicon glyphicon-print" type="button" ></button>';
+                        } else { return ''; }
+                    }, "className": "text-center"
+                },
+                //{'render': function (data, type, full, meta) {return '';}, "className": "text-center"},
+                { "data": "FiltrarCodigoCorrelativo", "className": "hide_column" },
+                { "data": "CodigoDocumentoGenerado", "className": "hide_column" },
+                { "data": "Bloqueado", "className": "hide_column" },
+                { "data": "FiltrarCodigoCorrelativo", "className": "hide_column" },
+
+            ]
+        });
+        $("#tablaInforme tbody").on('click', 'button.btnEditInforme', function (event) {
+            var data = tablaInforme.row($(this).parents('tr')).data();
+            var row = $(this).parents('tr');
+
+            var cont1 = data.CodigoCorrelativoTramite.indexOf('-'); var cont2 = data.CodigoCorrelativoTramite.indexOf('-', cont1 + 1);
+            console.log('VAL', cont1, cont2);
+            $('#FiltrarCodigoPeriodo').val(data.CodigoCorrelativoTramite.substring(cont1 + 1, cont2));
+
+            if ($('#FiltrarCodigoTipoInforme').val() != 'INFV') {
+                $("#NroCalidadVerificacion").hide();
+                $("#divNroCalidadVerificacion").hide();
+                
+            } else {
+                $("#NroCalidadVerificacion").show();
+                $("#divNroCalidadVerificacion").show();
+            }
+
+
+            if (data.Bloqueado && ($('#FiltrarCodigoTipoInforme').val() === 'INFV' || $('#FiltrarCodigoTipoInforme').val() === 'INFT')) {
+                $("#cuerpoInforme").hide();
+                toastr.error("La solicitud ha sido cerrada y no se puede modificar", "Mensaje del Sistema", { "progressBar": true });
+            } else if (data.CodigoUsuario == '@VariablesWeb.IdUsuarioIntento') {
+                $('#FiltrarCodigoCorrelativo').val(data.FiltrarCodigoCorrelativo);
+                BuscarInformes(data.FiltrarCodigoCorrelativo);
+                tablaInforme.$('tr.selected').removeClass('selected'); row.addClass('selected');
+                $('#cuerpoInforme').fadeOut();
+                $('#cuerpoInforme').fadeIn(2000);
+            } else{
+                toastr.warning("No cuenta con permisos para modificar este informe", "Mensaje del Sistema", { "progressBar": true });
+            }
+
+
+        });
+        $("#tablaInforme tbody").on('click', 'button.btnDeleteInforme', function (event) {
+            var data = tablaInforme.row($(this).parents('tr')).data();
+            var enlace = "@Url.Content("~/Informes/EliminarInforme")";
+        if (data.Bloqueado && ($('#FiltrarCodigoTipoInforme').val() === 'INFV' || $('#FiltrarCodigoTipoInforme').val() === 'INFT')) {
+            $("#cuerpoInforme").hide();
+            toastr.error("La solicitud ha sido cerrada y no se puede modificar", "Mensaje del Sistema", { "progressBar": true });
+        } else if (data.CodigoUsuario == '@VariablesWeb.IdUsuarioIntento') {
+            bootbox.confirm({
+                title: "Mensaje del Sistema", message: "¿Esta seguro de borrar el registro?",
+                buttons: { confirm: { label: '<i class="fa fa-trash"></i> Eliminar ', className: "btn btn-danger" }, cancel: { label: '<i class="fa fa-times"></i> Cancelar' } },
+                callback: function (result) {
+                    if (result) {
+                        $.post(enlace, { CodigoInforme: data.FiltrarCodigoInforme, CodigoTipoInforme: data.FiltrarCodigoTipoInforme, CodigoCorrelativo: data.FiltrarCodigoCorrelativo }, function (response) {
+                            $('#cuerpoInforme').hide();
+                            tablaInforme.ajax.reload();
+                        });
+                    }
+                }
+            });
+        } else {
+            toastr.warning("No cuenta con permisos para eliminar este informe", "Mensaje del Sistema", { "progressBar": true });
+        }
+    });
+
+    $("#tablaInforme tbody").on('click', 'button.btnPrint', function (event) {
+        event.stopPropagation();
+        var data = tablaInforme.row($(this).parents('tr')).data();
+        var UrlFicha;
+
+        if ($('#FiltrarCodigoTipoInforme').val() === 'INFV') {
+            var CodigoAnioInforme = '2018';
+            UrlFicha = "@Url.Content("~/InformePdf/InformeVerificacion")" + '?CodigoTipoInforme=' + $('#FiltrarCodigoTipoInforme').val() + '&NumeroInforme=' + data.FiltrarCodigoInforme + '&CorrelativoInforme=' + data.FiltrarCodigoCorrelativo + '&CodigoAnioInforme=' + CodigoAnioInforme;
+            window.open(UrlFicha);
+
+            @*UrlFicha = "@Url.Content("~/Reportes/Reports.aspx")" + '?CodigoReporte=INFV' + '&CodigoTipoInforme=' + $('#FiltrarCodigoTipoInforme').val() + '&NumeroInforme=' + data.FiltrarCodigoInforme + '&CorrelativoInforme=' + data.FiltrarCodigoCorrelativo + '&CodigoAnioInforme=' + CodigoAnioInforme;
+            window.open(UrlFicha);*@
+
+            } else if ($('#FiltrarCodigoTipoInforme').val() === 'INFT') {
+                var CodigoAnioInforme = '2018';
+                UrlFicha = "@Url.Content("~/InformePdf/InformeTecnico")" + '?CodigoTipoInforme=' + $('#FiltrarCodigoTipoInforme').val() + '&NumeroInforme=' + data.FiltrarCodigoInforme + '&CorrelativoInforme=' + data.FiltrarCodigoCorrelativo + '&CodigoAnioInforme=' + CodigoAnioInforme;
+                window.open(UrlFicha);
+            } else {
+                var CodigoAnioInforme = '2018';
+                UrlFicha = "@Url.Content("~/InformePdf/InformeNumeracion")" + '?CodigoTipoInforme=' + $('#FiltrarCodigoTipoInforme').val() + '&NumeroInforme=' + data.FiltrarCodigoInforme + '&CorrelativoInforme=' + data.FiltrarCodigoCorrelativo + '&CodigoAnioInforme=' + CodigoAnioInforme;
+                window.open(UrlFicha);
+            }
+
+        });
+
+        $('#btnAgregarInforme').click(function () {
+            var cont = 0; var contBloq = 0;
+            tablaInforme.rows().every(function () {
+                var data = this.data();
+                if (data.CodigoUsuario == '@VariablesWeb.IdUsuarioIntento') {
+                    if (data.Bloqueado) {
+                        contBloq++;
+                    }
+                    if (!data.CodigoDocumentoGenerado) {
+                        cont++
+                    }
+                }
+            });
+            if (contBloq != 0 && $('#FiltrarCodigoTipoInforme').val() === 'INFV') {
+                $("#cuerpoInforme").hide();
+                toastr.error("La solicitud ha sido cerrada y no se puede modificar", "Mensaje del Sistema", { "progressBar": true });
+            } else if (cont === 0) {
+                $.post("@Url.Content("~/Informes/CrearInforme")", {
+                    FiltrarCodigoTipoInforme: $('#FiltrarCodigoTipoInforme').val(), FiltrarCodigoTipoSolicitud: $('#FiltrarCodigoTipoSolicitud').val(),
+                    FiltrarCodigoTipoDocumentoReg: $('#FiltrarCodigoTipoDocumentoReg').val(), FiltrarNumeroSolicitud: $('#FiltrarNumeroSolicitud').val(),
+                }, function (r) {
+                    if (r.success) {
+                        console.log('CartaCreada');
+                        tablaInforme.ajax.reload();
+                    } else {
+                        console.log('LOG', r);
+                        toastr.warning(r.responseText, "Mensaje del Sistema", { "progressBar": true });
+                    }
+                });
+            } else {
+                toastr.warning("Se ha detectado un informe que no ha sido grabado", "Mensaje del Sistema", { "progressBar": true });
+            }
+        });
+
+        var listaCodigoTipoDetalle = [];
+
+        function BuscarInformes(correlativo) {
+            ubicacionTemp = '';
+            titularesTemp = '';
+            $.post("@Url.Content("~/Informes/BuscarGrabar")", {
+                FiltrarCodigoTipoInforme: $('#FiltrarCodigoTipoInforme').val(), FiltrarCodigoTipoSolicitud: $('#FiltrarCodigoTipoSolicitud').val(),
+                FiltrarCodigoTipoDocumentoReg: $('#FiltrarCodigoTipoDocumentoReg').val(), FiltrarNumeroSolicitud: $('#FiltrarNumeroSolicitud').val(),
+                FiltrarCodigoCorrelativo: correlativo
+            }, function (response) {
+                //console.log(r.success);
+                if (response.success !== false) {
+                    if (response.SolicitudUnidad.CodigoCatastral) {
+                        codigosTemp = (response.SolicitudUnidad.UbicacionPredio != null) ? response.SolicitudUnidad.CodigoCatastral.split("|") : "";
+                        ubicacionTemp = (response.SolicitudUnidad.UbicacionPredio != null) ? response.SolicitudUnidad.UbicacionPredio.split("|") : "";
+                    } else {
+                        codigosTemp = '';
+                        ubicacionTemp = '';
+                    }
+                    LimpiarForm();
+                    RecuperarDatosCatastrales();
+                    RecuperarSolicitud();
+                    $('#FiltrarCodigoInforme').val('0001'); //Traer valor por controlador--
+                    $('#NombreSigla').val(response.SolicitudUnidad.NombreSigla);
+                    
+                    $('#NroCalidadVerificacion').val(response.SolicitudUnidad.NroCalidadVerificacion);
+                    $('#Asunto').val(response.SolicitudUnidad.Asunto);
+                    $('#Solicitante').val(response.SolicitudUnidad.Solicitante); $('#NombreOficina').val(response.SolicitudUnidad.NombreOficina);
+                    if (response.SolicitudUnidad.NombreFirma) { $('#NombreFirma').val(response.SolicitudUnidad.NombreFirma); }
+                    tablaInformeDetalle.ajax.reload(function (json) {
+                        listaCodigoTipoDetalle = [];
+                        json.data.forEach(function (item) {
+                            if (item.CodigoTipoDetalle) {
+                                listaCodigoTipoDetalle.push(item.CodigoTipoDetalle);
+                            }
+                            //console.log(item)
+                        });
+                    });
+                    $('#TipoPersonas').val(response.SolicitudUnidad.TipoPersonas);
+                    $('#GrabarGeneral').removeAttr('disabled'); $('#GenFicha').removeAttr('disabled');
+                    $('#tabInforme').show();
+                    $('#cuerpoInforme').fadeIn();
+                } else {
+                    $('#tabInforme').hide();
+                    $('#cuerpoInforme').fadeOut();
+                }
+            });
+        }
+
+        //Eventos
+        $('#btnBuscar').click(function () {
+            if (!$('#FiltrarCodigoTipoInforme').val()) {
+                toastr.warning("No ha seleccionado el tipo de informe", "Mensaje del Sistema", { "progressBar": true });
+            } else {
+                if (validarCamposBusqueda($('#FiltrarCodigoTipoSolicitud').val(), $('#FiltrarNumeroSolicitud').val(), $('#FiltrarCodigoTipoDocumentoReg').val())) {
+                    $('.tablecheck').prop('checked', false);
+                    var codSol = $('#FiltrarCodigoTipoSolicitud').val(); var numVal = $('#FiltrarNumeroSolicitud').val(); var codDoc = $('#FiltrarCodigoTipoDocumentoReg').val();
+                    $.ajax({
+                        url: "@Url.Content("~")" + "Lotes/BuscarSolicitud", type: "POST", dataType: "json",
+                        data: { FiltrarCodigoTipoSolicitud: codSol, FiltrarNumeroSolicitud: numVal, FiltrarCodigoTipoDocumentoReg: codDoc },
+                        success: function (response) {
+                            if (response.success) {
+                                CargarTabla();
+                            } else {
+                                toastr.error("No se ha encontrado la solicitud", "Mensaje del Sistema", { "progressBar": true });
+                            }
+                        }
+                    });
+                }
+            }
+        });
+        function validarCamposBusqueda(codSol, numVal, tipDoc) {
+            var validado = false;
+            valiCodTip = $('[data-valmsg-for="FiltrarCodigoTipoSolicitud"]');
+            valiTipDoc = $('[data-valmsg-for="FiltrarCodigoTipoDocumentoReg"]');
+            valiNumSol = $('[data-valmsg-for="FiltrarNumeroSolicitud"]');
+            if (!codSol) {
+                valiCodTip.html('Seleccione el tipo de solicitud').addClass('field-validation-valid has-error');
+                valiNumSol.html('').removeClass('field-validation-valid has-error');
+                $('[data-valmsg-for="FiltrarCodigoTipoDocumentoReg"]').html('').removeClass('field-validation-valid has-error');
+                $('#FiltrarCodigoTipoSolicitud').focus(); //$('#btnDerivar').attr('disabled', 'disabled');
+            } else if (!tipDoc && codSol != '010003') {
+                valiCodTip.html('').removeClass('field-validation-valid has-error');
+                valiNumSol.html('').removeClass('field-validation-valid has-error');
+                $('[data-valmsg-for="FiltrarCodigoTipoDocumentoReg"]').html('Seleccione el tipo de documento').addClass('field-validation-valid has-error');
+                $('#FiltrarCodigoTipoDocumentoReg').focus();
+            } else if (numVal === '-' || !numVal) {
+                valiCodTip.html('').removeClass('field-validation-valid has-error');
+                valiNumSol.html('Ingrese un número de solicitud').addClass('field-validation-valid has-error');
+                $('[data-valmsg-for="FiltrarCodigoTipoDocumentoReg"]').html('').removeClass('field-validation-valid has-error');
+                $('#FiltrarNumeroSolicitud').focus(); //$('#btnDerivar').attr('disabled', 'disabled');
+            } else {
+                valiCodTip.html('').removeClass('field-validation-valid has-error');
+                valiNumSol.html('').removeClass('field-validation-valid has-error');
+                $('[data-valmsg-for="FiltrarCodigoTipoDocumentoReg"]').html('').removeClass('field-validation-valid has-error');
+                validado = true;
+            }
+            return validado;
+        }
+        $('#btnAgregarDetalle').click(function () {
+            $.get("@Url.Content("~")" + "Informes/RegistrarDetalle", function (response) {
+                $("#modalRegistrarDetalle").modal().html(response);
+            });
+        });
+
+        $(document).on('change', '.tablecheck', function () {
+            var tablecheck = $(this).is(":checked")
+            $('.CamposCatastrales').find('tr').each(function (index) {
+                var ind = (index + 1);
+                if (tablecheck) {
+                    $('#Check' + ind).prop('checked', true).trigger('change');
+                } else {
+                    $('#Check' + ind).prop('checked', false).trigger('change');
+                }
+            });
+
+        });
+        $(document).on('change', '.cellcheck', function () {
+            var index = $(this).attr('id').replace('Check', '');
+            //console.log('IND', index, $(this).attr('id'));
+            if ($(this).is(":checked")) {
+                $('#Ubicacion' + index).val('').multiselect('enable').focus().select();
+                $('#filaCampos' + index).addClass('selected');
+            } else {
+                $('#Ubicacion' + index).val('').multiselect('disable').multiselect('refresh').val('');
+                $('#filaCampos' + index).removeClass('selected');
+            }
+            CambiarDatosCatastrales();
+        });
+        $(document).on('change', '.select-table', function () {
+            CambiarDatosCatastrales();
+        });
+
+        function CargarTabla() {
+            $('#tabInforme').show();
+            tablaInforme.ajax.reload();
+            $('#cuerpoInforme').fadeOut();
+        }
+        function LimpiarForm() {
+            $('#tabInforme input').val(''); $('#tabInforme textarea').val('');
+            $('#GrabarGeneral').attr('disabled', 'disabled'); $('#GenFicha').attr('disabled', 'disabled');
+            if (!$('#NombreAnio').val()) $('#NombreAnio').val('"Año del Diálogo y Reconciliación Nacional"');
+            if (!$('#NombreSigla').val()) $('#NombreSigla').val('SC-GACU-/MSI');
+            if (!$('#NombreOficina').val()) $('#NombreOficina').val('SUBGERENCIA DE CATASTRO');
+            $('#CodigoOficina').val('@System.Configuration.ConfigurationManager.AppSettings["CODAREA"]');
+            $('#DescripcionInforme').val($('#FiltrarCodigoTipoInforme option:selected').text());
+            if ($('#FiltrarCodigoTipoInforme').val() == 'INFV') { $('#legInforme').html('Informe de Verificación Catastral'); }
+            else if ($('#FiltrarCodigoTipoInforme').val() == 'INFT') { $('#legInforme').html('Informe Técnico'); }
+            else { $('#legInforme').html('Informe de Certificación'); }
+            //console.log('DESCRIP', $('#FiltrarCodigoTipoInforme option:selected').text());
+            $('#NombreFirma').val(nombreFirmaTemp);
+
+            tablaInformeDetalle.ajax.reload();
+        }
+        function GrabarInforme(changes) {
+            var contVal = 0; var contCheck = 0;
+            $('.CamposCatastrales').find('tr').each(function (index) {
+                var ind = (index + 1);
+                console.log('SaveCh', $('#Check' + ind).is(":checked"));
+                if ($('#Check' + ind).is(":checked")) {
+                    console.log('SaveUbic', $('#Ubicacion' + ind).val());
+                    if (!$('#Ubicacion' + ind).val()) {
+                        contVal++;
+                    }
+                    contCheck++;
+                }
+            });
+            console.log('ContUnid', contCheck, '|', contVal)
+            if (contCheck === 0) {
+                toastr.warning("No ha seleccionado ninguna unidad", "Mensaje del Sistema", { "progressBar": true });
+                return;
+            }
+            if (contVal > 0) {
+                toastr.warning("No se han selecionado todas las ubicaciones", "Mensaje del Sistema", { "progressBar": true });
+                return;
+            }
+            $.post("@Url.Content("~/Informes/Grabar")", {
+                FiltrarCodigoTipoInforme: $('#FiltrarCodigoTipoInforme').val(), FiltrarCodigoTipoSolicitud: $('#FiltrarCodigoTipoSolicitud').val(),
+                FiltrarCodigoTipoDocumentoReg: $('#FiltrarCodigoTipoDocumentoReg').val(), FiltrarNumeroSolicitud: $('#FiltrarNumeroSolicitud').val(),
+                NombreTipoLlenado: $('#NombreTipoLlenado').val(), CodigoCatastral: $('#CodigoCatastral').val(), FechaInspeccion: $('#FechaInspeccion').val(),
+                CodigoOficina: $('#CodigoOficina').val(), NombreOficina: $('#NombreOficina').val(), NombreSigla: $('#NombreSigla').val(),
+                CodigoUnico: $('#CodigoUnico').val(), UbicacionPredio: $('#UbicacionPredio').val(), TitularCatastral: $('#TitularCatastral').val(),
+                Solicitante: $('#Solicitante').val(), DescripcionInforme: $('#DescripcionInforme').val(), FiltrarCodigoInforme: $('#FiltrarCodigoInforme').val(),
+                FiltrarCodigoCorrelativo: $('#FiltrarCodigoCorrelativo').val(), TipoPersonas: $('#TipoPersonas').val(),
+                Asunto: $('#Asunto').val(), NombreAnio: $('#NombreAnio').val(), NombreFirma: $('#NombreFirma').val(), Unidades: '', NroCalidadVerificacion: $('#NroCalidadVerificacion').val()
+            }, function (response) {
+                toastr.success("Informe Actualizado Correctamente", "Mensaje del Sistema", { "progressBar": true });
+                tablaInforme.ajax.reload();
+                $('#cuerpoInforme').fadeOut();
+                $('#GenFicha').removeAttr('disabled')
+            });
+        }
+
+        function RecuperarDatosCatastrales() {
+            // var URLObservacion = "/Informes/BuscarUnidades";
+            var URLObservacion = "@Url.Content("~/Informes/BuscarUnidades")";
+            var codigoCatastralH = '', codigoCatastral = '';
+            var titularH = '', titular = '';
+            var codigoUniH = '', codigoUni = '';
+            var direccion = '';
+            $('.CamposCatastrales').children('tr').remove()
+            $.post(URLObservacion, { model: RetornarBusqueda() },
+            function (r) {
+                $.each(r.SolicitudUnidad, function (index, item) {
+                    codigoCatastral = item.CodigoDistrito + '-' + item.CodigoSector + '-' + item.CodigoManzana + '-' + item.CodigoLote + '-' + item.Ed + '-' + item.Entrada + '-' + item.Piso + '-' + item.Unidad;
+                    codigoUni = codigoUni + '\n' + item.CodigoUni;
+                    titular = titular + '\n' + item.Titular;
+                    CrearCamposCatastrales((index + 1), codigoCatastral, item.CodigoUni, item.Titular);
+                });
+            });
+        }
+        function CrearCamposCatastrales(index, codigo, codigoUni, titular) {
+            $('.CamposCatastrales').append(
+                '<tr id="filaCampos' + index + '">' +
+                    '<td>' +
+                        '<input type="checkbox" id="Check' + index + '" class="form-control cellcheck input-table" >' +
+                    '</td>' +
+                    '<td>' +
+                        '<input type="text" disabled id="CodigoCatastral' + index + '" class="form-control text-center input-table" value="' + codigo + '">' +
+                    '</td>' +
+                    '<td>' +
+                        '<input type="text" disabled id="CodigoUnico' + index + '" class="form-control text-center input-table" value="' + codigoUni + '">' +
+                    '</td>' +
+                    '<td>' +
+                        '<select id="Ubicacion' + index + '" multiple="multiple" disabled class="select-table" >' +
+                            //'<option value=""> - Seleccione la ubicación - </option>' +
+                        '</select>' +
+                    '</td>' +
+                    '<td>' +
+                        '<input type="text" disabled id="Titular' + index + '" class="form-control input-table" value="' + titular + '">' +
+                    '</td>' +
+                '</tr>'
+            );
+            var ubicacion = '';
+            if (codigosTemp) {
+                codigosTemp.forEach(function (valor, indice) {
+                    console.log('codtte1', valor, codigo)
+                    if (valor === codigo) { ubicacion = ubicacionTemp[indice]; }
+                });
+            }
+            RecuperarUbicacion(codigo, index, ubicacion)
+
+
+        }
+        function RecuperarUbicacion(codigo, index, ubicacion) {
+            //var URLObservacion = "/Informes/BuscarUbicacion";
+            var URLObservacion = "@Url.Content("~/Informes/BuscarUbicacion")";
+            $.post(URLObservacion, {
+                FiltrarCodigoTipoInforme: $('#FiltrarCodigoTipoInforme').val(), FiltrarCodigoTipoSolicitud: $('#FiltrarCodigoTipoSolicitud').val(),
+                FiltrarCodigoTipoDocumentoReg: $('#FiltrarCodigoTipoDocumentoReg').val(), FiltrarNumeroSolicitud: $('#FiltrarNumeroSolicitud').val(),
+                CodigoSector: codigo.substring(3, 5), CodigoManzana: codigo.substring(6, 9), CodigoLote: codigo.substring(10, 13),
+                CodigoEdificacion: codigo.substring(14, 16), CodigoEntrada: codigo.substring(17, 19), CodigoPiso: codigo.substring(20, 22), CodigoUnidad: codigo.substring(23, 26),
+
+            },
+            function (r) {
+                $('#Ubicacion' + index).children('option:not(:first)').remove();
+                $.each(r.SolicitudUnidad, function (ind, item) {
+                    $('#Ubicacion' + index).append($('<option>').text(item.Ubicacion).attr('value', item.Ubicacion));
+                });
+                $('#Ubicacion' + index).multiselect({
+                    buttonWidth: '100%',
+                    allSelectedText: "Todos los documentos seleccionados",
+                    buttonClass: 'btn btn-default btn-sm',
+                    nonSelectedText: 'Seleccione la ubicación',
+                });
+                //console.log('UBIC',ubicacion)
+                if (ubicacion) {
+                    //$('#Ubicacion' + index).val(ubicacion)
+                    var ubic = ubicacion.split(",");
+                    //console.log('UB', ubic);
+                    $('#Ubicacion' + index).multiselect('select', ubic);
+                    CambiarDatosCatastrales(index);
+                }
+
+            });
+        }
+        function CambiarDatosCatastrales(init) {
+            $('#CodigoCatastral').val(''); $('#CodigoUnico').val(''); $('#UbicacionPredio').val(''); $('#TitularCatastral').val('');
+            $('#CodigoCatastralSelect').val('');
+            var codcat = '', coduni = '', ubicac = '', titula = '', codCatSel = '';
+            if (init) {
+                $('#Check' + init).prop('checked', true);
+                $('#filaCampos' + init).addClass('selected');
+                $('#Ubicacion' + init).removeAttr('disabled').multiselect('enable')
+            }
+            $('.CamposCatastrales').find('tr').each(function (index) {
+                var ind = (index + 1);
+                if ($('#Check' + ind).is(":checked")) {
+                    codcat = codcat + '|' + $('#CodigoCatastral' + ind).val();
+                    coduni = coduni + '|' + $('#CodigoUnico' + ind).val();
+                    ubicac = ubicac + '|' + $('#Ubicacion' + ind).val();
+                    titula = titula + '|' + $('#Titular' + ind).val();
+                    codCatSel = codCatSel + '<option value="' + $('#CodigoCatastral' + ind).val() + '">' + $('#CodigoCatastral' + ind).val() + '</option>'
+                }
+            });
+            $('#CodigoCatastralSelect').val("<option value=''> - Seleccione una opción - </option>" + codCatSel);
+
+            $('#CodigoCatastral').val(codcat.substring(1)); $('#CodigoUnico').val(coduni.substring(1));
+            $('#UbicacionPredio').val(ubicac.substring(1)); $('#TitularCatastral').val(titula.substring(1));
+        }
+
+
+        function RecuperarSolicitud() {
+            //var URLObservacion = "/Informes/BuscarSolicitud";
+            var URLObservacion = "@Url.Content("~/Informes/BuscarSolicitud")";
+            $.post(URLObservacion, { model: RetornarBusqueda() },
+                function (r) { $.each(r.SolicitudUnidad, function (index, item) { $('#FechaInspeccion').val(item.FechaInspeccion); $('#NombreTipoLlenado').val(item.NombreTipoLlenado); }); });
+        }
+        function RetornarBusqueda() {
+            return {
+                FiltrarCodigoTipoInforme: $('#FiltrarCodigoTipoInforme').val(), FiltrarCodigoTipoSolicitud: $('#FiltrarCodigoTipoSolicitud').val(),
+                FiltrarCodigoTipoDocumentoReg: $('#FiltrarCodigoTipoDocumentoReg').val(), FiltrarNumeroSolicitud: $('#FiltrarNumeroSolicitud').val()
+            }
+        }
+
+        function GenerarInforme() {
+            urlFICHA = "/Reportes/Reports.aspx?codigoInforme=" + $('#FiltrarCodigoInforme').val() + '&CodigoAnio=' + $('#FiltrarCodigoPeriodo').val() + '&CodigoTipoInforme=' + $('#FiltrarCodigoTipoInforme').val() + '&CodigoReporte=' + $('#FiltrarCodigoTipoInforme').val();
+            window.open(urlFICHA);
+        }
+        function GenerarInforme2() {
+
+            var CodigoTipoInforme = '010001';
+            var NumeroInforme = '0002';
+            var CodigoAnioInforme = '2018';
+
+
+            window.open('InformePdf/InformeVerificacion?CodigoTipoInforme=' + CodigoTipoInforme + '&NumeroInforme=' + NumeroInforme + '&CodigoAnioInforme=' + CodigoAnioInforme);
+
+            //$.post("/informePdf/InfromeVerificacion", {
+            //    CodigoTipoInforme: CodigoTipoInforme, NumeroInforme: NumeroInforme, CodigoAnioInforme: CodigoAnioInforme
+            //}, function (response) {
+            //    toastr.success("Genero Reporte", "Mensaje del Sistema", { "progressBar": true });
+            //    //tablaCarta.ajax.reload();
+            //    //$('#cuerpoInforme').html('').hide();
+            //    //$('#GenFicha').removeAttr('disabled')
+            //});
+        }
+</script>
+}

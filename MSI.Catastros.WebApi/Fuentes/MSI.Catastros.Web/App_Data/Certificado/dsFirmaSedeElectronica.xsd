@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsFirmaSedeElectronica" targetNamespace="http://tempuri.org/dsFirmaSedeElectronica.xsd" xmlns:mstns="http://tempuri.org/dsFirmaSedeElectronica.xsd" xmlns="http://tempuri.org/dsFirmaSedeElectronica.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsFirmaSedeElectronica" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsFirmaSedeElectronica" msprop:Generator_UserDSName="dsFirmaSedeElectronica">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="DatosFirma" msprop:Generator_TableClassName="DatosFirmaDataTable" msprop:Generator_TableVarName="tableDatosFirma" msprop:Generator_TablePropName="DatosFirma" msprop:Generator_RowDeletingName="DatosFirmaRowDeleting" msprop:Generator_RowChangingName="DatosFirmaRowChanging" msprop:Generator_RowEvHandlerName="DatosFirmaRowChangeEventHandler" msprop:Generator_RowDeletedName="DatosFirmaRowDeleted" msprop:Generator_UserTableName="DatosFirma" msprop:Generator_RowChangedName="DatosFirmaRowChanged" msprop:Generator_RowEvArgName="DatosFirmaRowChangeEvent" msprop:Generator_RowClassName="DatosFirmaRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="USUARIOREGTRAMITE" msprop:Generator_ColumnVarNameInTable="columnUSUARIOREGTRAMITE" msprop:Generator_ColumnPropNameInRow="USUARIOREGTRAMITE" msprop:Generator_ColumnPropNameInTable="USUARIOREGTRAMITEColumn" msprop:Generator_UserColumnName="USUARIOREGTRAMITE" type="xs:string" minOccurs="0" />
+              <xs:element name="CODIGOVALITRAMITE" msprop:Generator_ColumnVarNameInTable="columnCODIGOVALITRAMITE" msprop:Generator_ColumnPropNameInRow="CODIGOVALITRAMITE" msprop:Generator_ColumnPropNameInTable="CODIGOVALITRAMITEColumn" msprop:Generator_UserColumnName="CODIGOVALITRAMITE" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

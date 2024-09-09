@@ -1,0 +1,307 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Informes.RegistrarInformeDetalle
+
+<div id="RegistrarLotesContainer">
+    @using (Html.BeginForm("RegistrarDetalle", "Informes", FormMethod.Post, new { id = "frmDetalle", name = "frmDetalle" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog modal-lg" id="DetalleInforme" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4><strong>Agregar Detalle</strong></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        @Html.ValidationSummary(true)
+                        @Html.TextBoxFor(m => m.CodigoInforme, new { type = "hidden" })
+                        @Html.TextBoxFor(m => m.CodigoTipoInforme, new { type = "hidden" })
+                        @Html.TextBoxFor(m => m.CodigoCorrelativo , new { type = "hidden" })
+                        @Html.TextBoxFor(m => m.Estado, new { type = "hidden" })
+                        <input type="hidden" id="CodigoPeriodo" name="CodigoPeriodo" />
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Titulo, htmlAttributes: new { @class = "control-label" })
+                                @*@Html.TextBoxFor(m => m.Titulo, new { @class = "form-control", @style="display:none;" })*@
+                                <input id="Titulo" name="Titulo" class="form-control" type="text" style="display:none">
+                                <select id="TituloSelec" class="form-control"></select>
+
+                                @Html.ValidationMessageFor(model => model.Titulo)
+                            </div>
+                        </div>
+                        <div class="col-md-12" id="divEditor1">
+                            <div class="form-group Informes">
+                                @Html.LabelFor(model => model.Detalle, htmlAttributes: new { @class = "control-label " })
+                                <br />
+                                <button onclick="AgregarLinea()" id="btnLineaConstructiva" type="button" style="display:none;" class="btn btn-success btn-sm mb-3">Agregar Línea Constructiva</button>
+                                <button onclick="AgregarInstalaciones()" id="btnInstalaciones" type="button" style="display:none;" class="btn btn-success btn-sm mb-3">Agregar Otras Instalaciones</button>
+                                @Html.TextAreaFor(model => model.Detalle, new { @class = "form-control Detalle", rows = "1" })
+                                @Html.ValidationMessageFor(model => model.Detalle)
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input id="btnSubmit" type="submit" value="Grabar" class="btn btn-green" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+<script type="text/javascript">
+    debugger;
+    $('.hidesub').hide();
+    $('#btnNuevoInformes1').show();
+    $('#CodigoPeriodo').val($('#FiltrarCodigoPeriodo').val())
+    if ($('#FiltrarCodigoTipoInforme').val() == "INFV") {
+        //$('#btnLineaConstructiva').show();
+        //$('#btnInstalaciones').show();
+        $('#Titulo').hide(); $('#TituloSelec').show();
+        if ('@Model.CodigoCorrelativo' == '') {
+            $('#divEditor1').hide();
+        } else {
+            $('#divEditor1').show();
+        }
+        
+    } else {
+        $('#Titulo').show(); $('#TituloSelec').hide();
+        $('#divEditor1').show();
+
+    }
+
+
+    var listTitulos = [
+        { Value: "", Text: "- Seleccione -" },
+        { Value: "010001", Text: "ANTECEDENTES" },
+        { Value: "010002", Text: "DATOS DE LA INSPECCION" },
+        { Value: "010003", Text: "DOCUMENTOS CONSULTADOS" },
+        { Value: "010004", Text: "CROQUIS DE LEVANTAMIENTO CATASTRAL" },
+        { Value: "010005", Text: "CUADRO DE AREAS Y CATEGORIAS CONSTRUCTIVAS" },
+        { Value: "010006", Text: "RELACION DE OTRAS INSTALACIONES" },
+        { Value: "010007", Text: "DATOS DE RETIRO Y JARDIN DE AISLAMIENTO DEL LOTE" },
+        { Value: "010008", Text: "INSCRIPCION CATASTRAL Y NUMERACION OFICIAL" },
+        { Value: "010009", Text: "FOTOS" },
+        { Value: "010010", Text: "OBSERVACIONES" },
+        { Value: "010011", Text: "CONCLUSIONES" },
+        { Value: "010012", Text: "ANEXOS" },
+    ];
+
+    var listTexto = [
+        { Value: "010001", Text: "La inspección fue programada en atención al *** de la referencia para la verificación catastral del inmueble que se encuentra ubicado en ***. " },
+        { Value: "010002", Text: "La inspección se realizó el día *** en presencia de *** quien brindo las facilidades para la verificación.<br>Se verifico una edificación de *** pisos, que tiene como uso de ***." },
+        { Value: "010003", Text: "<strong>3.1 Documento Presentados por el Propietario</strong><ul><li></li><li></li></ul><strong>3.2 Documentos de Consulta de la MSI</strong><ul><li></li><li></li></ul>" },
+        { Value: "010004", Text: "Ver croquis adjunto." },
+        { Value: "010005", Text: "" },
+        { Value: "010006", Text: "" },
+        { Value: "010007", Text: "<ul><li>El retiro oficial por el *** y el retiro de campo es de ***.</li><li>El retiro oficial por el *** y el retiro de campo es de ***.</li></ul>" },
+        { Value: "010008", Text: "<strong>8.1 Inscripción Catastral<strong><ul><li></li><li></li></ul><strong>8.2 Numeración Oficial</strong><ul><li></li><li></li></ul>" },
+        { Value: "010009", Text: "" },
+        { Value: "010010", Text: "" },
+        { Value: "010011", Text: "" },
+        { Value: "010012", Text: "" },
+    ];
+
+
+    $.each(listTitulos, function (i, obj) {
+        var cont = 0;
+        listaCodigoTipoDetalle.forEach(function (item) {
+            if (obj.Value == item) {
+                cont++;
+            }
+        })
+        if (cont === 0) {
+            $('#TituloSelec').append($('<option>').text(obj.Text).attr('value', obj.Value));
+        } else {
+            $('#TituloSelec').append($('<option>').text(obj.Text).attr('value', obj.Value).attr('disabled', 'disabled'));
+        }
+    });
+
+    $('#TituloSelec').change(function () {
+        if (this.value) {
+            $('#divEditor1').show();
+            if (this.value === "010005") {
+                $('#btnLineaConstructiva').show(); $('#btnInstalaciones').hide();
+            } else if (this.value === "010006") {
+                $('#btnInstalaciones').show(); $('#btnLineaConstructiva').hide();
+            } else {
+                $('#btnLineaConstructiva').hide();
+                $('#btnInstalaciones').hide();
+            }
+            $('#Titulo').val($("#TituloSelec option:selected").text());
+            listTexto.forEach(function (item) {
+                if (item.Value === $('#TituloSelec').val()) {
+                    CKEDITOR.instances['Detalle'].setData(item.Text);
+                }
+            });
+        } else {
+            $('#divEditor1').hide();
+        }
+    });
+
+    $('input').keyup(function () { this.value = this.value.toLocaleUpperCase() });
+    var editorText = [];
+    var unidadImagen = "?FiltrarCodigoTipoInforme=" + $('#FiltrarCodigoTipoInforme').val() +
+        "&FiltrarCodigoInforme=" + $('#FiltrarCodigoInforme').val() + "&FiltrarCodigoPeriodo=" + $('#FiltrarCodigoPeriodo').val() +
+        "&FiltrarCodigoCorrelativo=" + $('#FiltrarCodigoCorrelativo').val() + "&FiltrarCodigoTipoSolicitud=" + $('#FiltrarCodigoTipoSolicitud').val()
+    "&FiltrarCodigoTipoDocumentoReg=" + $('#FiltrarCodigoTipoDocumentoReg').val() + "&FiltrarNumeroSolicitud=" + $('#FiltrarNumeroSolicitud').val();
+    $.fn.modal.Constructor.prototype.enforceFocus = function () {
+        var $modalElement = this.$element;
+        $(document).on('focusin.modal', function (e) {
+            var $parent = $(e.target.parentNode);
+            if ($modalElement[0] !== e.target && !$modalElement.has(e.target).length
+                // add whatever conditions you need here:
+                &&
+                !$parent.hasClass('cke_dialog_ui_input_select') && !$parent.hasClass('cke_dialog_ui_input_text')) {
+                $modalElement.focus()
+            }
+        })
+    };
+    $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+
+
+    CKEDITOR.replace('Detalle', {
+        //customConfig: '/Scripts/ckeditor_config.js',
+        toolbar: [
+	        { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline'] },
+	        { name: 'styles', items: ['Format', 'Font', 'FontSize'] },
+	        { name: 'paragraph', items: ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'] },
+	        { name: 'insert', items: ['SImage', 'Table'] },
+        ],
+        height: 500,
+        imageUploadURL: "@Url.Content("~/Informes/GrabarImagen/")" + unidadImagen,
+        extraPlugins: ['justify', 'font', 'simage', 'pastefromword'],
+        allowedContent: true,
+
+        language: 'es',
+    });
+    if ('@Model.CodigoCorrelativo' == '') {
+        console.log('e');
+        //$('#divEditor1').hide();
+    } else {
+        $('#TituloSelec').val('@Model.CodigoTipoDetalle');
+
+
+        if ('@Model.CodigoTipoInforme' == 'INFV') {
+            $('#Titulo').val($("#TituloSelec option:selected").text());
+        } else {
+            $('#Titulo').val('@Model.Titulo');
+        }
+        
+        console.log('@Model.CodigoTipoDetalle');
+        if ('@Model.CodigoTipoDetalle' == "010005") {
+            $('#btnLineaConstructiva').show(); $('#btnInstalaciones').hide();
+        } else if ('@Model.CodigoTipoDetalle' === "010006") {
+            $('#btnInstalaciones').show(); $('#btnLineaConstructiva').hide();
+        } else {
+            $('#btnLineaConstructiva').hide();
+            $('#btnInstalaciones').hide();
+        }
+    }
+        //$(document).on("mouseup", '.cke_button__simage', function (e) {
+        //    e.preventDefault();
+        //    e.stopPropagation();
+        //    $('.cke_button__simage').attr('disabled', 'disabled');
+        //});
+        //$(document).on("click", '.cke_button__simage', function (e) {
+        //    e.stopPropagation();
+        //    e.preventDefault();
+        //    $('.cke_button__simage').attr('disabled', 'disabled');
+        //    return false;
+        //});
+        //$(document).on("mousedown", '.cke_button__simage', function (e) {
+        //    e.preventDefault();
+        //    e.stopImmediatePropagation();
+        //    $("a.cke_button__simage").off('click');
+        //    $("a.cke_button__simage").removeAttr("onclick");
+        //    $('.cke_button__simage').attr('disabled', 'disabled');
+
+
+        //    bootbox.confirm({
+        //        title: "Unidad Catastral de la Imagen", message: "Seleccione la Unidad Catastral <select id='ImagenUnidad' class='form-control'>" + $('#CodigoCatastralSelect').val() + "</select>",
+        //        buttons: { confirm: { label: '<i class="fa fa-check"></i> Aceptar ', className: "btn btn-success" }, cancel: { label: '<i class="fa fa-times"></i> Cancelar' } },
+        //        callback: function (result) {
+        //            if (result) {
+        //                unidadImagen = "?CodigoCatastral=" + $('#ImagenUnidad').val();
+
+        //                CKEDITOR.tools.callFunction(43, this); return false;
+        //            }
+        //        }
+        //    });
+
+        //    console.log('PREV');
+        //});
+
+
+    if ('@Model.CodigoCorrelativo') {
+        $('#CodigoCorrelativo').val('@Model.CodigoCorrelativo');
+    }
+    function AgregarLinea() {
+        if ($('#CodigoCatastral').val()) {
+            var enlace = "@Url.Content("~")" + 'Informes/BuscarLineasConstructivas';
+            $.post(enlace, { codigoUnico: $('#CodigoUnico').val(), codigoCatastral: $('#CodigoCatastral').val() }, function (response) {
+                var tablasUnidades = response;
+                var dataInicial = CKEDITOR.instances['Detalle'].getData();
+                CKEDITOR.instances['Detalle'].setData(dataInicial + response.HTML);
+            });
+        } else {
+            toastr.warning("Debe seleccionar al menos una unidad", "Mensaje del Sistema", { "progressBar": true });
+        }
+    }
+    function AgregarInstalaciones() {
+        if ($('#CodigoCatastral').val()) {
+            var enlace = "@Url.Content("~")" + 'Informes/BuscarOtrasInstalaciones';
+            $.post(enlace, { codigoUnico: $('#CodigoUnico').val(), codigoCatastral: $('#CodigoCatastral').val() }, function (response) {
+                var tablasUnidades = response;
+                var dataInicial = CKEDITOR.instances['Detalle'].getData();
+                CKEDITOR.instances['Detalle'].setData(dataInicial + response.HTML);
+            });
+        } else {
+            toastr.warning("Debe seleccionar al menos una unidad", "Mensaje del Sistema", { "progressBar": true });
+        }
+    }
+
+    $("#frmDetalle").on("submit", function (event) {
+        ValidarFormularioDetalle(event, $('#btnSubmit'));
+    });
+    function ValidarFormularioDetalle(event, button) {
+        event.preventDefault(); button.attr('disabled', 'disabled'); var url = $('#frmDetalle').attr("action"); var formData = $('#frmDetalle').serialize();
+        console.log('Procesar', $('#TituloSelec').val());
+        $.ajax({
+            url: url, type: "POST", contentType: 'application/json;charset=utf-8', dataType: "json",
+            data: JSON.stringify({
+                CodigoInforme: $('#FiltrarCodigoInforme').val(), CodigoTipoInforme: $('#FiltrarCodigoTipoInforme').val(),
+                CodigoSubCorrelativo: $('#FiltrarCodigoCorrelativo').val(), Detalle: CKEDITOR.instances['Detalle'].getData(),
+                Titulo: $('#Titulo').val(), Estado: $('#Estado').val(), CodigoCorrelativo: $('#CodigoCorrelativo').val(),
+                CodigoTipoDetalle: $('#TituloSelec').val(), CodigoPeriodo: $('#CodigoPeriodo').val()
+            }),
+            success: function (response) {
+                if (response.success) {
+
+                    $('#modalRegistrarDetalle').modal('toggle');
+                    $('#tablaInformeDetalle').DataTable().ajax.reload(function (json) {
+                        listaCodigoTipoDetalle = [];
+                        json.data.forEach(function (item) {
+                            if (item.CodigoTipoDetalle) {
+                                listaCodigoTipoDetalle.push(item.CodigoTipoDetalle);
+                            }
+                            //console.log(item)
+                        });
+                    });
+                    var mensaje = response.responseText; toastr.success(mensaje, "Mensaje del Sistema", { "progressBar": true });
+
+                } else { toastr.error(response.responseText, "Mensaje del Sistema", { "progressBar": true }); }
+            },
+            error: function (response) {
+                var modelStateErrors = response.responseJSON;
+                for (var i = 0; i < modelStateErrors.length; i++) { $('span[data-valmsg-for="' + modelStateErrors[i].key + '"]').text(modelStateErrors[i].errors[0]).addClass('has-error'); }
+            },
+            complete: function () { button.removeAttr('disabled'); }
+        });
+    }
+</script>

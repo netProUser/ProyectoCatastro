@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsReporteEstatisticoGeneralAnio" targetNamespace="http://tempuri.org/dsReporteEstatisticoGeneralAnio.xsd" xmlns:mstns="http://tempuri.org/dsReporteEstatisticoGeneralAnio.xsd" xmlns="http://tempuri.org/dsReporteEstatisticoGeneralAnio.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsReporteEstatisticoGeneralAnio" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsReporteEstatisticoGeneralAnio" msprop:Generator_UserDSName="dsReporteEstatisticoGeneralAnio">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="TB_ESTADISTICAANIO" msprop:Generator_TableClassName="TB_ESTADISTICAANIODataTable" msprop:Generator_TableVarName="tableTB_ESTADISTICAANIO" msprop:Generator_TablePropName="TB_ESTADISTICAANIO" msprop:Generator_RowDeletingName="TB_ESTADISTICAANIORowDeleting" msprop:Generator_RowChangingName="TB_ESTADISTICAANIORowChanging" msprop:Generator_RowEvHandlerName="TB_ESTADISTICAANIORowChangeEventHandler" msprop:Generator_RowDeletedName="TB_ESTADISTICAANIORowDeleted" msprop:Generator_UserTableName="TB_ESTADISTICAANIO" msprop:Generator_RowChangedName="TB_ESTADISTICAANIORowChanged" msprop:Generator_RowEvArgName="TB_ESTADISTICAANIORowChangeEvent" msprop:Generator_RowClassName="TB_ESTADISTICAANIORow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CODUSOCLAS" msprop:Generator_ColumnVarNameInTable="columnCODUSOCLAS" msprop:Generator_ColumnPropNameInRow="CODUSOCLAS" msprop:Generator_ColumnPropNameInTable="CODUSOCLASColumn" msprop:Generator_UserColumnName="CODUSOCLAS" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTUSOCLASIFICACION" msprop:Generator_ColumnVarNameInTable="columnTXTUSOCLASIFICACION" msprop:Generator_ColumnPropNameInRow="TXTUSOCLASIFICACION" msprop:Generator_ColumnPropNameInTable="TXTUSOCLASIFICACIONColumn" msprop:Generator_UserColumnName="TXTUSOCLASIFICACION" type="xs:string" minOccurs="0" />
+              <xs:element name="ENERO" msprop:Generator_ColumnVarNameInTable="columnENERO" msprop:Generator_ColumnPropNameInRow="ENERO" msprop:Generator_ColumnPropNameInTable="ENEROColumn" msprop:Generator_UserColumnName="ENERO" type="xs:int" minOccurs="0" />
+              <xs:element name="FEBRERO" msprop:Generator_ColumnVarNameInTable="columnFEBRERO" msprop:Generator_ColumnPropNameInRow="FEBRERO" msprop:Generator_ColumnPropNameInTable="FEBREROColumn" msprop:Generator_UserColumnName="FEBRERO" type="xs:int" minOccurs="0" />
+              <xs:element name="MARZO" msprop:Generator_ColumnVarNameInTable="columnMARZO" msprop:Generator_ColumnPropNameInRow="MARZO" msprop:Generator_ColumnPropNameInTable="MARZOColumn" msprop:Generator_UserColumnName="MARZO" type="xs:int" minOccurs="0" />
+              <xs:element name="ABRIL" msprop:Generator_ColumnVarNameInTable="columnABRIL" msprop:Generator_ColumnPropNameInRow="ABRIL" msprop:Generator_ColumnPropNameInTable="ABRILColumn" msprop:Generator_UserColumnName="ABRIL" type="xs:int" minOccurs="0" />
+              <xs:element name="MAYO" msprop:Generator_ColumnVarNameInTable="columnMAYO" msprop:Generator_ColumnPropNameInRow="MAYO" msprop:Generator_ColumnPropNameInTable="MAYOColumn" msprop:Generator_UserColumnName="MAYO" type="xs:int" minOccurs="0" />
+              <xs:element name="JUNIO" msprop:Generator_ColumnVarNameInTable="columnJUNIO" msprop:Generator_ColumnPropNameInRow="JUNIO" msprop:Generator_ColumnPropNameInTable="JUNIOColumn" msprop:Generator_UserColumnName="JUNIO" type="xs:int" minOccurs="0" />
+              <xs:element name="JULIO" msprop:Generator_ColumnVarNameInTable="columnJULIO" msprop:Generator_ColumnPropNameInRow="JULIO" msprop:Generator_ColumnPropNameInTable="JULIOColumn" msprop:Generator_UserColumnName="JULIO" type="xs:int" minOccurs="0" />
+              <xs:element name="AGOSTO" msprop:Generator_ColumnVarNameInTable="columnAGOSTO" msprop:Generator_ColumnPropNameInRow="AGOSTO" msprop:Generator_ColumnPropNameInTable="AGOSTOColumn" msprop:Generator_UserColumnName="AGOSTO" type="xs:int" minOccurs="0" />
+              <xs:element name="SETIEMBRE" msprop:Generator_ColumnVarNameInTable="columnSETIEMBRE" msprop:Generator_ColumnPropNameInRow="SETIEMBRE" msprop:Generator_ColumnPropNameInTable="SETIEMBREColumn" msprop:Generator_UserColumnName="SETIEMBRE" type="xs:int" minOccurs="0" />
+              <xs:element name="OCTUBRE" msprop:Generator_ColumnVarNameInTable="columnOCTUBRE" msprop:Generator_ColumnPropNameInRow="OCTUBRE" msprop:Generator_ColumnPropNameInTable="OCTUBREColumn" msprop:Generator_UserColumnName="OCTUBRE" type="xs:int" minOccurs="0" />
+              <xs:element name="NOVIEMBRE" msprop:Generator_ColumnVarNameInTable="columnNOVIEMBRE" msprop:Generator_ColumnPropNameInRow="NOVIEMBRE" msprop:Generator_ColumnPropNameInTable="NOVIEMBREColumn" msprop:Generator_UserColumnName="NOVIEMBRE" type="xs:int" minOccurs="0" />
+              <xs:element name="DICIEMBRE" msprop:Generator_ColumnVarNameInTable="columnDICIEMBRE" msprop:Generator_ColumnPropNameInRow="DICIEMBRE" msprop:Generator_ColumnPropNameInTable="DICIEMBREColumn" msprop:Generator_UserColumnName="DICIEMBRE" type="xs:int" minOccurs="0" />
+              <xs:element name="SUBTOTAL" msprop:Generator_ColumnVarNameInTable="columnSUBTOTAL" msprop:Generator_ColumnPropNameInRow="SUBTOTAL" msprop:Generator_ColumnPropNameInTable="SUBTOTALColumn" msprop:Generator_UserColumnName="SUBTOTAL" type="xs:int" minOccurs="0" />
+              <xs:element name="ANIOANTERIOR" msprop:Generator_ColumnVarNameInTable="columnANIOANTERIOR" msprop:Generator_ColumnPropNameInRow="ANIOANTERIOR" msprop:Generator_ColumnPropNameInTable="ANIOANTERIORColumn" msprop:Generator_UserColumnName="ANIOANTERIOR" type="xs:int" minOccurs="0" />
+              <xs:element name="SUBTOTALANIOANTERIOR" msprop:Generator_ColumnVarNameInTable="columnSUBTOTALANIOANTERIOR" msprop:Generator_ColumnPropNameInRow="SUBTOTALANIOANTERIOR" msprop:Generator_ColumnPropNameInTable="SUBTOTALANIOANTERIORColumn" msprop:Generator_UserColumnName="SUBTOTALANIOANTERIOR" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

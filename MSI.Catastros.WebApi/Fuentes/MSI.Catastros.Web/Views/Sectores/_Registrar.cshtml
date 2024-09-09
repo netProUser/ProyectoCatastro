@@ -1,0 +1,75 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Sectores.RegistroSectorViewModel
+
+<div id="RegistrarSectoresContainer">
+    @using (Html.BeginForm("Registrar", "Sectores", FormMethod.Post, new { id = "frmSectores", name = "frmSectores" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-hidden="true">
+                        &times;
+                    </button>
+                    @if (@Model.Estado == 2)
+                    {
+                        <h4>Modificando @Model.NombreSector</h4>
+                    }
+                    else
+                    {
+                        <h4>Registrar</h4>
+                    }
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true)
+                        <div class="form-group ">
+                            @Html.LabelFor(model => model.CodigoSector, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.CodigoSector, new { @class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.CodigoSector)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NombreSector, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.NombreSector, new { @class = "form-control", autofocus = "autofocus" , @maxlength = "20" })
+                                @Html.ValidationMessageFor(model => model.NombreSector)
+                            </div>
+                        </div>
+                        @Html.TextBoxFor(model => model.Estado, new { type = "hidden", @class = "form-control" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CodigoDistrito, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                <select class="form-control" readonly id="CodigoDistrito" name="CodigoDistrito">
+                                    <option value="31">SAN ISIDRO</option>
+                                </select>
+                                @*@Html.DropDownListFor(model => model.CodigoDistrito, new SelectList(Model.Distritos, "CodigoDistrito", "NombreDistrio"), "",
+                                    new { @class ="form-control" })
+                                @Html.ValidationMessageFor(model => model.CodigoDistrito)*@
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input id="btnSubmit" type="submit" value="Grabar" class="btn btn-green" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('input').keyup(function () { this.value = this.value.toLocaleUpperCase() });
+        $("#frmSectores").on("submit", function (event) {
+            validarFormulario(event, $('#btnSubmit'), "Sectores");
+        });
+    });
+</script>

@@ -1,0 +1,63 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.TipoHabilitacion.FiltrarTipoHabilitacionViewModel
+
+@if (Model.listTipoHabilitacion != null || Model.listTipoHabilitacion.Count() > 0)
+{
+    <div class="table-responsive">
+        <table id="tablaDistritos" class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Acciones</th>
+                    <th>Código</th>
+                    <th>Nombre TipoHab.</th>
+                </tr>
+            </thead>
+            @*<tbody>
+                @foreach (var item in Model.listTipoHabilitacion)
+                {
+                    <tr>
+                        <td align="center">
+                            @Ajax.ActionLink(" ", "Editar", "TipoHabilitacion"
+                                , new { id = item.CodigoTipoHabilitacion }
+                                , new AjaxOptions
+                                        {
+                                            HttpMethod = "Get",
+                                            InsertionMode = InsertionMode.Replace,
+                                            UpdateTargetId = "modalTipoHabilitacion"
+                                        }
+                                ,
+                                new
+                                {
+                                    @class = "btn btn-default glyphicon glyphicon-edit",
+                                    @type = "button",
+                                    data_toggle = "modal",
+                                    data_target = "#modalTipoHabilitacion"
+
+                                }
+                           )
+                           @Ajax.ActionLink(" ", "Eliminar", "TipoHabilitacion"
+                                , new { id = item.CodigoTipoHabilitacion }
+                                , new AjaxOptions
+                                        {
+                                            HttpMethod = "Get",
+                                            UpdateTargetId = "modalEliminarTipoHabilitacion"
+                                        }
+                                ,
+                                new
+                                {
+                                    @class = "btn btn-danger glyphicon glyphicon-remove",
+                                    @type = "button",
+                                    data_toggle = "modal",
+                                    data_target = "#modalEliminarTipoHabilitacion"
+
+                                }
+                           )
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.CodigoTipoHabilitacion)</td>
+                        <td>@item.NombreTipoHabilitacion</td>
+
+                    </tr>
+                }
+            </tbody>*@
+        </table>
+    </div>
+}

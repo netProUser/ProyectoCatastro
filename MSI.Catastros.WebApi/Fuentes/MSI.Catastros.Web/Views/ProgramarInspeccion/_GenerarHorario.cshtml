@@ -1,0 +1,49 @@
+@model MSI.Catastros.Web.Funcionalidad.ProgramarInspeccion.GenerarHorarioViewModel
+
+<div id="GenerarHorarioContainer">
+    @using (Html.BeginForm("Registrar", "RegistrarAtencion", FormMethod.Post, new { id = "ControlCalidadDetalladoForm", @class = "form", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4>Generar Horario</h4>
+
+                </div>
+                <div class="modal-body">
+                    @Html.ValidationSummary(true)
+                    <div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.MesHorario, htmlAttributes: new { @class = "control-label" })
+                                    @Html.TextBoxFor(model => model.MesHorario, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.MesHorario)
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.DiaHorario, htmlAttributes: new { @class = "control-label" })
+                                    @Html.TextBoxFor(model => model.DiaHorario, new { type = "text", @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.DiaHorario)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Exportar" class="btn btn-success" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

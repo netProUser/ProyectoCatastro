@@ -1,0 +1,187 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.ManzanaUrbana.FiltrarManzanaUrbanaViewModel
+
+@{
+    ViewBag.Title = "Mantenimiento Manzana Urbana";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="overflow: hidden">
+                <label class="fonts14 mt-2">Mantenimiento de Manzana Urbana</label>
+                <span class="icon-add">
+                    @Ajax.ActionLink(" Registrar", "Registrar", "ManzanaUrbana"
+                        , new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "modalManzanaUrbana", OnComplete = "mostrarModal('ManzanaUrbana')" }
+                        , new { @class = "btn btn-green pull-right px-5 glyphicon glyphicon-plus-sign" })
+                </span>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        @using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "SeccionListaManzanaUrbana" }))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            @Html.ValidationSummary(true)
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <div class="form-group">
+                                        <label class="control-label">Distrito</label>
+                                        <input type="text" class="form-control px-3" value="San Isidro" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.CodigoTipoHabilitacionReg, htmlAttributes: new { @class = "control-label mr-2" })
+                                        @Html.DropDownListFor(model => model.CodigoTipoHabilitacionReg,
+                                         new SelectList(Model.TipoHabilitacionReg, "CodigoTipoHabilitacion", "NombreTipoHabilitacion"), " - Seleccione -",
+                                            new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.CodigoHabilitacionUrbanaReg, htmlAttributes: new { @class = "control-label mr-2" })
+                                        @Html.DropDownListFor(model => model.CodigoHabilitacionUrbanaReg,
+                                         new SelectList(Model.HabilitacionUrbanaReg, "CodigoHabilitacionUrbana", "NombreHabilitacionUrbana"), " - Seleccione una opción - ",
+                                     new { @class = "chosen-seleccionar form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.ListTipoManzanaUrbana, htmlAttributes: new { @class = "control-label mr-2" })
+                                        @Html.DropDownListFor(model => model.CodigoTipoManzanaUrbanaReg,
+                                         new SelectList(Model.ListTipoManzanaUrbana, "Value", "Text"), " - Seleccione -",
+                                            new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.NombreManzanaUrbanaReg, htmlAttributes: new { @class = "control-label mr-2" })
+                                        @Html.TextBoxFor(model => model.NombreManzanaUrbanaReg, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                @*<div class="col-md-2">
+                                    <div class="form-group">
+                                        <br />
+                                        <input id="btnBuscar" type="button" value="Buscar" class="btn btn-block btn-default " style="margin-top: 5px" />
+                                    </div>
+                                </div>*@
+                                <div class="col-lg-2 col-xl-2">
+                                    <div class="form-group">
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-md-8 pr-0"><input id="btnBuscar" type="button" value="Buscar" class="btn btn-block btn-primary" style="margin-top:5px" /></div>
+                                            <div class="col-md-4 pl-0"><button id="btnLimpiar" type="button" class="btn btn-default py-3 fa fa-refresh mx-3" style="margin-top:5px"></button></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            if (Model.listManzanaUrbana != null || Model.listManzanaUrbana.Count() > 0)
+                            {
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table id="tablaManzanaUrbana" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th width="120px">Acciones</th>
+                                                    <th width="140px">Tipo de Habilitación Urbana</th>
+                                                    <th>Nombre Habilitación Urbana</th>
+                                                    <th>Tipo Manzana Urbana</th>
+                                                    <th width="100px">Manzana Urbana</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+
+                </div>
+                <!-- /.row (nested) -->
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
+
+<!-- Modal -->
+<div id="modalManzanaUrbana"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="labelManzanaUrbana"
+     aria-hidden="true">
+</div>
+<!-- Modal -->
+<div id="modalEliminarManzanaUrbana"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="labelEliminarManzanaUrbana"
+     aria-hidden="true">
+</div>
+
+@section datatables {
+    <script>
+    $(document).ready(function () {
+        // -- Modificar el nombre la entidad
+        var nombreEntidad = "ManzanaUrbana";
+        $(".chosen-seleccionar").chosen({ width: "100%", placeholder_text_single: "Seleccione una opción" });
+        var table = $("#tabla" + nombreEntidad).DataTable({
+            "ajax": {
+                "url": "@Url.Content("~/ManzanaUrbana/CargarGrid")",
+                    "type": "POST",
+                    "datatype": "json",
+                    "data": function (d) {
+                        // -- Agregar campos de busqueda
+                        d.CodigoTipoHabilitacionReg = $('#CodigoTipoHabilitacionReg').val();
+                        d.CodigoHabilitacionUrbanaReg = $('#CodigoHabilitacionUrbanaReg').val();
+                        d.NombreManzanaUrbanaReg = $('#NombreManzanaUrbanaReg').val();
+                        d.CodigoTipoManzanaUrbanaReg = $('#CodigoTipoManzanaUrbanaReg').val();
+                    }
+                },
+                "columns": [
+                    {
+                        "render": function (data, type, full, meta) {
+                            // -- Reemplazar los codigos de los hrefs
+                            return '<a data-toggle="tooltip" title="Editar" class="btn btn-default glyphicon glyphicon-edit" href="' + nombreEntidad + '/Editar/' + full.CodigoManzanaUrbana + '"></a>' +
+                            ' <a data-toggle="tooltip" title="Eliminar" class="btn btn-danger glyphicon glyphicon-remove" href="' + nombreEntidad + '/Eliminar/' + full.CodigoManzanaUrbana + '"></a>'
+                            ;
+                        }, "className": "text-center",
+                    },
+                    { "data": "NombreTipoHabilitacion", "name": "Tipo de Habilitación Urbana", "autoWidth": true, "className": "text-center", },
+                    { "data": "NombreHabilitacionUrbana", "name": "Nombre de Habilitación Urbana", "autoWidth": true },
+                    { "data": "NombreTipoManzana", "name": "Nombre Tipo Manzana Urbana", "autoWidth": true },
+                    { "data": "NombreManzanaUrbana", "name": "Nombre de Manzana Urbana", "autoWidth": true }
+                ]
+            });
+            $("#tabla" + nombreEntidad + " tbody").on('click', 'a', function (event) {
+                event.preventDefault();
+                var enlace = "@Url.Content("~")" + $(this).attr('href');
+                $.get(enlace, function (response) {
+                    var id = "#modal".concat((enlace.indexOf("Editar") !== -1) ? nombreEntidad : "Eliminar" + nombreEntidad);
+                    $(id).modal().html(response);
+                    console.log(id);
+                    //$('#modalEliminaManzanaUrbana').modal().html(response);
+
+                });
+            });
+            $('#btnBuscar').click(function () {
+                console.log($(this).val());
+                table.ajax.reload();
+            })
+            $('#btnLimpiar').click(function () {
+                $('#CodigoTipoHabilitacionReg').val('');
+                $('#CodigoHabilitacionUrbanaReg').val('').trigger('chosen:updated');
+                $('#CodigoTipoManzanaUrbanaReg').val('').trigger('chosen:updated');
+                $('#NombreManzanaUrbanaReg').val('');
+                table.ajax.reload();
+            });
+        });
+    </script>
+}

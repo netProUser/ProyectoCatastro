@@ -1,0 +1,163 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Vias.RegistroViaViewModel
+
+<div id="RegistrarViasContainer">
+    @*@using (Ajax.BeginForm("Registrar", "Vias", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "frmVias" }))*@
+    @using (Html.BeginForm("Registrar", "Vias", FormMethod.Post, new { id = "frmVias", name = "frmVias" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-hidden="true">
+                        &times;
+                    </button>
+                    @if (@Model.Estado == 2)
+                    {
+                        <h4>Modificando @Model.NombreVia</h4>
+                    }
+                    else
+                    {
+                        <h4>Registrar</h4>
+                    }
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Distrito, new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.Distrito, new { @class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.Distrito)
+                            </div>
+                        </div>
+                        @Html.TextBoxFor(model => model.Estado, new { type = "hidden", @class = "form-control" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CodigoVia, new { @class = "control-label col-md-3" })
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.CodigoVia, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CodigoVia)
+                            </div>
+                            
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CodTipoVia, new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.DropDownListFor(model => model.CodTipoVia, new SelectList(ViewBag.listTipoVias, "CodigoParametro", "Descripcion"), "Seleccione...",
+                                        new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CodTipoVia)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NombreVia, new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.NombreVia, new { @class = "form-control", style = "text-transform:none" })
+                                @Html.ValidationMessageFor(model => model.NombreVia)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CodClaseVia, new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.DropDownListFor(model => model.CodClaseVia, new SelectList(ViewBag.listClaseVia, "CodigoParametro", "Descripcion"), "Seleccione...",
+                                        new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CodClaseVia)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ConvertirViaAnterior, new { @class = "control-label col-md-3 chkvia-anterior" })
+                            <div class="col-md-3">
+                                @Html.CheckBoxFor(model => model.ConvertirViaAnterior, new { @checked = "checked", @class = "chkvia-anterior" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NombreTipoViaAnterior, new { @class = "control-label col-md-3 via-anterior" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.NombreTipoViaAnterior, new { @class = "form-control via-anterior", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.NombreTipoViaAnterior)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NombreViaAnterior, new { @class = "control-label col-md-3 via-anterior" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.NombreViaAnterior, new { @class = "form-control via-anterior", @readonly = "readonly", style = "text-transform:none" })
+                                @Html.ValidationMessageFor(model => model.NombreViaAnterior)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Normativa, new { @class = "control-label col-md-3 via-anterior" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.Normativa, new { @class = "form-control via-anterior Mayus" })
+                                @Html.ValidationMessageFor(model => model.Normativa)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FechaInicio, new { @class = "control-label col-md-3 via-anterior" })
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(model => model.FechaInicio, new { @class = "form-control via-anterior", @autocomplete = "off", Value = String.Format("{0:dd/MM/yyyy}", Model.FechaInicio) })
+                                @Html.ValidationMessageFor(model => model.Normativa)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input id="btnSubmit" type="submit" value="Grabar" class="btn btn-success" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.Mayus').keyup(function () { this.value = this.value.toLocaleUpperCase() });
+
+        $("#FechaInicio").datepicker({
+            format: "dd/mm/yyyy",
+            language: "es",
+            calendarWeeks: true
+        });
+
+        if ($('#CodigoVia').val() === "") {
+            $('#CodigoVia').removeAttr("readonly").attr("readonly", "readonly");
+            $('.via-anterior').hide();
+            $('.chkvia-anterior').hide();
+
+        } else {
+            $('#CodigoVia').removeAttr("readonly").attr("readonly", "readonly");
+            $(".via-anterior").hide();
+            $(".chkvia-anterior").show();
+        }
+        $('#frmVias').on("submit", function (event) {
+            console.log(event);
+            validarFormulario(event, $('#btnSubmit'), "Vias");
+        });
+
+        $('#CancelarVia').click(function () {
+            $('.via-anterior').hide();
+        });
+
+        $('#ConvertirViaAnterior').change(function () {
+            if (this.checked) {
+                //alert($('#CodTipoVia').find("option:selected").text());
+                //alert($('#CodTipoVia option:selected').val());
+                $('.via-anterior').show();
+                $('#NombreViaAnterior').val('@Model.NombreVia');
+                $('#NombreTipoViaAnterior').val($("#CodTipoVia option:selected").text());
+                $('#NombreVia').val(' ');
+            } else {
+                $(".via-anterior").hide();
+            }
+        });
+
+    });
+
+</script>

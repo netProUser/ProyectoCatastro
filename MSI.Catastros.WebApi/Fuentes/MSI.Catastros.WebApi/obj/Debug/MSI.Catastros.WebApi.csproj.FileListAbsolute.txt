@@ -1,0 +1,259 @@
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.WebApi.dll.config
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.WebApi.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.WebApi.pdb
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Antlr3.Runtime.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Web.Infrastructure.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.BusinessEntities.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.BusinessLogic.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.Exceptions.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.Helpers.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Newtonsoft.Json.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Net.Http.Formatting.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Helpers.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Http.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Http.WebHost.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Mvc.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Optimization.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Razor.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.WebPages.Deployment.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.WebPages.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.WebPages.Razor.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\WebGrease.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.BusinessEntities.pdb
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.BusinessLogic.pdb
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.Exceptions.pdb
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.Helpers.pdb
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Newtonsoft.Json.xml
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Net.Http.Formatting.xml
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Helpers.xml
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Http.xml
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Http.WebHost.xml
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Mvc.xml
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Optimization.xml
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Razor.xml
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.WebPages.xml
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.WebPages.Deployment.xml
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.WebPages.Razor.xml
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Antlr3.Runtime.pdb
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Net.Http.Formatting.resources.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.Helpers.resources.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.Http.resources.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.Http.WebHost.resources.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.Mvc.resources.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.Optimization.resources.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.Razor.resources.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.WebPages.resources.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.WebPages.Deployment.resources.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.WebPages.Razor.resources.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\obj\Debug\MSI.Catastros.WebApi.csprojResolveAssemblyReference.cache
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\obj\Debug\MSI.Catastros.WebApi.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\obj\Debug\MSI.Catastros.WebApi.pdb
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.DataAccess.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.EnterpriseLibrary.Data.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.EnterpriseLibrary.Common.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.ServiceLocation.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.Unity.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.Unity.Interception.dll
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.DataAccess.pdb
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.EnterpriseLibrary.Data.pdb
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.EnterpriseLibrary.Data.xml
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.EnterpriseLibrary.Common.pdb
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.EnterpriseLibrary.Common.xml
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.ServiceLocation.pdb
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.Unity.pdb
+c:\users\jaime diaz espinoza\documents\visual studio 2013\Projects\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.Unity.Interception.pdb
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.WebApi.dll.config
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.WebApi.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.WebApi.pdb
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Antlr3.Runtime.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Web.Infrastructure.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.BusinessEntities.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.BusinessLogic.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.Exceptions.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.Helpers.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Newtonsoft.Json.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Net.Http.Formatting.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Helpers.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Http.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Http.WebHost.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Mvc.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Optimization.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Razor.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.WebPages.Deployment.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.WebPages.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.WebPages.Razor.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\WebGrease.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.DataAccess.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.EnterpriseLibrary.Data.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.EnterpriseLibrary.Common.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.ServiceLocation.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.Unity.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.Unity.Interception.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.BusinessEntities.pdb
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.BusinessLogic.pdb
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.Exceptions.pdb
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.Helpers.pdb
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Newtonsoft.Json.xml
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Net.Http.Formatting.xml
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Helpers.xml
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Http.xml
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Http.WebHost.xml
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Mvc.xml
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Optimization.xml
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Razor.xml
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.WebPages.xml
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.WebPages.Deployment.xml
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.WebPages.Razor.xml
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Antlr3.Runtime.pdb
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.DataAccess.pdb
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.EnterpriseLibrary.Data.pdb
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.EnterpriseLibrary.Data.xml
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.EnterpriseLibrary.Common.pdb
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.EnterpriseLibrary.Common.xml
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.ServiceLocation.pdb
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.Unity.pdb
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.Unity.Interception.pdb
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Net.Http.Formatting.resources.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.Helpers.resources.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.Http.resources.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.Http.WebHost.resources.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.Mvc.resources.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.Optimization.resources.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.Razor.resources.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.WebPages.resources.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.WebPages.Deployment.resources.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.WebPages.Razor.resources.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\obj\Debug\MSI.Catastros.WebApi.csprojResolveAssemblyReference.cache
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\obj\Debug\MSI.Catastros.WebApi.csproj.CoreCompileInputs.cache
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\obj\Debug\MSI.Catastros.WebApi.csproj.CopyComplete
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\obj\Debug\MSI.Catastros.WebApi.dll
+E:\MUNI SAN ISIDRO\Repos\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\obj\Debug\MSI.Catastros.WebApi.pdb
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\obj\Debug\MSI.Catastros.WebApi.csprojResolveAssemblyReference.cache
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\obj\Debug\MSI.Catastros.WebApi.csproj.CoreCompileInputs.cache
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\obj\Debug\MSI.Catastros.WebApi.dll
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\obj\Debug\MSI.Catastros.WebApi.pdb
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.WebApi.dll.config
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.WebApi.dll
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.WebApi.pdb
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Antlr3.Runtime.dll
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Web.Infrastructure.dll
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.BusinessEntities.dll
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.BusinessLogic.dll
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.Exceptions.dll
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.Helpers.dll
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Newtonsoft.Json.dll
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Net.Http.Formatting.dll
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Helpers.dll
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Http.dll
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Http.WebHost.dll
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Mvc.dll
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Optimization.dll
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Razor.dll
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.WebPages.Deployment.dll
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.WebPages.dll
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.WebPages.Razor.dll
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\WebGrease.dll
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.DataAccess.dll
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.ServiceLocation.dll
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.Unity.dll
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.Unity.Interception.dll
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.BusinessEntities.pdb
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.BusinessLogic.pdb
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.Exceptions.pdb
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.Helpers.pdb
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Newtonsoft.Json.xml
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Net.Http.Formatting.xml
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Helpers.xml
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Http.xml
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Http.WebHost.xml
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Mvc.xml
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Optimization.xml
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Razor.xml
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.WebPages.xml
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.WebPages.Deployment.xml
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.WebPages.Razor.xml
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Antlr3.Runtime.pdb
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.DataAccess.pdb
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.EnterpriseLibrary.Data.pdb
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.EnterpriseLibrary.Data.xml
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.EnterpriseLibrary.Common.pdb
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.EnterpriseLibrary.Common.xml
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.ServiceLocation.pdb
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.Unity.pdb
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.Unity.Interception.pdb
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Net.Http.Formatting.resources.dll
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.Helpers.resources.dll
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.Http.resources.dll
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.Http.WebHost.resources.dll
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.Mvc.resources.dll
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.Optimization.resources.dll
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.Razor.resources.dll
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.WebPages.resources.dll
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.WebPages.Deployment.resources.dll
+D:\CursoMVC\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.WebPages.Razor.resources.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.WebApi.dll.config
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.WebApi.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.WebApi.pdb
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Antlr3.Runtime.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Web.Infrastructure.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.BusinessEntities.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.BusinessLogic.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.Exceptions.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.Helpers.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Newtonsoft.Json.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Net.Http.Formatting.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Helpers.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Http.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Http.WebHost.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Mvc.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Optimization.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Razor.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.WebPages.Deployment.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.WebPages.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.WebPages.Razor.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\WebGrease.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.DataAccess.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.EnterpriseLibrary.Data.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.EnterpriseLibrary.Common.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.ServiceLocation.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.Unity.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.Unity.Interception.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.BusinessEntities.pdb
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.BusinessLogic.pdb
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.Exceptions.pdb
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.Helpers.pdb
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Newtonsoft.Json.xml
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Net.Http.Formatting.xml
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Helpers.xml
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Http.xml
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Http.WebHost.xml
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Mvc.xml
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Optimization.xml
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.Razor.xml
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.WebPages.xml
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.WebPages.Deployment.xml
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\System.Web.WebPages.Razor.xml
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Antlr3.Runtime.pdb
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\MSI.Catastros.DataAccess.pdb
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.EnterpriseLibrary.Data.pdb
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.EnterpriseLibrary.Data.xml
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.EnterpriseLibrary.Common.pdb
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.EnterpriseLibrary.Common.xml
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.ServiceLocation.pdb
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.Unity.pdb
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\Microsoft.Practices.Unity.Interception.pdb
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Net.Http.Formatting.resources.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.Helpers.resources.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.Http.resources.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.Http.WebHost.resources.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.Mvc.resources.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.Optimization.resources.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.Razor.resources.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.WebPages.resources.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.WebPages.Deployment.resources.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\bin\es\System.Web.WebPages.Razor.resources.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\obj\Debug\MSI.Catastros.WebApi.csprojResolveAssemblyReference.cache
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\obj\Debug\MSI.Catastros.WebApi.dll
+C:\Proyectos\MSIProyecto\BackEnd\Desarrollo\MSI.Catastros.WebApi\MSI.Catastros.WebApi\obj\Debug\MSI.Catastros.WebApi.pdb

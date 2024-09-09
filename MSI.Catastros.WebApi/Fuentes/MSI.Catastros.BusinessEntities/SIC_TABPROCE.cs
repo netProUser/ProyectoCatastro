@@ -1,0 +1,26 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MSI.Catastros.BusinessEntities
+{
+    public partial class SIC_TABPROCE
+    {
+        //――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+        //Creado por	: Jaime Díaz Espinoza(24/05/2018)
+        //――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+        public string CODESTATENCION { get; set; }
+        public string CODTIPPROC { get; set; }
+        public string CODCARCAT { get; set; }
+        public string CODCARCATE { get; set; }
+        public string CODUSUARIO { get; set; }
+        public Nullable<DateTime> FECREG { get; set; }
+        public string TXTIPREG { get; set; }
+        public string CODUSUARIOMODIF { get; set; }
+        public Nullable<DateTime> FECMODIF { get; set; }
+        public string TXTIPMODIF { get; set; }
+        public string CODESTATENCIONE { get; set; }
+    }
+}

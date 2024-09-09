@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="alturavias" targetNamespace="http://tempuri.org/FichaLoteCatas.xsd" xmlns:mstns="http://tempuri.org/FichaLoteCatas.xsd" xmlns="http://tempuri.org/FichaLoteCatas.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="alturavias" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="alturavias" msprop:Generator_UserDSName="alturavias">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Alturavias" msprop:Generator_TableClassName="AlturaviasDataTable" msprop:Generator_TableVarName="tableAlturavias" msprop:Generator_TablePropName="Alturavias" msprop:Generator_RowDeletingName="AlturaviasRowDeleting" msprop:Generator_RowChangingName="AlturaviasRowChanging" msprop:Generator_RowEvHandlerName="AlturaviasRowChangeEventHandler" msprop:Generator_RowDeletedName="AlturaviasRowDeleted" msprop:Generator_UserTableName="Alturavias" msprop:Generator_RowChangedName="AlturaviasRowChanged" msprop:Generator_RowEvArgName="AlturaviasRowChangeEvent" msprop:Generator_RowClassName="AlturaviasRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="TIPOVIA" msprop:Generator_ColumnVarNameInTable="columnTIPOVIA" msprop:Generator_ColumnPropNameInRow="TIPOVIA" msprop:Generator_ColumnPropNameInTable="TIPOVIAColumn" msprop:Generator_UserColumnName="TIPOVIA" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTVIA" msprop:Generator_ColumnVarNameInTable="columnTXTVIA" msprop:Generator_ColumnPropNameInRow="TXTVIA" msprop:Generator_ColumnPropNameInTable="TXTVIAColumn" msprop:Generator_UserColumnName="TXTVIA" type="xs:string" minOccurs="0" />
+              <xs:element name="ALTURA" msprop:Generator_ColumnVarNameInTable="columnALTURA" msprop:Generator_ColumnPropNameInRow="ALTURA" msprop:Generator_ColumnPropNameInTable="ALTURAColumn" msprop:Generator_UserColumnName="ALTURA" type="xs:string" minOccurs="0" />
+              <xs:element name="OBSERVACIONES" msprop:Generator_ColumnVarNameInTable="columnOBSERVACIONES" msprop:Generator_ColumnPropNameInRow="OBSERVACIONES" msprop:Generator_ColumnPropNameInTable="OBSERVACIONESColumn" msprop:Generator_UserColumnName="OBSERVACIONES" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

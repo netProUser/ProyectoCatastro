@@ -1,0 +1,111 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Lotes.LoteDocumentosViewModel
+modalRegistrarDocumentosExpediente
+<div id="RegistrarDocumentosExpedienteContainer">
+    @Html.AntiForgeryToken()
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-hidden="true">
+                    &times;
+                </button>
+                <h4 id="tituloModalDirec">Registrar Documentos de Tramite Documentario al Lote</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="tablaTramitesDocumentos" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th width="3%">Agregar</th>
+                                    <th width="3%">Tipo Documento</th>
+                                    <th width="10%">Nro. Documento</th>
+                                    <th width="20%">Asunto</th>
+                                    <th width="30%">Solicitante</th>
+                                    <th width="10%">Fecha</th>
+                                    <th width="30%">Observacion</th>
+                                    <th style="display:none;"></th>
+                                    <th style="display:none;"></th>
+                                    <th style="display:none;"></th>
+                                    <th style="display:none;"></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                
+            </div>
+        </div>
+    </div>
+</div>
+<script  type="text/javascript">
+    $(document).ready(function () {
+
+        tablaTramitesDocumentos = $("#tablaTramitesDocumentos").DataTable({
+            "ajax": {
+                "url": ROOT + "Lotes/DocumentosLote",
+                "type": "POST",
+                "datatype": "json",
+                "data": function (d) {
+                    d.CodigoCatastral = $('#CodDist').val() + $('#CodSect').val() + $('#CodManz').val() +  $('#CodLote').val();
+                    d.Estatico = Estatico;
+                }
+            },
+            "columns": [
+                {
+                    'render': function (data, type, full, meta) {
+                        var disabled = full.Habilitado != "0" ? "disabled" : "";
+                        return '<button data-toggle="tooltip" title="Seleccionar" ' + disabled + ' class="btn mr-1 text-center btnAgregarDocumento btn-default btn-xs glyphicon glyphicon-refresh" type="button" ></button>';
+                    }, "className": "text-center"
+                },
+                { "data": "CodigoTipoDocumento", "name": "CodigoTipoDocumento", "className": "text-center" },
+                { "data": "CodigoNumeroSolicitud", "name": "CodigoNumeroSolicitud", "className": "text-center" },
+                { "data": "Asunto", "name": "Asunto", "className": "text-center" },
+                { "data": "Solicitante", "name": "Solicitante", "className": "text-center" },
+                { "data": "FechaDocumento", "name": "FechaDocumento", "className": "text-center" },
+                { "data": "Observacion", "name": "Observacion", "className": "text-center" },
+                { "data": "CodigoTramite", "name": "CodigoTramite", "autoWidth": true, "className": "hide_column" },
+                { "data": "Habilitado", "name": "Habilitado", "autoWidth": true, "className": "hide_column" },
+                { "data": "CodigoSolicitante", "name": "CodigoSolicitante", "autoWidth": true, "className": "hide_column" },
+                { "data": "CodigoSolicitante", "name": "CodigoSolicitante", "autoWidth": true, "className": "hide_column" }
+
+
+            ], "className": "text-center", "responsivePriority": -2,
+        });
+    });
+
+    $("#tablaTramitesDocumentos tbody").on('click', 'button.btnAgregarDocumento ', function (event) {
+        var cell = this;
+        var data = tablaTramitesDocumentos.row($(this).parents('tr')).data();
+        var enlace = ROOT + 'Lotes/AgregarDocumentos';
+        $.post(enlace,
+            {
+                CodigoDepartamento: "15",
+                CodigoProvincia: "01",
+                CodigoDistrito: $('#CodDist').val(),
+                CodigoLote: $('#CodLote').val(),
+                CodigoManzana: $('#CodManz').val(),
+                CodigoSector: $('#CodSect').val(), 
+                CodigoTipoDocumento: data.CodigoTipoDocumento,
+                CodigoNumeroSolicitud: data.CodigoNumeroSolicitud,
+                Solicitante: data.Solicitante,
+                FechaDocumento: data.FechaDocumento,
+                Observacion: data.Observacion,
+                CodigoTramite: data.CodigoTramite,
+                CodigoSolicitante: data.CodigoSolicitante,
+                Estatico: Estatico
+            }
+            , function (response) {
+                $('#modalRegistrarLindero').modal('show');
+                RecuperarDocumentos(Estatico);
+                tablaTramitesDocumentos.ajax.reload();
+                toastr.success("Registro grabado correctamente", "Mensaje del Sistema", { "progressBar": true });
+            });
+    })
+
+
+</script>

@@ -1,0 +1,535 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.ManzanaVia.RegistroManzanaViaViewModel
+
+<div id="RegistrarManzanaViaContainer">
+    @using (Html.BeginForm("Registrar", "ManzanaVia", FormMethod.Post, new { id = "frmManzanaVia", name = "frmManzanaVia" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog modal-lg" id="ManzanaVia" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    @if (@Model.Estado == 2)
+                    {  <h4><strong>Modificando</strong></h4>   }
+                    else
+                    {  <h4><strong>Registrar</strong></h4> }
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="row">
+                                @Html.ValidationSummary(true)
+                                @Html.HiddenFor(model => model.CodigoManzanaViaReg, new { type = "hidden" })
+                                @Html.HiddenFor(model => model.Estado, new { type = "hidden" })
+                                <div class="col-md-6">
+                                    
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.CodigoSectorReg, htmlAttributes: new { @class = "control-label ", @style = "text-align:left" })
+                                        @Html.DropDownList("CodigoSectorReg", new SelectList(Model.ParametroSector, "Value", "Text"), "Seleccione un sector",
+                                        new { @class = "chosen-seleccionar form-control SearchFilter", style = "width:100%;" })
+                                        @Html.ValidationMessageFor(model => model.CodigoSectorReg)
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.CodigoManzanaReg, htmlAttributes: new { @class = "control-label ", @style = "text-align:left" })
+                                        @Html.DropDownList("CodigoManzanaReg", new SelectList(Model.ParametroManzana, "Value", "Text"), "Seleccione una manzana", new { @class = "chosen-seleccionar form-control SearchFilter", style = "width:100%;" })
+                                        @Html.ValidationMessageFor(model => model.CodigoManzanaReg)
+                                    </div>
+                                </div>
+                            </div>
+                            
+
+                        </div>
+                        <div class="col-md-2">
+                            <br />
+                            <button id="BuscarDetalle" type="button" class="btn btn-search mt-2"><span class="fa fa-search"></span> Buscar</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <fieldset class="formulario divOculto px-3">
+                                
+                                <div class="row">
+                                    <div class="col-md-12  pl-5">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.CodigoViaReg, htmlAttributes: new { @class = "control-label" })
+                                            @Html.DropDownList("CodigoViaReg", new SelectList(Model.ParametroVia, "Value", "Text"), "Seleccione una vía", new { @class = "chosen-seleccionar form-control", style = "width:100%;" })
+                                            @Html.ValidationMessageFor(model => model.CodigoViaReg)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3  pl-5">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.NumcuadraReg, htmlAttributes: new { @class = "control-label" })
+                                            @Html.DropDownList("NumcuadraReg", new SelectList(Model.ParametroCuadra, "Value", "Text"), "Seleccione una cuadra", new { @class = "chosen-seleccionar form-control", style = "width:100%;", placeholder = "Seleccione una Cuadra" })
+                                            @Html.ValidationMessageFor(model => model.NumcuadraReg)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3  pr-5">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.PosicionladoReg, htmlAttributes: new { @class = "control-label " })
+                                            @Html.DropDownList("PosicionladoReg", new SelectList(Model.ParametroLado, "Value", "Text"), "Seleccione un lado", new { @class = "form-control", style = "width:100%;" })
+                                            @Html.ValidationMessageFor(model => model.PosicionladoReg)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 ">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.PeriodoReg, htmlAttributes: new { @class = "control-label " })
+                                            @Html.TextBoxFor(model => model.PeriodoReg, new { @class = "form-control text-center", type = "number" })
+                                            @Html.ValidationMessageFor(model => model.PeriodoReg)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 ">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ValorizacionReg, htmlAttributes: new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.ValorizacionReg, new { @class = "form-control numero text-right", placeholder = "0.0000" })
+                                            @Html.ValidationMessageFor(model => model.ValorizacionReg)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 px-5">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.AlturaNormativaReg, htmlAttributes: new { @class = "control-label" })
+                                            @*@Html.TextBoxFor(model => model.AlturaNormativaReg, new { @class = "form-control text-right numero", placeholder = "0.0000" })*@
+                                            @Html.DropDownListFor(m => m.AlturaNormativa, Model.ListAlturaVia,  new { @class = "form-control" , multiple = "multiple" })
+                                            @Html.ValidationMessageFor(model => model.AlturaNormativa)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.RetiroOficialReg, htmlAttributes: new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.RetiroOficialReg, new { @class = "form-control text-right numero", placeholder = "0.0000" })
+                                            @Html.ValidationMessageFor(model => model.RetiroOficialReg)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" hidden="hidden">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.JardinOficialReg, htmlAttributes: new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.JardinOficialReg, new { @class = "form-control text-right numero", placeholder = "0.0000" })
+                                            @Html.ValidationMessageFor(model => model.JardinOficialReg)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 px-5">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ObservacionNormativaReg, htmlAttributes: new { @class = "control-label" })
+                                            @Html.TextAreaFor(model => model.ObservacionNormativaReg, new { @class = "form-control", @style = "text-transform: uppercase;", rows = "2", @maxlength = "50" })
+                                            @Html.ValidationMessageFor(model => model.ObservacionNormativaReg)
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4 class="px-4 mb-0" style="font-weight:bold;text-decoration: underline;">Zonificacion de Uso de Suelo</h4>
+                                <div class="form-horizontal">
+                                    <div class="col-sm-6">
+                                        @Html.LabelFor(model => model.ListadoZonificacionSuelo, htmlAttributes: new { @class = "control-label" })
+                                        @Html.DropDownListFor(m => m.codZonificacionSuelo, Model.ListadoZonificacionSuelo, "- Seleccione -", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.ListadoZonificacionSuelo, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-sm-5">
+                                        @Html.LabelFor(model => model.ListadoDescripcionZonificacionUso, htmlAttributes: new { @class = "control-label" })
+                                        @Html.DropDownListFor(m => m.codDescripcionZonificacionUso, Model.ListadoDescripcionZonificacionUso, "- Seleccione -", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.ListadoDescripcionZonificacionUso, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <label style="width:100%">&nbsp;</label>
+                                        <a class="btn btn-default mt-2 btn-sm" id="btnAgregar"> <i class="glyphicon glyphicon-plus" aria-hidden="true"></i> </a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 px-5">
+
+                                        <table id="TablaZonificacion" class="table manzaVia mt-2 table-bordered" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Item</th>
+                                                    <th class="hide">idCod</th>
+                                                    <th>Zonificacion de Uso de Suelo</th>
+                                                    <th>Acción</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                                @*</fieldset>*@
+                                <div class="row">
+                                    <button id="AgregarManzanaVia" type="button" class="btn btn-search pull-right px-4 mr-5"><span class="fa fa-save"></span>  Grabar</button>
+                                    <button id="EditarManzanaVia" type="button" style="display:none;" class="btn btn-search pull-right px-4 mr-5"><span class="fa fa-edit"></span>  Grabar</button>
+
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group divOculto">
+                                <table id="tablaManzanaViaDetalle" style="width:100%" class="table manzaVia responsive display table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Acciones</th>
+                                            <th>Via</th>
+                                            <th>Cuadra</th>
+                                            <th>Lado</th>
+                                            <th>Periodo Reg</th>
+                                            <th>Valoriz</th>
+                                            @*<th>Altura Normativa</th>*@
+                                            <th>Observacion</th>
+                                            <th>Retiro Oficial</th>
+                                            <th>Jardín Oficial</th>
+                                            <th style="display:none;"></th>
+                                            <th style="display:none;"></th>
+                                            <th style="display:none;"></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-offset-2 col-md-10">
+                        @*<input id="btnSubmit" type="submit" value="Grabar" class="btn btn-green" />*@
+                        <button type="button" class="btn btn-default px-5" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script src="~/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('input').keyup(function () { this.value = this.value.toLocaleUpperCase() });
+        $('textarea').keyup(function () { this.value = this.value.toLocaleUpperCase() });
+        $('.SearchFilter').change(function () {
+            if ('@Model.Estado' !== '2') {
+                $('.divOculto').hide();
+                $('#AgregarManzanaVia').show(); $('#EditarManzanaVia').hide();
+            } else {
+                $('#AgregarManzanaVia').hide(); $('#EditarManzanaVia').show();
+            }
+        })
+        $('#BuscarDetalle').click(function () {
+            if (!$('#CodigoSectorReg').val()) {
+                toastr.warning("Seleccione un sector", "Mensaje del Sistema", { "progressBar": true });
+            } else if (!$('#CodigoManzanaReg').val()) {
+                toastr.warning("Seleccione una manzana", "Mensaje del Sistema", { "progressBar": true });
+            } else {
+                $('.divOculto').show();
+                tablaManzanaViaDetalle.ajax.reload();
+                $('#CodigoViaReg').trigger('chosen:activate');
+            }
+
+        });
+        $('#AlturaNormativa').multiselect({
+            buttonWidth: '100%',
+            allSelectedText: "Todas las alturas",
+            buttonClass: 'btn btn-default btn-sm',
+            nonSelectedText: 'Seleccione la altura',
+        });
+        if('@Model.AlturaNormativa') {
+            var altura = '@Model.AlturaNormativa'.split(",");
+            $('#AlturaNormativa').multiselect('select', altura);
+        }
+
+        var tablaManzanaViaDetalle = $("#tablaManzanaViaDetalle").DataTable({
+            "ajax": {
+                "url": "@Url.Content("~/ManzanaVia/CargarGridDetalle")", "type": "POST", "datatype": "json",
+                "data": function (d) { d.CodigoSectorReg = $('#CodigoSectorReg').val(); d.CodigoManzanaReg = $('#CodigoManzanaReg').val(); }
+            },
+            "language": { "lengthMenu": "", "info": "", "emptyTable": "" }, "processing": true, "serverSide": false, "paging": false,
+            "columns": [
+                {
+                    'render': function (data, type, full, meta) {
+                        return '<button data-toggle="tooltip" title="Editar" class="btn mr-1 text-center btnEditDetalle btn-default btn-xs glyphicon glyphicon-edit" type="button" ></button>' +
+                        '<button data-toggle="tooltip" title="Eliminar" class="btn mr-1 text-center btnDeleteDetalle btn-default btn-xs glyphicon glyphicon-trash" type="button" ></button>';
+                    }, "className": "text-center"
+                },
+                { "data": "NombreViaReg", "className": "text-center", "width": "15%" }, { "data": "NumcuadraReg", "className": "text-center" },
+                { "data": "NombreladoReg", "className": "text-center" }, { "data": "PeriodoReg", "className": "text-center" },
+                { "data": "ValorizacionReg", render: function (data, type, full) { return parseFloat(data).toFixed(4); }, "className": "text-center" },
+                //{ "data": "AlturaNormativaReg", render: function (data, type, full) { return parseFloat(data).toFixed(4); }, "className": "text-center" },
+                { "data": "ObservacionNormativaReg", "className": "text-center" },
+                { "data": "RetiroOficialReg", render: function (data, type, full) { return parseFloat(data).toFixed(4); }, "className": "text-center" },
+                { "data": "JardinOficialReg", render: function (data, type, full) { return parseFloat(data).toFixed(4); }, "className": "hide_column" },
+                { "data": "CodigoViaReg", "className": "hide_column" }, { "data": "CodigoManzanaViaReg", "className": "hide_column" },
+                { "data": "PosicionladoReg", "className": "hide_column" }
+
+            ]
+        });
+        $('#AgregarManzanaVia').click(function () {
+            if (!$('#CodigoViaReg').val()) {
+                toastr.warning("Seleccione una vía", "Mensaje del Sistema", { "progressBar": true });
+            } else if (!$('#PosicionladoReg').val()) {
+                toastr.warning("Seleccione el lado", "Mensaje del Sistema", { "progressBar": true });
+            } else {
+                var tablaCodZonificacion;
+                if (tablaZonificacion.data().count() > 0) {
+                    tablaCodZonificacion = tablaZonificacion.rows().data().toArray();
+                }
+                console.log('TablaZonif', tablaCodZonificacion);
+                $.post("@Url.Content("~/ManzanaVia/Registrar")", {
+                    CodigoSectorReg: $('#CodigoSectorReg').val(), CodigoManzanaReg: $('#CodigoManzanaReg').val(),
+                    CodigoViaReg: $('#CodigoViaReg').val(), NumcuadraReg: $('#NumcuadraReg').val(),
+                    PosicionladoReg: $('#PosicionladoReg').val(), PeriodoReg: $('#PeriodoReg').val(), ValorizacionReg: $('#ValorizacionReg').val(),
+                    AlturaNormativa: ($('#AlturaNormativa').val()) ? $('#AlturaNormativa').val().toString() : "", ObservacionNormativaReg: $('#ObservacionNormativaReg').val(), RetiroOficialReg: $('#RetiroOficialReg').val(), JardinOficialReg: $('#JardinOficialReg').val(),
+                    CodigoManzanaViaReg: $('#CodigoManzanaViaReg').val(), Estado: $('#Estado').val(), tablaCodZonificacion: tablaCodZonificacion
+                }, function (response) {
+                    if (response.success == true) {
+                        toastr.success("Manzana Vía Agregado Correctamente", "Mensaje del Sistema", { "progressBar": true });
+                        tablaManzanaViaDetalle.ajax.reload();
+                        $('.divOculto input').val('');
+                        $('.divOculto select').val('').trigger('chosen:updated');
+                        $('.divOculto textarea').val('');
+                        $('#PeriodoReg').val('2018');
+                        $('#AgregarManzanaVia').show(); $('#EditarManzanaVia').hide();
+                        $('#CodigoViaReg').trigger('chosen:activate');
+                    } else {
+                        toastr.warning(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                    }
+                });
+            }
+        });
+        $('#EditarManzanaVia').click(function () {
+            var tablaCodZonificacion;
+            if (tablaZonificacion.data().count() > 0) {
+                tablaCodZonificacion = tablaZonificacion.rows().data().toArray();
+            }
+            $.post("@Url.Content("~/ManzanaVia/Registrar")", {
+                CodigoSectorReg: $('#CodigoSectorReg').val(), CodigoManzanaReg: $('#CodigoManzanaReg').val(), CodigoViaReg: $('#CodigoViaReg').val(), NumcuadraReg: $('#NumcuadraReg').val(),
+                PosicionladoReg: $('#PosicionladoReg').val(), PeriodoReg: $('#PeriodoReg').val(), ValorizacionReg: $('#ValorizacionReg').val(),
+                AlturaNormativa: ($('#AlturaNormativa').val()) ? $('#AlturaNormativa').val().toString() : "", ObservacionNormativaReg: $('#ObservacionNormativaReg').val(), RetiroOficialReg: $('#RetiroOficialReg').val(), JardinOficialReg: $('#JardinOficialReg').val(),
+                CodigoManzanaViaReg: $('#CodigoManzanaViaReg').val(), Estado: $('#Estado').val(), tablaCodZonificacion: tablaCodZonificacion
+            }, function (response) {
+                toastr.success("Manzana Vía Modificada Correctamente", "Mensaje del Sistema", { "progressBar": true });
+                tablaManzanaViaDetalle.ajax.reload();
+                $('.divOculto input').val('')
+                $('.divOculto select').val('').removeAttr('disabled').trigger('chosen:updated')
+                $('#CodigoViaReg').chosen().chosenReadonly(false);
+                $('.divOculto textarea').val('');
+                $('#PeriodoReg').val('2018');
+                $('#CodigoManzanaViaReg').val('');
+                $('#Estado').val('1');
+                $('#CodigoViaReg').trigger('chosen:activate');
+                $('.formulario').hide()
+            });
+        });
+
+        tablaZonificacion = $("#TablaZonificacion").DataTable({
+            "processing": false,
+            "serverSide": false,
+            "paging": false,
+            "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+            'columnDefs': [
+                { "width": "7%", "targets": 0 },
+                { "width": "7%", "targets": 1 },
+                { "width": "7%", "targets": 2 },
+                { "width": "7%", "targets": 2 }
+            ],
+            "columns": [
+                { "data": "codigo", "className": "text-center" },
+                { "data": "CodigoZonicacion", "className": "text-center hide" },
+                { "data": "Descripcion", "className": "text-center" },
+                {
+                    'render': function (data, type, full, meta) {
+                        return '<button type="button" class="btn  btn-xs  btn-default glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="top" title="Eliminar" name="Eliminar_' + full.NroInspeccion + '" value="' + full.NroInspeccion + '"></button>';
+                    }, "className": "text-center"
+                },
+            ]
+        });
+        $("#codZonificacionSuelo").change(function () {
+            if ($("#codZonificacionSuelo").val() != "") {
+                $("#codDescripcionZonificacionUso").val($("#codZonificacionSuelo").val());
+            }
+            else {
+                $("#codDescripcionZonificacionUso").val($("#codZonificacionSuelo").val());
+                $("#codDescripcionZonificacionUso").attr("disabled", false);
+                $("#codZonificacionSuelo").attr("disabled", false);
+            }
+        });
+        $("#codDescripcionZonificacionUso").change(function () {
+            if ($("#codDescripcionZonificacionUso").val() != "") {
+                $("#codZonificacionSuelo").val($("#codDescripcionZonificacionUso").val())
+            } else {
+                $("#codZonificacionSuelo").val($("#codDescripcionZonificacionUso").val())
+                $("#codDescripcionZonificacionUso").attr("disabled", false);
+                $("#codZonificacionSuelo").attr("disabled", false);
+            }
+        });
+        $("#btnAgregar").click(function () {
+            var modelo = new Object();
+            if ($("#codZonificacionSuelo").val() != "") {
+                modelo.CodigoZonicacion = $("#codZonificacionSuelo").val();
+                modelo.Descripcion = $("#codZonificacionSuelo option:selected").text().trim();
+            } else if ($("#codDescripcionZonificacionUso").val() != "") {
+                modelo.CodigoZonicacion = $("#codDescripcionZonificacionUso").val()
+                modelo.Descripcion = $("#codDescripcionZonificacionUso option:selected").text().trim();
+            } else {
+                return;
+            }
+            modelo.codigo = tablaZonificacion.data().count() + 1;
+            tablaZonificacion.row.add(modelo).draw();
+            $("#codDescripcionZonificacionUso").val("")
+            $("#codZonificacionSuelo").val("")
+            $("#codDescripcionZonificacionUso").attr("disabled", false);
+            $("#codZonificacionSuelo").attr("disabled", false);
+        });
+        $("#TablaZonificacion tbody").on('click', 'button', function (event) {
+            var objeto = $(this);
+            var Action = $(this)[0].name.split('_')[0];
+            if (Action == "Eliminar") {
+                bootbox.confirm({
+                    title: "Mensaje del Sistema",
+                    message: "¿Esta seguro de borrar el registro?",
+                    buttons: {
+                        cancel: { label: '<i class="fa fa-times"></i> Cancelar' },
+                        confirm: { label: '<i class="fa fa-trash"></i> Eliminar ', className: "btn btn-danger" }
+                    },
+                    callback: function (result) {
+                        if (result) {
+                            tablaZonificacion.row(objeto.parents('tr')).remove().draw();
+                        }
+                    }
+                });
+            }
+        });
+        if ($("#Estado").val() == "2") {
+            var listtabla = @Html.Raw(Json.Encode(Model.tablaCodZonificacion));
+            $.each(listtabla, function (i, item) {
+                tablaZonificacion.row.add({
+                    "codigo": i+1,
+                    "CodigoZonicacion": item.CodigoZonicacion,
+                    "Descripcion": item.Descripcion,
+                }).draw();
+            });
+        }
+
+
+        $("#tablaManzanaViaDetalle tbody").on('click', 'button.btnEditDetalle', function (event) {
+            var data = tablaManzanaViaDetalle.row($(this).parents('tr')).data(), row = $(this).parents('tr')
+            $('#CodigoViaReg').val(data.CodigoViaReg).trigger('chosen:updated');
+            $('#CodigoManzanaViaReg').val(data.CodigoManzanaViaReg);
+            CambiarCodigoVia(data.NumcuadraReg)
+            CargarTablaZonificacion();
+            $('#PosicionladoReg').val(data.PosicionladoReg)
+            $('#PeriodoReg').val(data.PeriodoReg)
+            $('#ValorizacionReg').val(data.ValorizacionReg)
+            var altura = (data.AlturaNormativa) ? data.AlturaNormativa.split(",") : ""; 
+            console.log('test', altura);
+            if ( $('#AlturaNormativa').val() ) {
+                $('#AlturaNormativa').multiselect('refresh').val('');
+            }
+            $('#AlturaNormativa').multiselect('select', altura);
+            //$('#AlturaNormativa').val(data.AlturaNormativa)
+            $('#RetiroOficialReg').val(data.RetiroOficialReg)
+            $('#JardinOficialReg').val(data.JardinOficialReg)
+            $('#ObservacionNormativaReg').val(data.ObservacionNormativaReg);
+            $('#AgregarManzanaVia').hide(); $('#EditarManzanaVia').show();
+            $('.formulario').show();
+            $('#Estado').val('2');
+
+        });
+        $("#tablaManzanaViaDetalle tbody").on('click', 'button.btnDeleteDetalle', function (event) {
+            var data = tablaManzanaViaDetalle.row($(this).parents('tr')).data();
+            var enlace = "@Url.Content("~/ManzanaVia/Eliminar")";
+            bootbox.confirm({
+                title: "Mensaje del Sistema", message: "¿Esta seguro de borrar el registro?",
+                buttons: { confirm: { label: '<i class="fa fa-trash"></i> Eliminar ', className: "btn btn-danger" }, cancel: { label: '<i class="fa fa-times"></i> Cancelar' } },
+                callback: function (result) {
+                    if (result) {
+                        $.post(enlace, { CodigoManzanaViaReg: data.CodigoManzanaViaReg, CodigoSectorReg: $('#CodigoSectorReg').val(), CodigoManzanaReg: $('#CodigoManzanaReg').val(), CodigoViaReg: data.CodigoViaReg }, function (response) {
+                            tablaManzanaViaDetalle.ajax.reload();
+                            toastr.success("Manzana Vía Eliminada Correctamente", "Mensaje del Sistema", { "progressBar": true });
+                        });
+                    }
+                }
+            });
+
+        });
+
+        $(".chosen-seleccionar").chosen({ width: "100%", placeholder_text_single: "Seleccione una opción" });
+        if ('@ViewBag.isReadOnly' == 'True') {
+            $('#CodigoManzanaReg').chosen().chosenReadonly(true);
+            $('#CodigoSectorReg').chosen().chosenReadonly(true);
+            $('#CodigoViaReg').chosen().chosenReadonly(true);
+            $('.divOculto').show();
+            $('#BuscarDetalle').attr('disabled', 'disabled');
+        } else {
+            $('.divOculto').hide();
+        }
+        $('.numero').number(true, 4, '.', '');
+
+
+        if ('@Model.ValorizacionReg' !== "") {
+            $('#ValorizacionReg').val('@Model.ValorizacionReg');
+        }
+        $("#frmManzanaVia").on("submit", function (event) {
+            validarFormulario(event, $('#btnSubmit'), "ManzanaVia");
+        });
+        $("#CodigoSectorReg").change(function () {
+            var URL = "@Url.Content("~")" + "Manzana/Sector/".concat($('#CodigoSectorReg').val());
+            $.post(URL, function (data) {
+                $('#CodigoManzanaReg').find('option:not(:first)').remove();
+                var items = '<option value="">Seleccione una manzana</option>';
+                $.each(data, function (i, item) {
+                    items += "<option value='" + item.CodigoManzana + "'>" + item.NombreManzana + "</option>";
+                });
+                $('#CodigoManzanaReg').html(items);
+                if ('@Model.CodigoManzanaReg') {
+                    $('#CodigoManzanaReg').val('@Model.CodigoManzanaReg');
+                }
+                $('#CodigoManzanaReg').trigger("chosen:updated");
+                tablaManzanaViaDetalle.ajax.reload();
+            });
+        });
+        $("#CodigoViaReg").change(function () {
+            CambiarCodigoVia(this.value);
+        });
+        function CargarTablaZonificacion() {
+            var modelo = new Object();
+            modelo.CodigoSectorReg = $("#frmManzanaVia #CodigoSectorReg").val();
+            modelo.CodigoManzanaReg = $("#frmManzanaVia #CodigoManzanaReg").val();
+            modelo.CodigoViaReg = $("#frmManzanaVia #CodigoViaReg").val();
+            modelo.CodigoManzanaViaReg = $("#frmManzanaVia #CodigoManzanaViaReg").val();
+            $.post("@Url.Action("CargarZonificacion", "ManzanaVia")", modelo, function (response) {
+                tablaZonificacion.clear().draw();
+                if (response.success) {
+                    if (response.data) {
+                        $.each(response.data, function (i, item) {
+                            tablaZonificacion.row.add({
+                                "codigo": i+1,
+                                "CodigoZonicacion": item.CodigoZonicacion,
+                                "Descripcion": item.Descripcion,
+                            }).draw();
+                        });
+                    }
+                }
+            });
+        }
+        function CambiarCodigoVia(value) {
+            var URL = "@Url.Content("~")" + "ManzanaVia/Cuadras/".concat( $("#CodigoViaReg").val() );
+            $.post(URL, function (data) {
+                $('#NumcuadraReg').find('option:not(:first)').remove();
+                var items = '<option value="">Seleccione</option>';
+                $.each(data, function (i, item) {
+                    items += "<option value='" + item.Text + "'>" + item.Text + "</option>";
+                });
+                $('#NumcuadraReg').html(items);
+                if (value) {    $('#NumcuadraReg').val(value);  }
+                $('#NumcuadraReg').trigger("chosen:updated");
+            });
+        }
+
+        var CodigoSector = $("#CodigoSectorReg").val();
+        if (CodigoSector) {
+            $("#CodigoSectorReg").trigger("change")
+        }
+        var Numcuadra = '@Model.NumcuadraReg';
+        if (Numcuadra) {
+            CambiarCodigoVia(Numcuadra);
+        }
+        $('.chosen-single').focus();
+    });
+</script>

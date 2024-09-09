@@ -1,0 +1,123 @@
+﻿<div id="ExpedienteDocContainer">
+    @Html.AntiForgeryToken()
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-hidden="true">
+                    &times;
+                </button>
+                <h4 id="TituloExpediente">Registrando Expedientes y/o Documentos Simples</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12" id="containerTableExpediente" style="display:none;">
+
+                        <table id="tablaExpedienteDocLote" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th width="5%">Nro.</th>
+                                    <th width="30%">Solicitante</th>
+                                    <th width="15%">Documento</th>
+                                    <th width="10%">Número</th>
+                                    <th width="10%">Fecha</th>
+                                    <th width="10%">Observación</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-offset-2 col-md-10">
+                    <input id="btnGrabarExpedienteDoc" type="submit" value="Grabar" class="btn btn-success" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/vendor/datatables-checkboxes/js/dataTables.checkboxes.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#TituloExpediente').text('Registrando Expedientes y/o Documentos Simples - UC: ' + $("#CodigoDistrito").val() + '-' +
+        $("#CodigoSector").val() + '-' +
+        $("#CodigoManzana").val() + '-' +
+        $("#CodigoLote").val() + '-' +
+        $("#CodigoEdificacion").val() + '-' +
+        $("#CodigoEntrada").val() + '-' +
+        $("#CodigoPiso").val() + '-' +
+        $("#CodigoUnidad").val());
+        localStorage.setItem('ExpedienteDocSelec', "");
+        tablaExpedienteDocLote = $("#tablaExpedienteDocLote").DataTable({
+            "ajax": {
+                "url": "@Url.Content("~/Cotitularidad/CargarExpedienteDocLote")",
+                "type": "POST",
+                "datatype": "json",
+                "data": function (d) {
+                    // -- Agregar campos de busqueda
+                    d.CodigoDistrito = $('#CodigoDistrito').val();
+                    d.CodigoSector = $('#CodigoSector').val();
+                    d.CodigoManzana = $('#CodigoManzana').val();
+                    d.CodigoLote = $('#CodigoLote').val();
+                    d.Estatico = Estatico;
+                }
+            },
+            "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+            "processing": true,
+            "serverSide": false,
+            "scrollY": "400px",
+            "scrollCollapse": true,
+            "initComplete": function (setting, json) {
+                console.log(json)
+                if (json.recordsTotal < 12) {
+                    $('#tablaExpedienteDocLote_wrapper .dataTables_scrollHead').removeClass('pr-4');
+                } else {
+                    $('#tablaExpedienteDocLote_wrapper .dataTables_scrollHead').addClass('pr-4');
+                }
+                //tablaExpedienteDocLote.columns.adjust().draw();
+            },
+            "paging": false,
+            'columnDefs': [
+                 { "width": "5%", "targets": 0 },
+                 { "width": "15%", "targets": 1 },
+                 { "width": "6%", "targets": 2 },
+                 { "width": "7%", "targets": 3 },
+                 { "width": "7%", "targets": 4 },
+                 { "width": "20%", "targets": 5 },
+                 { 'targets': 6, 'checkboxes': { 'selectRow': true } },
+
+            ],
+            "columns": [
+                { "data": "Item", "name": "Item", "className": "text-center" },
+                { "data": "Solicitante", "name": "Solicitante", "autoWidth": true, "className": "text-center" },
+                { "data": "Documento", "name": "Documento", "autoWidth": true, "className": "text-center" },
+                { "data": "Numero", "name": "Numero", "autoWidth": true, "className": "text-center" },
+                { "data": "Fecha", "name": "Fecha", "autoWidth": true, "className": "text-center" },
+                { "data": "Detalle", "name": "Detalle", "className": "text-center" },
+                { "data": "Item", "name": "Item", "autoWidth": true, "className": "text-center" },
+                { "data": "CodigoCorrelativoLote", "name": "CodigoCorrelativoLote", "autoWidth": true, "className": "hide_column" },
+
+            ]
+        });
+        $("#btnGrabarExpedienteDoc").on("click", function (event) {
+            var rows_selected = tablaExpedienteDocLote.column(6).checkboxes.selected();
+            console.log('rows_selected');
+            console.log(rows_selected);
+            var ListaRows = [];
+            $.each(rows_selected, function (index, Indice) {
+                console.log(Indice);
+                var rows = tablaExpedienteDocLote.rows(Indice - 1).data()[0];
+                console.log(rows);
+                ListaRows.push(rows);
+
+            });
+            localStorage.setItem('ExpedienteDocSelec', JSON.stringify(ListaRows));
+            $('#modalNuevoExpeDoc').modal('hide');
+        });
+    });
+</script>

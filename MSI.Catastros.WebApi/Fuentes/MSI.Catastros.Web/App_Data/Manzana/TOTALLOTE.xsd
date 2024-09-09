@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="TOTALLOTE" targetNamespace="http://tempuri.org/TOTALLOTE.xsd" xmlns:mstns="http://tempuri.org/TOTALLOTE.xsd" xmlns="http://tempuri.org/TOTALLOTE.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="TOTALLOTE" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="TOTALLOTE" msprop:Generator_UserDSName="TOTALLOTE">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="TOTALLOTE" msprop:Generator_TableClassName="TOTALLOTEDataTable" msprop:Generator_TableVarName="tableTOTALLOTE" msprop:Generator_TablePropName="_TOTALLOTE" msprop:Generator_RowDeletingName="TOTALLOTERowDeleting" msprop:Generator_RowChangingName="TOTALLOTERowChanging" msprop:Generator_RowEvHandlerName="TOTALLOTERowChangeEventHandler" msprop:Generator_RowDeletedName="TOTALLOTERowDeleted" msprop:Generator_UserTableName="TOTALLOTE" msprop:Generator_RowChangedName="TOTALLOTERowChanged" msprop:Generator_RowEvArgName="TOTALLOTERowChangeEvent" msprop:Generator_RowClassName="TOTALLOTERow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CC" msprop:Generator_ColumnVarNameInTable="columnCC" msprop:Generator_ColumnPropNameInRow="CC" msprop:Generator_ColumnPropNameInTable="CCColumn" msprop:Generator_UserColumnName="CC" type="xs:string" minOccurs="0" />
+              <xs:element name="URBANIZ" msprop:Generator_ColumnVarNameInTable="columnURBANIZ" msprop:Generator_ColumnPropNameInRow="URBANIZ" msprop:Generator_ColumnPropNameInTable="URBANIZColumn" msprop:Generator_UserColumnName="URBANIZ" type="xs:string" minOccurs="0" />
+              <xs:element name="OFICIAL" msprop:Generator_ColumnVarNameInTable="columnOFICIAL" msprop:Generator_ColumnPropNameInRow="OFICIAL" msprop:Generator_ColumnPropNameInTable="OFICIALColumn" msprop:Generator_UserColumnName="OFICIAL" type="xs:double" minOccurs="0" />
+              <xs:element name="CAMPO" msprop:Generator_ColumnVarNameInTable="columnCAMPO" msprop:Generator_ColumnPropNameInRow="CAMPO" msprop:Generator_ColumnPropNameInTable="CAMPOColumn" msprop:Generator_UserColumnName="CAMPO" type="xs:double" minOccurs="0" />
+              <xs:element name="GRAFICA" msprop:Generator_ColumnVarNameInTable="columnGRAFICA" msprop:Generator_ColumnPropNameInRow="GRAFICA" msprop:Generator_ColumnPropNameInTable="GRAFICAColumn" msprop:Generator_UserColumnName="GRAFICA" type="xs:double" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

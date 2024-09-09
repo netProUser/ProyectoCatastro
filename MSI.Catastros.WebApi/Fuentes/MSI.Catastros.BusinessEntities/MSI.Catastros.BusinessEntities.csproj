@@ -1,0 +1,284 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D2A63D54-7FCF-4F52-944F-76998E7C3425}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MSI.Catastros.BusinessEntities</RootNamespace>
+    <AssemblyName>MSI.Catastros.BusinessEntities</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Deployment|AnyCPU'">
+    <OutputPath>bin\Deployment\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Partials\SIC_BIENCLINDERO.cs" />
+    <Compile Include="Partials\SIC_CARTA.cs" />
+    <Compile Include="Partials\SIC_CARTACONFI.cs" />
+    <Compile Include="Partials\SIC_CERTIFICADO.cs" />
+    <Compile Include="Partials\SIC_CERTIFIRECI.cs" />
+    <Compile Include="Partials\SIC_CERTIFIDETA.cs" />
+    <Compile Include="Partials\SIC_CONSULTAGEN.cs" />
+    <Compile Include="Partials\SIC_CONSULTAHST.cs" />
+    <Compile Include="Partials\SIC_DETAFILESERVER.cs" />
+    <Compile Include="Partials\SIC_DOCUUNIDAD.cs" />
+    <Compile Include="Partials\SIC_HABURBAOBSER.cs" />
+    <Compile Include="Partials\SIC_LOTEOTRODOC.cs" />
+    <Compile Include="Partials\SIC_TIPOINTERIOR.cs" />
+    <Compile Include="Partials\SIC_UNIDBIENCOMUN.cs" />
+    <Compile Include="Partials\SIC_USOGENE.cs" />
+    <Compile Include="Partials\SIC_USOCLAS.cs" />
+    <Compile Include="Partials\SIC_MANZAVIANORMA.cs" />
+    <Compile Include="Partials\SIC_ZONIFMANZAVIA.cs" />
+    <Compile Include="SIC_CERTIFIRECI.cs" />
+    <Compile Include="SIC_CONSULTAGEN.cs" />
+    <Compile Include="Partials\SIC_DOCISO.cs" />
+    <Compile Include="Partials\SIC_INFORMESUBDETA.cs" />
+    <Compile Include="Partials\SIC_INFORMEDETA.cs" />
+    <Compile Include="Partials\SIC_LOTEAUTOEDIF.cs" />
+    <Compile Include="Partials\SIC_INFORME.cs" />
+    <Compile Include="Partials\SIC_EDIFICACION.cs" />
+    <Compile Include="Partials\SIC_QUINTALINDERO.cs" />
+    <Compile Include="Partials\SIC_UNIDADACTIVIDAD.cs" />
+    <Compile Include="Partials\SIC_UNIDADAUTOEDIF.cs" />
+    <Compile Include="Partials\SIC_UNIDADBIENCOMUN.cs" />
+    <Compile Include="Partials\SIC_UNIDADMAS.cs" />
+    <Compile Include="SIC_BIENCLINDERO.cs" />
+    <Compile Include="SIC_CARTA.cs" />
+    <Compile Include="SIC_CARTACONFI.cs" />
+    <Compile Include="SIC_CERTIFICADO.cs" />
+    <Compile Include="SIC_CERTIFIDETA.cs" />
+    <Compile Include="SIC_CONSULTAHST.cs" />
+    <Compile Include="SIC_DETAFILESERVER.cs" />
+    <Compile Include="SIC_DOCISO.cs" />
+    <Compile Include="SIC_DOCUUNIDAD.cs" />
+    <Compile Include="SIC_HABURBAOBSER.cs" />
+    <Compile Include="SIC_INFORMESUBDETA.cs" />
+    <Compile Include="SIC_INFORMEDETA.cs" />
+    <Compile Include="SIC_LOTEAUTOEDIF.cs" />
+    <Compile Include="DDU_LICENCIAEDIFICACION.cs" />
+    <Compile Include="Extensions\DataRecordExtensions.cs" />
+    <Compile Include="Partials\DDU_LICENCIAEDIFICACION.cs" />
+    <Compile Include="Partials\PGD_TRAMITE_EXT.cs" />
+    <Compile Include="Partials\DDU_LICENCIA.cs" />
+    <Compile Include="Partials\PGD_TRAMITE_INT.cs" />
+    <Compile Include="Partials\SAT_OTRAINSTALACION.cs" />
+    <Compile Include="Partials\SEG_OPCION.cs" />
+    <Compile Include="Partials\SEG_USUARIO.cs" />
+    <Compile Include="Partials\SIC_CLASEMOBU.cs" />
+    <Compile Include="Partials\SIC_COMPONENTE.cs" />
+    <Compile Include="Partials\SIC_CONFIGOBJETO.cs" />
+    <Compile Include="Partials\SIC_CONFIGSUBCLASE.cs" />
+    <Compile Include="Partials\SIC_CONTROLCALIDAD.cs" />
+    <Compile Include="Partials\SIC_DEPARTAMENTO.cs" />
+    <Compile Include="Partials\SIC_DISTRITO.cs" />
+    <Compile Include="Partials\SIC_ESTADOATENCION.cs" />
+    <Compile Include="Partials\SIC_INSCRIPCION.cs" />
+    <Compile Include="Partials\SIC_INSTALACION.cs" />
+    <Compile Include="Partials\SIC_LOTE.cs" />
+    <Compile Include="Partials\SIC_LOTEAUTOLICE.cs" />
+    <Compile Include="Partials\SIC_LOTEDIRECMUNI.cs" />
+    <Compile Include="Partials\SIC_LOTEEXPEDOCU.cs" />
+    <Compile Include="Partials\SIC_LOTEHABIURBA.cs" />
+    <Compile Include="Partials\SIC_LOTELINDERO.cs" />
+    <Compile Include="Partials\SIC_LOTELINDERODET.cs" />
+    <Compile Include="Partials\SIC_LOTELINDEROVIADET.cs" />
+    <Compile Include="Partials\SIC_LOTEMOBILDETALLE.cs" />
+    <Compile Include="Partials\SIC_LOTEMOBILURBA.cs" />
+    <Compile Include="Partials\SIC_LOTEMOBOBSER.cs" />
+    <Compile Include="Partials\SIC_LOTEMUCONFIG.cs" />
+    <Compile Include="Partials\SIC_OBJETO.cs" />
+    <Compile Include="Partials\SIC_SUBCLASEMOBU.cs" />
+    <Compile Include="Partials\SIC_TIPODOCURRP.cs" />
+    <Compile Include="Partials\SIC_USOESPE.cs" />
+    <Compile Include="Partials\SIC_ZONIFICACION.cs" />
+    <Compile Include="Partials\SIC_ZONIFLOTE.cs" />
+    <Compile Include="Partials\SIC_ZONIFMANZA.cs" />
+    <Compile Include="Partials\SIC_LOTENORMAURBANA.cs" />
+    <Compile Include="Partials\SIC_LOTEOBSERVACION.cs" />
+    <Compile Include="Partials\SIC_LOTERETIRO.cs" />
+    <Compile Include="Partials\SIC_LOTERRPP.cs" />
+    <Compile Include="Partials\SIC_LOTEVIA.cs" />
+    <Compile Include="Partials\SIC_MANZAVIAVALOR.cs" />
+    <Compile Include="Partials\SIC_MOVINSPEC.cs" />
+    <Compile Include="Partials\SIC_PROGINSPEC.cs" />
+    <Compile Include="Partials\SIC_PUERTA.cs" />
+    <Compile Include="Partials\SIC_SOLICITUD.cs" />
+    <Compile Include="Partials\SIC_SOLINSPEACT.cs" />
+    <Compile Include="Partials\SIC_SOLISEGUI.cs" />
+    <Compile Include="Partials\SIC_SOLUNIDAD.cs" />
+    <Compile Include="Partials\SIC_TABPROCE.cs" />
+    <Compile Include="Partials\SIC_TIPOLLENA.cs" />
+    <Compile Include="Partials\SIC_TIPOPROCINSPACT.cs" />
+    <Compile Include="Partials\SIC_TIPPROCED.cs" />
+    <Compile Include="Partials\SIC_UNIDAD.cs" />
+    <Compile Include="Partials\SIC_UNIDADAUTOLICE.cs" />
+    <Compile Include="Partials\SIC_UNIDADCONSTRUCCION.cs" />
+    <Compile Include="Partials\SIC_UNIDADDIRECCONINTERIOR.cs" />
+    <Compile Include="Partials\SIC_UNIDADEXPEDOCU.cs" />
+    <Compile Include="Partials\SIC_UNIDADINFORME.cs" />
+    <Compile Include="Partials\SIC_UNIDADINSPECCION.cs" />
+    <Compile Include="Partials\SIC_UNIDADOBSERVACION.cs" />
+    <Compile Include="Partials\SIC_UNIDADRRPP.cs" />
+    <Compile Include="Partials\SIC_UNIDADTITULAR.cs" />
+    <Compile Include="Partials\SIC_UNIDINSTALACION.cs" />
+    <Compile Include="Partials\SIC_URBAMANZA.cs" />
+    <Compile Include="Partials\SIC_HABILITURBA.cs" />
+    <Compile Include="Partials\SIC_LADO.cs" />
+    <Compile Include="Partials\SIC_MANZANA.cs" />
+    <Compile Include="Partials\SIC_MANZANAVIA.cs" />
+    <Compile Include="Partials\SIC_PARAMETROS.cs" />
+    <Compile Include="Partials\SIC_PROVINCIA.cs" />
+    <Compile Include="Partials\SIC_SECTOR.cs" />
+    <Compile Include="Partials\SIC_TEMATICAMANZANA.cs" />
+    <Compile Include="Partials\SIC_TIPOHABURB.cs" />
+    <Compile Include="Partials\SIC_URBANIZACION.cs" />
+    <Compile Include="Partials\SIC_USUCARCAT.cs" />
+    <Compile Include="Partials\SIC_VIA.cs" />
+    <Compile Include="Partials\SIC_VIADETALLE.cs" />
+    <Compile Include="Partials\SIC_VIASANTE.cs" />
+    <Compile Include="PGD_TRAMITE_EXT.cs" />
+    <Compile Include="DDU_LICENCIA.cs" />
+    <Compile Include="PGD_TRAMITE_INT.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SAT_OTRAINSTALACION.cs" />
+    <Compile Include="SEG_OPCION.cs" />
+    <Compile Include="SEG_USUARIO.cs" />
+    <Compile Include="SIC_CLASEMOBU.cs" />
+    <Compile Include="SIC_COMPONENTE.cs" />
+    <Compile Include="SIC_CONFIGOBJETO.cs" />
+    <Compile Include="SIC_CONFIGSUBCLASE.cs" />
+    <Compile Include="SIC_CONTROLCALIDAD.cs" />
+    <Compile Include="SIC_DEPARTAMENTO.cs" />
+    <Compile Include="SIC_DISTRITO.cs" />
+    <Compile Include="SIC_ESTADOATENCION.cs" />
+    <Compile Include="SIC_INSCRIPCION.cs" />
+    <Compile Include="SIC_INSTALACION.cs" />
+    <Compile Include="SIC_LOTE.cs" />
+    <Compile Include="SIC_LOTEAUTOLICE.cs" />
+    <Compile Include="SIC_LOTEDIRECMUNI.cs" />
+    <Compile Include="SIC_LOTEEXPEDOCU.cs" />
+    <Compile Include="SIC_LOTEHABIURBA.cs" />
+    <Compile Include="SIC_LOTELINDERO.cs" />
+    <Compile Include="SIC_LOTELINDERODET.cs" />
+    <Compile Include="SIC_LOTELINDEROVIADET.cs" />
+    <Compile Include="SIC_LOTEMOBILDETALLE.cs" />
+    <Compile Include="SIC_LOTEMOBILURBA.cs" />
+    <Compile Include="SIC_LOTEMOBOBSER.cs" />
+    <Compile Include="SIC_LOTEMUCONFIG.cs" />
+    <Compile Include="SIC_LOTEOTRODOC.cs" />
+    <Compile Include="SIC_OBJETO.cs" />
+    <Compile Include="SIC_INFORME.cs" />
+    <Compile Include="SIC_EDIFICACION.cs" />
+    <Compile Include="SIC_QUINTALINDERO.cs" />
+    <Compile Include="SIC_SUBCLASEMOBU.cs" />
+    <Compile Include="SIC_TIPODOCURRP.cs" />
+    <Compile Include="SIC_TIPOINTERIOR.cs" />
+    <Compile Include="SIC_UNIDADACTIVIDAD.cs" />
+    <Compile Include="SIC_UNIDBIENCOMUN.cs" />
+    <Compile Include="SIC_UNIDADAUTOEDIF.cs" />
+    <Compile Include="SIC_UNIDADBIENCOMUN.cs" />
+    <Compile Include="SIC_UNIDADMAS.cs" />
+    <Compile Include="SIC_USOCLAS.cs" />
+    <Compile Include="SIC_USOGENE.cs" />
+    <Compile Include="SIC_USOESPE.cs" />
+    <Compile Include="SIC_ZONIFICACION.cs" />
+    <Compile Include="SIC_ZONIFMANZA.cs" />
+    <Compile Include="SIC_ZONIFLOTE.cs" />
+    <Compile Include="SIC_LOTENORMAURBANA.cs" />
+    <Compile Include="SIC_LOTEOBSERVACION.cs" />
+    <Compile Include="SIC_LOTERETIRO.cs" />
+    <Compile Include="SIC_LOTERRPP.cs" />
+    <Compile Include="SIC_LOTEVIA.cs" />
+    <Compile Include="SIC_MANZAVIAVALOR.cs" />
+    <Compile Include="SIC_MOVINSPEC.cs" />
+    <Compile Include="SIC_PROGINSPEC.cs" />
+    <Compile Include="SIC_PUERTA.cs" />
+    <Compile Include="SIC_SOLICITUD.cs" />
+    <Compile Include="SIC_SOLINSPEACT.cs" />
+    <Compile Include="SIC_SOLISEGUI.cs" />
+    <Compile Include="SIC_SOLUNIDAD.cs" />
+    <Compile Include="SIC_TABPROCE.cs" />
+    <Compile Include="SIC_TIPOLLENA.cs" />
+    <Compile Include="SIC_TIPOPROCINSPACT.cs" />
+    <Compile Include="SIC_TIPPROCED.cs" />
+    <Compile Include="SIC_UNIDAD.cs" />
+    <Compile Include="SIC_UNIDADAUTOLICE.cs" />
+    <Compile Include="SIC_UNIDADCONSTRUCCION.cs" />
+    <Compile Include="SIC_UNIDADDIRECCONINTERIOR.cs" />
+    <Compile Include="SIC_UNIDADEXPEDOCU.cs" />
+    <Compile Include="SIC_UNIDADINFORME.cs" />
+    <Compile Include="SIC_UNIDADINSPECCION.cs" />
+    <Compile Include="SIC_UNIDADOBSERVACION.cs" />
+    <Compile Include="SIC_UNIDADRRPP.cs" />
+    <Compile Include="SIC_UNIDADTITULAR.cs" />
+    <Compile Include="SIC_UNIDINSTALACION.cs" />
+    <Compile Include="SIC_URBAMANZA.cs" />
+    <Compile Include="SIC_HABILITURBA.cs" />
+    <Compile Include="SIC_LADO.cs" />
+    <Compile Include="SIC_MANZANA.cs" />
+    <Compile Include="SIC_MANZANAVIA.cs" />
+    <Compile Include="SIC_PARAMETROS.cs" />
+    <Compile Include="SIC_PROVINCIA.cs" />
+    <Compile Include="SIC_RETORNO.cs" />
+    <Compile Include="SIC_SECTOR.cs" />
+    <Compile Include="SIC_TEMATICAMANZANA.cs" />
+    <Compile Include="SIC_TIPOHABURB.cs" />
+    <Compile Include="SIC_URBANIZACION.cs" />
+    <Compile Include="SIC_USUCARCAT.cs" />
+    <Compile Include="SIC_VIA.cs" />
+    <Compile Include="SIC_VIADETALLE.cs" />
+    <Compile Include="SIC_VIASANTE.cs" />
+    <Compile Include="SIC_MANZAVIANORMA.cs" />
+    <Compile Include="SIC_ZONIFMANZAVIA.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MSI.Catastros.Helpers\MSI.Catastros.Helpers.csproj">
+      <Project>{df22d66d-f966-40d7-a84f-d5b8d38aa5e2}</Project>
+      <Name>MSI.Catastros.Helpers</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,759 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.SeguimientoSolicitud.FiltrarSeguimientoSolicitudViewModel
+
+@{
+    ViewBag.Title = "Seguimiento de Solicitud";
+}
+<style>
+    .tdColapse {
+        height: 55px;
+    }
+</style>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="overflow: hidden">
+                <div class="row">
+                    <div class="col-xl-10 col-lg-10 col-xs-10 pt-2">
+                        <label class="control-label">Seguimiento Solicitud</label>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @*<button class="btn btn-white btn-block px-4"><span class="glyphicon glyphicon-remove mr-2"></span> Salir</button>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="">
+                    @using (Html.BeginForm("Listar", "SeguimientoSolicitud", FormMethod.Post, new { id = "frmSeguimientoSolicitud", name = "frmSeguimientoSolicitud", @autocomplete = "off" }))
+                    {
+                        @Html.ValidationSummary(true)
+                        <fieldset class="formulario" style="display: block;">
+                            <legend>Seleccionar Rango</legend>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.TipoBusqueda, new { @class = "control-label col-md-12" })
+                                        <div class="col-md-12">
+                                            @*@Html.EditorFor(model => model.codTipoBusqueda)*@
+                                            @Html.DropDownListFor(m => m.codTipoBusqueda, Model.TipoBusqueda, "- Tipo de Busqueda  -", new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.codTipoBusqueda)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="panelTipoSolicitud" class="col-sm-3" style="display:none;">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.CodigoTipoSolicitud, new { @class = "control-label col-md-12" })
+                                        <div class="col-md-12">
+                                            @Html.DropDownListFor(m => m.CodigoTipoSolicitud, Model.ListTipoSolicitud, "- Seleccione el tipo de solicitud -", new { @class = "form-control", autofocus = "true" })
+                                            @Html.ValidationMessageFor(model => model.NroSolicitud, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="panelSolicitud" class="col-sm-3" style="display:none;">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.NroSolicitud, new { @class = "control-label col-md-12" })
+                                        <div class="col-md-12">
+                                            @Html.TextBoxFor(model => model.NroSolicitud, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.NroSolicitud, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="panelFecha" style="display:none;">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.FechaInicio, new { @class = "control-label col-md-12" })
+                                            <div class="col-md-12">
+                                                <div class="form-group has-default has-feedback">
+                                                    @Html.TextBoxFor(model => model.FechaInicio, "{0:dd/MM/yyyy}", new { @class = "form-control fechaE" })
+                                                    <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>
+                                                    @*@Html.ValidationMessageFor(model => model.FechaInicio, "", new { @class = "text-danger" })*@
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.FechaFin, new { @class = "control-label col-md-12" })
+                                            <div class="col-md-12">
+                                                <div class="form-group has-default has-feedback">
+                                                    @Html.TextBoxFor(model => model.FechaFin, "{0:dd/MM/yyyy}", new { @class = "form-control fechaE" })
+                                                    <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>
+                                                    @*@Html.ValidationMessageFor(model => model.FechaFin, "", new { @class = "text-danger" })*@
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="panelAsunto" class="col-sm-3" style="display:none;">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Asunto, new { @class = "control-label col-md-12" })
+                                        <div class="col-md-12">
+                                            @Html.TextBoxFor(model => model.Asunto, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.Asunto, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="panelTitular" class="col-sm-3" style="display:none;">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Titular, new { @class = "control-label col-md-12" })
+                                        <div class="col-md-12">
+                                            @Html.TextBoxFor(model => model.Titular, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.Titular, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <br />
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <button type="button" id="btnBuscarInspeccion" class="btn btn-green btn-block" data-loading-text="Cargando..." autocomplete="off">Buscar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <br />
+                        @*@Html.Partial("_ListarSeguimientoSolic", Model.ListadoSeguimiento)*@
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="table-responsive">
+                                    <table id="TablaSeguimientoSolicitud" class="table table-bordered" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Nro. Solicitud</th>
+                                                <th>Asunto</th>
+                                                <th>Tipo Llenado</th>
+                                                <th>Código Catastral</th>
+                                                <th>Titular</th>
+                                                <th>Fecha Ingreso Documento</th>
+                                                <th>Fecha Limite Atención</th>
+                                                <th>Estado Atención</th>
+                                                <th>Datos Solicitud	</th>
+                                                <th>Seguimiento</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="ModalDatosSolicitante" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Datos de Solicitud</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-6"><label>TIPO SOLICITUD</label> </div>
+                    <div class="col-sm-6">
+                        <span id="TipoSolicitud"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6"><label>TIPO DE DOCUMENTO</label> </div>
+                    <div class="col-sm-6">
+                        <span id="TipoDocumento"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6"><label>AREA SOLICITANTE</label> </div>
+                    <div class="col-sm-6">
+                        <span id="AreaSolicitante"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6"><label>FORMULARIO PROCEDIMIENTO</label> </div>
+                    <div class="col-sm-6">
+                        <span id="FormularioProcedimiento"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="ModalAnalista" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Analista</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row hide">
+                    <div class="col-sm-6"><label>FECHA DE ATENCION ANTERIOR</label> </div>
+                    <div class="col-sm-6">
+                        <span id="AtencionAnterioAnalista"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6"><label>FECHA DE RECEPCION</label> </div>
+                    <div class="col-sm-6">
+                        <span id="FechaRecepcionAnalista"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6"><label>PUESTO RESPONSABLE</label> </div>
+                    <div class="col-sm-6">
+                        <span id="PuestoResponsableAnalista"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6"><label>RESPONSABLE</label> </div>
+                    <div class="col-sm-6">
+                        <span id="ResponsableAnalista"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6"><label>TIPO DE PROCEDIMIENTO</label> </div>
+                    <div class="col-sm-6">
+                        <span id="TipoProcedimientoAnalista"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6"><label>FECHA LIMITE INFORME ANALISTA</label> </div>
+                    <div class="col-sm-6">
+                        <span id="FechaLimiteAnalista"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="ModalInspeccion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Inspeccion</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-6"><label>FECHA LIMITE INSPECCION</label> </div>
+                    <div class="col-sm-6">
+                        <span id="FechaLimiteInspeccion"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6"><label>FORMULARIO PROCEDIMIENTO</label> </div>
+                    <div class="col-sm-6">
+                        <span id="FormularioProcedimientoInspeccion"></span>
+                    </div>
+                </div>
+                <div class="row hide">
+                    <div class="col-sm-6"><label>FECHA ATENCION ANTERIOR</label> </div>
+                    <div class="col-sm-6">
+                        <span id="FechaAntecionAnterioInspeccion"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6"><label>FECHA RECEPCION</label> </div>
+                    <div class="col-sm-6">
+                        <span id="FechaRecepcionInspeccion"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6"><label>PUESTO RESPONSABLE</label> </div>
+                    <div class="col-sm-6">
+                        <span id="PuestoResponsableInspeccion"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6"><label>RESPONSABLE</label> </div>
+                    <div class="col-sm-6">
+                        <span id="ResponsableInspeccion"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6"><label>NRO INSPECCION</label> </div>
+                    <div class="col-sm-6">
+                        <span id="NumeroInspeccion"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6"><label>TIPO PROCEDIMIENTO</label> </div>
+                    <div class="col-sm-6">
+                        <span id="TipoProcedimientoInspeccion"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="ModalActualizacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Actualizacion</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-6"><label>FECHA LIMITE DE ACTUALIZACION</label> </div>
+                    <div class="col-sm-6">
+                        <span id="FechaLimiteActualizacion"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6"><label>FORMULARIO DE PROCEDIMIENTO</label> </div>
+                    <div class="col-sm-6">
+                        <span id="FormularioProcedimientoActualizacion"></span>
+                    </div>
+                </div>
+                <div class="row hide">
+                    <div class="col-sm-6"><label>FECHA ATENCION ANTERIOR</label> </div>
+                    <div class="col-sm-6">
+                        <span id="FechaAtencionAnteriorActualizacion"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6"><label>FECHA RECEPCION</label> </div>
+                    <div class="col-sm-6">
+                        <span id="FechaRecepcionActualizacion"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6"><label>PUESTO RESPONSABLE</label> </div>
+                    <div class="col-sm-6">
+                        <span id="PuestoResponsanbleActualiacion"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6"><label>RESPONSABLE</label> </div>
+                    <div class="col-sm-6">
+                        <span id="ResponsableActualizacion"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6"><label>TIPO DE PROCEDIMIENTO</label> </div>
+                    <div class="col-sm-6">
+                        <span id="TipoProcedimientoActualizacion"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="ModalDatosTotal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Datos Total Solicitud</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table id="tablaProcedimientoNuevo" style="width:100%" class="table tablaUtil table-striped table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th width="5%">Nro</th>
+                                        <th width="20%">Estado de atencion previo</th>
+                                        <th width="10%">Responsable</th>
+                                        <th width="10%">Fecha Recepcion</th>
+                                        <th width="10%">Tipo Procedimiento</th>
+                                        <th width="20%">Estado de atencion Actual</th>
+                                        <th width="10%">Fecha Atencion</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script>
+        //$('#page-wrapper').removeClass('pt-5').addClass('pt-1'); $('#periodoGlobal').show();
+        $(function () {
+            /*
+             TABLES
+             */
+            tablaSeguimientoSolicitud = $("#TablaSeguimientoSolicitud").DataTable({
+                "processing": true,
+                "serverSide": false,
+                "paging": true,
+                "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+                @*"ajax": {
+                    "url": "@Url.Action("Listar", "SeguimientoSolicitud")",
+                    "type": "POST",
+                    "datatype": "json",
+                    "data": function (d) {
+                        d.FechaInicio = $("#FechaInicio").val();
+                        d.FechaFin = $("#FechaFin").val();
+                        d.NroSolicitud = $("#NroSolicitud").val();
+                    }
+                },*@
+                //"initComplete": function (settings, json) {
+                //    console.log(settings);
+                //    console.log(json);
+                //    //if (json.success) {
+                //    //    toastr.info(json.responseText, "Mensaje del Sistema", { "progressBar": true });
+                //    //} else {
+                //    //    toastr.info(json.responseText, "Mensaje del Sistema", { "progressBar": true });
+                //},
+                'columnDefs': [
+                    { "width": "5%", "visible": true, "targets": 0 },
+                    //{ "width": "15px", "visible": true, "targets": 1 },
+                    { "width": "6%", "visible": true, "targets": 2 },
+                    { "width": "8%", "visible": true, "targets": 3 },
+                    { "width": "23%", "visible": true, "targets": 4 },
+                    { "width": "7%", "visible": true, "targets": 5 },
+                    { "width": "7%", "visible": true, "targets": 6 },
+                    { "width": "7%", "visible": true, "targets": 7 },
+                    { "width": "5%", "visible": true, "targets": 8 },
+                    { "width": "10%", "visible": true, "targets": 9 }
+                ],
+                "columns": [
+                    { "data": "NroSolicitud", "className": "text-center" },
+                    { "data": "Asunto", "className": "text-center" },
+                    { "data": "TipoLlenado", "className": "text-center" },
+                    //{ "data": "CodCatastral", "className": "text-center" },
+                    { //"data": "CodigoCatastral", "className": "text-center" },
+                        'render': function (data, type, full, meta) {
+                            console.log(full.CodCatastral);
+                            if (full.CodCatastral.length > 78) {
+                                return "<div id='divHid" + full.NroSolicitud + "' onclick='$(\"#divHid" + full.NroSolicitud + "\").toggleClass(\"tdColapse\")' class='tdColapse' style='overflow: hidden; cursor:pointer;'>" +
+                                    full.CodCatastral + "</div>" + "<button type='button' onclick='$(\"#divHid" + full.NroSolicitud + "\").toggleClass(\"tdColapse\")'  class='btn btn-default btn-xs'> Ver todos los códigos ...</button>";
+                            } else {
+                                return full.CodCatastral;
+                            }
+                        }, "className": "text-center"
+                    },
+                    { "data": "Titular", "className": "text-left" },
+                    { "data": "FechaRecepOriginal", "className": "text-center" },
+                    { "data": "FechaLimite", "className": "text-center" },
+                    { "data": "EstadoAtencion", "className": "text-center" },
+                    {
+                        'render': function (data, type, full, meta) {
+                            return ' <button class="ModalDatosSolicitud btn btn-xs btn-default glyphicon glyphicon-search" type="button" name="DATOS"></button> ' +
+                                ' <button class="ModalDatosTotal btn btn-xs btn-default glyphicon glyphicon-list-alt" type="button" name="DATOSTOTAL"></button>';
+                        }, "className": "text-center"
+                    },
+                    {
+                        'render': function (data, type, full, meta) {
+                            //return ' <button class="btn btn-xs btn-default glyphicon glyphicon-search ModalDatosSolicitud" type="button"></button>';
+                            var cadena = "";
+                            if (full.Seguimiento != null) {
+
+                                $.each(full.Seguimiento, function (i, item) {
+
+                                    var inactivo = "btn btn-circle-sm btn-default";
+                                    var activo = "btn btn-circle-sm btn-success";
+                                    if (item == "ANL") {
+                                        cadena += '<button class="' + (item == "ANL" ? activo : inactivo) + ' ModalAnalisa" name="ANL" type="button">ANL</button>';
+                                        cadena += '<button class="' + (item == "INS" ? activo : inactivo) + ' disabled" disabled name="INS" type="button">INS</button>'
+                                        cadena += '<button class="' + (item == "ACT" ? activo : inactivo) + ' disabled" disabled name="ACT" type="button">ACT</button>'
+                                    } else if (item == "INS") {
+                                        cadena += '<button class="' + (item == "ANL" ? activo : inactivo) + ' ModalAnalisa" name="ANL" type="button">ANL</button>';
+                                        cadena += '<button class="' + (item == "INS" ? activo : inactivo) + ' ModalInspeccion" name="INS" type="button">INS</button>'
+                                        cadena += '<button class="' + (item == "ACT" ? activo : inactivo) + ' disabled" disabled name="ACT" type="button">ACT</button>'
+                                    } else if (item == "ACT") {
+                                        cadena += '<button class="' + (item == "ANL" ? activo : inactivo) + ' ModalAnalisa" name="ANL" type="button">ANL</button>';
+                                        cadena += '<button class="' + (item == "INS" ? activo : inactivo) + ' ModalInspeccion" name="INS" type="button">INS</button>'
+                                        cadena += '<button class="' + (item == "ACT" ? activo : inactivo) + ' ModalActualizacion" name="ACT" type="button">ACT</button>'
+                                    } else {
+                                        cadena += '<button class="' + ("" == "ANL" ? activo : inactivo) + '" disabled type="button">ANL</button>'
+                                        cadena += '<button class="' + ("" == "INS" ? activo : inactivo) + '" disabled type="button">INS</button>'
+                                        cadena += '<button class="' + ("" == "ACT" ? activo : inactivo) + '" disabled type="button">ACT</button>'
+                                    }
+
+                                    cadena += '<button class="' + (item == "FIN" ? activo : inactivo) + ' disabled" disabled type="button">FIN</button>'
+                                    return false;
+                                });
+                            } else {
+                                var inactivo = "btn btn-circle-sm btn-default";
+                                var activo = "btn btn-circle-sm btn-success";
+
+                                cadena += '<button class="' + ("" == "ANL" ? activo : inactivo) + ' disabled" disabled type="button">ANL</button>'
+                                cadena += '<button class="' + ("" == "INS" ? activo : inactivo) + ' disabled" disabled type="button">INS</button>'
+                                cadena += '<button class="' + ("" == "ACT" ? activo : inactivo) + ' disabled" disabled type="button">ACT</button>'
+                                cadena += '<button class="'("" == "FIN" ? activo : inactivo) + ' disabled" disabled type="button">FIN</button>'
+                            }
+                            return cadena;
+                        }, "className": "text-center"
+                    }
+                ]
+            });
+
+            tablaProcedimientoNuevo = $("#tablaProcedimientoNuevo").DataTable({
+                /*"ajax": {
+                    "url": "/ProcedimientoNuevo/CargarProcedimientoNuevo", "type": "POST", "datatype": "json",
+                    "data": function (d) {
+                        d.FiltrarCodigoTipoSolicitud = "";
+                        d.FiltrarNumeroSolicitud = "000253";
+                        d.FiltrarCodigoPeriodo = "";
+                        d.cantReg = 200;
+                    }
+                },*/
+                "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+                "processing": true,
+                "serverSide": false,
+                "paging": false,
+                "columns": [
+                    { "data": "Item", "className": "text-center" },
+                    { "data": "CodigoEstadoAtencion", "className": "text-center" },
+                    { "data": "ResponsableActual", "className": "text-center" },
+                    { "data": "EFechaRecepcion", "className": "text-center" },
+                    { "data": "CodigoTipoProcedimiento", "className": "text-center" },
+                    { "data": "NombreEstadoPrevio", "className": "text-center" },
+                    { "data": "EFechaSolicitud", "className": "text-center" }
+                ]
+            });
+            /*
+            ACCION BOTTON
+            */
+            $('#btnBuscarInspeccion').on('click', function () {
+                var $btn = $(this).button('loading')
+                $.ajax({
+                    "url": "@Url.Action("Listar", "SeguimientoSolicitud")",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        FechaInicio: $("#FechaInicio").val(),
+                        FechaFin: $("#FechaFin").val(),
+                        CodigoTipoSolicitud: $("#CodigoTipoSolicitud").val(),
+                        NroSolicitud: $("#NroSolicitud").val(),
+                        Asunto: $("#Asunto").val(),
+                        Titular: $("#Titular").val()
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            tablaSeguimientoSolicitud.clear().draw();
+                            $.each(response.data, function (i, item) {
+                                tablaSeguimientoSolicitud.row.add(item).draw();
+                            });
+                        } else {
+                            toastr.error(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                        }
+                    },
+                    complete: function (response) {
+                        $btn.button('reset');
+                    }
+                });
+            })
+            $("#TablaSeguimientoSolicitud tbody").on('click', 'button', function (event) {
+                //$(".ModalDatosSolicitud").click(function () {
+                //});
+                //$(".ModalAnalisa").click(function () {
+                //    $("#ModalAnalista").modal();
+                //});
+                //$(".ModalInspeccion").click(function () {
+                //    $("#ModalInspeccion").modal();
+                //});
+                //$(".ModalActualizacion").click(function () {
+                //    $("#ModalActualizacion").modal();
+                //});
+                var Action = $(this)[0].name.split('_')[0];
+                var Values = $(this)[0].value;
+                var data = tablaSeguimientoSolicitud.row($(this).parents('tr')).data();
+                if (Action == "DATOS") {
+                    CargarDetalle(data.NroSolicitud);
+                    $("#ModalDatosSolicitante").modal();
+                } else if (Action == "DATOSTOTAL") {
+                    CargarDatosTotal(data.NroSolicitud);
+                    $("#ModalDatosTotal").modal();
+                }
+                else if (Action == "ANL") {
+                    CargarDetalle(data.NroSolicitud);
+                    $("#ModalAnalista").modal();
+                } else if (Action == "INS") {
+                    CargarDetalle(data.NroSolicitud);
+                    $("#ModalInspeccion").modal();
+                }
+                if (Action == "ACT") {
+                    CargarDetalle(data.NroSolicitud);
+                    $("#ModalActualizacion").modal();
+                }
+            });
+
+            function CargarDetalle(NroSolicitud) {
+                $.post("@Url.Action("Detalle", "SeguimientoSolicitud")",
+                                               {
+                                                   NroSolicitud: NroSolicitud
+                                               }
+                                               , function (response) {
+                                                   console.log(response);
+                                                   //datos Generales
+                                                   var encontro = false;
+                                                   $.each(response.data, function (i, item) {
+                                                       //console.log(item);
+                                                       if (encontro == false) {
+                                                           $("#TipoSolicitud").html(item.TipoSolicitud);
+                                                           $("#TipoDocumento").html(item.TipoDocumento);
+                                                           $("#AreaSolicitante").html(item.AreaSolicitante);
+                                                           $("#FormularioProcedimiento").html(item.FormularioProcedimiento);
+                                                           encontro = true;
+                                                       }
+                                                       if (item.EstadoSeguimiento == "ANL") {
+                                                           $("#AtencionAnterioAnalista").html(item.FechaLimiteInformeAnalista);
+                                                           $("#FechaRecepcionAnalista").html(item.FechaRecepcion);
+                                                           $("#PuestoResponsableAnalista").html(item.PuestoResponsable);
+                                                           $("#ResponsableAnalista").html(item.Responsable);
+                                                           $("#TipoProcedimientoAnalista").html(item.TipoProcedimiento);
+                                                           //$("#FechaLimiteAnalista").html(item. );
+                                                       } else if (item.EstadoSeguimiento == "INS") {
+                                                           $("#FechaLimiteInspeccion").html(item.FechaLimiteInspeccion);
+                                                           //$("#FormularioProcedimientoInspeccion").html(item. );
+                                                           //$("#FechaAntecionAnterioInspeccion").html(item. );
+                                                           $("#FechaRecepcionInspeccion").html(item.FechaRecepcion);
+                                                           $("#PuestoResponsableInspeccion").html(item.PuestoResponsable);
+                                                           $("#ResponsableInspeccion").html(item.Responsable);
+                                                           $("#NumeroInspeccion").html(item.NumeroInpesccion);
+                                                           $("#TipoProcedimientoInspeccion").html(item.TipoProcedimiento);
+
+                                                       } else if (item.EstadoSeguimiento == "ACT") {
+                                                           $("#FechaLimiteActualizacion").html(item.FechaLimiteActualizacion);
+                                                           $("#FormularioProcedimientoActualizacion").html(item.FormularioProcedimiento);
+                                                           //$("#FechaAtencionAnteriorActualizacion").html(item. );
+                                                           $("#FechaRecepcionActualizacion").html(item.FechaRecepcion);
+                                                           $("#PuestoResponsanbleActualiacion").html(item.PuestoResponsable);
+                                                           $("#ResponsableActualizacion").html(item.Responsable)
+                                                           $("#TipoProcedimientoActualizacion").html(item.TipoProcedimiento);
+                                                       }
+                                                   });
+                                               });
+            }
+            function CargarDatosTotal(NroSolicitud) {
+                //tablaProcedimientoNuevo.ajax.reload();
+                //tablaProcedimientoNuevo.columns.adjust().draw();
+                tablaProcedimientoNuevo.clear().draw();
+                $.post("@Url.Action("CargarProcedimientoNuevoSegui", "ProcedimientoNuevo")",
+                                               {
+                                                   FiltrarCodigoTipoSolicitud: "",
+                                                   FiltrarNumeroSolicitud: NroSolicitud,
+                                                   FiltrarCodigoPeriodo: "",
+                                                   cantReg: 2000
+                                               }
+                                               , function (response) {
+                                                   console.log(response);
+                                                   //datos Generales
+                                                   var encontro = false;
+                                                   //tablaProcedimientoNuevo.clear().draw();
+                                                   $.each(response.data, function (i, item) {
+                                                       tablaProcedimientoNuevo.row.add(item).draw();
+                                                   });
+                                               });
+                @*$.post("@Url.Action("CargarProcedimientoInicial", "ProcedimientoNuevo")",
+                                               {
+                                                   FiltrarCodigoTipoSolicitud: "",
+                                                   FiltrarNumeroSolicitud: NroSolicitud,
+                                                   FiltrarCodigoPeriodo: ""
+                                               }
+                                               , function (response) {
+                                                   console.log(response);
+                                                   //datos Generales
+                                                   $.each(response.data, function (i, item) {
+                                                       item.Item = 0;
+                                                       tablaProcedimientoNuevo.row.add(item).draw();
+                                                   });
+                                               });*@
+            }
+            /*
+            MODAL
+            */
+
+            var valor = $("#codTipoBusqueda").val();
+            $("#panelSolicitud").hide();
+            $("#panelFecha").hide();
+            $("#panelTitular").hide();
+            $("#panelAsunto").hide();
+            $('#panelTipoSolicitud').hide();
+            $("#FechaInicio").val("");
+            $("#FechaFin").val("");
+            $("#NroSolicitud").val("");
+            $("#Asunto").val("");
+            $("#Titular").val("");
+            $('#CodigoTipoSolicitud').val('');
+
+            $("#codTipoBusqueda").change(function () {
+                $("#panelSolicitud").hide();
+                $("#panelFecha").hide();
+                $("#panelTitular").hide();
+                $("#panelAsunto").hide();
+                $("#panelTipoSolicitud").hide();
+
+                $("#FechaInicio").val("");
+                $("#FechaFin").val("");
+                $("#NroSolicitud").val("");
+                $("#Asunto").val("");
+                $("#Titular").val("");
+                $('#CodigoTipoSolicitud').val('');
+                $("#btnBuscarInspeccion").show();
+                switch (this.value.trim()) {
+                    case "1": $("#panelTipoSolicitud").show(); break;
+                    case "2": $("#panelSolicitud").show(); break;
+                    case "3": $("#panelFecha").show(); break;
+                    case "4": $("#panelAsunto").show(); break;
+                    case "5": $("#panelTitular").show(); break;
+                }
+            });
+        });
+    </script>
+    <style>
+        .btn-circle {
+            width: 49px;
+            height: 49px;
+            text-align: center;
+            padding: 5px 0;
+            font-size: 20px;
+            line-height: 2.00;
+            border-radius: 30px;
+        }
+
+        .btn-circle-micro {
+            width: 19px;
+            height: 19px;
+            text-align: center;
+            padding: 1px 0;
+            font-size: 13px;
+            line-height: 0.1;
+            border-radius: 30px;
+        }
+
+        .btn-circle-sm {
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            padding: 1px 2px 1px;
+            font-size: 9px;
+            line-height: 1.65;
+            border-radius: 30px;
+        }
+
+        .btn-default {
+            border-color: #4cae4c;
+        }
+
+        .btn-circle-lg {
+            width: 79px;
+            height: 79px;
+            text-align: center;
+            padding: 13px 0;
+            font-size: 30px;
+            line-height: 2.00;
+            border-radius: 70px;
+        }
+    </style>
+}

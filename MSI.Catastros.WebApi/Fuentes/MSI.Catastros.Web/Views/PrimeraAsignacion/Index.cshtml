@@ -1,0 +1,267 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.PrimeraAsignacion.FiltrarPrimeraAsignacionViewModel
+
+@{
+    ViewBag.Title = "Primera Asignación";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="overflow: hidden">
+                <div class="row">
+                    <div class="col-xl-9 col-lg-8 col-xs-6 pt-2">
+                        <label class="control-label">Primera Asignación</label>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-xs-6">
+                        <div class="row">
+                            <div class="col-md-6 pull-right">
+                                <button type="button" id="btnDerivar" disabled class="btn btn-green btn-block mr-3"><span class="glyphicon glyphicon-ok mr-2"></span> Derivar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="">
+                    <div class="row mb-5">
+                        <div class="col-sm-12 col-lg-9">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.ListTipoSolicitud)
+                                        @Html.DropDownListFor(m => m.CodigoTipoSolicitud, Model.ListTipoSolicitud, "- Seleccione el tipo de solicitud -", new { @class = "form-control", autofocus = "true" })
+                                        <span class="field-validation-valid" data-valmsg-for="CodigoTipoSolicitud" data-valmsg-replace="true"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3" id="divTipoDocumento" style="display:none;">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.ListTipoDocumento, htmlAttributes: new { @class = "control-label" })
+                                        @Html.DropDownListFor(m => m.CodigoTipoDocumentoReg, Model.ListTipoDocumento, "- Seleccione el tipo de documento -", new { @class = "chosen-seleccionar form-control", autofocus = "true" })
+                                        <span class="field-validation-valid" data-valmsg-for="CodigoTipoDocumento" data-valmsg-replace="true"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.NumeroSolicitud)
+                                        @Html.TextBoxFor(model => model.NumeroSolicitud, new { @class = "form-control" })
+                                        <span class="field-validation-valid" data-valmsg-for="NumeroSolicitud" data-valmsg-replace="true"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 col-lg-2">
+                                    <br />
+                                    <button id="btnBuscar" type="button" class="btn btn-block btn-default" style="margin-top:6px">Buscar</button>
+                                </div>
+                            </div>
+                            <hr class="buscar" />
+                            <div id="SeccionListaPrimeraAsignacion">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Tipo de Documento</label>
+                                            <input type="text" class="form-control" readonly="readonly" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Area Solicitante</label>
+                                            <input type="text" class="form-control" readonly="readonly" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Folios</label>
+                                            <input type="text" class="form-control" readonly="readonly" />
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Asignar a Responsable</label>
+                                            <select class="form-control" readonly><option>- Seleccione Responsable -</option></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Puesto Responsable</label>
+                                            <input type="text" class="form-control" readonly="readonly" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Fecha de Recepción</label>
+                                            <input type="text" class="form-control" readonly="readonly"  />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label class="control-label">Actividad</label>
+                                            <select class="form-control" readonly><option>- Seleccione la actividad -</option></select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label class="control-label">Acción</label>
+                                            <select class="form-control" readonly><option>- Seleccione la acción -</option></select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label class="control-label">Observaciones</label>
+                                            <textarea class="form-control" rows="5" readonly="readonly"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Tipo Procedimiento</label>
+                                            <select class="form-control" readonly>
+                                                <option>- Seleccione el tipo de procedimiento -</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @*<div class="row">
+                                <div class="col-md-3 col-md-offset-9">
+                                    <button type="button" id="btnDerivar" disabled class="btn btn-green btn-block mr-3"><span class="glyphicon glyphicon-ok mr-2"></span> Derivar</button>
+                                </div>
+                            </div>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
+@section datatables {
+    <script>
+        $(document).ready(function () {
+            function a(e) {
+                setInterval(function () { void $.LoadingOverlay("hide"); }, e)
+            }
+            $.LoadingOverlaySetup({}), a(7000)
+        //$('#page-wrapper').removeClass('pt-5').addClass('pt-1'); $('#periodoGlobal').show();
+        $(".chosen-seleccionar").chosen({ width: "100%", placeholder_text_single: "Seleccione una opción" });
+        $('#btnBuscar').click(function () {
+            numVal = $('#NumeroSolicitud').val();
+            tipDoc = $('#CodigoTipoDocumentoReg').val();
+            codSol = $('#CodigoTipoSolicitud').val();
+            $.LoadingOverlay("show");
+            $('.field-validation-valid').html('').removeClass('has error'); $('#btnDerivar').attr('disabled', 'disabled');
+            $('#SeccionListaPrimeraAsignacion').html("");
+            if (!codSol) {
+                $('[data-valmsg-for="CodigoTipoSolicitud"]').html('Seleccione el tipo de solicitud').addClass('field-validation-valid has-error');
+                
+                $('#CodigoTipoSolicitud').focus();$.LoadingOverlay("hide");
+            } else if (!tipDoc && codSol != '010003') {
+                $('[data-valmsg-for="CodigoTipoDocumento"]').html('Seleccione el tipo de documento').addClass('field-validation-valid has-error');
+                $('#CodigoTipoDocumentoReg').focus();$.LoadingOverlay("hide");
+            } else if (numVal === '-' || !numVal) {
+                $('[data-valmsg-for="NumeroSolicitud"]').html('Ingrese un número de solicitud').addClass('field-validation-valid has-error');
+                $('#NumeroSolicitud').focus();  $.LoadingOverlay("hide");
+            } else {
+                $.get("@Url.Content("~/PrimeraAsignacion/BuscarAsignacion")", {
+                    CodigoTipoSolicitud: $('#CodigoTipoSolicitud').val(), NumeroSolicitud: $('#NumeroSolicitud').val(),
+                    CodigoTipoDocumento: $('#CodigoTipoDocumentoReg').val(), NombreTipoDocumento:($('#CodigoTipoSolicitud').val()!= '010003')?  $('#CodigoTipoDocumentoReg option:selected').text() :  $('#CodigoTipoSolicitud option:selected').text() 
+                }, function (response) {
+                    $.LoadingOverlay("hide");
+                    if (response != null) {
+                        $('#SeccionListaPrimeraAsignacion').html(response);
+                        $('.field-validation-error.text-danger').html("");
+                        if ($('#Correlativo').val()) {
+                            $('#btnDerivar').removeAttr('disabled');
+                            $('#RegistroPrimeraAsignacion .form-control').removeAttr('disabled');
+                        } else {
+                            $('#btnDerivar').attr('disabled', 'disabled');
+                            $('#SeccionListaPrimeraAsignacion').html("");
+                            toastr.error('No se han encontrado solicitudes derivadas', "Mensaje del Sistema", { "progressBar": true });
+                            $('#RegistroPrimeraAsignacion .form-control').attr('disabled', 'disabled');
+                        }
+                    }
+                });
+            }
+        });
+
+        $('#btnDerivar').click(function () {
+            bootbox.confirm({
+                title: "Mensaje del Sistema", message: "¿Esta seguro de derivar la solicitud?",
+                buttons: { confirm: { label: '<i class="fa fa-check"></i> Aceptar ' }, cancel: { label: '<i class="fa fa-times"></i> Cancelar' } },
+                callback: function (result) {
+                    if (result) {
+                        $(this).attr('disabled', 'disabled');
+                        var url = $('#frmPrimeraAsignacion').attr("action"); var formData = $('#frmPrimeraAsignacion').serialize();
+                        $.ajax({
+                            url: url, type: "POST", data: formData, dataType: "json",
+                            success: function (response) {
+                                if (response.success) {
+                                    $('#frmPrimeraAsignacion')[0].reset();
+                                    $('#NombreTipoDocumento').val(""); $('#PuestoResponsable').val(""); $('#FechaRecepcion').val("");
+                                    $('#NombreAreaSolicitante').val(""); $('#PuestoResponsable').val(""); $('#Folio').val("");
+                                    $('#NumeroSolicitud').val(""); $('#CodigoTipoSolicitud').val("").focus();
+
+                                    $('#CodigoAccion').attr('disabled', 'disabled').val('').trigger("chosen:updated");
+                                    $('#CodigoActividad').attr('disabled', 'disabled').val('').trigger("chosen:updated");
+
+                                    $('.field-validation-error.text-danger').html("");
+                                    $('#RegistroPrimeraAsignacion .form-control').attr('disabled', 'disabled');
+                                    $('#btnDerivar').attr('disabled', 'disabled');
+                                    toastr.success("Solicitud derivada correctamente", "Mensaje del Sistema", { "progressBar": true });
+                                } else { toastr.error(response.responseText, "Mensaje del Sistema", { "progressBar": true }); }
+                            },
+                            error: function (response) {
+                                $('#btnDerivar').removeAttr('disabled');
+                                var modelStateErrors = response.responseJSON;
+                                if (modelStateErrors) {
+                                    for (var i = 0; i < modelStateErrors.length; i++) { $('span[data-valmsg-for="' + modelStateErrors[i].key + '"]').text(modelStateErrors[i].errors[0]).addClass('has-error'); }
+                                }
+                            },
+                            complete: function () {
+
+                            }
+                        });
+                    }
+                }
+            });
+        });
+        $('#CodigoTipoSolicitud').change(function () {
+            if (this.value === "010001") {
+                $('#divTipoDocumento').show();
+                var URL = "@Url.Content("~/RecepcionDocumentos/DocExterno")";
+                    $.post(URL, function (data) {
+                        $('#CodigoTipoDocumentoReg').find('option:not(:first)').remove();
+                        var items = '<option value="">Seleccione el tipo de documento</option>';
+                        $.each(data, function (i, item) { items += "<option value='" + item.Value + "'>" + item.Text + "</option>"; });
+                        $('#CodigoTipoDocumentoReg').html(items);
+                        $('#CodigoTipoDocumentoReg').trigger("chosen:updated");
+                    });
+                } else if (this.value === "010002") {
+                    $('#divTipoDocumento').show();
+                    var URL = "@Url.Content("~/RecepcionDocumentos/DocInterno")";
+                    $.post(URL, function (data) {
+                        $('#CodigoTipoDocumentoReg').find('option:not(:first)').remove();
+                        var items = '<option value="">Seleccione el tipo de documento</option>';
+                        $.each(data, function (i, item) { items += "<option value='" + item.Value + "'>" + item.Text + "</option>"; });
+                        $('#CodigoTipoDocumentoReg').html(items);
+                        $('#CodigoTipoDocumentoReg').trigger("chosen:updated");
+                    });
+                } else {
+                    $('#divTipoDocumento').hide();
+                    $('#CodigoTipoDocumentoReg').find('option:not(:first)').remove();
+                }
+            });
+            });
+</script>
+}

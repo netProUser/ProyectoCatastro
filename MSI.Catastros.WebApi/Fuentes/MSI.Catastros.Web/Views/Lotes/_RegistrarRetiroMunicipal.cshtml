@@ -1,0 +1,202 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Lotes.RegistrarRetiroMunicipalViewModel
+
+<div id="RegistrarRetiroContainer">
+
+    @Html.AntiForgeryToken()
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-hidden="true">
+                    &times;
+                </button>
+                <h4 id="tituloModalRetiro">Registrar Retiro Municipal</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row fonts12">
+                    <div class="col-md-12">
+                        <input id="Codigo" type="hidden" />
+                        <input id="Estado" type="hidden" />
+                        <table>
+                            <tr>
+                                <td width="35%"><label><br /> Vía</label></td>
+                                <td width="7%"><label>Retiro <br />Oficial</label></td>
+                                <td width="7%"><label>Retiro <br />Campo</label></td>
+                                <td width="8%"><label><br />Ocupación</label></td>
+                                <td width="11%"><label><br />Descripción</label></td>
+                                <td width="7%"><label>Jardín <br />Campo</label></td>
+                                <td width="7%"><label><br />Ocupación</label></td>
+                                <td width="11%"><label><br />Descripción</label></td>
+                            </tr>
+                            <tr>
+                                <td class="pr-3"><select autofocus class="form-control"  id="CodigoViaRet"><option value=""> - Seleccione una vía- </option></select></td>
+                                <td class="pr-3"><input type="text" class="form-control px-2 text-right numero" disabled id="RetiroOfic"></td>
+                                <td class="pr-3"><input type="text" class="form-control px-2 text-right numero" id="RetiroCampo"></td>
+                                <td class="pr-3"><select class="form-control px-2" id="OcupacionRetiro"><option value=""> - Seleccione - </option></select></td>
+                                <td class="pr-3"><select class="form-control px-0" id="DescripcionRetiro" disabled><option value=""> - Seleccione - </option></select></td>
+                                <td class="pr-3"><input type="text" class="form-control px-2 text-right numero" id="JardinAislamOfi"></td>
+                                <td class="pr-3"><select class="form-control px-2" id="OcupacionJardin"><option value=""> - Seleccione - </option></select></td>
+                                <td class=""><select class="form-control px-0" id="DescripcionJardin" disabled><option value=""> - Seleccione - </option></select></td>
+                            </tr>
+                            <tr>
+                                <td colspan="9">
+                                    <div class="has-error">
+                                        <ul id="msgErroresDet"></ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <br />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button id="btnSubmitDet" type="button" class="btn btn-green">Grabar</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#OcupacionRetiro').change(function () {
+            console.log('a', $('#OcupacionRetiro').val());
+            if (this.value === "010002") {
+                $('#DescripcionRetiro').val('').attr('disabled', 'disabled');
+            } else {
+                $('#DescripcionRetiro').removeAttr('disabled');
+            }
+        })
+        $('#OcupacionJardin').change(function () {
+            console.log('b', this.value);
+            if (this.value === "010002") {
+                $('#DescripcionJardin').val('').attr('disabled', 'disabled');
+            } else {
+                $('#DescripcionJardin').removeAttr('disabled');
+            }
+        })
+        if ('@Model.Codigo') {
+            $('#RetiroCampo').val('@Model.RetiroCampo');
+            $('#JardinAislamOfi').val('@Model.JardinAislamOfi');
+            var ocuRetiro = '@Model.OcupacionRetiro';
+            $('#OcupacionRetiro').val(ocuRetiro);
+            if (ocuRetiro === "010002") { $('#DescripcionRetiro').attr('disabled', 'disabled'); } else { $('#DescripcionRetiro').removeAttr('disabled'); }
+            $('#DescripcionRetiro').val('@Model.DescripcionRetiro');
+
+            var ocuJardin = '@Model.OcupacionJardin';
+            $('#OcupacionJardin').val('@Model.OcupacionJardin').trigger('change');
+            if (ocuJardin === "010002") { $('#DescripcionJardin').attr('disabled', 'disabled'); } else { $('#DescripcionJardin').removeAttr('disabled'); }
+            $('#DescripcionJardin').val('@Model.DescripcionJardin');
+            $('#Codigo').val('@Model.Codigo');
+
+            CargarParamConfirmacion('@Model.OcupacionRetiro', '@Model.OcupacionJardin');
+            CargarDescripcionRetiro('@Model.DescripcionRetiro', '@Model.DescripcionJardin');
+        } else {
+            CargarParamConfirmacion();
+            CargarDescripcionRetiro();
+        }
+
+
+
+        $('#Estado').val('@Model.Estado');
+        $('#tituloModalRetiro').text('Registrar Retiro Municipal: ' + $('#CodDist').val() + '-' + $('#CodSect').val() + '-' + $('#CodManz').val() + '-' + $('#CodLote').val());
+        //console.log('AbrirRetiro', '@Model.CodigoVia');
+        CargarViasRetiro('@Model.CodigoVia');
+        $('.numero').number(true, 4, '.', '');
+        $('input').keyup(function () { this.value = this.value.toLocaleUpperCase() });
+
+        $("#btnSubmitDet").on("click", function (event) {
+            var cont = 0;
+            $('#msgErroresDet').html("");
+            if (!$('#CodigoViaRet').val()) { $('#msgErroresDet').append("<li>Seleccione la vía</li>"); cont++; }
+            if (!$('#RetiroCampo').val()) { $('#msgErroresDet').append("<li>Ingrese el Retiro Campo</li>"); cont++; }
+            if (!$('#JardinAislamOfi').val()) { $('#msgErroresDet').append("<li>Ingrese el Jardín Aislam</li>"); cont++; }
+            if (!$('#OcupacionRetiro').val()) { $('#msgErroresDet').append("<li>Seleccione la ocupación</li>"); cont++; }
+            if (!$('#OcupacionJardin').val()) { $('#msgErroresDet').append("<li>Seleccione la ocupación</li>"); cont++; }
+            if (cont === 0) {
+                $('#msgErroresDet').html("");
+                var model = {
+                    "Codigo": $('#Codigo').val(), "Estado": $('#Estado').val(), "CodigoVia": $('#CodigoViaRet').val(), "RetiroCampo": $('#RetiroCampo').val(), "JardinAislamOfi": $('#JardinAislamOfi').val(),
+                    "OcupacionRetiro": $('#OcupacionRetiro').val(), "OcupacionJardin": $('#OcupacionJardin').val(),
+                    "DescripcionRetiro": $('#DescripcionRetiro').val(), "DescripcionJardin": $('#DescripcionJardin').val(),Estatico: Estatico,
+                    CodigoDistrito: $('#CodDist').val(), CodigoLote: $('#CodLote').val(), CodigoManzana: $('#CodManz').val(), CodigoSector: $('#CodSect').val()
+                };
+                $.post("@Url.Content("~/Lotes/GrabarLoteRetiroMunicipal")", {
+                    model: model
+                }, function (response) {
+                    if (response.success === false) {
+                        toastr.warning(response.responseText, "Mensaje del Sistema", { "progressBar": true, "showDuration": "800", });
+                    } else {
+                        tablaRetiroMunicipal.ajax.reload();
+                        $('#modalRegistrarRetiroMunicipal').modal('hide');
+                    }
+
+                });
+
+            }
+        });
+        $('#CodigoViaRet').change(function () {
+            $.post("@Url.Content("~/Lotes/RecuperarManzanaMedidas")", { CodigoDistrito: $('#CodDist').val(), CodigoLote: $('#CodLote').val(), CodigoManzana: $('#CodManz').val(), CodigoSector: $('#CodSect').val(), CodigoVia: this.value, Estatico: Estatico }, function (data) {
+                $('#RetiroOfic').val(data.Retiro);
+                //$('#JardinOfic').val(data.Jardin);
+            });
+        });
+
+        function CargarDescripcionRetiro(valor1, valor2) {
+            $('#DescripcionRetiro').children('option:not(:first)').remove();
+            $('#DescripcionJardin').children('option:not(:first)').remove();
+            $.post("@Url.Content("~/Lotes/ListarDescripcionRetiro")", function (data) {
+                $.each(data, function (i, obj) {
+                    $('#DescripcionRetiro').append($('<option>').text(obj.Text).attr('value', obj.Value));
+                    $('#DescripcionJardin').append($('<option>').text(obj.Text).attr('value', obj.Value));
+                });
+                if (valor1) {
+                    $('#DescripcionRetiro').val(valor1);
+                    $('#DescripcionJardin').val(valor2);
+                }
+            });
+        }
+        function CargarRetiroJardin(valor) {
+            $.post("@Url.Content("~/Lotes/RecuperarManzanaMedidas")", { CodigoDistrito: $('#CodDist').val(), CodigoLote: $('#CodLote').val(), CodigoManzana: $('#CodManz').val(), CodigoSector: $('#CodSect').val(), CodigoVia: valor, Estatico: Estatico }, function (data) {
+                $('#RetiroOfic').val(data.Retiro);
+                //$('#JardinOfic').val(data.Jardin);
+            });
+        }
+        function CargarParamConfirmacion(valor1, valor2) {
+            $('#OcupacionRetiro').children('option:not(:first)').remove();
+            $('#OcupacionJardin').children('option:not(:first)').remove();
+            $.post("@Url.Content("~/Lotes/ListarParamConfirmacion")", function (data) {
+                $.each(data, function (i, obj) {
+                    $('#OcupacionRetiro').append($('<option>').text(obj.Text).attr('value', obj.Value));
+                    $('#OcupacionJardin').append($('<option>').text(obj.Text).attr('value', obj.Value));
+                });
+                if (valor1) {
+                    $('#OcupacionRetiro').val(valor1);
+                    $('#OcupacionJardin').val(valor2);
+                }
+            });
+        }
+        function CargarViasRetiro(valor) {
+            $('#CodigoViaRet').children('option:not(:first)').remove();
+            $.post("@Url.Content("~/Lotes/ListarViasRetiro")", { CodigoDistrito: $('#CodDist').val(), CodigoLote: $('#CodLote').val(), CodigoManzana: $('#CodManz').val(), CodigoSector: $('#CodSect').val(), Estatico: Estatico }, function (data) {
+                $.each(data, function (i, obj) {
+                    $('#CodigoViaRet').append($('<option>').text(obj.Text).attr('value', obj.Value));
+                });
+                if (valor) {
+                    $('#CodigoViaRet').val(valor);
+                    CargarRetiroJardin(valor);
+                }
+            });
+        }
+    });
+</script>
+
+

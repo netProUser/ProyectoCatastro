@@ -1,0 +1,165 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Masivo.AreaTerreno
+
+@*@using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()*@
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-hidden="true">
+                &times;
+            </button>
+            <h4 id="TituloGeneral">AREAS DE TERRENO / AREAS CONSTRUIDAS</h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="table-responsive">
+                        <table id="TablaUnidadPaso8" class="display table table-bordered" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Dist</th>
+                                    <th>Sec</th>
+                                    <th>Mz</th>
+                                    <th>Lote</th>
+                                    <th>Ed</th>
+                                    <th>Entr</th>
+                                    <th>Piso</th>
+                                    <th>Unidad</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.areaOcupada)
+                        @Html.TextBoxFor(model => model.areaOcupada, new { @class = "form-control numero" })
+                        @Html.ValidationMessageFor(model => model.areaOcupada)
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.areaComun)
+                        @Html.TextBoxFor(model => model.areaComun, new { @class = "form-control numero" })
+                        @Html.ValidationMessageFor(model => model.areaComun)
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ListTipoDepartamento)
+                        @Html.DropDownListFor(m => m.CodTipoDepartamento, Model.ListTipoDepartamento, "- Seleccione -", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.CodTipoDepartamento)
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ListUsoPredio)
+                        @Html.DropDownListFor(m => m.CodUsoPredio, Model.ListUsoPredio, "- Seleccione -", new { @class = "form-control chosen-seleccionar" })
+                        @Html.ValidationMessageFor(model => model.CodUsoPredio)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="col-md-offset-2 col-md-10">
+                <input id="btnGuardarAreaTerreno" type="submit" value="Grabar" class="btn btn-success" />
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*}*@
+<script>
+    $(function () {
+        $(".chosen-seleccionar").chosen({ width: "100%", placeholder_text_single: "Seleccione una opción" });
+        tablaUnidadPaso8 = $("#TablaUnidadPaso8").DataTable({
+            "processing": false,
+            "serverSide": false,
+            "paging": false,
+            "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+            "columns": [
+                { "data": "Distrito", "className": "text-center" },
+                { "data": "Sec", "className": "text-center" },
+                { "data": "Manzana", "className": "text-center" },
+                { "data": "Lote", "className": "text-center" },
+                { "data": "Ed", "className": "text-center" },
+                { "data": "Entr", "className": "text-center" },
+                { "data": "Piso", "className": "text-center" },
+                { "data": "Unidad", "className": "text-center" }
+            ]
+        });
+        //debugger;
+        tablaUnidadPaso8.clear().draw();
+        $.each(ListunidadCatastralDireccion, function (index, entry) {
+            tablaUnidadPaso8.row.add(entry).draw();
+        });
+        $('.numero').number(true, 4, '.', '');
+        $('#btnGuardarAreaTerreno').click(function () {
+            var UnidadCatastral = {
+                CodigoUnidadCatastral: dataCatastralMasivo.CODUNI,
+                //CodigoDistrito: $("#CodigoDistrito").val(),
+                //CodigoSector: $("#CodigoSector").val(),
+                //CodigoManzana: $("#CodigoManzana").val(),
+                //CodigoLote: $("#CodigoLote").val(),
+                //CodigoEdificacion: $("#CodigoEdificacion").val(),
+                //CodigoEntrada: $("#CodigoEntrada").val(),
+                //CodigoPiso: $("#CodigoPiso").val(),
+                //CodigoUnidad: $("#CodigoUnidad").val(),
+                //Cuc: $("#Cuc").val(),
+                //CodigoPredial: $("#CodigoPredial").val(),
+                //CodigoInscripcionCatastral: $("#CodigoInscripcionCatastral").val(),
+                //CodigoFuenteInscripcionCatastral: $("#CodigoFuenteInscripcionCatastral").val(),
+                //Denominacion: $("#Denominacion").val(),
+                //CodigoClasificacionPredio: $("#CodTipoDepartamento").val(),
+                //CodigoCargaRegistral: $("#CodigoCargaRegistral").val(),
+                //CodigoEstadoConstruccion: $("#CodigoEstadoConstruccion").val(),
+                //AvanceConstruccion: $("#AvanceConstruccion").val(),
+                CodgiUsoPredio: $("#CodUsoPredio").val(),
+                CodigoDepartamentoPredio: $("#CodTipoDepartamento").val(),
+                //AreaTerrenoVerificada: $("#AreaTerrenoVerificada").val(),
+                //AreaTerrenoComun: $("#AreaTerrenoComun").val(),
+                //AreaTerrenoTotal: $("#AreaTerrenoTotal").val(),
+                //AreaConstruidaTotalDeclarada: $("#AreaConstruidaTotalDeclarada").val(),
+
+                AreaOcupada: $("#areaOcupada").val(),
+                AreaComunesOficial: $("#areaComun").val(),
+
+                //AreaTerrenoDeclarada: $("#AreaTerrenoDeclarada").val(),
+                //AreaTerrenoSubValuada: $("#AreaTerrenoSubValuada").val(),
+                //AreaTerrenoSobreValuada: $("#AreaTerrenoSobreValuada").val(),
+                //AreaConstruidaSubValuada: $("#AreaConstruidaSubValuada").val(),
+                //AreaConstruidaSobreValuada: $("#AreaConstruidaSobreValuada").val(),
+                //TipoLlenado: $("#TipoLlenado").val(),
+                Estado: 2,
+            };
+            $.ajax({
+                url: "@Url.Content("~/UnidadCatastral/RegistrarUnidadCatastral")",
+                type: "POST",
+                data:
+                {
+                    UnidadCatastral: UnidadCatastral
+                },
+                dataType: "json",
+                success: function (response) {
+                    if (response.success) {
+                        $('#modalAreaTerreno').modal('hide');
+                        var mensaje = "Registro grabado correctamente";
+                        toastr.success(mensaje, "Mensaje del Sistema", { "progressBar": true });
+                        CagarListadoMasivo();
+                    } else {
+                        toastr.error(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                    }
+                },
+                complete: function () {
+                    $('#btnGuardarAreaTerreno').removeAttr('disabled');
+                }
+            });
+        });
+    })
+</script>

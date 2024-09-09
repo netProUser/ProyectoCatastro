@@ -1,0 +1,1155 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.MobiliarioUrbano.MobiliarioUrbanoViewModel
+
+@{
+    ViewBag.Title = "Mobiliario Urbano";
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="overflow: hidden">
+                <div class="row">
+                    <div class="col-md-6 col-xs-12"><strong>Mobiliario Urbano</strong></div>
+                    <div class="col-md-6 col-xs-12 text-right">
+                        <span>
+                            <button id="btnNuevo" class="btn btn-green">
+                                Crear
+                            </button>
+                        </span>
+                        <span>
+                            <button id="btnModificar" class="btn btn-green" disabled="disabled">
+                                Modicicar
+                            </button>
+                        </span>
+                        <span>
+                            <button id="btnElimianr" class="btn btn-green" disabled="disabled">
+                                Eliminar
+                            </button>
+                        </span>
+                        <span>
+                            <button id="btnGrabar" class="btn btn-green" disabled="disabled">
+                                Grabar
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("", "", FormMethod.Post, new { id = "frmMobiliario" }))
+                {
+                    @*@Html.AntiForgeryToken()*@
+                    @Html.ValidationSummary(true)
+                    <fieldset class="formulario" style="display: block;">
+                        <legend></legend>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Distrito)
+
+                                    @Html.TextBoxFor(model => model.Distrito, new { @class = "form-control", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.Distrito)
+
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.listSector)
+                                    @Html.DropDownListFor(m => m.codSector, Model.listSector, "- Seleccione -", new { @class = "form-control", @value = "0" })
+
+                                    @Html.ValidationMessageFor(model => model.codSector)
+
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.listManzana)
+                                    @Html.DropDownListFor(m => m.codManzana, Model.listManzana, "- Seleccione -", new { @class = "form-control" })
+
+                                    @Html.ValidationMessageFor(model => model.codManzana)
+
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ListLote)
+                                    @Html.DropDownListFor(m => m.codLote, Model.ListLote, "- Seleccione -", new { @class = "form-control" })
+
+                                    @Html.ValidationMessageFor(model => model.codLote)
+
+                                </div>
+
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ListClase)
+                                    @Html.DropDownListFor(m => m.codClase, Model.ListClase, "- Seleccione -", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.codClase)
+
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ListSubClase)
+                                    @Html.DropDownListFor(m => m.codSubClase, Model.ListSubClase, "- Seleccione -", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.codSubClase)
+
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ListObjeto)
+                                    @Html.DropDownListFor(m => m.codObjeto, Model.ListObjeto, "- Seleccione -", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.codObjeto)
+
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.listUnidad)
+                                    @Html.DropDownListFor(m => m.codUnidad, Model.listUnidad, "- Seleccione -", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.codUnidad)
+
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <label style="width:100%">&nbsp;</label>
+                                <a class="btn btn-default" id="btnBuscarUnidad">
+                                    <i class="glyphicon glyphicon-search" aria-hidden="true"></i> Buscar
+                                </a>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="formulario" style="display: block;">
+                        <legend></legend>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                @Html.Partial("_Componente", Model)
+                                <fieldset class="formulario" style="display: block;">
+                                    <legend>Ubicación</legend>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.listVia_1)
+                                                @Html.DropDownListFor(model => model.codVia_1, new SelectList(ViewBag.listVias, "Value", "Text"), "Seleccione una vía", new { @class = "chosen-seleccionar form-control", style = "width:100%;" })
+                                                @Html.ValidationMessageFor(model => model.codVia_1)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.ubicacionEspecificada)
+
+                                                @Html.TextBoxFor(model => model.ubicacionEspecificada, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.ubicacionEspecificada)
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.image)
+                                                @Html.TextBoxFor(model => model.image, null, new
+                                                {
+                                                    type = "file",
+                                                    @class = "form-control",
+                                                    onchange = "onFileSelected(event)",
+                                                    accept = "image/*",
+                                                    src=""
+                                                })
+                                                @Html.ValidationMessageFor(model => model.image)
+                                                @*<label id="label_detalle" class="form-label" style="font-weight: 200;font-size: 11px;">Subir solamente archivos PDF. El archivo debe ser menor a los 2 MB.</label>*@
+                                                @*<label id="label_archivo" class="form-label">
+                                                        <span class="mt-2 mr-2">Imagen Subido:  </span>
+                                                        <span id="nombre_archivo" class="mr-2"></span>
+                                                        <button type="button" data-toggle="tooltip" title="Borrar Documento" style="padding:2px 5px" id="EliminarArchivoTemp" class="btn btn-danger mb-2 glyphicon glyphicon-remove"></button>
+                                                    </label>*@
+                                                <p class="text-danger">Cargar Imagen en formato JPG , PNG</p>
+                                                <img id="imgUbicacion" class="img-responsive img-thumbnail" alt="" />
+                                                <input type="hidden" id="hdfImagen" name="name" value="" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.Partial("_Georeferencia", Model)
+                                </fieldset>
+                            </div>
+                            <div class="col-sm-8">
+                                <fieldset class="formulario" style="display: block; min-height: 561px;">
+                                    <legend>Formulario Detalle</legend>
+                                    <h4 class="text-info">Sub Clase</h4>
+                                    <div id="pnlGeneral">
+                                    </div>
+                                    <hr />
+                                    <h4 class="text-info">Objeto</h4>
+                                    <div id="pnlDetalle">
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <fieldset class="formulario" style="display: block;">
+                                    <legend>Observación</legend>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.Observacion.codigo)
+                                                @Html.TextBoxFor(model => model.Observacion.codigo, new { @class = "form-control", @readonly = "readonly" })
+                                                @Html.ValidationMessageFor(model => model.Observacion.codigo)
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.Observacion.fecha)
+                                                @*@Html.TextBoxFor(model => model.Observacion.fecha, new { @class = "form-control" })*@
+                                                <div class="form-group has-default has-feedback">
+                                                    @Html.TextBoxFor(model => model.Observacion.fecha, new { @class = "form-control fechaE", @readonly = "readonly" })
+                                                    <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>
+                                                </div>
+                                                @Html.ValidationMessageFor(model => model.Observacion.fecha)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.Observacion.Detalle)
+                                                @Html.TextBoxFor(model => model.Observacion.Detalle, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.Observacion.Detalle)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <label style="width:100%">&nbsp;</label>
+                                            <a class="btn btn-default" id="btnRegistrarObservacion">
+                                                <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                                            </a>
+                                            @*<a class="btn btn-default" id="">
+                                                    <i class="glyphicon glyphicon-pencil" aria-hidden="true"></i>
+                                                </a>*@
+                                            @*<a class="btn btn-default" id="">
+                                                    <i class="glyphicon glyphicon-trash" aria-hidden="true"></i>
+                                                </a>*@
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table id="TablaObservacion" class="table table-bordered" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Código</th>
+                                                        <th>Fecha</th>
+                                                        <th>Detalle</th>
+                                                        @*<th>Acciones</th>*@
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </fieldset>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $(function () {
+            /*
+             * INIT
+             */
+            $('input').keyup(function () { this.value = this.value.toLocaleUpperCase() });
+            $(".chosen-seleccionar").chosen({ width: "100%", placeholder_text_single: "Seleccione una opción" });
+            LoadClase();
+            /*
+             * CONGIFURAR DATA TABLE
+             */
+            tablaObservacion = $("#TablaObservacion").DataTable({
+                "processing": false,
+                "serverSide": false,
+                "paging": false,
+                //"language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+                'columnDefs': [
+                    { "width": "7%", "targets": 0 },
+                    { "width": "7%", "targets": 1 },
+                    { "width": "7%", "targets": 2 }
+                    //{ "width": "7%", "targets": 3 }
+                    //{ 'targets': 9, 'checkboxes': { 'selectRow': true } }
+                ],
+                "columns": [
+                    { "data": "Codigo", "className": "text-center" },
+                    { "data": "Fecha", "className": "text-center" },
+                    { "data": "Detalle", "className": "text-center" }
+                    //{ "data": "OpcionDesplegable", "className": "text-center" }
+                    //{ "data": "Indice", "name": "Indice", "autoWidth": true, "className": "text-center" },
+                ]
+            });
+            /*
+             * COMBOBOX
+             */
+            $("#codSector").change(function () {
+                LoadManzana();
+            });
+            $("#codManzana").change(function () {
+                debugger;
+                LoadLote();
+            });
+            $("#codLote").change(function () {
+                LoadClase();
+                //LoadUnidad();
+            });
+            $("#codClase").change(function () {
+                LoadSubClase();
+            });
+            $("#codSubClase").change(function () {
+                LoadObjeto();
+                LoadConfiguracionSubClase();
+            });
+            $("#codObjeto").change(function () {
+                LoadConfiguracionObjeto();
+                LoadUnidad();
+            });
+            $("#CodigoSector").change(function () {
+            });
+
+            /*
+             * BOTONES
+             */
+            $("#btnRegistrarObservacion").click(function () {
+                RegistrarObservacion();
+            });
+            $("#btnNuevo").click(function () {
+                if ($(this).val() == "") {
+                    //$("#btnNuevo").attr("disabled", true);
+                    $("#btnNuevo").html("Limpiar");
+                    $("#btnNuevo").val("Limpiar");
+                    $("#codUnidad").attr("disabled", true);
+                    $("#btnBuscarUnidad").attr("disabled", true);
+                    $("#btnModificar").attr("disabled", true);
+                    $("#btnElimianr").attr("disabled", true);
+                    $("#btnGrabar").attr("disabled", false);
+
+
+                    $("#codSector").val("0").change();
+                    $("#codManzana").val("0").change();
+                    $("#codLote").val("0").change();
+                    $("#codClase").val("0").change();
+                    $("#codSubClase").val("0").change();
+                    $("#codObjeto").val("0").change();
+                    $("#CodigoSector").val("0").change();
+                    $("#numeroUnidad").val("");
+                    $("#CodigoCampa_a").val("");
+                    $("#fechaCampania").val("");
+                    $("#codVia_1").val("0").trigger("chosen:updated");
+                    $("#ubicacionEspecificada").val("");
+                    tablaObservacion.clear().draw();
+                } else {
+                    $("#btnNuevo").html("Crear");
+                    $("#btnNuevo").val("");
+                    $("#codUnidad").attr("disabled", false);
+                    $("#btnBuscarUnidad").attr("disabled", false);
+                    $("#btnModificar").attr("disabled", true);
+                    $("#btnElimianr").attr("disabled", true);
+                    $("#btnGrabar").attr("disabled", true);
+
+                    $("#codSector").val("0").change();
+                    $("#codManzana").val("0").change();
+                    $("#codLote").val("0").change();
+                    $("#codClase").val("0").change();
+                    $("#codSubClase").val("0").change();
+                    $("#codObjeto").val("0").change();
+                    $("#CodigoSector").val("0").change();
+                    $("#numeroUnidad").val("");
+                    $("#CodigoCampa_a").val("");
+                    $("#fechaCampania").val("");
+                    $("#codVia_1").val("0").trigger("chosen:updated");
+                    $("#ubicacionEspecificada").val("");
+                    tablaObservacion.clear().draw();
+
+                }
+            });
+            $("#btnModificar").click(function () {
+
+            });
+            $("#btnElimianr").click(function () {
+
+            });
+            $("#btnGrabar").click(function () {
+                ObtenerDatosFormulario();
+            });
+            $("#btnBuscarUnidad").click(function () {
+                BuscarUnidad();
+            });
+        });
+        /*
+         * LISTAR MANZANA
+         */
+        function LoadManzana() {
+            if ($('#codSector').val() == "") {
+                return;
+            }
+            var URL = "@Url.Content("~/Manzana/Sector/")" + $('#codSector').val();
+            $.post(URL,
+                null,
+                function (data) {
+                    //if (response.success) {
+                    let dropdown = $('#codManzana');
+                    dropdown.empty();
+                    dropdown.append($('<option></option>').attr('value', 0).text("- Seleccione -"));
+                    $.each(data, function (key, entry) {
+                        dropdown.append($('<option></option>').attr('value', entry.CodigoManzana).text(entry.NombreManzana));
+                    });
+                    //}
+                });
+        }
+        /*
+         * LISTAR LOTE
+         */
+        function LoadLote() {
+            debugger;
+            var modelo = new Object();
+            modelo.codSector = $("#codSector").val();
+            modelo.codManzana = $("#codManzana").val();
+            $.post("@Url.Action("ListarLote", "MobiliarioUrbano")",
+                modelo,
+            function (response) {
+                if (response.success) {
+                    let dropdown = $('#codLote');
+                    dropdown.empty();
+                    dropdown.append($('<option></option>').attr('value', 0).text("- Seleccione -"));
+                    $.each(response.data, function (key, entry) {
+                        dropdown.append($('<option></option>').attr('value', entry.Value).text(entry.Text));
+                    });
+                }
+            });
+        }
+        /**
+         * LISTAR CLASE
+         */
+        function LoadClase() {
+            $.post("@Url.Action("ListarClase", "MobiliarioUrbano")",
+                null,
+                function (response) {
+                    if (response.success) {
+                        let dropdown = $('#codClase');
+                        dropdown.empty();
+                        dropdown.append($('<option></option>').attr('value', 0).text("- Seleccione -"));
+                        $.each(response.data, function (key, entry) {
+                            dropdown.append($('<option></option>').attr('value', entry.Value).text(entry.Text));
+                        });
+                        //if (response.data.length > 0) {
+                        //}
+                    }
+                });
+        }
+        /**
+         * LISTAR SUB CLASE
+         */
+        function LoadSubClase() {
+            var modelo = new Object();
+            modelo.CodClase = $("#codClase").val();
+            $.post("@Url.Action("ListarSubClase", "MobiliarioUrbano")",
+                modelo,
+                function (response) {
+                    let dropdown = $('#codSubClase');
+                    dropdown.empty();
+                    dropdown.append($('<option></option>').attr('value', 0).text("- Seleccione -"));
+                    $.each(response.data, function (key, entry) {
+                        dropdown.append($('<option></option>').attr('value', entry.Value).text(entry.Text));
+                    });
+                });
+        }
+        /**
+         * LISTAR OBJETOS
+         */
+        function LoadObjeto() {
+            var modelo = new Object();
+            modelo.CodClase = $("#codClase").val();
+            modelo.CodSubClase = $("#codSubClase").val();
+            $.post("@Url.Action("ListarObjeto", "MobiliarioUrbano")",
+                modelo,
+                function (response) {
+                    let dropdown = $('#codObjeto');
+                    dropdown.empty();
+                    dropdown.append($('<option></option>').attr('value', 0).text("- Seleccione -"));
+                    $.each(response.data, function (key, entry) {
+                        dropdown.append($('<option></option>').attr('value', entry.Value).text(entry.Text));
+                    });
+                });
+        }
+        /*
+         * LISTAR UNIDAD
+         */
+        function LoadUnidad() {
+            var modelo = new Object();
+            modelo.codSector = $("#codSector").val();
+            modelo.codManzana = $("#codManzana").val();
+            modelo.codLote = $("#codLote").val();
+            modelo.codClase = $("#codClase").val();
+            modelo.codSubClase = $("#codSubClase").val();
+            modelo.codObjeto = $("#codObjeto").val();
+            $.post("@Url.Action("ListarUnidad", "MobiliarioUrbano")",
+                modelo,
+            function (response) {
+                if (response.success) {
+                    let dropdown = $('#codUnidad');
+                    dropdown.empty();
+                    dropdown.append($('<option></option>').attr('value', 0).text("- Seleccione -"));
+                    $.each(response.data, function (key, entry) {
+                        dropdown.append($('<option></option>').attr('value', entry.Value).text(entry.Text));
+                    });
+                }
+            });
+        }
+
+        /*
+        * LISTAR CONFIGURACION SUB CLASE
+        */
+        function LoadConfiguracionSubClase() {
+            var modelo = new Object();
+            modelo.CodClase = $("#codClase").val();
+            modelo.CodSubClase = $("#codSubClase").val();
+            $.post("@Url.Action("ListarFormularioSubClase", "MobiliarioUrbanoFormulario")",
+                modelo,
+                function (response) {
+                    //console.log(response.data);
+                    let panelPrincipal = $("#pnlGeneral");
+                    panelPrincipal.html("");
+                    $.each(response.data, function (i, item) {
+                        if (item.codTipoCampo == "TEXTBOX") {
+                            panelPrincipal.append($("<label></label>").html(item.Descripcion));
+                            panelPrincipal.append($("<input></input>").attr("type", "text").attr("id", item.codigoConfiguracion).addClass("form-control"));
+                        } else if (item.codTipoCampo == "COMBOBOX") {
+                            var optionData = item.OpcionDesplegable.split(",");
+                            let htm = $("<select></select>").attr("id", item.codigoConfiguracion).addClass("form-control");
+                            htm.empty();
+                            htm.append($('<option></option>').attr('value', 0).text("- Seleccione -"));
+                            //debugger;
+                            if (optionData.length > 0) {
+                                $.each(optionData, function (i, obj) {
+                                    htm.append($("<option></option>").attr('value', optionData[i]).text(optionData[i]));
+                                })
+                            }
+                            panelPrincipal.append($("<label></label>").html(item.Descripcion));
+                            panelPrincipal.append(htm);
+                        } else if (item.codTipoCampo == "CHECKBOX") {
+                            var optionData = item.OpcionDesplegable.split(",");
+                            if (optionData.length > 0) {
+                                $.each(optionData, function (i, obj) {
+                                    panelPrincipal.append($("<label><label>").append($("<input></input>").attr("type", "checkbox").attr("value", item.codigoConfiguracion)).append(item.Descripcion));
+                                })
+                                panelPrincipal.append("<br/>");
+                            }
+                        }
+                    });
+                });
+        }
+        /*
+        * LISTAR CONFIGURACION OBJETO
+        */
+        function LoadConfiguracionObjeto() {
+            var modelo = new Object();
+            modelo.CodClase = $("#codClase").val();
+            modelo.CodSubClase = $("#codSubClase").val();
+            modelo.CodObjeto = $("#codObjeto").val();
+            $.post("@Url.Action("ListarFormularioObjeto", "MobiliarioUrbanoFormulario")",
+                modelo,
+                function (response) {
+                    //console.log(response.data);
+                    let pnlDetalle = $("#pnlDetalle");
+                    pnlDetalle.html("");
+                    $.each(response.data, function (i, item) {
+                        if (item.codTipoCampo == "TEXTBOX") {
+                            pnlDetalle.append($("<label></label>").html(item.Descripcion));
+                            pnlDetalle.append($("<input></input>").attr("type", "text").attr("id", item.codigoConfiguracion).addClass("form-control"));
+                        } else if (item.codTipoCampo == "COMBOBOX") {
+                            var optionData = item.OpcionDesplegable.split(",");
+                            let htm = $("<select></select>").attr("id", item.codigoConfiguracion).addClass("form-control");
+                            htm.empty();
+                            htm.append($('<option></option>').attr('value', 0).text("- Seleccione -"));
+                            //debugger;
+                            if (optionData.length > 0) {
+                                $.each(optionData, function (i, obj) {
+                                    htm.append($("<option></option>").attr('value', optionData[i]).text(optionData[i]));
+                                })
+                            }
+                            pnlDetalle.append($("<label></label>").html(item.Descripcion));
+                            pnlDetalle.append(htm);
+                        } else if (item.codTipoCampo == "CHECKBOX") {
+                            var optionData = item.OpcionDesplegable.split(",");
+                            if (optionData.length > 0) {
+                                pnlDetalle.append($("<label><label>").append(item.Descripcion));
+                                pnlDetalle.append("<br/>");
+                                $.each(optionData, function (i, obj) {
+                                    pnlDetalle.append($("<label><label>").append($("<input></input>").attr("id", item.codigoConfiguracion).attr("type", "checkbox").attr("value", obj)).append(obj));
+                                })
+                                pnlDetalle.append("<br/>");
+                            }
+                        }
+                    });
+                });
+        }
+        /*
+        * LOAD IMAGEN
+        */
+        function onFileSelected(event) {
+            var selectedFile = event.target.files[0];
+            var reader = new FileReader();
+
+            var imgtag = document.getElementById("imgUbicacion");
+            imgtag.title = selectedFile.name;
+
+            reader.onload = function (event) {
+                imgtag.src = event.target.result;
+                document.getElementById("hdfImagen").value = event.target.result;
+            };
+
+            reader.readAsDataURL(selectedFile);
+        }
+        /*
+         * REGISTRO DE OBSERVACIONES
+         */
+        function RegistrarObservacion() {
+            if ($("#Observacion_fecha").val().trim() == "") {
+                toastr.error("Ingrese Fecha del Detalle", "Mensaje del Sistema", { "progressBar": true });
+                $("#Observacion_fecha").focus();
+                return;
+            } else if ($("#Observacion_Detalle").val().trim() == "") {
+                toastr.error("Ingrese Detalle", "Mensaje del Sistema", { "progressBar": true });
+                $("#Observacion_Detalle").focus();
+                return
+            }
+            var modelo = new Object();
+            modelo.Codigo = $("#Observacion_codigo").val() == "" ? tablaObservacion.data().count() + 1 : $("#Observacion_codigo").val();
+            modelo.Fecha = $("#Observacion_fecha").val().trim();
+            modelo.Detalle = $("#Observacion_Detalle").val().trim();
+            //tablaObservacion.clear().draw();
+            //$.each(response.data, function (i, item) {
+            tablaObservacion.row.add(modelo).draw();
+            //});
+            //LIMPIAR CAMPOS
+            $("#Observacion_fecha").val("");
+            $("#Observacion_Detalle").val("");
+        }
+        /**
+         * LOAD INFO SAVE
+         */
+        function ObtenerDatosFormulario() {
+            var modelo = new Object();
+            modelo.Estado = 1;
+            modelo.codSector = $("#codSector").val();
+            modelo.codManzana = $("#codManzana").val();
+            modelo.codLote = $("#codLote").val();
+            modelo.codClase = $("#codClase").val();
+            modelo.codSubClase = $("#codSubClase").val();
+            modelo.codObjeto = $("#codObjeto").val();
+
+            modelo.CodigoCampa_a = $("#CodigoCampa_a").val();
+            modelo.fechaCampania = $("#fechaCampania").val();
+            modelo.codVia_1 = $("#codVia_1").val();
+            modelo.ubicacionEspecificada = $("#ubicacionEspecificada").val();
+            modelo.image = $("#hdfImagen").val();
+            modelo.latitud = $("#latitud").val();
+            modelo.longitud = $("#longitud").val();
+
+            /**
+             *  DATOS DINAMICOS SUB CLASE
+             */
+            var array = new Array();
+            var inputg = $("#pnlGeneral input:text");
+            var selectg = $("#pnlGeneral select");
+            var checkboxg = $("#pnlGeneral input:checkbox");
+            $(inputg).each(
+                function () {
+                    //console.log($(this).attr('id') + "->" + $(this).val());
+                    var Minimodelo = new Object();
+                    Minimodelo.configuracion = "SUBLCASE";
+                    //Minimodelo.padre = modelo.codSubClase;
+                    Minimodelo.codigo = $(this).attr('id');
+                    Minimodelo.valor = $(this).val();
+                    array.push(Minimodelo)
+                }
+            );
+            $(selectg).each(
+                function () {
+                    //console.log($(this).attr('id') + "->" + $(this).val());
+                    var Minimodelo = new Object();
+                    Minimodelo.configuracion = "SUBLCASE";
+                    //Minimodelo.padre = modelo.codSubClase;
+                    Minimodelo.codigo = $(this).attr('id');
+                    Minimodelo.valor = $(this).val();
+                    array.push(Minimodelo)
+                }
+            );
+            $(checkboxg).each(
+                function () {
+                    if ($(this).is(':checked')) {
+                        //console.log($(this).attr('id') + "->" + $(this).val());
+                        var Minimodelo = new Object();
+                        Minimodelo.configuracion = "SUBLCASE";
+                        //Minimodelo.padre = modelo.codSubClase;
+                        Minimodelo.codigo = $(this).attr('id');
+                        Minimodelo.valor = $(this).val();
+                        array.push(Minimodelo)
+                    }
+                }
+            );
+            /**
+             * DATOS DINAMICOS OBJETO
+             */
+            var input = $("#pnlDetalle input:text");
+            var select = $("#pnlDetalle select");
+            var checkbox = $("#pnlDetalle input:checkbox");
+            $(input).each(
+                function () {
+                    //console.log($(this).attr('id') + "->" + $(this).val());
+                    var Minimodelo = new Object();
+                    Minimodelo.configuracion = "OBJETO";
+                    // Minimodelo.padre = modelo.codObjeto;
+                    Minimodelo.codigo = $(this).attr('id');
+                    Minimodelo.valor = $(this).val();
+                    array.push(Minimodelo)
+                }
+            );
+            $(select).each(
+                function () {
+                    //console.log($(this).attr('id') + "->" + $(this).val());
+                    var Minimodelo = new Object();
+                    Minimodelo.configuracion = "OBJETO";
+                    //Minimodelo.padre = modelo.codObjeto;
+                    Minimodelo.codigo = $(this).attr('id');
+                    Minimodelo.valor = $(this).val();
+                    array.push(Minimodelo)
+                }
+            );
+            $(checkbox).each(
+                function () {
+                    if ($(this).is(':checked')) {
+                        //console.log($(this).attr('id') + "->" + $(this).val());
+                        var Minimodelo = new Object();
+                        Minimodelo.configuracion = "OBJETO";
+                        //Minimodelo.padre = modelo.codObjeto;
+                        Minimodelo.codigo = $(this).attr('id');
+                        Minimodelo.valor = $(this).val();
+                        array.push(Minimodelo)
+                    }
+                }
+            );
+            /**
+             * RECUPERA INFORMACION DETALLE
+             */
+            if (tablaObservacion.data().count() > 0) {
+                modelo.Detalle = tablaObservacion.rows().data().toArray();
+            }
+            modelo.Dinamico = array;
+            console.log(modelo);
+            //console.log(array);
+            /*
+             * PROCESO DE VALIDACION Y REGISTRO DE LA INFORMACION
+             */
+            $.ajax({
+                url: '@Url.Action("RegistrarFormulario", "MobiliarioUrbano")',
+                type: 'POST',
+                dataType: 'json',
+                data: modelo,
+                success: function (response) {
+                    if (response.success) {
+                        toastr.success(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                    } else {
+                        toastr.error(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                    }
+                },
+                error: function (response) {
+                    var modelStateErrors = response.responseJSON;
+                    for (var i = 0; i < modelStateErrors.length; i++) {
+                        $('span[data-valmsg-for="' + modelStateErrors[i].key + '"]').text(modelStateErrors[i].errors[0]).addClass('has-error');
+                    }
+                },
+                complete: function (response) {
+                    if (response.success) {
+                        /*
+                         * lo que sea
+                         */
+                    }
+                }
+            });
+        }
+
+        function BuscarUnidad() {
+            var modelo = new Object();
+            modelo.Estado = 1;
+            modelo.codSector = $("#codSector").val();
+            modelo.codManzana = $("#codManzana").val();
+            modelo.codLote = $("#codLote").val();
+            modelo.codClase = $("#codClase").val();
+            modelo.codSubClase = $("#codSubClase").val();
+            modelo.codObjeto = $("#codObjeto").val();
+            modelo.codObjeto = $("#codObjeto").val();
+            modelo.codUnidad = $("#codUnidad").val();
+
+
+            $("#btnModificar").attr("disabled", false);
+            $("#btnElimianr").attr("disabled", false);
+            $("#btnNuevo").html("Limpiar");
+            $("#btnNuevo").val("Limpiar");
+            /**
+            * CARGANDO  SUB CLASE DINAMICOS
+            */
+            var inputg = $("#pnlGeneral input:text");
+            var selectg = $("#pnlGeneral select");
+            var checkboxg = $("#pnlGeneral input:checkbox");
+            /**
+            * CARGANDO  OBJETOS DINAMICOS
+            */
+            var input = $("#pnlDetalle input:text");
+            var select = $("#pnlDetalle select");
+            var checkbox = $("#pnlDetalle input:checkbox");
+            /*CLEAR SUB CLASE Y OBJETO*/
+            $(inputg).each(
+            function () {
+                $(this).val("");
+            });
+            $(selectg).each(
+            function () {
+                $(this).val("0");
+            });
+            $(checkboxg).each(
+            function () {
+                //if ($(this).is(':checked')) {
+                //}
+            });
+
+            $(select).each(
+            function () {
+                $(this).val("0");
+            });
+            $(input).each(
+            function () {
+                $(this).val("");
+            });
+            $(checkbox).each(
+            function () {
+                //if ($(this).is(':checked')) {
+                //}
+            });
+
+            $.ajax({
+                url: '@Url.Action("BuscarUnidad", "MobiliarioUrbano")',
+                type: 'POST',
+                dataType: 'json',
+                data: modelo,
+                success: function (response) {
+                    if (response.success) {
+                        console.log(response);
+                        toastr.success(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                        /*Cangando cabecera*/
+                        $("#numeroUnidad").val(response.data.numeroUnidad);
+                        $("#fechaCampania").val(response.data.fechaCampania);
+                        //$("#codVia_1").val(response.data.codVia_1).change();
+                        $('#codVia_1').val(response.data.codVia_1).trigger("chosen:updated");
+                        $("#ubicacionEspecificada").val(response.data.ubicacionEspecificada);
+                        $("#latitud").val(response.data.latitud);
+                        $("#longitud").val(response.data.longitud);
+
+                        $.each(response.data.Dinamico, function (i, item) {
+                            if (item.configuracion == "SUBLCASE") {
+                                $(inputg).each(
+                                function () {
+                                    if (item.codigoConfiguracion == $(this).attr('id')) {
+                                        $(this).val(item.valor);
+                                    }
+                                });
+                                $(selectg).each(
+                                function () {
+                                    if (item.codigoConfiguracion == $(this).attr('id')) {
+                                        $(this).val(item.valor);
+                                    }
+                                });
+                                $(checkboxg).each(
+                                function () {
+                                    if (item.codigoConfiguracion == $(this).attr('id')) {
+                                        $(this).val(item.valor);
+                                    }
+                                    //if ($(this).is(':checked')) {
+                                    //}
+                                });
+                            } else if (item.configuracion == "OBJETO") {
+                                $(input).each(
+                                function () {
+                                    if (item.codigoConfiguracion == $(this).attr('id')) {
+                                        $(this).val(item.valor);
+                                    }
+                                });
+                                $(select).each(
+                                function () {
+                                    if (item.codigoConfiguracion == $(this).attr('id')) {
+                                        $(this).val(item.valor);
+                                    }
+                                });
+                                $(checkbox).each(
+                                function () {
+                                    if ($(this).is(':checked')) {
+                                    }
+                                });
+                            }
+                        });
+
+                        /*Cargando observacion*/
+                        tablaObservacion.clear().draw();
+                        //console.log(response.data);
+                        $.each(response.data.Detalle, function (i, item) {
+                            item.Item = 0;
+                            //tablaObservacion.row.add(item).draw();
+                            tablaObservacion.row.add({
+                                "Codigo": item.codigo,
+                                "Fecha": item.fecha,
+                                "Detalle": item.Detalle,
+                            }).draw();
+                        });
+
+                    } else {
+                        toastr.error(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                    }
+                },
+                error: function (response) {
+                    var modelStateErrors = response.responseJSON;
+                    for (var i = 0; i < modelStateErrors.length; i++) {
+                        $('span[data-valmsg-for="' + modelStateErrors[i].key + '"]').text(modelStateErrors[i].errors[0]).addClass('has-error');
+                    }
+                },
+                complete: function (response) {
+                    if (response.success) {
+                        /*
+                         * lo que sea
+                         */
+                    }
+                }
+            });
+        }
+
+</script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJKiQo6ke2UCRp5EEm4M2PgnlTp8CBNms&sensor=false">
+    </script>
+    <script>
+        $(function () {
+            var center
+            var map = null;
+
+            /***********************************************
+                Control del redimensionamiento de la ventana
+            ***********************************************/
+
+            window.onresize = function () {
+                document.getElementById("contenedor_mapa").style.height = (window.innerHeight) + "px";
+                init();
+            }
+            google.maps.event.addDomListener(window, 'load', init);
+            /***********************************************
+                Función de inicio.
+                Creo el mapa, y lo centro en las coordenadas de España
+            ***********************************************/
+
+            function init() {
+                var mapdivMap = document.getElementById("contenedor_mapa");
+                mapdivMap.style.width = '100%';
+                mapdivMap.style.height = (window.innerHeight) + "px";
+                var lat = -12.097150922344943;
+                var lng = -77.01540470123291;
+                if (document.getElementById("latitud").value != "" || document.getElementById("longitud").value != "") {
+                    lat = document.getElementById("latitud").value;
+                    lng = document.getElementById("longitud").value;
+                } else {
+                    document.getElementById("latitud").value = lat;
+                    document.getElementById("longitud").value = lng;
+                }
+                center = new google.maps.LatLng(lat, lng)
+                var myOptions = {
+                    zoom: 15,
+                    center: center,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP,
+
+                    mapTypeControl: true,
+                    mapTypeControlOptions: {
+                        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                        position: google.maps.ControlPosition.TOP_CENTER
+                    },
+                    zoomControl: true,
+                    zoomControlOptions: {
+                        position: google.maps.ControlPosition.LEFT_CENTER
+                    },
+                    scaleControl: true,
+                    streetViewControl: true,
+                    streetViewControlOptions: {
+                        position: google.maps.ControlPosition.LEFT_TOP
+                    },
+                    fullscreenControl: true,
+                    styles: [
+                        { elementType: 'geometry', stylers: [{ color: '#242f3e' }] },
+                        { elementType: 'labels.text.stroke', stylers: [{ color: '#242f3e' }] },
+                        { elementType: 'labels.text.fill', stylers: [{ color: '#746855' }] },
+                        {
+                            featureType: 'administrative.locality',
+                            elementType: 'labels.text.fill',
+                            stylers: [{ color: '#d59563' }]
+                        },
+                        {
+                            featureType: 'poi',
+                            elementType: 'labels.text.fill',
+                            stylers: [{ color: '#d59563' }]
+                        },
+                        {
+                            featureType: 'poi.park',
+                            elementType: 'geometry',
+                            stylers: [{ color: '#263c3f' }]
+                        },
+                        {
+                            featureType: 'poi.park',
+                            elementType: 'labels.text.fill',
+                            stylers: [{ color: '#6b9a76' }]
+                        },
+                        {
+                            featureType: 'road',
+                            elementType: 'geometry',
+                            stylers: [{ color: '#38414e' }]
+                        },
+                        {
+                            featureType: 'road',
+                            elementType: 'geometry.stroke',
+                            stylers: [{ color: '#212a37' }]
+                        },
+                        {
+                            featureType: 'road',
+                            elementType: 'labels.text.fill',
+                            stylers: [{ color: '#9ca5b3' }]
+                        },
+                        {
+                            featureType: 'road.highway',
+                            elementType: 'geometry',
+                            stylers: [{ color: '#746855' }]
+                        },
+                        {
+                            featureType: 'road.highway',
+                            elementType: 'geometry.stroke',
+                            stylers: [{ color: '#1f2835' }]
+                        },
+                        {
+                            featureType: 'road.highway',
+                            elementType: 'labels.text.fill',
+                            stylers: [{ color: '#f3d19c' }]
+                        },
+                        {
+                            featureType: 'transit',
+                            elementType: 'geometry',
+                            stylers: [{ color: '#2f3948' }]
+                        },
+                        {
+                            featureType: 'transit.station',
+                            elementType: 'labels.text.fill',
+                            stylers: [{ color: '#d59563' }]
+                        },
+                        {
+                            featureType: 'water',
+                            elementType: 'geometry',
+                            stylers: [{ color: '#17263c' }]
+                        },
+                        {
+                            featureType: 'water',
+                            elementType: 'labels.text.fill',
+                            stylers: [{ color: '#515c6d' }]
+                        },
+                        {
+                            featureType: 'water',
+                            elementType: 'labels.text.stroke',
+                            stylers: [{ color: '#17263c' }]
+                        }
+                    ]
+                }
+                //map.setMapTypeId('terrain');
+                map = new google.maps.Map(document.getElementById("contenedor_mapa"), myOptions);
+
+
+                var marker = new google.maps.Marker({
+                    position: map.getCenter(),
+                    map: map,
+                    draggable: true
+                });
+
+                google.maps.event.addListener(marker, 'dragend', function (event) {
+                    document.getElementById("latitud").value = this.getPosition().lat();
+                    document.getElementById("longitud").value = this.getPosition().lng();
+                });
+                //geoposicionar();
+            }
+
+            /***********************************************
+                En esta función se hace la solicitud de geolocalización y el primer
+                control para ver si el navegador soporta el servicio
+            ***********************************************/
+
+            function geoposicionar() {
+                if (navigator.geolocation) {
+                    mostrarMensaje("obteniendo posición...");
+                    navigator.geolocation.getCurrentPosition(centrarMapa, errorPosicionar);
+                } else {
+                    mostrarMensaje('Tu navegador no soporta geolocalización');
+                }
+            }
+
+            /***********************************************
+                Control de errores en caso de que la llamada
+                navigator.geolocation.getCurrentPosition(centrarMapa,errorPosicionar);
+                termine generando un error
+            ***********************************************/
+
+            function errorPosicionar(error) {
+                switch (error.code) {
+                    case error.TIMEOUT:
+                        mostrarMensaje('Request timeout');
+                        break;
+                    case error.POSITION_UNAVAILABLE:
+                        mostrarMensaje('Tu posición no está disponible');
+                        break;
+                    case error.PERMISSION_DENIED:
+                        mostrarMensaje('Tu navegador ha bloqueado la solicitud de geolocalización');
+                        break;
+                    case error.UNKNOWN_ERROR:
+                        mostrarMensaje('Error desconocido');
+                        break;
+                }
+            }
+
+            /***********************************************
+                Esta función se ejecuta si la llamada a  navigator.geolocation.getCurrentPosition
+                tiene éxito. La latitud y la longitud vienen dentro del objeto coords.
+            ***********************************************/
+
+            function centrarMapa(pos, z) {
+                map.setZoom(15);
+                map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+                var marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
+                    map: map,
+                    title: "Tu posición"
+                });
+
+                ocultarMensaje();
+            }
+
+            /***********************************************
+                Gestión de mensajes
+            ***********************************************/
+
+            function mostrarMensaje(str) {
+                $('#texto').html(str);
+                $('#capa_mensajes').css({ "visibility": "visible" });
+            }
+
+            function ocultarMensaje() {
+                $('#capa_mensajes').css({ "visibility": "hidden" });
+            }
+        });
+    </script>
+}

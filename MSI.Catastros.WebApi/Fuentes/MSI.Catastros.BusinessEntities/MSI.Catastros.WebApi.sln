@@ -1,0 +1,66 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSI.Catastros.Helpers", "MSI.Catastros.Helpers\MSI.Catastros.Helpers.csproj", "{DF22D66D-F966-40D7-A84F-D5B8D38AA5E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSI.Catastros.Exceptions", "MSI.Catastros.Exceptions\MSI.Catastros.Exceptions.csproj", "{40845948-ED83-4D72-AD33-2CFE269B0430}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSI.Catastros.BusinessEntities", "MSI.Catastros.BusinessEntities\MSI.Catastros.BusinessEntities.csproj", "{D2A63D54-7FCF-4F52-944F-76998E7C3425}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSI.Catastros.DataAccess", "MSI.Catastros.DataAccess\MSI.Catastros.DataAccess.csproj", "{BE95C807-766C-4CDC-BCF9-10E53B95B129}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSI.Catastros.BusinessLogic", "MSI.Catastros.BusinessLogic\MSI.Catastros.BusinessLogic.csproj", "{D650EC34-C2D7-4FA4-A6A7-77107B66010C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSI.Catastros.WebApi", "MSI.Catastros.WebApi\MSI.Catastros.WebApi.csproj", "{6EA5A5CA-CF93-43C4-BF1D-2855C720CB72}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1- Presentación", "1- Presentación", "{61ED65A8-8F02-4B52-B77B-781B6A63C739}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2- Capas", "2- Capas", "{97027806-0424-49C9-89D3-98E601695E4D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3- Ayuda", "3- Ayuda", "{CBB7E478-4EE2-4AAE-98D9-F3C0FB384F27}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DF22D66D-F966-40D7-A84F-D5B8D38AA5E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF22D66D-F966-40D7-A84F-D5B8D38AA5E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF22D66D-F966-40D7-A84F-D5B8D38AA5E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF22D66D-F966-40D7-A84F-D5B8D38AA5E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40845948-ED83-4D72-AD33-2CFE269B0430}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40845948-ED83-4D72-AD33-2CFE269B0430}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40845948-ED83-4D72-AD33-2CFE269B0430}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40845948-ED83-4D72-AD33-2CFE269B0430}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2A63D54-7FCF-4F52-944F-76998E7C3425}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2A63D54-7FCF-4F52-944F-76998E7C3425}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2A63D54-7FCF-4F52-944F-76998E7C3425}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2A63D54-7FCF-4F52-944F-76998E7C3425}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE95C807-766C-4CDC-BCF9-10E53B95B129}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE95C807-766C-4CDC-BCF9-10E53B95B129}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE95C807-766C-4CDC-BCF9-10E53B95B129}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE95C807-766C-4CDC-BCF9-10E53B95B129}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D650EC34-C2D7-4FA4-A6A7-77107B66010C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D650EC34-C2D7-4FA4-A6A7-77107B66010C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D650EC34-C2D7-4FA4-A6A7-77107B66010C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D650EC34-C2D7-4FA4-A6A7-77107B66010C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EA5A5CA-CF93-43C4-BF1D-2855C720CB72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EA5A5CA-CF93-43C4-BF1D-2855C720CB72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EA5A5CA-CF93-43C4-BF1D-2855C720CB72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EA5A5CA-CF93-43C4-BF1D-2855C720CB72}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{40845948-ED83-4D72-AD33-2CFE269B0430} = {CBB7E478-4EE2-4AAE-98D9-F3C0FB384F27}
+		{DF22D66D-F966-40D7-A84F-D5B8D38AA5E2} = {CBB7E478-4EE2-4AAE-98D9-F3C0FB384F27}
+		{BE95C807-766C-4CDC-BCF9-10E53B95B129} = {97027806-0424-49C9-89D3-98E601695E4D}
+		{D650EC34-C2D7-4FA4-A6A7-77107B66010C} = {97027806-0424-49C9-89D3-98E601695E4D}
+		{D2A63D54-7FCF-4F52-944F-76998E7C3425} = {97027806-0424-49C9-89D3-98E601695E4D}
+		{6EA5A5CA-CF93-43C4-BF1D-2855C720CB72} = {61ED65A8-8F02-4B52-B77B-781B6A63C739}
+	EndGlobalSection
+EndGlobal

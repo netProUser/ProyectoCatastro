@@ -1,0 +1,587 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.ProgramarInspeccion.RegistrarInspeccion
+
+@using (Html.BeginForm("AgregarInspeccion", "ProgramacionInspeccion", FormMethod.Post, new { id = "frmProgramacionInspeccion", name = "frmProgramacionInspeccion", @autocomplete = "off" }))
+{
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                Registrar Inspeccion
+                @*@Html.HiddenFor(model => model.estado, new { type = "hidden" })*@
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table id="TablaCodigoCatastralRegistro" class="table table-bordered" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Dist</th>
+                                    <th>Sec</th>
+                                    <th>Mz</th>
+                                    <th>Lote</th>
+                                    <th>Ed</th>
+                                    <th>Entr</th>
+                                    <th>Piso</th>
+                                    <th>Unidad</th>
+                                    <th>Ubicación de Predio</th>
+                                    <th></th>
+                                    <th>Unidad</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <span data-valmsg-for="UnidadCatastral" aria-hidden="true"></span>
+                        @*<span class="field-validation-valid text-danger has-error"  data-valmsg-replace="true">Ingrese la Fecha de inspección</span>*@
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NroInspeccion, htmlAttributes: new { @class = "control-label col-md-12" })
+                            <div class="col-md-12">
+                                @Html.EditorFor(model => model.NroInspeccion, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                @Html.ValidationMessageFor(model => model.NroInspeccion, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FechaLimiteM, htmlAttributes: new { @class = "control-label col-md-12" })
+                            <div class="col-md-12">
+                                <div class="form-group has-default has-feedback">
+                                    @Html.TextBoxFor(model => model.FechaLimiteM, new { @class = "form-control fechaE"})
+                                    <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.FechaLimiteM, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FechaLimiProgInspecM, htmlAttributes: new { @class = "control-label col-md-12" })
+                            <div class="col-md-12">
+                                <div class="form-group has-default has-feedback"> 
+                                    @Html.TextBoxFor(model => model.FechaLimiProgInspecM, new { @class = "form-control fechaE" })
+                                    <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.FechaLimiProgInspecM, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FechaLimiteInspeccionM, htmlAttributes: new { @class = "control-label col-md-12" })
+                            <div class="col-md-12">
+                                <div class="form-group has-default has-feedback">
+                                    @Html.TextBoxFor(model => model.FechaLimiteInspeccionM, new { @class = "form-control fechaE" })
+                                    <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.FechaLimiteInspeccionM, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    @*<div class="col-md-3">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.FechaAvisoInspeccion, htmlAttributes: new { @class = "control-label col-md-12" })
+                                <div class="col-md-12">
+                                    <div class="form-group has-default has-feedback">
+                                        @Html.TextBoxFor(model => model.FechaAvisoInspeccion, new { @class = "form-control fechaLimite" })
+                                        <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.FechaAvisoInspeccion, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>*@
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FechaInspeccion, htmlAttributes: new { @class = "control-label col-md-12", id = "lblFechaInspeccion" })
+                            <div class="col-md-12">
+                                <div class="form-group has-default has-feedback">
+                                    @Html.TextBoxFor(model => model.FechaInspeccion, new { @class = "form-control fechaE" })
+                                    <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.FechaInspeccion, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 hide">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FechaReprogramacion, htmlAttributes: new { @class = "control-label col-md-12" })
+                            <div class="col-md-12">
+                                <div class="form-group has-default has-feedback">
+                                    @Html.TextBoxFor(model => model.FechaReprogramacion, new { @class = "form-control fechaE" })
+                                    <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.FechaReprogramacion, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.HoraInspeccion, htmlAttributes: new { @class = "control-label col-md-12" })
+                            <div class="col-md-12">
+                                @Html.EditorFor(model => model.HoraInspeccion, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.HoraInspeccion, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Inspectores, htmlAttributes: new { @class = "control-label col-md-12" })
+                            <div class="col-md-12">
+                                @*@Html.DropDownListFor(m => m.codInspectores, Model.ListadoInspectores, null, new { @class = "form-control", @multiple = "multiple" })*@
+                                <select id="codInspectores" name="codInspectores" class="form-control">
+                                    <option value="0"> Seleccione</option>
+                                </select>
+                                @Html.ValidationMessageFor(model => model.codInspectores, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Responsable, htmlAttributes: new { @class = "control-label col-md-12" })
+                            <div class="col-md-12">
+                                @*@Html.DropDownListFor(m => m.codInspectores, Model.ListadoInspectores, null, new { @class = "form-control", @multiple = "multiple" })*@
+                                <select id="codResponsable" name="codResponsable" class="form-control">
+                                    <option value="0"> Seleccione</option>
+                                </select>
+                                @Html.ValidationMessageFor(model => model.codResponsable, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Observacion, htmlAttributes: new { @class = "control-label col-md-12" })
+                            <div class="col-md-12">
+                                @Html.TextAreaFor(model => model.Observacion, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Observacion, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FechaCitacion, htmlAttributes: new { @class = "control-label col-md-12" })
+                            <div class="col-md-12">
+                                <div class="form-group has-default has-feedback">
+                                    @Html.TextBoxFor(model => model.FechaCitacion, new { @class = "form-control fechaE" })
+                                    <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.FechaCitacion, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                @*<button type="button" id="btnGrabar" value="Grabar" class="btn btn-sm btn-green">Grabar</button>*@
+                <div class="row">
+                    <div class="col-sm-offset-10  col-sm-2 text-right">
+                        <button id="btnRegistrar" type="button" value="Registrar" class="btn btn-sm btn-green">
+                            Registrar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<style>
+    .multiselect-container li.odd {
+        background: #eeeeee;
+    }
+</style>
+<script>
+    $(function () {
+
+        $(".fechaE").datepicker({
+            format: "dd/mm/yyyy",
+            language: "es",
+            //calendarWeeks: true
+        });
+        //var startDate = new Date('01/20/2018');
+        debugger;
+        var fecFin = $("#FechaLimiteInspeccion").val();
+        var FechaLimite = $("#FechaLimite").val();
+        
+        
+        var fecFin2 = fecFin.split("/")[1] + "/" + fecFin.split("/")[0] + "/" + fecFin.split("/")[2];
+        fecFinFechaLimite = FechaLimite.split("/")[1] + "/" + FechaLimite.split("/")[0] + "/" + FechaLimite.split("/")[2];
+        var startDate = new Date('' + fecFin2 + '');
+        var startDateFechaLimite = new Date('' + fecFinFechaLimite + '');
+        //$('#FechaInspeccion').datepicker('setEndDate', startDate).on('changeDate', function (selected) {
+        //    startDates = new Date(selected.date.valueOf());
+        //    startDates.setDate(startDates.getDate(new Date(selected.date.valueOf())));
+        //    $('#FechaCitacion').datepicker('setStartDate', startDates);
+        //    $('#FechaCitacion').datepicker('setEndDate', startDate);
+
+        //});
+        //$('#FechaCitacion').datepicker('setEndDate', startDateFechaLimite);
+        //$('#FechaAvisoInspeccion').datepicker({
+        //    endDate: new Date('' + $("#FechaLimiteInspeccion").val().split("/")[1] + "/" + $("#FechaLimiteInspeccion").val().split("/")[0] + "/" + $("#FechaLimiteInspeccion").val().split("/")[2] + ''),
+        //    datesDisabled: '-60d',
+        //    format: 'dd/mm/yyyy',
+        //}).on('changeDate', function (selected) {
+        //    EndDates = new Date(selected.date.valueOf());
+        //    EndDates.setDate(EndDates.getDate(new Date(selected.date.valueOf())));
+        //    $('#FechaInspeccion').datepicker('setEndDate', EndDates).on('changeDate', function (selected) {
+        //        startDates = new Date(selected.date.valueOf());
+        //        startDates.setDate(startDates.getDate(new Date(selected.date.valueOf())));
+        //        $('#FechaCitacion').datepicker('setStartDate', startDates);
+        //        $('#FechaCitacion').datepicker('setEndDate', new Date('' + $("#FechaLimiteInspeccion").val().split("/")[1] + "/" + $("#FechaLimiteInspeccion").val().split("/")[0] + "/" + $("#FechaLimiteInspeccion").val().split("/")[2] + ''));
+        //    });
+        //});
+        /*
+        TABLES
+        */
+        tablaCodCatastralRegistro = $("#TablaCodigoCatastralRegistro").DataTable({
+            "processing": false,
+            "serverSide": false,
+            "paging": false,
+            //"language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+            'columnDefs': [
+                { "width": "7%", "targets": 0 },
+                { "width": "7%", "targets": 1 },
+                { "width": "7%", "targets": 2 },
+                { "width": "7%", "targets": 3 },
+                { "width": "7%", "targets": 4 },
+                { "width": "7%", "targets": 5 },
+                { "width": "7%", "targets": 6 },
+                { "width": "7%", "targets": 7 },
+                { "width": "20%", "targets": 8 },
+                {
+                    'targets': 9, 'checkboxes': {
+                        'selectRow': true
+                    }
+                },
+                {
+                    "targets": [10],
+                    "visible": false
+                }
+            ],
+            "columns": [
+                { "data": "Distrito", "className": "text-center" },
+                { "data": "Sec", "className": "text-center" },
+                { "data": "Manzana", "className": "text-center" },
+                { "data": "Lote", "className": "text-center" },
+                { "data": "Ed", "className": "text-center" },
+                { "data": "Entr", "className": "text-center" },
+                { "data": "Piso", "className": "text-center" },
+                { "data": "Unidad", "className": "text-center" },
+                { "data": "UbicacionPredio", "className": "text-center" },
+                //{
+                //    data: "Indice",
+                //    render: function (data, type, row) {
+                //        if (type === 'display') {
+                //            return '<input type="checkbox" class="editor-active">';
+                //        }
+                //        return data;
+                //    },
+                //    className: "dt-body-center"
+                //}
+                { "data": "Indice", "name": "Indice", "autoWidth": true, "className": "text-center" },
+                { "data": "CODUNI", "name": "CODUNI", "autoWidth": true, "className": "text-center" }
+            ],
+            //"rowCallback": function (row, data) {
+            //    //if (data.grade == "A") {
+            //    //    $('td:eq(4)', row).html('<b>A</b>');
+            //    //}
+            //    console.log(row);
+            //    console.log(data);
+            //}
+        });
+        $("#HoraInspeccion").mask("99:99", { placeholder: "HH:MM" });
+
+        /********************************************************************/
+        /***********************RegistrarInspeccion**************************/
+        /********************************************************************/
+
+        $('#btnRegistrar').click(function () {
+
+            var modelo = new Object();
+            try {
+                modelo.temCodInspeccion = localStorage.tempInspeccion;
+            } catch (e) {
+                modelo.temCodInspeccion = "";
+            }
+            var rows_selected = tablaCodCatastralRegistro.column(9).checkboxes.selected();
+            var ListunidadCatastral = [];
+            $.each(rows_selected, function (index, Indice) {
+                var rows = tablaCodCatastralRegistro.rows(Indice).data()[0];
+                ListunidadCatastral.push(rows);
+            });
+            debugger;
+            //localStorage.setItem('UnidadesSelec', JSON.stringify(ListaUniCatastro));
+            console.log(ListunidadCatastral);
+            modelo.ListunidadCatastral = ListunidadCatastral;
+
+            modelo.NroInspeccion = "";
+            modelo.FechaInspeccion = $('#FechaInspeccion').val();
+            modelo.HoraInspeccion = $('#HoraInspeccion').val();
+            modelo.codInspectores = $("#codInspectores option:selected").text();
+            //modelo.codInspectores = $("#codInspectores").val();
+            //modelo.Responsable = $("#Responsable option:selected").text();
+            modelo.codResponsable = $("#Responsable").val();
+            modelo.FechaCitacion = $('#FechaCitacion').val();
+            modelo.Observacion = $('#Observacion').val();
+            modelo.FechaAvisoInspeccion = $('#FechaAvisoInspeccion').val();
+
+            var codInspectores = [];
+            $('#codInspectores option:selected').each(function () {
+                codInspectores.push({ 'Value': $(this).val(), 'Text': $(this).text() });
+            });
+            modelo.codInspectores = codInspectores;//JSON.stringify(codInspectores);
+            var codResponsable = [];
+            $('#codResponsable option:selected').each(function () {
+                codResponsable.push({ 'Value': $(this).val(), 'Text': $(this).text() });
+            });
+            modelo.codResponsable = codResponsable;
+
+
+            modelo.FechaLimiteM = $('#FechaLimiteM').val();
+            modelo.FechaLimiProgInspecM = $('#FechaLimiProgInspecM').val();
+            modelo.FechaLimiteInspeccionM  = $('#FechaLimiteInspeccionM').val();
+
+            //$('#FechaLimite').val(modelo.FechaLimiteM);
+            //$('#FechaLimiProgInspec').val(modelo.FechaLimiProgInspecM);
+            //$('#FechaLimiteInspeccion').val(modelo.FechaLimiteInspeccionM);
+            
+            
+            //console.log(JSON.stringify(modelo));
+            //debugger;
+            //console.log(modelo);
+            if (validarRegistroInspeccion(modelo)) {
+                $('.inputUtil').html('').removeClass('field-validation-valid has-error');
+                $.ajax({
+                    url: "@Url.Content("~/ProgramarInspeccion/AgregarInspeccion")", type: "POST", dataType: "json",
+                    data: modelo,
+                    success: function (response) {
+                        if (response.success) {
+                            $('.btnUtil').removeAttr('disabled');
+                            $('.tablaUtil button').removeAttr('disabled');
+                            tablaProgInspeccion.clear().draw();
+                            toastr.success(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                            tablaProgInspeccion.ajax.reload();
+                            $("#modalTipo").modal('hide')
+                            localStorage.tempInspeccion = "";
+                        } else {
+                            toastr.error(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                        }
+                    },
+                    complete: function (response) {
+                        //if (DatosEncontrados) {
+                        //    $('.btnUtil').removeAttr('disabled');
+                        //    $('.tablaUtil button').removeAttr('disabled');
+                        //}
+                        //else {
+                        //    $('.btnUtil').attr('disabled', 'disabled');
+                        //    $('.tablaUtil button').attr('disabled', 'disabled');
+                        //}
+                        //limiar
+                        $('#FechaInspeccion').val("");
+                        $('#HoraInspeccion').val("");
+                        $('#FechaCitacion').val("");
+                        $('#Observacion').val("");
+                        $('#FechaAvisoInspeccion').val("");
+                        //$("#codResponsable").multiselect('dataprovider', null);
+                        //$("#codInspectores").multiselect('dataprovider', null);
+                    }
+                });
+
+            }
+        });
+    });
+    function validarRegistroInspeccion(modelo) {
+        var validado = false;
+        FechaInspeccion = $('[data-valmsg-for="FechaInspeccion"]');
+        HoraInspeccion = $('[data-valmsg-for="HoraInspeccion"]');
+        FechaCitacion = $('[data-valmsg-for="FechaCitacion"]');
+        //FechaAvisoInspeccion = $('[data-valmsg-for="FechaAvisoInspeccion"]');
+        codInspectores = $('[data-valmsg-for="codInspectores"]');
+        codResponsable = $('[data-valmsg-for="codResponsable"]');
+        UnidadCatastral = $('[data-valmsg-for="UnidadCatastral"]');
+
+
+        if (!modelo.FechaInspeccion) {
+            FechaInspeccion.html('Ingrese la Fecha de inspección').addClass('field-validation-valid has-error');
+            $('#FechaInspeccion').focus();
+            //$('#btnDerivar').attr('disabled', 'disabled');
+        }
+        else if (!modelo.HoraInspeccion) {
+            HoraInspeccion.html('Ingrese la Hora de inspección').addClass('field-validation-valid has-error');
+            $('#HoraInspeccion').focus();
+            //$('#btnDerivar').attr('disabled', 'disabled');
+        }
+        else if (!modelo.FechaCitacion) {
+            FechaCitacion.html('Ingrese la Fecha de citación').addClass('field-validation-valid has-error');
+            $('#FechaCitacion').focus();
+            //$('#btnDerivar').attr('disabled', 'disabled');
+        //}
+        //else if (!modelo.FechaAvisoInspeccion) {
+        //    FechaAvisoInspeccion.html('Ingrese la Fecha de aviso de inspección').addClass('field-validation-valid has-error');
+        //    $('#FechaAvisoInspeccion').focus();
+            //$('#btnDerivar').attr('disabled', 'disabled');
+            //}
+            //else if (numVal === '-' || !numVal) {
+            //    FechaInspeccion.html('').removeClass('field-validation-valid has-error');
+            //    valiNumSol.html('Ingrese un número de solicitud').addClass('field-validation-valid has-error');
+            //    $('#nroSolicitud').focus(); $('#btnDerivar').attr('disabled', 'disabled');
+        } else if (modelo.codInspectores.length == 0) {
+            codInspectores.html('Seleccione inspector').addClass('field-validation-valid has-error');
+            $('#codInspectores').focus();
+        }
+        else if (modelo.codResponsable.length == 0) {
+            codResponsable.html('Selecciones un responsable').addClass('field-validation-valid has-error');
+            $('#codResponsable').focus();
+        }
+        else if (modelo.ListunidadCatastral.length == 0) {
+            UnidadCatastral.html('Seleccione uno o más unidades Catastrales').addClass('field-validation-valid has-error');
+            $('#TablaCodigoCatastralRegistro').focus();
+        } else {
+            validado = true;
+        }
+
+        /*validando hora*/
+        var Hora = modelo.HoraInspeccion.split(":")
+        if (Hora.length == 2) {
+            if (Hora[0] < 0 || Hora[0] > 23) {
+                HoraInspeccion.html('Hora Incorrecto').addClass('field-validation-valid has-error');
+                $('#HoraInspeccion').focus();
+                return false;
+            }
+            if (Hora[1] < 0 || Hora[1] > 60) {
+                HoraInspeccion.html('Minuto Incorrecto').addClass('field-validation-valid has-error');
+                $('#HoraInspeccion').focus();
+                return false;
+            }
+        } else {
+            HoraInspeccion.html('Formato de Hora Incorrecto').addClass('field-validation-valid has-error');
+            $('#HoraInspeccion').focus();
+            return false;
+        }
+        return validado;
+        // return true;
+    }
+
+    /*
+  ======================INSPECTORES
+  */
+    //$("#btnRegistrarInspectores").click(function () {
+
+    //});
+    //$('#codInspectores').multiselect({
+    //    includeSelectAllOption: true
+    //});
+    $("#FechaInspeccion").change(function () {
+        debugger;
+        if ($("#FechaInspeccion").val() == "") {
+            return false;
+        } else {
+            $.ajax({
+                url: "@Url.Content("~/ProgramarInspeccion/ListarInspectores")", type: "POST", dataType: "json",
+                data: { fecha: $("#FechaInspeccion").val() },
+                success: function (response) {
+                    //$('option', $('#codInspectores')).each(function (element) {
+                    //    $(this).removeAttr('selected').prop('selected', false);
+                    //    //$(this).remove();//.prop('selected', false);
+                    //});
+                    //$('#codInspectores').multiselect('refresh');
+                    //$('option', $('#codResponsable')).each(function (element) {
+                    //    $(this).remove();//.prop('selected', false);
+                    //});
+                    //$('#codResponsable').multiselect('refresh');
+
+                    if (response.success) {
+                        var sitePersonel = {};
+                        var employees = []
+                        sitePersonel.employees = employees;
+                        //debugger;
+                        for (var i = 0; i < response.data.length; i++) {
+                            var employee = {
+                                label: response.data[i].Text,
+                                value: response.data[i].Value,
+                                selected: false,
+                                disabled: false
+                                //"attributes": {
+                                //    "some-attribute": 1,
+                                //    "another-attribute": false
+                                //}
+                            }
+                            sitePersonel.employees.push(employee);
+                        }
+                        $('#codInspectores').attr("multiple", "multiple");
+                        //var orderCount = 0;
+                        $('#codInspectores').multiselect({
+                            includeSelectAllOption: false,
+                            enableClickableOptGroups: false,
+                            delimiterText: '; ',
+                            nonSelectedText: 'Seleccion Inspectores',
+                            allSelectedText: 'Se seleccionó todo los Inspectores',
+                            selectAllText: ' Seleccionar todo los Inspectores',
+                            selectAllValue: '0',
+                            onChange: function (option, checked) {
+                                $('#codResponsable').multiselect({
+                                    includeSelectAllOption: false,
+                                    enableClickableOptGroups: false,
+                                    delimiterText: '; ',
+                                    nonSelectedText: 'Seleccione Inspector Responsable',
+                                    selectAllText: ' Seleccione Inspector Responsable'
+                                });
+                                $.ajax({
+                                    url: "@Url.Content("~/ProgramarInspeccion/ListarInspectores")", type: "POST", dataType: "json",
+                                    data: { fecha: $("#FechaInspeccion").val() },
+                                    success: function (response) {
+                                        if (response.success) {
+
+                                            if (response.data.length > 0) {
+                                                var sitePersonelResponsable = {};
+                                                var employeesResponsable = []
+                                                sitePersonelResponsable.employees = employeesResponsable;
+                                                for (var i = 0; i < response.data.length; i++) {
+                                                    //debugger;
+                                                    $('#codInspectores option:selected').each(function () {
+                                                        if ($(this).val() == response.data[i].Value) {
+                                                            var employeeResponsable = {
+                                                                "label": response.data[i].Text,
+                                                                "value": response.data[i].Value,
+                                                                "selected": false
+                                                            }
+                                                            sitePersonelResponsable.employees.push(employeeResponsable);
+                                                        }
+                                                    });
+                                                    //console.log(option);
+                                                }
+                                                $("#codResponsable").multiselect('dataprovider', sitePersonelResponsable.employees);
+                                            } else {
+                                                toastr.error(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                                            }
+                                        } else $("#codResponsable").multiselect('dataprovider', null);
+                                    },
+                                    complete: function (response) {
+                                    }
+                                });
+                            }
+                        });
+                        $("#codInspectores").multiselect('dataprovider', sitePersonel.employees);
+                        //$('#codResponsable').multiselect('dataprovider', null);
+                    } else {
+                        toastr.error(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                    }
+                },
+                complete: function (response) {
+
+                }
+            });
+        }
+    });
+</script>

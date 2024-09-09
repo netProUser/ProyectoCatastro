@@ -1,0 +1,62 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.TipoHabilitacion.RegistroTipoHabilitacionViewModel
+
+<div id="RegistrarTipoHabilitacionContainer">
+    @using (Html.BeginForm("Registrar", "TipoHabilitacion", FormMethod.Post, new { id = "frmTipoHabilitacion", name = "frmTipoHabilitacion" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-hidden="true">
+                        &times;
+                    </button>
+                    @if(@Model.Estado == 2) 
+                    {
+                        <h4>Modificando @Model.NombreTipoHabilitacion</h4>
+                    } else {
+                        <h4>Registrar</h4>
+                    }
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true)
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CodigoTipoHabilitacion, htmlAttributes: new { @class = "control-label col-md-3 pr-0 pl-3" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.CodigoTipoHabilitacion, new { @class = "form-control", @readonly = "readonly" } )
+                                @Html.ValidationMessageFor(model => model.CodigoTipoHabilitacion)
+                            </div>
+                        </div>
+                        @Html.TextBoxFor(model => model.Estado, new { type = "hidden", @class = "form-control" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NombreTipoHabilitacion, htmlAttributes: new { @class = "control-label col-md-3 pr-0 pl-3" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.NombreTipoHabilitacion, new { @class = "form-control", @maxlength = "30" })
+                                @Html.ValidationMessageFor(model => model.NombreTipoHabilitacion)
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input id="btnSubmit" type="submit" value="Grabar" class="btn btn-green" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#frmTipoHabilitacion").on("submit", function (event) {
+            validarFormulario(event, $('#btnSubmit'), "TipoHabilitacion");
+        });
+        $('input').keyup(function () { this.value = this.value.toLocaleUpperCase() });
+    });
+</script>

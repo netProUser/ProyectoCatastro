@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="FOTO" targetNamespace="http://tempuri.org/FOTO.xsd" xmlns:mstns="http://tempuri.org/FOTO.xsd" xmlns="http://tempuri.org/FOTO.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="FOTO" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="FOTO" msprop:Generator_UserDSName="FOTO">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="FOTO" msprop:Generator_TableClassName="FOTODataTable" msprop:Generator_TableVarName="tableFOTO" msprop:Generator_RowChangedName="FOTORowChanged" msprop:Generator_TablePropName="_FOTO" msprop:Generator_RowDeletingName="FOTORowDeleting" msprop:Generator_RowChangingName="FOTORowChanging" msprop:Generator_RowEvHandlerName="FOTORowChangeEventHandler" msprop:Generator_RowDeletedName="FOTORowDeleted" msprop:Generator_RowClassName="FOTORow" msprop:Generator_UserTableName="FOTO" msprop:Generator_RowEvArgName="FOTORowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CODFOTO" msprop:Generator_ColumnVarNameInTable="columnCODFOTO" msprop:Generator_ColumnPropNameInRow="CODFOTO" msprop:Generator_ColumnPropNameInTable="CODFOTOColumn" msprop:Generator_UserColumnName="CODFOTO" type="xs:string" minOccurs="0" />
+              <xs:element name="CODTIPODOCUMENTOREF" msprop:Generator_ColumnVarNameInTable="columnCODTIPODOCUMENTOREF" msprop:Generator_ColumnPropNameInRow="CODTIPODOCUMENTOREF" msprop:Generator_ColumnPropNameInTable="CODTIPODOCUMENTOREFColumn" msprop:Generator_UserColumnName="CODTIPODOCUMENTOREF" type="xs:string" minOccurs="0" />
+              <xs:element name="CODDOCUMENTOREF" msprop:Generator_ColumnVarNameInTable="columnCODDOCUMENTOREF" msprop:Generator_ColumnPropNameInRow="CODDOCUMENTOREF" msprop:Generator_ColumnPropNameInTable="CODDOCUMENTOREFColumn" msprop:Generator_UserColumnName="CODDOCUMENTOREF" type="xs:string" minOccurs="0" />
+              <xs:element name="CODLOTECATASTRAL" msprop:Generator_ColumnVarNameInTable="columnCODLOTECATASTRAL" msprop:Generator_ColumnPropNameInRow="CODLOTECATASTRAL" msprop:Generator_ColumnPropNameInTable="CODLOTECATASTRALColumn" msprop:Generator_UserColumnName="CODLOTECATASTRAL" type="xs:string" minOccurs="0" />
+              <xs:element name="CODFOTOCLASIFICACION" msprop:Generator_ColumnVarNameInTable="columnCODFOTOCLASIFICACION" msprop:Generator_ColumnPropNameInRow="CODFOTOCLASIFICACION" msprop:Generator_ColumnPropNameInTable="CODFOTOCLASIFICACIONColumn" msprop:Generator_UserColumnName="CODFOTOCLASIFICACION" type="xs:string" minOccurs="0" />
+              <xs:element name="NUMFOTO" msprop:Generator_ColumnVarNameInTable="columnNUMFOTO" msprop:Generator_ColumnPropNameInRow="NUMFOTO" msprop:Generator_ColumnPropNameInTable="NUMFOTOColumn" msprop:Generator_UserColumnName="NUMFOTO" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTRUTA" msprop:Generator_ColumnVarNameInTable="columnTXTRUTA" msprop:Generator_ColumnPropNameInRow="TXTRUTA" msprop:Generator_ColumnPropNameInTable="TXTRUTAColumn" msprop:Generator_UserColumnName="TXTRUTA" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTRUTAFOTO" msprop:Generator_ColumnVarNameInTable="columnTXTRUTAFOTO" msprop:Generator_ColumnPropNameInRow="TXTRUTAFOTO" msprop:Generator_ColumnPropNameInTable="TXTRUTAFOTOColumn" msprop:Generator_UserColumnName="TXTRUTAFOTO" type="xs:string" minOccurs="0" />
+              <xs:element name="FECCAPTURA" msprop:Generator_ColumnVarNameInTable="columnFECCAPTURA" msprop:Generator_ColumnPropNameInRow="FECCAPTURA" msprop:Generator_ColumnPropNameInTable="FECCAPTURAColumn" msprop:Generator_UserColumnName="FECCAPTURA" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTDESCRIPCION" msprop:Generator_ColumnVarNameInTable="columnTXTDESCRIPCION" msprop:Generator_ColumnPropNameInRow="TXTDESCRIPCION" msprop:Generator_ColumnPropNameInTable="TXTDESCRIPCIONColumn" msprop:Generator_UserColumnName="TXTDESCRIPCION" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTEXTENSION" msprop:Generator_ColumnVarNameInTable="columnTXTEXTENSION" msprop:Generator_ColumnPropNameInRow="TXTEXTENSION" msprop:Generator_ColumnPropNameInTable="TXTEXTENSIONColumn" msprop:Generator_UserColumnName="TXTEXTENSION" type="xs:string" minOccurs="0" />
+              <xs:element name="CODUSUARIOREG" msprop:Generator_ColumnVarNameInTable="columnCODUSUARIOREG" msprop:Generator_ColumnPropNameInRow="CODUSUARIOREG" msprop:Generator_ColumnPropNameInTable="CODUSUARIOREGColumn" msprop:Generator_UserColumnName="CODUSUARIOREG" type="xs:string" minOccurs="0" />
+              <xs:element name="FLAG" msprop:Generator_ColumnVarNameInTable="columnFLAG" msprop:Generator_ColumnPropNameInRow="FLAG" msprop:Generator_ColumnPropNameInTable="FLAGColumn" msprop:Generator_UserColumnName="FLAG" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

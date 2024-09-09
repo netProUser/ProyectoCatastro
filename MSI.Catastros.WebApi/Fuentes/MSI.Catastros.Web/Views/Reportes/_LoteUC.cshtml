@@ -1,0 +1,85 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Reporte.ReporteViewModel
+@{
+    ViewBag.Title = "xFicha Manzana";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="overflow: hidden">
+                <div class="row">
+                    <div class="col-md-6 col-xs-12"><strong>Reporte por Lote y Unidad Catastral</strong></div>
+                    <div class="col-md-6 col-xs-12">
+
+                        <div class="col-md-3 col-md-offset-6 col-sm-3">
+                            @*<button class="btn btn-green btn-block mr-3" id="" onclick="Limpiar()"><span class="glyphicon glyphicon-ok mr-2"></span> Nueva Busqueda </button>*@
+                        </div>
+                        <div class="col-md-3 col-sm-3">
+                            <button type="button" id="GenFicha" class="btn btn-create py-2 glyphicon glyphicon-plus-sign" style="float:right" onclick="GenerarFicha()"><span style="font-family:'Open Sans'"> Generar Reporte</span></button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-10">
+                        <div class="row">
+                            <div class="col-sm-3 px-3">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.CodigoTipoReporte, htmlAttributes: new { @class = "control-label" })
+                                    @Html.DropDownList("CodigoTipoReporte",
+                                                            new SelectList(Model.ListTipoReporte, "Value", "Text"), "Seleccione un Reporte",
+                                                            new { @class = "chosen-seleccionar form-control", style = "width:100%;" })
+                                    <span class="field-validation-valid" data-valmsg-for="CodigoTipoReporte" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section datatables {
+    <script>
+
+        function GenerarFicha() {
+            cont = Validar();
+
+            if (cont == true) {
+
+                urlFICHA = "@Url.Content("~/Reportes/Reports.aspx")" + '?CodigoReporte=' + $('#CodigoTipoReporte').val();
+                window.open(urlFICHA);
+            }
+        }
+
+
+        function Validar() {
+            var cont = true;
+
+            RemoveValidacion();
+
+            if (!$('#CodigoTipoReporte').val()) {
+                $('[data-valmsg-for="CodigoTipoReporte"]').html('Seleccione el Tipo de Reporte').addClass('field-validation-valid has-error');
+                cont = false;
+            }
+
+            return cont
+
+        }
+
+        function RemoveValidacion() {
+            $('[data-valmsg-for="CodigoTipoReporte"]').html('').removeClass('field-validation-valid has-error');
+        }
+
+        function Limpiar() {
+            RemoveValidacion();
+            $('#CodigoSector').val('');
+            $('#CodigoManzana').html('<option value="">Seleccione una manzana</option>');
+            $('#CodigoManzana').val('');
+        }
+
+    </script>
+
+}

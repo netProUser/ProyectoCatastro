@@ -1,0 +1,143 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.ProgramarInspeccion.RegistrarInspeccion
+
+@using (Html.BeginForm("AgregarInspeccion", "ProgramacionInspeccion", FormMethod.Post, new { id = "frmProgramacionInspeccion", name = "frmProgramacionInspeccion", @autocomplete = "off" }))
+{
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Registrar Inspeccion</h4>
+                @*@Html.HiddenFor(model => model.estado, new { type = "hidden" })*@
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NroInspeccion, htmlAttributes: new { @class = "control-label col-md-12" })
+                            <div class="col-md-12">
+                                @Html.EditorFor(model => model.NroInspeccion, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                @Html.ValidationMessageFor(model => model.NroInspeccion, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FechaInspeccion, htmlAttributes: new { @class = "control-label col-md-12" })
+                            <div class="col-md-12">
+                                <div class="form-group has-default has-feedback">
+                                    @Html.TextBoxFor(model => model.FechaInspeccion, new { @class = "form-control fechaE", @readonly = "readonly" })
+                                    <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.FechaInspeccion, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FechaReprogramacion, htmlAttributes: new { @class = "control-label col-md-12" })
+                            <div class="col-md-12">
+                                <div class="form-group has-default has-feedback">
+                                    @Html.TextBoxFor(model => model.FechaReprogramacion, new { @class = "form-control fechaE", @readonly = "readonly" })
+                                    <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.FechaReprogramacion, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.HoraInspeccion, htmlAttributes: new { @class = "control-label col-md-12" })
+                            <div class="col-md-12">
+                                @Html.EditorFor(model => model.HoraInspeccion, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                @Html.ValidationMessageFor(model => model.HoraInspeccion, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Inspectores, htmlAttributes: new { @class = "control-label col-md-12" })
+                            <div class="col-md-12">
+                                @Html.DropDownListFor(m => m.codResponsable, Model.codInspectores, null, new { @class = "form-control", multiple = "multiple" })
+                                @*<select id="codInspectores" name="codInspectores" class="form-control">
+                                    <option value="0"> Seleccione</option>
+                                </select>*@
+                                @Html.ValidationMessageFor(model => model.codInspectores, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Responsable, htmlAttributes: new { @class = "control-label col-md-12" })
+                            <div class="col-md-12">
+                                @Html.DropDownListFor(m => m.Responsable, Model.codInspectores, null, new { @class = "form-control", @readonly = "readonly" })
+                                @*<select id="codResponsable" name="codResponsable" class="form-control">
+                                    <option value="0"> Seleccione</option>
+                                </select>*@
+                                @Html.ValidationMessageFor(model => model.codResponsable, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FechaCitacion, htmlAttributes: new { @class = "control-label col-md-12" })
+                            <div class="col-md-12">
+                                <div class="form-group has-default has-feedback">
+                                    @Html.TextBoxFor(model => model.FechaCitacion, new { @class = "form-control fechaE", @readonly = "readonly" })
+                                    <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.FechaCitacion, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FechaAvisoInspeccion, htmlAttributes: new { @class = "control-label col-md-12" })
+                            <div class="col-md-12">
+                                <div class="form-group has-default has-feedback">
+                                    @Html.TextBoxFor(model => model.FechaAvisoInspeccion, new { @class = "form-control fechaE", @readonly = "readonly" })
+                                    <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.FechaAvisoInspeccion, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Observacion, htmlAttributes: new { @class = "control-label col-md-12" })
+                            <div class="col-md-12">
+                                @Html.TextAreaFor(model => model.Observacion, new { @class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.Observacion, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                @*<button type="button" id="btnGrabar" value="Grabar" class="btn btn-sm btn-green">Grabar</button>*@
+                <div class="row">
+                    <div class="col-sm-offset-10  col-sm-2 text-right">
+                        <button id="btnRegistrar" type="button" data-dismiss="modal" aria-label="Close" value="Registrar" class="btn btn-sm btn-green">
+                            Salir
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<style>
+    .multiselect-container li.odd {
+        background: #eeeeee;
+    }
+</style>
+<script>
+</script>

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="MANZAURBANA" targetNamespace="http://tempuri.org/MANZAURBANA.xsd" xmlns:mstns="http://tempuri.org/MANZAURBANA.xsd" xmlns="http://tempuri.org/MANZAURBANA.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="MANZAURBANA" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="MANZAURBANA" msprop:Generator_UserDSName="MANZAURBANA">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="MANZAURBANA" msprop:Generator_TableClassName="MANZAURBANADataTable" msprop:Generator_TableVarName="tableMANZAURBANA" msprop:Generator_TablePropName="_MANZAURBANA" msprop:Generator_RowDeletingName="MANZAURBANARowDeleting" msprop:Generator_RowChangingName="MANZAURBANARowChanging" msprop:Generator_RowEvHandlerName="MANZAURBANARowChangeEventHandler" msprop:Generator_RowDeletedName="MANZAURBANARowDeleted" msprop:Generator_UserTableName="MANZAURBANA" msprop:Generator_RowChangedName="MANZAURBANARowChanged" msprop:Generator_RowEvArgName="MANZAURBANARowChangeEvent" msprop:Generator_RowClassName="MANZAURBANARow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="NUM" msprop:Generator_ColumnVarNameInTable="columnNUM" msprop:Generator_ColumnPropNameInRow="NUM" msprop:Generator_ColumnPropNameInTable="NUMColumn" msprop:Generator_UserColumnName="NUM" type="xs:string" minOccurs="0" />
+              <xs:element name="DESCMANZA" msprop:Generator_ColumnVarNameInTable="columnDESCMANZA" msprop:Generator_ColumnPropNameInRow="DESCMANZA" msprop:Generator_ColumnPropNameInTable="DESCMANZAColumn" msprop:Generator_UserColumnName="DESCMANZA" type="xs:string" minOccurs="0" />
+              <xs:element name="CODCATASMANZA" msprop:Generator_ColumnVarNameInTable="columnCODCATASMANZA" msprop:Generator_ColumnPropNameInRow="CODCATASMANZA" msprop:Generator_ColumnPropNameInTable="CODCATASMANZAColumn" msprop:Generator_UserColumnName="CODCATASMANZA" type="xs:string" minOccurs="0" />
+              <xs:element name="CANTLOTE" msprop:Generator_ColumnVarNameInTable="columnCANTLOTE" msprop:Generator_ColumnPropNameInRow="CANTLOTE" msprop:Generator_ColumnPropNameInTable="CANTLOTEColumn" msprop:Generator_UserColumnName="CANTLOTE" type="xs:string" minOccurs="0" />
+              <xs:element name="TIPOMANZA" msprop:Generator_ColumnVarNameInTable="columnTIPOMANZA" msprop:Generator_ColumnPropNameInRow="TIPOMANZA" msprop:Generator_ColumnPropNameInTable="TIPOMANZAColumn" msprop:Generator_UserColumnName="TIPOMANZA" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,123 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.PrimeraAsignacion.PrimeraAsignacionViewModel
+
+<div id="RegistroPrimeraAsignacion">
+    @using (Html.BeginForm("Registrar", "PrimeraAsignacion", FormMethod.Post, new { id = "frmPrimeraAsignacion", name = "frmPrimeraAsignacion" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            @Html.TextBoxFor(model => model.Periodo, new { type = "hidden" })
+            @Html.TextBoxFor(model => model.Correlativo, new { type = "hidden" })
+            @Html.TextBoxFor(model => model.CodigoTipoSolicitud, new { type = "hidden" })
+            @Html.TextBoxFor(model => model.CodigoTD, new { type = "hidden" })
+            @Html.TextBoxFor(model => model.NumeroSolicitud, new { type = "hidden" })
+            @Html.TextBoxFor(model => model.IdRef, new { type = "hidden" })
+
+            @*@Html.TextBoxFor(model => model.Usuario, new { type = "hidden" })
+                @Html.TextBoxFor(model => model.Cargo, new { type = "hidden" })*@
+            <div class="col-sm-4">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NombreTipoDocumento)
+                    @Html.TextBoxFor(model => model.NombreTipoDocumento, new { @class = "form-control", @readonly = "true" })
+                    @*@Html.ValidationMessageFor(model => model.TipoDocumento, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NombreAreaSolicitante)
+                    @Html.TextBoxFor(model => model.NombreAreaSolicitante, new { @class = "form-control", @readonly = "true" })
+                    @*@Html.ValidationMessageFor(model => model.AreaSolicitante, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Folio)
+                    @Html.TextBoxFor(model => model.Folio, new { @class = "form-control", @readonly = "true" })
+                    @*@Html.ValidationMessageFor(model => model.Folio)*@
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CodigoResponsable)
+                    @Html.DropDownListFor(m => m.CodigoResponsable, Model.ListAsignarResponsable, "- Seleccione Responsable -", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CodigoResponsable, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PuestoResponsable)
+                    @Html.TextBoxFor(model => model.PuestoResponsable, new { @class = "form-control", @readonly = "true" })
+                    @*@Html.ValidationMessageFor(model => model.PuestoResponsable)*@
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FechaRecepcion)
+                    @Html.TextBoxFor(model => model.FechaRecepcion, new { @class = "form-control", @readonly = "true", @autocomplete = "off", Value = String.Format("{0:dd/MM/yyyy}", Model.FechaRecepcion) })
+                    @*@Html.TextBoxFor(model => model.FechaRecepcion, new { @class = "form-control", type = "date", @readonly = "true" })*@
+                    @*@Html.ValidationMessageFor(model => model.FechaRecepcion)*@
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CodigoActividad)
+                    @Html.DropDownListFor(m => m.CodigoActividad, Model.ListActividad, "- Seleccione la actividad -", new { @class = "form-control chosen-seleccionar" })
+                    @Html.ValidationMessageFor(model => model.CodigoActividad, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CodigoAccion)
+                    @Html.DropDownListFor(m => m.CodigoAccion, Model.ListAccion, "- Seleccione la acción -", new { @class = "form-control chosen-seleccionar" })
+                    @Html.ValidationMessageFor(model => model.CodigoAccion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Observaciones)
+                    @Html.TextAreaFor(model => model.Observaciones, new { @class = "form-control", @style = "text-transform:uppercase", @maxlength = "200", rows = "5" })
+                    @*@Html.ValidationMessageFor(model => model.Observaciones)*@
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CodigoTipoProcedimiento)<br />
+                    @Html.DropDownListFor(m => m.CodigoTipoProcedimiento, new SelectList(ViewBag.ListaTipoProcedimiento, "Value", "Text"), "- Seleccione el tipo de procedimiento -",
+                    new { @class = "form-control col-md-6 px-1" })
+                    @*@Html.DropDownListFor(m => m.CodigoTipoProcedimiento, Model.ListTipoProcedimiento, "- Seleccione el tipo de procedimiento -", new { @class = "form-control" })*@
+                    @Html.ValidationMessageFor(model => model.CodigoTipoProcedimiento, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script>
+    $(".chosen-seleccionar").chosen({ width: "100%", placeholder_text_single: "Seleccione una opción" });
+    if ($('#NombreAreaSolicitante').val() == "") {
+        $('#NombreTipoDocumento').val("");
+    }
+    $('textarea').keyup(function () { this.value = this.value.toLocaleUpperCase() });
+    $('#CodigoResponsable').change(function () {
+        if (this.value) {
+            $('#PuestoResponsable').val('Analista');
+        } else {
+            $('#PuestoResponsable').val('');
+        }
+
+    });
+    //$("#FechaRecepcion").datepicker({
+    //    format: "dd/mm/yyyy",
+    //    language: "es",
+    //    calendarWeeks: true
+    //});
+</script>

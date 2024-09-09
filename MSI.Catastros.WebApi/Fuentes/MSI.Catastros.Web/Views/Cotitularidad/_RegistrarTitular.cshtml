@@ -1,0 +1,647 @@
+﻿
+
+<div id="DocumentoRRPPContainer">
+
+    @Html.AntiForgeryToken()
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-hidden="true">
+                    &times;
+                </button>
+                <h4 id="TituloDocumentos">Registrando Titular</h4>
+            </div>
+            <div class="modal-body">
+                @*@Html.HiddenFor(m => m.CodigoCorrDirecUnidad)*@
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <div class="form-group">
+                            <label class="radio-inline control-label"><input type="radio" name="BusquedaRadio" value="1" checked>Código Contribuyente</label>
+                            <label class="radio-inline control-label"><input type="radio" name="BusquedaRadio" value="2">Tipo Documento y Número Documento</label>
+                            <label class="radio-inline control-label"><input type="radio" name="BusquedaRadio" value="3">Razón Social</label>
+                        </div>
+                    </div>  
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        
+                        <div class="col-md-2 DivCodigo">
+                            <label class="control-label">Codigo Contribuyente</label>
+                        </div>
+                        <div class="col-md-4 DivCodigo">
+                            <input class="form-control" type="text" id="CodigoContribuyente" />
+                        </div>
+
+                        <div class="col-md-2 DivTipoDocumento">
+                            <label class="control-label">Tipo Documento</label>
+                        </div>
+
+                        <div class="col-md-3 DivTipoDocumento">
+                            @Html.DropDownList("CodigoTipoDocumentoIdentidad", new SelectList(ViewBag.ListVBTipoDocumentoIdentidad, "value", "text"), "- Seleccione...", new { @class = "form-control" })
+                        </div>
+
+                        <div class="col-md-2 DivTipoDocumento">
+                            <label class="control-label">Número Documento</label>
+                        </div>
+
+                        <div class="col-md-3 DivTipoDocumento">
+                            <input class="form-control" type="text" id="NumeroDocumento" />
+                        </div>
+
+
+                        <div class="col-md-2 DivRazonSocial">
+                            <label class="control-label">Razón Social</label>
+                        </div>
+
+                        <div class="col-md-8 DivRazonSocial">
+                            <input class="form-control" type="text" id="RazonSocial" />
+                        </div>
+                        <button class="btn btn-github glyphicon glyphicon-search" type="button" id="btnBuscarTit"></button>
+
+                    </div>
+                </div>
+                <br />
+                
+                @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                <div class="row">
+                    <div class="col-md-12 py-2 text-right">
+                        <button class="btn btn-github" type="button" id="btnNuevoCotitular" style="background-color:#00784b;color:white">Nuevo Cotitular</button>
+   
+                    </div>
+                </div>
+                @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+
+                <div class="row" id="MasterTitularTabla">
+                    <div class="col-md-12">
+
+                        <table id="tablaTitularRentas" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th width="5%">Nro.</th>
+                                    <th style="width:15%" width="15%">Tipo Documento <br /> Identidad</th>
+                                    <th style="width:15%" width="15%">Nro. Documento <br /> Identidad</th>
+                                    <th style="width:25%" width="25%">Nombre o Razón Social</th>
+                                    <th style="width:10%" width="10%">Codigo de <br /> Contribuyente</th>
+                                    
+                                    <th style="width:10%" width="10%">Tipo de <br /> Propietario</th>
+                                    <th style="width:10%" width="10%"></th>
+                                    @*<th></th>*@
+                                    @*<th></th>
+                                    <th></th>*@
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <br />
+                @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                @*//Se comenta original,se agrega un id para poder reconocer contribuyente existente y nuevo*@
+                @*<div class="row">*@
+                    <div class="row" id="TabContribuyenteExistente">
+                @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">Tipo Documento Identidad</label>
+                                <input type="text" disabled class="form-control" id="txtDocumentoIdentidad" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">Número Documento Identidad</label>
+                                <input type="text" disabled class="form-control" id="txtNumeroDocIdentidad" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">Codigo Contribuyente</label>
+                                <input type="text" disabled class="form-control" id="txtCodigoContributente" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label class="control-label">Contribuyente</label>
+                                <input type="text" disabled class="form-control" id="txtContributente" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">Tipo Propietario</label>
+                                <input type="text" disabled class="form-control" id="txtTipoPropietario" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">Condición Propiedad</label>
+                                @Html.DropDownList("cbCondicionPropiedad", new SelectList(ViewBag.ListVBCondicionPropietario, "value", "text"), "- Seleccione...", new { @class = "form-control" })
+                                <span class="" data-valmsg-for="cbCondicionPropiedad" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">Porcentaje</label>
+                                <input type="text" class="form-control" id="txtPorcentaje" />
+                                <span class="" data-valmsg-for="txtPorcentaje" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                    </div>
+                    @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                    @*//SE AÑADE PARA LOS NUEVOS REGISTROS DE COTITULARES*@
+                    <div class="row" style="display:none" id="TabContribuyenteNuevo">
+                        <div class="col-md-4">
+                            @*<div class="form-group">
+                        <label class="control-label">Tipo Documento Identidad</label>
+                        <input type="text" disabled class="form-control" id="txtDocumentoIdentidad" />
+                    </div>*@
+                            <div class="form-group" id="DivCodigoTipoDocumento">
+                                <label class="control-label">Tipo Doc. Identidad</label>
+                                @Html.DropDownList("CodigoTipoDocumentoIdentidad", new SelectList(ViewBag.ListVBTipoDocumentoIdentidad, "value", "text"),"- Seleccione...", new { @class = "form-control" })
+                                <span class="" data-valmsg-for="cbCodigoTipoDocumentoNuevo" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">Nª Doc</label>
+                                <input type="text" class="form-control" id="txtNumeroDocIdentidadNuevo" />
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label class="control-label">Apellidos y Nombres o Razón Social</label>
+                                <input type="text" class="form-control" id="txtNombresRazonSocialNuevo" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">Codigo Via</label>
+                                <input type="text" disabled class="form-control" id="txtCodigoViaNuevo" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">Via</label>
+                                <input type="text" disabled class="form-control" id="txtViaNuevo" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">B-T</label>
+                                <input type="text"  class="form-control" id="txtBlockTorreNuevo" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">Nª Munic.</label>
+                                <input type="text"  class="form-control" id="txtNroMunicipalNuevo" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">Int.</label>
+                                <input type="text" disabled class="form-control" id="txtInteriorNuevo" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">Urbanizacion</label>
+                                <input type="text" disabled class="form-control" id="txtUrbanizacionNuevo" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">Mza</label>
+                                <input type="text" disabled class="form-control" id="txtManzanaNuevo" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">Lote</label>
+                                <input type="text" disabled class="form-control" id="txtLoteNuevo" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">Distrito</label>
+                                <input type="text" disabled class="form-control" id="txtDisttritoNuevo" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">Codigo Contribuyente</label>
+                                <input type="text" class="form-control" id="txtCodigoContributenteNuevo" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">%Cond.</label>
+                                <input type="text" class="form-control" id="txtPorcentajeNuevo" />
+                                <span class="" data-valmsg-for="txtPorcentaje" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">Telefono</label>
+                                <input type="text" class="form-control" id="txtTelefonoNuevo" />
+                            </div>
+                        </div>
+                    </div>
+                    @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                </div>
+            <div class="modal-footer">
+                <div class="col-md-offset-2 col-md-10" >
+                    <input id="btnGrabarTitularRentas" type="submit" value="Grabar" class="btn btn-green" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/vendor/datatables-checkboxes/js/dataTables.checkboxes.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#txtPorcentaje').number(true, 4, '.', '');
+        $('#btnGrabarTitularRentas').attr('disabled', 'disabled');
+
+         var tablaTitularRentas = $("#tablaTitularRentas").DataTable({
+            "ajax": {
+                "url": "@Url.Content("~/Cotitularidad/CargarTitularRentas")",
+            "type": "POST",
+            "datatype": "json",
+            "data": function (d) {
+                // -- Agregar campos de busqueda
+                d.CodigoContribuyente = $('#CodigoContribuyente').val();
+                d.CodigoTipoDocumentoIdentidad = $('#CodigoTipoDocumentoIdentidad').val();
+                d.NumeroDocumento = $('#NumeroDocumento').val();
+                d.RazonSocial = $('#RazonSocial').val().toUpperCase();
+                d.Estatico = Estatico;
+                d.CodigoCatastrlalRentas = '31033716211601';  //$("#CodigoDistrito").val() + $("#CodigoSector").val() + $("#CodigoManzana").val().substring(1) +
+                //$("#CodigoLote").val().substring(1) + $("#CodigoEdificacion").val().substring(1) + $("#CodigoEntrada").val().substring(1) +
+                //$("#CodigoPiso").val() + $("#CodigoUnidad").val().substring(1);
+            }
+        },
+                "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+                "processing": true,
+                "serverSide": false,
+                //"scrollY": "400px",
+                //"scrollCollapse": true,
+                "paging": true,
+                'columnDefs': [
+                     { "width": "5%", "targets": 0 },
+                     { "width": "7%", "targets": 1 },
+                     { "width": "7%", "targets": 2 },
+                     { "width": "40%", "targets": 3 },
+                     { "width": "7%", "targets": 4 },
+                     { "width": "7%", "targets": 5 },
+                     { "width": "7%", "targets": 6 },
+                     //{ 'targets': 7, 'checkboxes': { 'selectRow': true } },
+
+                ],
+                "columns": [
+                    { "data": "Item", "name": "Item", "className": "text-center" },
+                    { "data": "TipoDocumentoIdentidad", "name": "TipoDocumentoIdentidad ", "autoWidth": true, "className": "text-center" },
+                    { "data": "NumeroDocumentoIdentidad", "name": "NumeroDocumentoIdentidad ", "autoWidth": true, "className": "text-center" },
+                    { "data": "RazonSocial", "name": "RazonSocial ", "autoWidth": true, "className": "text-center" },
+                    { "data": "CodigoContribuyente", "name": "CodigoContribuyente", "autoWidth": true, "className": "text-center" },
+                    { "data": "TipoPropietario", "name": "TipoPropietario", "autoWidth": true, "className": "text-center" },
+                    { "data": "CodigoTipoPropietario", "name": "CodigoTipoPropietario ", "autoWidth": true, "className": "hide_column" },
+                    //{ "data": "Item", "name": "Item", "autoWidth": true, "className": "text-center" },
+                    //{ "data": "CodigoCorrelativoLote", "name": "CodigoCorrelativoLote", "autoWidth": true, "className": "hide_column" },
+                    //{ "data": "CodigoDocumento", "name": "CodigoDocumento", "autoWidth": true, "className": "hide_column" },
+
+        ]
+    });
+        ///////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////
+
+
+        $('#tablaTitularRentas tbody').on('click', 'tr', function () {
+            var row = $(this);
+            var data = tablaTitularRentas.row(row).data();
+
+
+                console.log(data);
+
+                $.LoadingOverlay("show");
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                    $.LoadingOverlay("hide");
+                }
+                else {
+                    tablaTitularRentas.$('tr.selected').removeClass('selected');
+                    row.addClass('selected');
+                    $('#txtDocumentoIdentidad').val(data.CodigoTipoDocumentoIdentidad);
+                    $('#txtNumeroDocIdentidad').val(data.NumeroDocumentoIdentidad);
+                    $('#txtCodigoContributente').val(data.CodigoContribuyente);
+                    $('#txtContributente').val(data.RazonSocial);
+                    $('#txtTipoPropietario').val(data.TipoPropietario);
+                    $('#btnGrabarTitularRentas').removeAttr('disabled', 'disabled');
+
+                    $.LoadingOverlay("hide");
+                }
+
+        });
+
+
+        $('#cbCondicionPropiedad').change(function () {
+            if ($(this).val() === '010001') {
+                $('#txtPorcentaje').val('100.0000');
+                $('#txtPorcentaje').prop( "disabled", true );
+            } else {
+                $('#txtPorcentaje').prop("disabled", false);
+            }
+        });
+
+
+
+
+        $("input[name=BusquedaRadio]").click(function () {
+            if ($(this).val() === '1') {
+                $(".DivCodigo").show();
+                $(".DivTipoDocumento").hide();
+                $(".DivRazonSocial").hide();
+
+                $('#CodigoContribuyente').val('');
+                $('#CodigoTipoDocumentoIdentidad').val('');
+                $('#NumeroDocumento').val('');
+                $('#RazonSocial').val('');
+
+            } else if ($(this).val() === '2') {
+                $(".DivCodigo").hide();
+                $(".DivTipoDocumento").show();
+                $(".DivRazonSocial").hide();
+                $('#CodigoContribuyente').val('');
+                $('#CodigoTipoDocumentoIdentidad').val('');
+                $('#NumeroDocumento').val('');
+                $('#RazonSocial').val('');
+            } else if ($(this).val() === '3') {
+                $(".DivCodigo").hide();
+                $(".DivTipoDocumento").hide();
+                $(".DivRazonSocial").show();
+                $('#CodigoContribuyente').val('');
+                $('#CodigoTipoDocumentoIdentidad').val('');
+                $('#NumeroDocumento').val('');
+                $('#RazonSocial').val('');
+            }
+        });
+
+        $('#TituloDocumentos').text('Registrando Titular Catastral - UC: ' + $("#CodigoDistrito").val() + '-' +
+        $("#CodigoSector").val() + '-' +
+        $("#CodigoManzana").val() + '-' +
+        $("#CodigoLote").val() + '-' +
+        $("#CodigoEdificacion").val() + '-' +
+        $("#CodigoEntrada").val() + '-' +
+        $("#CodigoPiso").val() + '-' +
+        $("#CodigoUnidad").val());
+
+        $(".DivCodigo").show();
+        $(".DivTipoDocumento").hide();
+        $(".DivRazonSocial").hide();
+
+        localStorage.setItem('TitularRentasSelec', "");
+
+        //tablaTitularRentas.columns.adjust().draw();
+        //
+
+        $("#btnBuscarTit").on("click", function (event) {
+            debugger;
+
+            tablaTitularRentas.ajax.reload(function (res) {
+                console.log('2', res.data)
+
+                var alto = $('#tablaTitularRentas_wrapper .dataTables_scrollBody').height();
+                if (alto < 399) {
+                    $('#tablaTitularRentas_wrapper .dataTables_scrollHead').removeClass('pr-4');
+
+                } else {
+                    $('#tablaTitularRentas_wrapper .dataTables_scrollHead').addClass('pr-4');
+                }
+                tablaTitularRentas.columns.adjust().draw(false);
+            });
+            $('#txtDocumentoIdentidad').val('');
+            $('#txtNumeroDocIdentidad').val('');
+            $('#txtCodigoContributente').val('');
+            $('#txtContributente').val('');
+            $('#txtTipoPropietario').val('');
+
+            //CAMBIOS NUEVOS CATASTRO GJLR-INI
+            //document.getElementById("tablaTitularRentas").style.display = "block";
+            document.getElementById("MasterTitularTabla").style.display = "block";
+            document.getElementById("TabContribuyenteExistente").style.display = "block";
+            document.getElementById("TabContribuyenteNuevo").style.display = "none";
+            //CAMBIOS NUEVOS CATASTRO GJLR-FIN
+
+        });
+
+        $("#btnGrabarTitularRentas").on("click", function (event) {
+
+            cont = ValidarTitular();
+
+            if (cont == true) {
+
+                var Titular = {
+
+                    CodigoContribuyente: $('#txtCodigoContributente').val(),
+                    CondicionPropiedad: $('#cbCondicionPropiedad').val(),
+                    PorcentajeTitularidad: $('#txtPorcentaje').val(),
+                    CodigoUni: $('#CodigoUnidadCatastral').val(),
+                    Estatico: Estatico
+                }
+
+                $.post("@Url.Content("~/Cotitularidad/RegistrarTitularCatastral")", {
+                    Titular: Titular,
+                }
+                , function (response) {
+
+                    if (response.success == true) {
+                        toastr.success("Las Unidades Catastrales se registraron correctamente", "Mensaje del Sistema", { "progressBar": true });
+                        tablaUnidadTitular.ajax.reload();
+                        $('#modalNuevoTitular').modal('hide');
+                        tablaUnidadTitular.ajax.reload(function (json) {
+                            if (json.data.length > 0) {
+                                $("#tdCondicionPropiedad").text(json.data[0].CondicionPropiedad);
+                            } else {
+                                $("#tdCondicionPropiedad").text("");
+                            }
+                        });
+
+
+                    } else {
+                        toastr.warning("Problema en el servidor", "Mensaje del Sistema", { "progressBar": true });
+                    }
+                });
+            } else {
+                toastr.error("Revisar, falta completar Informacion", "No se pudo grabar.", { "progressBar": true });
+                //$('#GrabarUnidadCatastral').removeAttr('disabled');
+            }
+
+        });
+
+
+        function ValidarTitular() {
+            RemoveValidacion();
+            var cont = true;
+
+
+            if (!$('#cbCondicionPropiedad').val()) {
+                $('[data-valmsg-for="cbCondicionPropiedad"]').html('Ingrese la condicion de propiedad').addClass('field-validation-valid has-error');
+                cont = false;
+            }
+
+            if (!$('#txtPorcentaje').val()) {
+                $('[data-valmsg-for="txtPorcentaje"]').html('Ingrese porcentaje').addClass('field-validation-valid has-error');
+                cont = false;
+            }
+
+            var totalPorcentaje = 0;
+            var data = tablaUnidadTitular.rows().data();
+            data.each(function (value, index) {
+                totalPorcentaje = totalPorcentaje + parseFloat(value.PorcentajeTitularidad);
+            });
+
+            totalPorcentaje = parseFloat(totalPorcentaje) + parseFloat($('#txtPorcentaje').val());
+
+            if (totalPorcentaje > 100) {
+                $('[data-valmsg-for="txtPorcentaje"]').html('Porcentaje menor o igual a 100%').addClass('field-validation-valid has-error');
+                cont = false;
+            }
+
+            return cont
+        }
+
+        function RemoveValidacion() {
+            $('[data-valmsg-for="cbCondicionPropiedad"]').html('').addClass('field-validation-valid has-error');
+            $('[data-valmsg-for="txtPorcentaje"]').html('').addClass('field-validation-valid has-error');
+        }
+
+        @*$('#modalNuevoTitular').on('hidden.bs.modal', function () {
+            if (localStorage.getItem('TitularRentasSelec')) {
+                var rows = 0; var ListTitularRentas = JSON.parse(localStorage.getItem('TitularRentasSelec'));
+                var ListaUnidadTitularSave = [];
+                var unidadesYaRegistras = '';
+                var contadorWarn = 0;
+                $.each(ListTitularRentas, function (index, Item) {
+                    if (CompararUnidadTitular(Item) === 0) {
+                        ListaUnidadTitularSave.push(Item);
+                        rows++;
+                    }
+                    else if (index === 0) {
+                        contadorWarn++;
+                        //toastr.warning("Uno o más registros ya se han ingresado", "Mensaje del Sistema", { "progressBar": true });
+                    }
+                });
+
+                if (contadorWarn > 0) {
+                    toastr.warning("Uno o más registros ya se han ingresado", "Mensaje del Sistema", { "progressBar": true });
+                }
+
+                if (ListaUnidadTitularSave.length > 0) {
+                    $.post("@Url.Content("~/UnidadCatastral/RegistrarTitularCatastral")", {
+                        ListaUnidadTitular: ListaUnidadTitularSave,
+                        CodigoUniCat: $('#CodigoUnidadCatastral').val(),
+                        //CodigoDistrito: $('#CodigoDistrito').val(),
+                        //CodigoSector: $('#CodigoSector').val(),
+                        //CodigoManzana: $('#CodigoManzana').val(),
+                        //CodigoLote: $('#CodigoLote').val()
+                    }
+                    , function (response) {
+                        toastr.success("Las Unidades Catastrales se registraron correctamente", "Mensaje del Sistema", { "progressBar": true });
+                        tablaUnidadTitular.ajax.reload();
+
+                        if (contadorWarn > 0) {
+                            toastr.warning("Uno o más registros ya se han ingresado", "Mensaje del Sistema", { "progressBar": true });
+                        }
+                    });
+                }
+            }
+        });*@
+
+        //CAMBIOS NUEVOS CATASTRO GJLR-INI
+        $("#btnNuevoCotitular").on("click", function (event) {
+            debugger;
+            document.getElementById("TabContribuyenteNuevo").style.display = "block";
+            document.getElementById("TabContribuyenteExistente").style.display = "none";
+
+            ///////////////////////////////////////////////////////////////
+            //document.getElementById("tablaTitularRentas").style.display = "none";
+            document.getElementById("MasterTitularTabla").style.display = "none";
+            
+            $('#txtNumeroDocIdentidadNuevo').val('');
+            $('#txtNombresRazonSocialNuevo').val('');
+            $('#txtBlockTorreNuevo').val('');
+            $('#txtNroMunicipalNuevo').val('');
+            $('#txtBlockTorreNuevo').val('');
+            $('#txtPorcentajeNuevo').val('');
+            $('#txtTelefonoNuevo').val('');
+            $('#txtCodigoContributenteNuevo').val('');
+
+            var htmlCode = `<label class ="control-label">Tipo Doc.Identidad</label>
+                                @Html.DropDownList("CodigoTipoDocumentoIdentidad", new SelectList(ViewBag.ListVBTipoDocumentoIdentidad, "value", "text"), "- Seleccione...", new { @class = "form-control" })
+                                <span class ="" data-valmsg-for="cbCodigoTipoDocumentoNuevo" data-valmsg-replace="true"></span>`;
+
+            // Insertar el HTML en el contenedor
+            document.getElementById('DivCodigoTipoDocumento').innerHTML = htmlCode;
+
+            //$('#CodigoTipoDocumentoIdentidad').prop('selectedIndex', 0);
+            //$('#CodigoTipoDocumentoIdentidad').val($('#CodigoTipoDocumentoIdentidad option:first').val());
+
+            //var primerValor = $('#CodigoTipoDocumentoIdentidad option:first').val();
+            //var primerValor = $('#CodigoTipoDocumentoIdentidad').prop('selectedIndex', 0)
+            //$('#CodigoTipoDocumentoIdentidad').val(primerValor).change();
+            //var selectElement = document.getElementById('CodigoTipoDocumentoIdentidad');
+            //selectElement.selectedIndex = 0;
+
+            //$('#CodigoTipoDocumentoIdentidad').val('- Seleccione...').change();
+            //$('#CodigoTipoDocumentoIdentidad').prop('selectedIndex', 0).change();
+
+            // Obtener el dropdown
+            //var selectElement = document.getElementById('CodigoTipoDocumentoIdentidad');
+
+            // Seleccionar el primer valor
+            //selectElement.selectedIndex = 0;
+
+            // Disparar el evento 'change' si es necesario
+            //var event = new Event('change');
+            //selectElement.dispatchEvent(event);
+
+            //var selectElement = document.getElementById('CodigoTipoDocumentoIdentidad');
+
+            //$('#CodigoTipoDocumentoIdentidad').val('010001');
+            @*$('#CodigoTipoDocumentoIdentidad').empty();
+            var opciones = @Html.Raw(Json.Encode(ViewBag.ListVBTipoDocumentoIdentidad));
+            var $select = $('#CodigoTipoDocumentoIdentidad');
+            $.each(opciones, function(index, opcion) {
+                $select.append(
+                    $('<option></option>').val(opcion.value).text(opcion.text)
+                );
+            });*@
+            ////
+            //var combox = document.getElementById('CodigoTipoDocumentoIdentidad');
+
+            // Establecer el valor deseado (debe coincidir con el valor de una opción existente)
+            //combox.value = "";
+            /////////
+            // Obtener el elemento del DOM usando su id
+            //var combox = document.getElementById('CodigoTipoDocumentoIdentidad');
+
+            // El texto visible que quieres seleccionar
+            //var textoSeleccionar = '- Seleccione...';
+
+            // Iterar sobre las opciones del select
+            //for (var i = 0; i < combox.options.length; i++) {
+            //    if (combox.options[i].text === textoSeleccionar) {
+            //        combox.selectedIndex = i;
+            //        break;
+            //    }
+            //}
+            //////////////////////////////////////////
+        });
+        //CAMBIOS NUEVOS CATASTRO GJLR-FIN
+    });
+</script>

@@ -1,0 +1,87 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.RegistrarAtencion.ControlCalidadViewModel
+
+<div id="RegistrarHabilitacionUrbanaContainer">
+    @using (Html.BeginForm("Registrar", "RegistrarAtencion", FormMethod.Post,
+
+                   new
+                   {
+                       id = "ControlCalidadDetalladoForm",
+                       @class = "form",
+                       role = "form"
+                   }
+                   ))
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4>Registrando Control de Calidad Detallado</h4>
+                </div>
+                <div class="modal-body">
+                    @Html.ValidationSummary(true)
+                    <div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.NumeroRevision, htmlAttributes: new { @class = "control-label" })
+                                        @Html.TextBoxFor(model => model.NumeroRevision, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.NumeroRevision)
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.FechaRevision, htmlAttributes: new { @class = "control-label" })
+                                        @Html.TextBoxFor(model => model.FechaRevision, new { type = "date", @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.FechaRevision)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.TipoError, htmlAttributes: new { @class = "control-label" })
+
+                                        @Html.TextBoxFor(model => model.DescripcionError, new { @class = "form-control" })
+                                        @*@Html.DropDownListFor(model => model.TipoError, new SelectList(Model.TipoError, "CodigoTipoHabilitacion", "NombreTipoHabilitacion"), "",
+                    new { @class = "form-control" })*@
+                                        @Html.ValidationMessageFor(model => model.TipoError)
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.DescripcionError, htmlAttributes: new { @class = "control-label" })
+
+                                        @Html.TextBoxFor(model => model.DescripcionError, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.DescripcionError)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Detalle, htmlAttributes: new { @class = "control-label" })
+                                        @Html.TextAreaFor(model => model.Detalle, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Detalle)
+                                    </div>
+                                </div>
+
+                            </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Grabar" class="btn btn-success" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

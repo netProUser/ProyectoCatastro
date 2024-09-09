@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsAccesoSobre" targetNamespace="http://tempuri.org/dsAccesoSobre.xsd" xmlns:mstns="http://tempuri.org/dsAccesoSobre.xsd" xmlns="http://tempuri.org/dsAccesoSobre.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+        </Connections>
+        <Tables>
+        </Tables>
+        <Sources>
+        </Sources>
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsAccesoSobre" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="dsAccesoSobre" msprop:Generator_DataSetName="dsAccesoSobre">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dtAccesoSobre" msprop:Generator_UserTableName="dtAccesoSobre" msprop:Generator_RowDeletedName="dtAccesoSobreRowDeleted" msprop:Generator_RowChangedName="dtAccesoSobreRowChanged" msprop:Generator_RowClassName="dtAccesoSobreRow" msprop:Generator_RowChangingName="dtAccesoSobreRowChanging" msprop:Generator_RowEvArgName="dtAccesoSobreRowChangeEvent" msprop:Generator_RowEvHandlerName="dtAccesoSobreRowChangeEventHandler" msprop:Generator_TableClassName="dtAccesoSobreDataTable" msprop:Generator_TableVarName="tabledtAccesoSobre" msprop:Generator_RowDeletingName="dtAccesoSobreRowDeleting" msprop:Generator_TablePropName="dtAccesoSobre">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CORRELATO" msprop:Generator_UserColumnName="CORRELATO" msprop:Generator_ColumnPropNameInRow="CORRELATO" msprop:Generator_ColumnVarNameInTable="columnCORRELATO" msprop:Generator_ColumnPropNameInTable="CORRELATOColumn" type="xs:double" minOccurs="0" />
+              <xs:element name="LOGIN" msprop:Generator_UserColumnName="LOGIN" msprop:Generator_ColumnPropNameInRow="LOGIN" msprop:Generator_ColumnVarNameInTable="columnLOGIN" msprop:Generator_ColumnPropNameInTable="LOGINColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="PASSWORD" msprop:Generator_UserColumnName="PASSWORD" msprop:Generator_ColumnPropNameInRow="PASSWORD" msprop:Generator_ColumnVarNameInTable="columnPASSWORD" msprop:Generator_ColumnPropNameInTable="PASSWORDColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="COD_USUARIO" msprop:Generator_UserColumnName="COD_USUARIO" msprop:Generator_ColumnPropNameInRow="COD_USUARIO" msprop:Generator_ColumnVarNameInTable="columnCOD_USUARIO" msprop:Generator_ColumnPropNameInTable="COD_USUARIOColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="TIPO_DOC" msprop:Generator_UserColumnName="TIPO_DOC" msprop:Generator_ColumnPropNameInRow="TIPO_DOC" msprop:Generator_ColumnVarNameInTable="columnTIPO_DOC" msprop:Generator_ColumnPropNameInTable="TIPO_DOCColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="NUM_DOCUMENTO" msprop:Generator_UserColumnName="NUM_DOCUMENTO" msprop:Generator_ColumnPropNameInRow="NUM_DOCUMENTO" msprop:Generator_ColumnVarNameInTable="columnNUM_DOCUMENTO" msprop:Generator_ColumnPropNameInTable="NUM_DOCUMENTOColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="NOM_LOCAL" msprop:Generator_UserColumnName="NOM_LOCAL" msprop:Generator_ColumnVarNameInTable="columnNOM_LOCAL" msprop:Generator_ColumnPropNameInRow="NOM_LOCAL" msprop:Generator_ColumnPropNameInTable="NOM_LOCALColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="NOM_CENTRO" msprop:Generator_UserColumnName="NOM_CENTRO" msprop:Generator_ColumnVarNameInTable="columnNOM_CENTRO" msprop:Generator_ColumnPropNameInRow="NOM_CENTRO" msprop:Generator_ColumnPropNameInTable="NOM_CENTROColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="DIRECCION" msprop:Generator_UserColumnName="DIRECCION" msprop:Generator_ColumnVarNameInTable="columnDIRECCION" msprop:Generator_ColumnPropNameInRow="DIRECCION" msprop:Generator_ColumnPropNameInTable="DIRECCIONColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="NOM_DPTO" msprop:Generator_UserColumnName="NOM_DPTO" msprop:Generator_ColumnVarNameInTable="columnNOM_DPTO" msprop:Generator_ColumnPropNameInRow="NOM_DPTO" msprop:Generator_ColumnPropNameInTable="NOM_DPTOColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

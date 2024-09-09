@@ -1,0 +1,44 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.MobiliarioUrbano.MobiliarioUrbanoViewModel
+
+<fieldset class="formulario" style="display: block;">
+    <legend>Componente</legend>
+    <div class="row">
+        @*<div class="col-sm-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.listTipoComponente)
+                @Html.DropDownListFor(m => m.codTipoComponente, Model.listTipoComponente, "- Seleccione -", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.codTipoComponente)
+
+            </div>
+        </div>*@
+        <div class="col-sm-4">
+            <div class="form-group">
+                @Html.LabelFor(model => model.numeroUnidad)
+
+                @Html.TextBoxFor(model => model.numeroUnidad, new { @class = "form-control", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.numeroUnidad)
+
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                @Html.LabelFor(model => model.CodigoCampaña)
+
+                @Html.TextBoxFor(model => model.CodigoCampaña, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CodigoCampaña)
+
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                @Html.LabelFor(model => model.fechaCampania)
+
+                <div class="form-group has-default has-feedback">
+                    @Html.TextBoxFor(model => model.fechaCampania, new { @class = "form-control fechaE", @readonly = "readonly" })
+                    <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>
+                </div>
+                @Html.ValidationMessageFor(model => model.fechaCampania)
+            </div>
+        </div>
+    </div>    
+</fieldset>

@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="BCLINDEROS" targetNamespace="http://tempuri.org/BCLINDEROS.xsd" xmlns:mstns="http://tempuri.org/BCLINDEROS.xsd" xmlns="http://tempuri.org/BCLINDEROS.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="BCLINDEROS" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="BCLINDEROS" msprop:Generator_UserDSName="BCLINDEROS">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="BCLINDEROS" msprop:Generator_TableClassName="BCLINDEROSDataTable" msprop:Generator_TableVarName="tableBCLINDEROS" msprop:Generator_RowChangedName="BCLINDEROSRowChanged" msprop:Generator_TablePropName="_BCLINDEROS" msprop:Generator_RowDeletingName="BCLINDEROSRowDeleting" msprop:Generator_RowChangingName="BCLINDEROSRowChanging" msprop:Generator_RowEvHandlerName="BCLINDEROSRowChangeEventHandler" msprop:Generator_RowDeletedName="BCLINDEROSRowDeleted" msprop:Generator_RowClassName="BCLINDEROSRow" msprop:Generator_UserTableName="BCLINDEROS" msprop:Generator_RowEvArgName="BCLINDEROSRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CODUNI" msprop:Generator_ColumnVarNameInTable="columnCODUNI" msprop:Generator_ColumnPropNameInRow="CODUNI" msprop:Generator_ColumnPropNameInTable="CODUNIColumn" msprop:Generator_UserColumnName="CODUNI" type="xs:string" minOccurs="0" />
+              <xs:element name="CODLADO" msprop:Generator_ColumnVarNameInTable="columnCODLADO" msprop:Generator_ColumnPropNameInRow="CODLADO" msprop:Generator_ColumnPropNameInTable="CODLADOColumn" msprop:Generator_UserColumnName="CODLADO" type="xs:string" minOccurs="0" />
+              <xs:element name="CODCORRELLINDE" msprop:Generator_ColumnVarNameInTable="columnCODCORRELLINDE" msprop:Generator_ColumnPropNameInRow="CODCORRELLINDE" msprop:Generator_ColumnPropNameInTable="CODCORRELLINDEColumn" msprop:Generator_UserColumnName="CODCORRELLINDE" type="xs:string" minOccurs="0" />
+              <xs:element name="CODTIPOCOLI" msprop:Generator_ColumnVarNameInTable="columnCODTIPOCOLI" msprop:Generator_ColumnPropNameInRow="CODTIPOCOLI" msprop:Generator_ColumnPropNameInTable="CODTIPOCOLIColumn" msprop:Generator_UserColumnName="CODTIPOCOLI" type="xs:string" minOccurs="0" />
+              <xs:element name="NUMMEDIOFIC" msprop:Generator_ColumnVarNameInTable="columnNUMMEDIOFIC" msprop:Generator_ColumnPropNameInRow="NUMMEDIOFIC" msprop:Generator_ColumnPropNameInTable="NUMMEDIOFICColumn" msprop:Generator_UserColumnName="NUMMEDIOFIC" type="xs:string" minOccurs="0" />
+              <xs:element name="NUMMEDICAMP" msprop:Generator_ColumnVarNameInTable="columnNUMMEDICAMP" msprop:Generator_ColumnPropNameInRow="NUMMEDICAMP" msprop:Generator_ColumnPropNameInTable="NUMMEDICAMPColumn" msprop:Generator_UserColumnName="NUMMEDICAMP" type="xs:string" minOccurs="0" />
+              <xs:element name="CODSECTCOLI" msprop:Generator_ColumnVarNameInTable="columnCODSECTCOLI" msprop:Generator_ColumnPropNameInRow="CODSECTCOLI" msprop:Generator_ColumnPropNameInTable="CODSECTCOLIColumn" msprop:Generator_UserColumnName="CODSECTCOLI" type="xs:string" minOccurs="0" />
+              <xs:element name="CODMANZCOLI" msprop:Generator_ColumnVarNameInTable="columnCODMANZCOLI" msprop:Generator_ColumnPropNameInRow="CODMANZCOLI" msprop:Generator_ColumnPropNameInTable="CODMANZCOLIColumn" msprop:Generator_UserColumnName="CODMANZCOLI" type="xs:string" minOccurs="0" />
+              <xs:element name="CODLOTECOLI" msprop:Generator_ColumnVarNameInTable="columnCODLOTECOLI" msprop:Generator_ColumnPropNameInRow="CODLOTECOLI" msprop:Generator_ColumnPropNameInTable="CODLOTECOLIColumn" msprop:Generator_UserColumnName="CODLOTECOLI" type="xs:string" minOccurs="0" />
+              <xs:element name="CODEDIFICCOLI" msprop:Generator_ColumnVarNameInTable="columnCODEDIFICCOLI" msprop:Generator_ColumnPropNameInRow="CODEDIFICCOLI" msprop:Generator_ColumnPropNameInTable="CODEDIFICCOLIColumn" msprop:Generator_UserColumnName="CODEDIFICCOLI" type="xs:string" minOccurs="0" />
+              <xs:element name="CODENTRACOLI" msprop:Generator_ColumnVarNameInTable="columnCODENTRACOLI" msprop:Generator_ColumnPropNameInRow="CODENTRACOLI" msprop:Generator_ColumnPropNameInTable="CODENTRACOLIColumn" msprop:Generator_UserColumnName="CODENTRACOLI" type="xs:string" minOccurs="0" />
+              <xs:element name="CODPISOCOLI" msprop:Generator_ColumnVarNameInTable="columnCODPISOCOLI" msprop:Generator_ColumnPropNameInRow="CODPISOCOLI" msprop:Generator_ColumnPropNameInTable="CODPISOCOLIColumn" msprop:Generator_UserColumnName="CODPISOCOLI" type="xs:string" minOccurs="0" />
+              <xs:element name="CODUNIDADCOLI" msprop:Generator_ColumnVarNameInTable="columnCODUNIDADCOLI" msprop:Generator_ColumnPropNameInRow="CODUNIDADCOLI" msprop:Generator_ColumnPropNameInTable="CODUNIDADCOLIColumn" msprop:Generator_UserColumnName="CODUNIDADCOLI" type="xs:string" minOccurs="0" />
+              <xs:element name="CODVIA" msprop:Generator_ColumnVarNameInTable="columnCODVIA" msprop:Generator_ColumnPropNameInRow="CODVIA" msprop:Generator_ColumnPropNameInTable="CODVIAColumn" msprop:Generator_UserColumnName="CODVIA" type="xs:string" minOccurs="0" />
+              <xs:element name="CODCORMANZVIA" msprop:Generator_ColumnVarNameInTable="columnCODCORMANZVIA" msprop:Generator_ColumnPropNameInRow="CODCORMANZVIA" msprop:Generator_ColumnPropNameInTable="CODCORMANZVIAColumn" msprop:Generator_UserColumnName="CODCORMANZVIA" type="xs:string" minOccurs="0" />
+              <xs:element name="COLINDANTETEXTO" msprop:Generator_ColumnVarNameInTable="columnCOLINDANTETEXTO" msprop:Generator_ColumnPropNameInRow="COLINDANTETEXTO" msprop:Generator_ColumnPropNameInTable="COLINDANTETEXTOColumn" msprop:Generator_UserColumnName="COLINDANTETEXTO" type="xs:string" minOccurs="0" />
+              <xs:element name="ESPQ" msprop:Generator_ColumnVarNameInTable="columnESPQ" msprop:Generator_ColumnPropNameInRow="ESPQ" msprop:Generator_ColumnPropNameInTable="ESPQColumn" msprop:Generator_UserColumnName="ESPQ" type="xs:string" minOccurs="0" />
+              <xs:element name="ESAV" msprop:Generator_ColumnVarNameInTable="columnESAV" msprop:Generator_ColumnPropNameInRow="ESAV" msprop:Generator_ColumnPropNameInTable="ESAVColumn" msprop:Generator_UserColumnName="ESAV" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

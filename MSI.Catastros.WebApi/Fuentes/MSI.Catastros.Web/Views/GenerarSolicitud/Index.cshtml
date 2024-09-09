@@ -1,0 +1,288 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.GenerarSolicitud.GenerarSolicitudViewModel
+
+@{
+    ViewBag.Title = "Recepción del Documento";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        @using (Html.BeginForm("Registrar", "GenerarSolicitud", FormMethod.Post, new { id = "frmGenerarSolicitud", name = "frmGenerarSolicitud" }))
+        {
+           
+                @Html.AntiForgeryToken()
+                <div class="panel panel-default">
+                    <div class="panel-heading" style="overflow: hidden">
+                        <strong>Generar Solicitud</strong>
+                        @*<span class="icon-add">
+                                <button type="button" class="btn btn-default" data-dismiss="modal" style="float:right">Salir</button>
+                            </span>*@
+
+                    </div>
+                    <div class="panel-body">
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(model => model.Estado)
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="row mb-5">
+                                    <div class="col-sm-6">
+                                        <div class="row">
+                                            <div class="col-sm-6 nrosol">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.NroSolicitud, htmlAttributes: new { @class = "control-label nrosol" })
+                                                    @Html.TextBoxFor(model => model.NroSolicitud, new { @class = "form-control nrosol", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.TipoSolicitud, htmlAttributes: new { @class = "control-label" })
+                                                    @Html.TextBoxFor(model => model.TipoSolicitud, new { @class = "form-control", @readonly = "readonly" })
+                                                    @Html.ValidationMessageFor(model => model.TipoSolicitud, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.TipoDocumento, htmlAttributes: new { @class = "control-label" })
+                                                    @Html.TextBoxFor(model => model.TipoDocumento, new { @class = "form-control", @readonly = "readonly" })
+                                                    @Html.ValidationMessageFor(model => model.TipoDocumento, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.AreaSolicitud, htmlAttributes: new { @class = "control-label" })
+                                                    @Html.TextBoxFor(model => model.AreaSolicitud, new { @class = "form-control", @readonly = "readonly" })
+                                                    @Html.ValidationMessageFor(model => model.AreaSolicitud, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.Folios, htmlAttributes: new { @class = "control-label" })
+                                                    @Html.TextBoxFor(model => model.Folios, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.Folios, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.Asunto, htmlAttributes: new { @class = "control-label" })
+                                                    @Html.TextAreaFor(model => model.Asunto, new { @class = "form-control", rows = "5" })
+                                                    @Html.ValidationMessageFor(model => model.Asunto, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <span class="icon-add">
+                                    <input id="btnSubmit" type="submit" value="Grabar" class="btn btn-green ml-2 px-5 glyphicon-plus-sign" style="float:right" />
+                                </span>
+
+                            </div>
+                        </div>
+
+                        <!-- /.row (nested) -->
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+        }
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
+<!-- Modal -->
+
+<div class="modal fade" id="ModalConfirmacionSave" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="TituloConfirmacion"></h5>
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>*@
+            </div>
+            @*<div class="modal-body">
+                ...
+            </div>*@
+            <div class="modal-footer">
+                <button type="button" id="btnModalImprimir" class="btn btn-primary"><i class="fa fa-print"></i> Imprimir</button>
+                <button type="button" id="btnOk" class="btn btn-success"><i class="fa fa-check"></i> Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    
+    <script type="text/javascript">
+    $('input').keyup(function () { this.value = this.value.toLocaleUpperCase() });
+    $('.nrosol').hide();
+    $('#btnProbar').click(function () {
+        printDiv('frmGenerarSolicitud');
+    });
+
+    $('#Folios').maskWeight({
+        integerDigits: 4,
+        decimalDigits: 0,
+        decimalMark: '.',
+        initVal: '',//'000,000',
+        roundingZeros: true,
+        digitsCount: 4,
+        callBack: null,
+        doFocus: true
+    });
+
+    $('#btnModalImprimir').click(function () {
+
+        $('#btnSubmit').hide();
+        $('#btnProbar').hide();
+        $('#Folios').attr('value', $('#Folios').val());
+        $('#Asunto').text($('#Asunto').val().toUpperCase());
+        $('.nrosol').show();
+        //$('#Asunto').attr('value', $('#Asunto').val());
+        //console.log($('#Folios').val());
+        ///console.log($('#Asunto').val());
+
+        var htmlinicial = $("#frmGenerarSolicitud").html();
+
+        Panel_Print($("#frmGenerarSolicitud").html(), '');
+
+        $('#btnSubmit').show();
+        $('#btnProbar').show();
+        $('.nrosol').hide();
+
+    });
+
+    $('#btnOk').click(function () {
+        $('#Folios').val('');
+        $('#Asunto').val('');
+        $('#Folios').attr('value', '');
+        $('#Asunto').text('');
+        $('#ModalConfirmacionSave').modal('hide');
+    });
+
+
+    $("#btnSubmit").click(function(event) {
+        //$("#frmGenerarSolicitud").on("submit", function (event) {
+        event.preventDefault();
+        $('#btnSubmit').attr('disabled', 'disabled');
+        var url = $('#frmGenerarSolicitud').attr("action");
+        var formData = $('#frmGenerarSolicitud').serialize();
+        $.ajax({
+            url: url, type: "POST", data: formData, dataType: "json",
+            success: function (response) {
+                if (response.success) {
+
+                    var mensaje = ($('#frmGenerarSolicitud').find("#Estado").val() == 1) ? "Registro grabador correctamente" : "Registro modificado correctamente";
+                    toastr.success(mensaje, "Mensaje del Sistema", { "progressBar": true });
+                    $('#ModalConfirmacionSave').modal('show');
+                    $('#TituloConfirmacion').text('El número de solicitud registrado es: ' + response.Solicitud );
+                    $('#NroSolicitud').attr('value', response.Solicitud);
+
+
+
+                    /*var dialog = bootbox.dialog({
+                        title: 'El número de solicitud registrado es: xxx - 2018',
+                        message: " ",
+                        buttons: {
+                            noclose: {
+                                label: "Imprimir",
+                                className: 'btn-danger',
+                                callback: function () {
+                                    printDiv('frmGenerarSolicitud');
+                                    var printContents = document.getElementById('frmGenerarSolicitud').innerHTML;
+
+                                    var originalContents = document.body.innerHTML;
+
+                                    document.body.innerHTML = printContents;
+
+                                    window.print();
+
+                                    document.body.innerHTML = originalContents;
+
+
+                                }
+                            },
+                            ok: {
+                                label: "OK",
+                                className: 'btn-create',
+                                callback: function () {
+                                    $('#Folios').val('');
+                                    $('#Asunto').val('');
+                                }
+                            }
+                        }
+                    });*/
+
+
+                } else {
+                    toastr.error(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                }
+
+            },
+            error: function (response) {
+                console.log(response);
+                var modelStateErrors = response.responseJSON;
+                for (var i = 0; i < modelStateErrors.length; i++) {
+                    $('span[data-valmsg-for="' + modelStateErrors[i].key + '"]').text(modelStateErrors[i].errors[0]).addClass('has-error');
+                }
+                //toastr.error("Se encontro un problema al momento de registrar", "Mensaje del Sistema", { "progressBar": true });
+            },
+            complete: function () {
+                $('#btnSubmit').removeAttr('disabled');
+            }
+        });
+
+    });
+
+    function printDiv(divName) {
+
+        /*if ($("#ESTADO").val() == "G" || $("#ESTADO").val() == "E") {
+            $('#Borrador').text("BORRADOR");
+            $("#ConformidadEvaluacion").hide();
+        } else if ($("#ESTADO").val() == "C") {
+            $("#ConformidadEvaluacion").show();
+        }
+
+        $('#Borrador').css('color', 'red');*/
+
+        var printContents = document.getElementById(divName).innerHTML;
+        //$('#Borrador').text("");
+        //$("#ConformidadEvaluacion").hide();
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+    }
+
+    function Panel_Print(html, title) {
+        var panel = html;
+        var printWindow = window.open('', '', 'height=400,width=800');
+        printWindow.document.write('<html><head><title>' + title + '</title>');
+        printWindow.document.write('<link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">');
+        printWindow.document.write('</head><body >');
+        printWindow.document.write(panel);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        setTimeout(function () {
+            printWindow.print();
+        }, 500);
+        return true;
+    }
+
+
+
+</script>
+
+}
+
+
+

@@ -1,0 +1,436 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Certificados.CertificadosViewModel
+<style>
+    .chosen-container-multi .chosen-choices {
+    }
+</style>
+<fieldset class="formulario p-3">
+    <legend id="legInforme" style="margin-bottom:-10px;">Certificado Numeración</legend>
+    @using (Html.BeginForm("Registrar", "Certificado", FormMethod.Post, new { id = "frmCertificadosJuri", name = "frmCertificadosJuri" }))
+    {
+        @Html.TextBoxFor(m => m.FiltrarCodigoCertificado, new { @class = "form-control change", type = "hidden" })
+        @Html.AntiForgeryToken()
+        <input type="hidden" class="form-control" id="AnioCertificado" name="AnioCertificado" value="@Model.FiltrarCodigoPeriodo" />
+        <input type="hidden" class="form-control" id="AnioSolicitud" name="AnioSolicitud" value="@Model.CodAnioSolicitud" />
+        <div class="row mt-3 px-3" style="display:none;">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label" id="lblTitulo" for="Titulo">Numero de Documento</label>
+                    @Html.TextBoxFor(m => m.Titulo, new { @class = "form-control change", disabled = true })
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3 px-3">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="control-label" id="lblCodigoCatastral" for="CodigoCatastral">Código Catastral</label>
+                    <input type="text" class="form-control" id="CodigoCatastralVer" name="CodigoCatastralVer" disabled />
+                    @Html.TextBoxFor(m => m.CodigoCatastral, new { @class = "form-control change", disabled = true, type = "hidden" })
+                </div>
+            </div>
+            <div class=" col-md-2">
+                <div class="form-group">
+                    <label class="control-label" id="lblCodigoUnico" for="CodigoUnico">Código Único Catastral</label>
+                    @*@Html.TextBoxFor(m => m.Parrafo1, new { @class = "form-control change" })*@
+                    @Html.TextBoxFor(m => m.CodigoUnico, new { @class = "form-control change", type= "hidden" })
+                    @Html.TextBoxFor(m => m.CUC, new { @class = "form-control change", disabled = true })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="control-label" id="lblFechaGeneracion" for="FechaGeneracion">Fecha de Emisión</label>
+                    @Html.TextBoxFor(m => m.FechaGeneracion, new { @class = "form-control change", type = "date", disabled = true })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="control-label" id="lblNumeroSolicitud" for="NumeroSolicitud">N° Expediente</label>
+                    @Html.TextBoxFor(m => m.NumeroSolicitud, new { @class = "form-control change", disabled = true })
+                </div>
+            </div>
+        </div>
+        <hr class="mx-3 mt-1 mb-0" />
+        <div class="row px-3">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label" id="lblUrbanizacion" for="Urbanizacion">Urbanizacion</label>
+                    @Html.TextBoxFor(m => m.Urbanizacion, new { @class = "form-control change", disabled = true })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="control-label" id="lblManzanaUrbana" for="ManzanaUrbana">Manzana</label>
+                    @Html.TextBoxFor(m => m.ManzanaUrbana, new { @class = "form-control change", disabled = true })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="control-label" id="lblLoteUrbano" for="LoteUrbano">Lote</label>
+                    @Html.TextBoxFor(m => m.LoteUrbano, new { @class = "form-control change", disabled = true })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="control-label" id="lblSubLoteUrbano" for="SubLoteUrbano">SubLote</label>
+                    @Html.TextBoxFor(m => m.SubLoteUrbano, new { @class = "form-control change", disabled = true })
+                </div>
+            </div>
+        </div>
+        <hr />
+        <h4 class="px-3">Recibos</h4>
+        <div class="row px-3">
+            <div class="col-md-2 Certificados">
+                <button id="btnAgregarRecibo" type="button" class="btn btn-success mb-2 btn-sm btn-block glyphicon glyphicon-plus-sign">
+                    <span style="font-family:'Open Sans'">Agregar Recibos</span>
+                </button>
+            </div>
+        </div>
+        <div class="row px-3">
+            <div class="col-md-8">
+                <table id="tablaRecibo" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th width="10%">Item</th>
+                            <th>Nro.</th>
+                            <th>Fecha</th>
+                            <th width="10%"></th>
+                            <th style="display:none;"></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+
+        <div class="row px-3 mb-3" style="display:none">
+            <div class="col-md-3">
+                <label class="control-label" id="lblRecibo" for="Recibo">Recibo</label>
+                @Html.TextBoxFor(m => m.Recibo, new { @class = "form-control ", @style = "text-transform: none;" })
+            </div>
+            <div class="col-md-3">
+                <label class="control-label" id="lblFechaPago" for="FechaPago">Fecha Pago</label>
+                @Html.TextBoxFor(m => m.FechaPago, new { @class = "form-control" })
+            </div>
+        </div>
+        
+        <hr />
+        <h4 class="px-3">Vías</h4>
+        <div class="row px-3">
+            <div class="col-md-12 certificados" >
+                <table id="tablaEntradasMunicipal" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Nombre de la Vía</th>
+                            <th>Tipo de Puerta</th>
+                            <th>Número</th>
+                            <th>Tipo de Interior</th>
+                            <th>Interior</th>
+                            <th>Nivel</th>
+                   
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="col-md-12">
+                <table style="width:100%" class="table table-bordered table-striped ">
+                    <thead><tr><th>Nombre Actual de la Vía</th><th>Nombre Anterior de la Vía</th></tr></thead>
+                    <tbody class="CamposVias"></tbody>
+                </table>
+            </div>
+        </div>
+        <hr />
+        <h4 class="px-3">Otros</h4>
+        <div class="row  px-3">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label" id="lblNivel" for="Nivel">Nivel</label>
+                    @Html.TextBoxFor(m => m.Nivel, new { @class = "form-control change", @style = "text-transform: none;" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label" id="lblNivelDescripcion" for="NivelDescripcion">Descripción</label>
+                    @Html.TextBoxFor(m => m.NivelDescripcion, new { @class = "form-control change" , disabled = "true" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label" id="lblInterior" for="Interior">Interior</label>
+                    @Html.TextBoxFor(m => m.Interior, new { @class = "form-control change", disabled = "true" })
+                </div>
+            </div>
+        </div>
+        <div class="row  px-3">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="control-label" id="lblAnotaciones" for="Anotaciones">Anotaciones Adicionales</label>
+                    @Html.TextAreaFor(m => m.Anotaciones, new { @class = "form-control change", rows = "5" })
+                </div>
+            </div>
+        </div>
+        <div class="row px-3" style="display:none;">
+            <div id="divSub1" class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label" id="lblPartida" for="Partida">Antecedentes del predio</label>
+                    <select id="Partida" class="" multiple="multiple"></select>
+                </div>
+            </div>
+            <div id="divSub2" class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label" id="lblDirección" for="Direccion">Dirección</label>
+                    @Html.TextAreaFor(m => m.Direccion, new { @class = "form-control change", rows = "1" })
+                </div>
+            </div>
+        </div>
+        <hr class="mx-3 mt-0 mb-3" />
+        }
+
+</fieldset>
+
+<script src="~/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js"></script>
+<script src="~/assets/vendor/datatables-checkboxes/js/dataTables.checkboxes.min.js"></script>
+<script>
+    //$('input').keyup(function () { this.value = this.value.toLocaleUpperCase() });
+    if ($('#NombreAreaSolicitante').val() == "") {
+        $('#NombreTipoDocumento').val("");
+    }
+    var codCat = $('#CodigoCatastral').val();
+
+    $("#FechaPago").datepicker({ format: "dd/mm/yyyy", language: "es", calendarWeeks: true });
+
+    $('#CodigoCatastralVer').val(codCat.slice(0, 2) + "-" + codCat.slice(2, 4) + "-" + codCat.slice(4, 7) + "-" + codCat.slice(7, 10) + "-" + codCat.slice(10, 12) + "-" + codCat.slice(12, 14) + "-" + codCat.slice(14, 16) + "-" + codCat.slice(16, 19))
+    RecuperarUrbanizacion();
+    $('#btnAgregarRecibo').click(function () {
+        $('#ModalRecibos').modal('show');
+    });
+    
+    tablaEntradasMunicipal = $("#tablaEntradasMunicipal").DataTable({
+        "ajax": {
+            "url": "@Url.Content("~/Certificados/CargarCertificadoEntradas")", "type": "POST", "datatype": "json",
+            "data": function (d) {
+                d.FiltrarCodigoPeriodo = @Model.FiltrarCodigoPeriodo.ToString(); d.FiltrarCodigoTipoCertificado = $('#FiltrarCodigoTipoCertificado').val();
+                //d.FiltrarCodigoPeriodo = $('#FiltrarCodigoPeriodo').val(); d.FiltrarCodigoTipoCertificado = $('#FiltrarCodigoTipoCertificado').val();
+                d.FiltrarCodigoCertificado = $('#FiltrarCodigoCertificado').val(); d.CodigoUnico = $('#CodigoUnico').val(); d.CodAnioSolicitud = @Model.CodAnioSolicitud.ToString();
+            }
+        },
+        "initComplete":function( settings, json){
+            CrearCamposEntradas();
+        },
+        "language": { "lengthMenu": "", "info": "", "emptyTable": "" }, "processing": true, "serverSide": false, "paging": false,
+        "columnDefs": [
+         {
+             "targets": 0, "checkboxes": { "selectRow": true },
+             "createdCell": function (td, cellData, rowData, row, col) {
+                 if (rowData.FiltrarCodigoCorrelativo != null) { this.api().cell(td).checkboxes.select(); }
+             },
+         },
+
+         { "width": "14%", "targets": 2 },
+         { "width": "7%", "targets": 3 },
+         { "width": "7%", "targets": 4 },
+         { "width": "220px", "targets": 5 },
+        ],
+        "columns": [
+            { "data": "NombreViaEsq", "className": "" },
+            { "data": "NombreVia", "className": "" }, { "data": "TipoPuerta", "className": "text-center" },
+            { "data": "NumeroPuerta", "className": "text-center" },
+            { "data": "DescripcionInscrip", "className": "text-center" },
+            { "data": "Interior", "className": "text-center" },
+            {
+                'render': function (data, type, full, meta) {
+                    var nivel = (full.Nivel) ? full.Nivel : "";var disabled = (full.FiltrarCodigoCorrelativo) ? "" : " disabled ";var index = meta.row;
+                    return '<input type="text" ' + disabled + ' class="form-control text-center" id="nivel_' + index + '"  style="width:220px;margin:auto;text-transform:none;" value="' + nivel + '">';
+                }, "className": "text-center"
+            },
+            //{ "data": "Nivel", "className": "text-center" },
+            { "data": "FiltrarCodigoCorrelativo", "className": "hide_column" }, { "data": "Interior", "className": "hide_column" },
+            { "data": "CodigoVia", "className": "hide_column" }, { "data": "NombreViaAnt", "className": "hide_column" }, { "data": "CodigoTipoInterior", "className": "hide_column" },
+            { "data": "CodigoUni", "className": "hide_column" }, { "data": "CodigoCorrelativoUnidad", "className": "hide_column" },
+            { "data": "NombreTipoVia", "className": "hide_column" },
+            { "data": "Edificacion", "className": "hide_column" }
+        ]
+    });
+
+    tablaRecibo = $("#tablaRecibo").DataTable({
+        "ajax": {
+            "url": "@Url.Content("~/Certificados/CargarCertificadoRecibo")", "type": "POST", "datatype": "json",
+            "data": function (d) {
+                //d.FiltrarCodigoPeriodo = $('#FiltrarCodigoPeriodo').val(); d.FiltrarCodigoTipoCertificado = $('#FiltrarCodigoTipoCertificado').val();
+                d.FiltrarCodigoPeriodo = @Model.FiltrarCodigoPeriodo.ToString(); d.FiltrarCodigoTipoCertificado = $('#FiltrarCodigoTipoCertificado').val();
+                d.FiltrarCodigoCertificado = $('#FiltrarCodigoCertificado').val(); d.CodigoUnico = $('#CodigoUnico').val(); d.CodAnioSolicitud = @Model.CodAnioSolicitud.ToString();
+            }
+        },
+        "language": { "lengthMenu": "", "info": "", "emptyTable": "" }, "processing": true, "serverSide": false, "paging": false,
+        "columns": [
+            { "data": "Item", "className": "text-center" },
+            { "data": "NumeroRecibo", "className": "text-center" }, { "data": "FechaRecibo", "className": "text-center" },
+            {
+                'render': function (data, type, full, meta) {
+                    return '<button data-toggle="tooltip" title="Eliminar" class="btn mr-1 text-center btnDeleteRecibo btn-default btn-xs glyphicon glyphicon-trash" type="button" ></button>';
+                }, "className": "text-center"
+            },
+            { "data": "Correlativo", "className": "hide_column" },
+        ]
+    });
+    $("#tablaRecibo tbody").on('click', 'button.btnDeleteRecibo', function (event) {
+        var data = tablaRecibo.row($(this).parents('tr')).data();
+        var enlace = ROOT + 'Certificados/EliminarRecibo';
+        bootbox.confirm({
+            title: "Mensaje del Sistema", message: "¿Esta seguro de borrar el registro?",
+            buttons: { confirm: { label: '<i class="fa fa-trash"></i> Eliminar ', className: "btn btn-danger" }, cancel: { label: '<i class="fa fa-times"></i> Cancelar' } },
+            callback: function (result) {
+                if (result) {
+                    $.post(enlace, {
+                        FiltrarCodigoTipoCertificado: $('#FiltrarCodigoTipoCertificado').val(), FiltrarCodigoTipoSolicitud: $('#FiltrarCodigoTipoSolicitud').val(),
+                        FiltrarCodigoTipoDocumentoReg: $('#FiltrarCodigoTipoDocumentoReg').val(), FiltrarNumeroSolicitud: $('#FiltrarNumeroSolicitud').val(),
+                        FiltrarCodigoCertificado: $('#FiltrarCodigoCertificado').val(), FiltrarCodigoCorrelativo: data.Correlativo
+                    }, function (response) {
+                        tablaRecibo.ajax.reload();
+                    });
+                }
+            }
+        });
+
+    });
+
+
+    $(document).on('change', '.dt-checkboxes-select-all input', function () {
+        var rows, checked;
+        rows = $('#tablaEntradasMunicipal').find('tbody tr');
+        checked = $(this).prop('checked');
+        var check = this.checked;
+        $.each(rows, function () {
+            //var checkbox = $($(this).find('td').eq(0)).find('input').prop('checked', checked);
+            console.log(check);
+            if (check) {
+                $($(this).find('td').eq(5)).find('input').removeAttr('disabled');
+            } else {
+                $($(this).find('td').eq(5)).find('input').attr('disabled', 'disabled').val('');
+            }
+        });
+    });
+
+    $(document).on('change', '.dt-checkboxes', function () {
+        if (this.checked) {
+            $(this).closest('tr').find('input.form-control').removeAttr('disabled');
+        } else {
+            $(this).closest('tr').find('input.form-control').attr('disabled', 'disabled').val('');
+        }
+        CrearCamposEntradas();
+    });
+    function CrearCamposEntradas() {
+        $('.CamposVias').children('tr').remove();
+        $('#Interior').val(''); var codigoInterior = '';
+        var tablaEntradasMunicipalTemp = tablaEntradasMunicipal.data();
+        var codviaTemp;
+        $.each(tablaEntradasMunicipalTemp, function (index, Item) {
+            var row = tablaEntradasMunicipalTemp.row(index).node();
+
+            var checked = $("input:checked", row).length;
+            if (checked === 1) {
+                console.log(codviaTemp, '|', Item.CodigoVia)
+                if (codviaTemp != Item.CodigoVia) {
+
+                    var res = Item.NombreViaAnt.trim().split("|");
+                    var nomviareal = Item.NombreViaAntReal.trim().split("|");
+                    var options = "";
+                    for (i = 0; i < res.length; i++) {
+                        options = options + "<option value='" + res[i] + "'>" + res[i] + "</option>"
+                    }
+                    $('.CamposVias').append(
+                        '<tr id="filaVias' + index + '">' +
+                            '<td width="50%">' +
+                                '<input type="text" style="height:40px;" disabled id="NombreVia' + index + '" class="form-control nombrevia input-table text-center" value="' + Item.NombreVia + '">' +
+                            '</td>' +
+                            '<td width="50%">' +
+                                //'<input type="text" disabled id="NombreViaAnt' + index + '" class="form-control text-center input-table" value="' + Item.NombreViaAnt + '">' +
+                                '<select id="NombreViaAnt' + index + '" multiple class="form-control text-center chosen-seleccionar" >' + options + '</select>' +
+                            '</td>' +
+                        '</tr>'
+                    );
+                    console.log(nomviareal);
+                    $('#NombreViaAnt' + index).val(nomviareal);
+                }
+                $(".chosen-seleccionar").chosen({ width: "100%", placeholder_text_single: "Seleccione una opción", placeholder_text_multiple: " - Seleccione las vías anteriores -"});
+                var inter = (Item.Interior) ? Item.Interior : "";
+                if (inter) {
+                    codigoInterior = codigoInterior + '/' + inter;
+                }
+                codviaTemp = Item.CodigoVia;
+            }
+        });
+        $('#Interior').val( (codigoInterior != null) ? codigoInterior.substring(1) : "" );
+
+    }
+    $('#Anotaciones').on('keydown', function (e) {
+        var input = document.getElementById('Anotaciones');
+        var caretPos = input.selectionStart;
+        var value = this.value;
+        if (e.keyCode == 13) {
+            //event.preventDefault();
+            //if (value.substring(caretPos - 1, caretPos) !== "*") {
+            //    console.log('2a.', caretPos, value.length, '|', value.substring(0, caretPos), '|', value.substring(caretPos));
+            //    $('#Anotaciones').val(value.substring(0, caretPos) + "|\n" + value.substring(caretPos));
+            //    $('#Anotaciones').prop('selectionEnd', caretPos+2);
+            //} else {
+            //    $('#Anotaciones').val(value.substring(0, caretPos) + "\n" + value.substring(caretPos));
+            //    $('#Anotaciones').prop('selectionEnd', caretPos + 1);
+            //}
+        }
+    });
+
+    var enlaceDocu = "@Url.Content("~/Certificados/CargarUnidadRRPP")";
+    $.post(enlaceDocu, { CodigoUnico: $('#CodigoUnico').val(), Tipo: '1' }, function (r) {
+        $('#Partida').children('option:not(:first)').remove();
+        $.each(r.data, function (ind, item) {
+            $('#Partida').append($('<option>').text(item.Text).attr('value', item.Value));
+        });
+        $('#Partida').multiselect({
+            buttonWidth: '100%',
+            allSelectedText: "Todos los documentos seleccionados",
+            buttonClass: 'btn btn-default btn-sm',
+            nonSelectedText: 'Seleccione una o más Partidas',
+        });
+
+        var ListaPartida;
+        if ("@Model.PartidaString") {
+            ListaPartida = "@Model.PartidaString".split(",");
+            $('#Partida').multiselect('select', ListaPartida);
+        }
+    });
+    function RecuperarUrbanizacion(ubicacion) {
+        var URLObservacion = "@Url.Content("~/Certificados/BuscarUrbanizacion")";
+        var Codigo = $('#CodigoCatastral').val();
+        console.log(Codigo);
+        $.post(URLObservacion, {
+            CodigoSector: Codigo.substring(2, 4), CodigoManzana: Codigo.substring(4, 7), CodigoLote: Codigo.substring(7, 10),
+            CodigoUnico: $('#CodigoUnico').val()
+        },
+        function (r) {
+            $('#NombreViaEsq').children('option:not(:first)').remove();
+            if (r.SolicitudUnidad) {
+                var datos = r.SolicitudUnidad;
+                var ind1 = datos.indexOf("|") + 1; var ind2 = datos.indexOf("|", ind1) + 1; var ind3 = datos.indexOf("|", ind2) + 1;
+                var ind4 = datos.indexOf("|", ind3) + 1;
+                $('#Urbanizacion').val(datos.substring(0, ind1 - 1));
+                $('#ManzanaUrbana').val(datos.substring(ind1, ind2 - 1));
+                //var loteurb = "PARTE DEL LOTE " + datos.substring(ind2, ind3 - 1);
+                var loteurb = datos.substring(ind2, ind3 - 1);
+                $('#LoteUrbano').val(loteurb)
+                var sublote = datos.substring(ind3,ind4 -1);
+                $('#SubLoteUrbano').val((sublote) ? sublote : "---");
+                $('#NivelDescripcion').val(datos.substring(ind4));
+
+            }
+        });
+    }
+
+</script>

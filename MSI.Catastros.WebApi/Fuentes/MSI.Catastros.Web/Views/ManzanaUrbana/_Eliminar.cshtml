@@ -1,0 +1,46 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.ManzanaUrbana.RegistroManzanaUrbanaViewModel
+
+<div id="EditTipoHabilitacionContainer">
+    @using (Html.BeginForm("Eliminar", "ManzanaUrbana", FormMethod.Post, new { id = "frmEliminarManzanaUrbana", name = "frmEliminaManzanaUrbana" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4>Eliminar @Model.NombreHabilitacionUrbana</h4>
+                    @Html.TextBoxFor(model => model.Estado, new { type = "hidden", @class = "form-control" })
+                    @Html.TextBoxFor(model => model.CodigoManzanaUrbana, new { type = "hidden", @class = "form-control" })
+                    @Html.TextBoxFor(model => model.CodigoHabilitacionUrbana, new { type = "hidden", @class = "form-control" })
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            ¿Esta seguro de eliminar el registro?
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input id="btnSubmit" type="submit" value="Eliminar" class="btn btn-green" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#frmEliminarManzanaUrbana").on("submit", function (event) {
+            eliminarFormulario(event, $('#btnSubmit'), "ManzanaUrbana");
+        });
+    });
+
+</script>
+

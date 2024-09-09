@@ -1,0 +1,681 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.BienComun.RegistrarUnidadCatastralNuevoViewModel
+
+<div id="RegistrarUCNuevoContainer">
+
+    @Html.AntiForgeryToken()
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times;</button>
+                <h4><strong>Nueva Unidad Catastral</strong></h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="row">
+                        <div id="filaMotivo" class="col-md-12">
+                            <fieldset class="formulario">
+                                <legend>Seleccionar Motivo de Generación</legend>                         
+                                <div class="row mx-5 pb-3">
+                                    <div class="col-md-12">
+                                        <label class="" style="line-height:22px"><input type="radio" class="FiltroCheck" name="FiltroCheck" style=" vertical-align: top;" value="2"> Nuevo Código</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+
+                    <fieldset class="formulario" id="GenerarNuevoCodigo" style="display:none;">
+                        <legend>Generar Nuevo Código</legend>
+                        <div class="row">
+                            <div class="col-md-12 pb-2">
+                                <table>
+                                    <tr>
+                                        <td width="7%"><label class="form-label">Dist.</label></td>
+                                        <td width="7%"><label class="form-label">Sec</label></td>
+                                        <td width="7%"><label class="form-label">Mz</label></td>
+                                        <td width="7%"><label class="form-label">Lote</label></td>
+                                        <td width="7%"><label class="form-label">Ed</label></td>
+                                        <td width="7%"><label class="form-label">Entr</label></td>
+                                        <td width="7%"><label class="form-label">Piso</label></td>
+                                        <td width="7%"><label class="form-label">Unidad</label></td>
+                                        <td width=""></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoDistrito, new { @class = "form-control text-center px-3", @disabled = "true" })</td>
+                                        <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoSector, new { @class = "form-control text-center px-3 Terminado Acumulacion NewCodigo", @maxlength = "2" })</td>
+                                        <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoManzana, new { @class = "form-control text-center px-3 Terminado Acumulacion NewCodigo", @maxlength = "3" })</td>
+                                        <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoLote, new { @class = "form-control text-center px-3 Terminado Acumulacion NewCodigo", @maxlength = "3" })</td>
+                                        <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarEd, new { @class = "form-control text-center px-3 Terminado Acumulacion", @maxlength = "2" })</td>
+                                        <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarEntrada, new { @class = "form-control text-center px-3 Terminado AcumulacionFin", @maxlength = "2" })</td>
+                                        <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarPiso, new { @class = "form-control text-center px-3 Terminado AcumulacionFin", @maxlength = "2" })</td>
+                                        <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarUnidad, new { @class = "form-control text-center px-3 Terminado TNuevo AcumulacionFin", @maxlength = "3" })</td>
+                                        <td>
+                                            <div class="">
+                                                <button style="display:none;" id="btnModalBuscar" type="button" class="btn btnModalBuscar btn-warning glyphicon glyphicon-search"></button>
+                                                <button id="btnModalAgregar" type="button" class="btn btn-green glyphicon glyphicon-plus Terminado AcumulacionFin"></button>
+                                                @*<button id="btnLimpiar" type="button" class="btn btn-default py-3 fa fa-refresh mx-3" style="margin-top:5px"></button>*@
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="9">
+                                            <div class="has-error ml-3 mt-2">
+                                                <ul id="msgErrores"></ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="9">
+                                            <div class="has-success ml-3 mt-2">
+                                                <ul id="msgCorrecto"></ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table id="tablaUnidadCatastralNueva" style="width:100%;" class="table responsive display  table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th width="6%" style="width:65px">Dist</th>
+                                            <th width="6%">Sec</th>
+                                            <th width="6%">Mz</th>
+                                            <th width="6%">Lote</th>
+                                            <th width="6%">Ed</th>
+                                            <th width="6%">Entr</th>
+                                            <th width="2%">Piso</th>
+                                            <th width="6%">Unidad</th>
+                                            <th width="">Referencia</th>
+                                            <th width="">Estado</th>
+                                            <th width="">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Cerrar</button>
+                    <button id="btnSubmitUCNuevo" type="button" class="btn btn-green Terminado">Generar Nuevo Unidad Catastral</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript">
+    $('input').keyup(function () { this.value = this.value.toLocaleUpperCase() });
+
+    //$('#filaMotivo').removeClass('col-md-12').addClass('col-md-6');
+    //$('.modal-dialog').addClass('modal-lg');
+    //$('#GenerarNuevoCodigo').show();
+    $(".Acumulacion").prop('disabled', true);
+
+    $('#FiltrarCodigoSector').change(function () {
+        var texto;
+        texto = ZeroIzqCaracter($('#FiltrarCodigoSector').val(), 2);
+        $('#FiltrarCodigoSector').val(texto);
+    });
+
+    $('#FiltrarCodigoManzana').change(function () {
+        var texto;
+        texto = ZeroIzqCaracter($('#FiltrarCodigoManzana').val(), 3);
+        $('#FiltrarCodigoManzana').val(texto);
+    });
+
+    $('#FiltrarCodigoLote').change(function () {
+        var texto;
+        texto = ZeroIzqCaracter($('#FiltrarCodigoLote').val(), 3);
+        $('#FiltrarCodigoLote').val(texto);
+    });
+
+    $('#FiltrarEd').change(function () {
+        var texto;
+        texto = ZeroIzqCaracter($('#FiltrarEd').val(), 2);
+        $('#FiltrarEd').val(texto);
+    });
+
+    $('#FiltrarEntrada').change(function () {
+        var texto;
+        texto = ZeroIzqCaracter($('#FiltrarEntrada').val(), 2);
+        $('#FiltrarEntrada').val(texto);
+    });
+
+    $('#FiltrarPiso').change(function () {
+        var texto;
+        texto = ZeroIzqCaracter($('#FiltrarPiso').val(), 2);
+        $('#FiltrarPiso').val(texto);
+    });
+
+    $('#FiltrarUnidad').change(function () {
+        var texto;
+        texto = ZeroIzqCaracter($('#FiltrarUnidad').val(), 3);
+        $('#FiltrarUnidad').val(texto);
+    });
+
+    var cont = 0;
+    var contEstado = 0, contUnidad = 0, contTabla = 0, tempSector = "", tempManzana = "", tempLote = "";
+    var tempEdificacion = "";
+    tablaUnidadCatastral.rows().every(function () {
+        var data = this.data();
+        if (contTabla != 0) {
+            if (data.CodigoSector != tempSector || data.CodigoManzana != tempManzana || data.CodigoLote != tempLote || data.Ed != tempEdificacion) { contUnidad++; }
+        }
+        if (data.EstadoUnidad != 'H') { contEstado++; }
+        tempSector = data.CodigoSector; tempManzana = data.CodigoManzana; tempLote = data.CodigoLote; tempEdificacion = data.Ed;
+        contTabla++;
+    });
+
+    $('#FiltrarCodigoSector').val(tempSector);
+    $('#FiltrarCodigoManzana').val(tempManzana);
+    $('#FiltrarCodigoLote').val(tempLote);
+    $('#FiltrarEd').val(tempEdificacion);
+
+    //if (tablaUnidadCatastral.data().count() < 2) {
+    //    toastr.warning("Deben existir al menos 2 unidades catastrales por trabajar", "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+    //    //} else if (contEstado !== 0) {
+    //} else if (contEstado > 0) {
+    //    console.log('a');
+    //    toastr.warning("Todos las unidades deben encontrarse habilitados", "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+    //} else if (contUnidad !== 0) {
+    //    toastr.warning("Todos los unidades deben pertenecer al mismo sector, manzana, lote y edificación", "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+    //}
+
+
+
+    var tablaUnidadCatastralNueva = $("#tablaUnidadCatastralNueva").DataTable({
+        //"ajax": {
+        //    "url": "@Url.Content("~/Lotes/CargarUnidad")",
+        //    "type": "POST",
+        //    "datatype": "json",
+        //    "data": function (d) {
+        //        // -- Agregar campos de busqueda
+        //        d.FiltrarCodigoDistrito = $('#FiltrarCodigoDistrito').val();
+        //        d.FiltrarCodigoSector = $('#FiltrarCodigoSector').val();
+        //        d.FiltrarCodigoManzana = $('#FiltrarCodigoManzana').val();
+        //        d.FiltrarCodigoLote = $('#FiltrarCodigoLote').val();
+        //        d.FiltrarEd = $('#FiltrarEd').val();
+        //        d.FiltrarEntrada = $('#FiltrarEntrada').val();
+        //        d.FiltrarPiso = $('#FiltrarPiso').val();
+        //        d.FiltrarUnidad = $('#FiltrarUnidad').val();
+        //    }
+        //},
+        'columnDefs': [
+            { "width": "7%", "targets": 0 }, { "width": "7%", "targets": 1 }, { "width": "7%", "targets": 2 }, { "width": "7%", "targets": 3 },
+            { "width": "7%", "targets": 4 }, { "width": "7%", "targets": 5 }, { "width": "7%", "targets": 6 }, { "width": "7%", "targets": 7 },
+            { "width": "20%", "targets": 8 }, { "width": "20%", "targets": 9 }
+        ],
+        "language": { "lengthMenu": "", "info": "", "emptyTable": "" }, "processing": true, "serverSide": false, "paging": false,
+        "columns": [
+            { "data": "CodigoDistrito", "name": "CodigoDistrito", "className": "text-center" },
+            { "data": "CodigoSector", "name": "CodigoSector", "className": "text-center" },
+            { "data": "CodigoManzana", "name": "CodigoManzana", "autoWidth": true, "className": "text-center" },
+            { "data": "CodigoLote", "name": "CodigoLote", "autoWidth": true, "className": "text-center" },
+            { "data": "Ed", "name": "Edificacion", "autoWidth": true, "className": "text-center" },
+            { "data": "Entrada", "name": "Entrada", "autoWidth": true, "className": "text-center" },
+            { "data": "Piso", "name": "Piso", "autoWidth": true, "className": "text-center" },
+            { "data": "Unidad", "name": "Unidad", "className": "text-center" },
+            { "data": "Ubicacion", "name": "Ubicacion", "autoWidth": true, "className": "text-center" },
+            { "data": "Ubicacion", "name": "Ubicacion", "autoWidth": true, "className": "text-center" },
+            {
+                'render': function (data, type, full, meta) {
+                    return '<button data-toggle="tooltip" title="Eliminar" class="btn mr-1 text-center btnDeleteTemp btn-default btn-xs glyphicon glyphicon-trash" type="button" ></button>';
+                }, "className": "text-center"
+            },
+
+        ]
+    });
+
+    $("#tablaUnidadCatastralNueva tbody").on('click', 'button.btnDeleteTemp', function (event) {
+        tablaUnidadCatastralNueva.row($(this).parents('tr')).remove().draw();
+        if (tablaUnidadCatastralNueva.data().count() == 0) {
+
+            if (inpRadio == '1') {
+                $(".AcumulacionFin").prop('disabled', false);
+                
+            } else {
+                $('#FiltrarCodigoSector').removeAttr('disabled');
+                $('#FiltrarCodigoManzana').removeAttr('disabled');
+                $('#FiltrarCodigoLote').removeAttr('disabled');
+            }
+
+
+            
+        }
+    });
+
+
+    $('#FiltrarCodigoDistrito').val('31');
+
+
+    var inpRadio = '1';
+    $('.FiltroCheck').click(function () {
+        if (this.value === '2') {
+            
+            var TablaUnidadesTotal = tablaUnidadCatastral.data();
+            var countTemp;
+            countTemp = 0;
+            console.log(TablaUnidadesTotal);
+
+            $.each(TablaUnidadesTotal, function (i, item) {
+                if (item.EstadoUnidad === 'T') {
+                    countTemp++;
+                }
+            });
+
+            if (TablaUnidadesTotal.count() !== countTemp) {
+                toastr.warning("Ya existen códigos habilitados asignados a la solicitud", "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+                $('.modal-dialog').removeClass('modal-lg');
+                $('#filaMotivo').removeClass('col-md-6').addClass('col-md-12');
+                $('#GenerarNuevoCodigo').hide();
+            } else {
+
+                $('#filaMotivo').removeClass('col-md-12').addClass('col-md-6');
+                $('.modal-dialog').addClass('modal-lg');
+                $('#GenerarNuevoCodigo').show();
+                $('#CantidadCodigo').hide();
+                $(".Acumulacion").prop('disabled', false);
+                $('#FiltrarCodigoSector').val('');
+                $('#FiltrarCodigoManzana').val('');
+                $('#FiltrarCodigoLote').val('');
+                $('#FiltrarEd').val('');
+                inpRadio = '2';
+
+                
+
+            }
+
+
+        } else {
+            
+
+            
+
+            var cont = 0;
+            var contEstado = 0, contUnidad = 0, contTabla = 0, tempSector = "", tempManzana = "", tempLote = "";
+            var tempEdificacion = "";
+            tablaUnidadCatastral.rows().every(function () {
+                var data = this.data();
+                if (contTabla != 0) {
+                    if (data.CodigoSector != tempSector || data.CodigoManzana != tempManzana || data.CodigoLote != tempLote || data.Ed != tempEdificacion) { contUnidad++; }
+                }
+                if (data.EstadoUnidad != 'H') { contEstado++; }
+                tempSector = data.CodigoSector; tempManzana = data.CodigoManzana; tempLote = data.CodigoLote; tempEdificacion = data.Ed;
+                contTabla++;
+            });
+
+            if (tablaUnidadCatastral.data().count() < 2) {
+                toastr.warning("Deben existir al menos 2 unidades catastrales por trabajar", "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+                $('.modal-dialog').removeClass('modal-lg');
+                $('#filaMotivo').removeClass('col-md-6').addClass('col-md-12');
+                $('#GenerarNuevoCodigo').hide();
+                //} else if (contEstado !== 0) {
+            } else if (contEstado > 0) {
+                console.log('a');
+                toastr.warning("Todos las unidades deben encontrarse habilitados", "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+                $('.modal-dialog').removeClass('modal-lg');
+                $('#filaMotivo').removeClass('col-md-6').addClass('col-md-12');
+                $('#GenerarNuevoCodigo').hide();
+            } else if (contUnidad !== 0) {
+                toastr.warning("Todos los unidades deben pertenecer al mismo sector, manzana, lote y edificación", "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+                $('.modal-dialog').removeClass('modal-lg');
+                $('#filaMotivo').removeClass('col-md-6').addClass('col-md-12');
+                $('#GenerarNuevoCodigo').hide();
+            } else {
+                $('#CantidadCodigo').hide()
+                inpRadio = '1';
+                $('#filaMotivo').removeClass('col-md-12').addClass('col-md-6');
+                $('.modal-dialog').addClass('modal-lg');
+                $('#GenerarNuevoCodigo').show();
+                $(".Acumulacion").prop('disabled', true);
+
+                $('#FiltrarCodigoSector').val(tempSector);
+                $('#FiltrarCodigoManzana').val(tempManzana);
+                $('#FiltrarCodigoLote').val(tempLote);
+                $('#FiltrarEd').val(tempEdificacion);
+
+                
+            }
+
+        }
+    });
+    $("#btnSubmitUCNuevo").on("click", function (event) {
+        $('#msgErrores').html("");
+        $('#msgCorrecto').html("");
+        var cont = 0;
+        var contEstado = 0, contUnidad = 0, contTabla = 0, tempSector = "", tempManzana = "", tempLote = "";
+        var tempEdificacion = "";
+        tablaUnidadCatastral.rows().every(function () {
+            var data = this.data();
+            if (contTabla != 0) {
+                if (data.CodigoSector != tempSector || data.CodigoManzana != tempManzana || data.CodigoLote != tempLote || data.Ed != tempEdificacion) { contUnidad++; }
+            }
+            if (data.EstadoUnidad != 'H') { contEstado++; }
+            tempSector = data.CodigoSector; tempManzana = data.CodigoManzana; tempLote = data.CodigoLote; tempEdificacion = data.Ed;
+            contTabla++;
+        });
+        switch (inpRadio) {
+            case "1":
+                console.log('Estado:', typeof(contEstado), inpRadio);
+                //Validaciones: Mas de 1 registro
+                if (tablaUnidadCatastral.data().count() < 2) {
+                    toastr.warning("Deben existir al menos 2 unidades catastrales por trabajar", "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+                    //} else if (contEstado !== 0) {
+                } else if (contEstado > 0) {
+                    console.log('a');
+                    toastr.warning("Todos las unidades deben encontrarse habilitados", "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+                } else if (contUnidad !== 0) {
+                    toastr.warning("Todos los unidades deben pertenecer al mismo sector, manzana, lote y edificación", "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+                } else {
+                    var arrayObject = [];
+                    var tablaUnidadCatastralTemp = tablaUnidadCatastralNueva.data();
+                    console.log(tablaUnidadCatastralTemp);
+                    $.each(tablaUnidadCatastralTemp, function (index, Item) {
+                        arrayObject.push({
+                            "CodigoDistrito": Item.CodigoDistrito, "CodigoSector": Item.CodigoSector, "CodigoManzana": Item.CodigoManzana, "CodigoLote": Item.CodigoLote,
+                            "Ed": Item.Ed, "Entrada" : Item.Entrada, "Piso": Item.Piso,  "Unidad": Item.Unidad,
+                            "CodigoNumeroSolicitud": $('#FiltrarNumeroSolicitud').val(), "CodigoTipoSolicitud": $('#FiltrarCodigoTipoSolicitud').val(),
+                            "CodigoTipoDocumento": $('#FiltrarCodigoTipoDocumentoReg').val()
+                        });
+                    });
+                    $.post("@Url.Content("~/UnidadCatastral/GrabarUnidadAcum")", { model: arrayObject }, function (response) {
+                        console.log("response.ListEstadoProceso");
+                        console.log(response.ListEstadoProceso);
+
+                        $.each(response.ListEstadoProceso, function (i, item) {
+                            if (item.Ok === false) {
+                                toastr.warning(item.MENSAJE, "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+                                $('#msgErrores').append("<li>" + item.MENSAJE + "</li>");
+                                console.log(item.MENSAJE);
+                            } else {
+                                toastr.success(item.MENSAJE, "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+                                $('#msgCorrecto').append("<li class='has-success'>" + item.MENSAJE + "</li>");
+                                console.log(item.MENSAJE);
+                            }
+                        });
+
+                        tablaUnidadCatastral.ajax.reload();
+                        tablaUnidadCatastralRef.ajax.reload();
+                        $(".Terminado").prop('disabled', true);
+                        //$("input").prop('disabled', false);
+                    });
+                }
+                break;
+            case "2":
+                var TablaUnidadesTotal = tablaUnidadCatastral.data();
+                var countTemp;
+                countTemp = 0;
+                console.log(TablaUnidadesTotal);
+
+                $.each(TablaUnidadesTotal, function (i, item) {
+                    if(item.EstadoUnidad === 'T') {
+                        countTemp++;
+                    }
+                });
+
+                if (TablaUnidadesTotal.count() !== countTemp) {
+                     toastr.warning("Todas las unidades asociadas a la solicitud deben estar en estado temporal", "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+                } else {
+                    var arrayObject = [];
+                    var tablaUnidadCatastralTemp = tablaUnidadCatastralNueva.data();
+                    console.log(tablaUnidadCatastralTemp);
+                    $.each(tablaUnidadCatastralTemp, function (index, Item) {
+                        arrayObject.push({
+                            "CodigoDistrito": Item.CodigoDistrito, "CodigoSector": Item.CodigoSector, "CodigoManzana": Item.CodigoManzana, "CodigoLote": Item.CodigoLote,
+                            "Ed": Item.Ed, "Entrada" : Item.Entrada, "Piso": Item.Piso,  "Unidad": Item.Unidad,
+                            "CodigoNumeroSolicitud": $('#FiltrarNumeroSolicitud').val(), "CodigoTipoSolicitud": $('#FiltrarCodigoTipoSolicitud').val(),
+                            "CodigoTipoDocumento": $('#FiltrarCodigoTipoDocumento').val()
+                        });
+                    });
+                    $.post("@Url.Content("~/UnidadCatastral/GrabarUnidadNuevo")", { model: arrayObject }, function (response) {
+                        console.log("response.ListEstadoProceso");
+                        console.log(response.ListEstadoProceso);
+
+                        $.each(response.ListEstadoProceso, function (i, item) {
+                            if (item.Ok === false) {
+                                toastr.warning(item.MENSAJE, "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+                                $('#msgErrores').append("<li>" + item.MENSAJE + "</li>");
+                                console.log(item.MENSAJE);
+                            } else {
+                                toastr.success(item.MENSAJE, "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+                                $('#msgCorrecto').append("<li class='has-success'>" + item.MENSAJE + "</li>");
+                                console.log(item.MENSAJE);
+                            }
+                        });
+
+                        tablaUnidadCatastral.ajax.reload();
+                        $(".Terminado").prop('disabled', true);
+                        //$("input").prop('disabled', false);
+                    });
+                }
+                break;
+        }
+        if (cont === 0) {
+            $('#msgErroresDet').html("");
+            var model = {};
+            @*$.post("@Url.Content("~/Lotes/GrabarLoteNuevo")", { model: model}, function (response) {
+                if (response.success === false) { toastr.warning(response.responseText, "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", }); } else { console.log('Grabado'); }
+            });*@
+        }
+    });
+
+    $("#btnLimiparUC").on("click", function (event) {
+
+        $(".Terminado").prop('disabled', false);
+        tablaUnidadCatastralNueva.clear().draw();
+        $('#msgErrores').html("");
+        $('#msgCorrecto').html("");
+    });
+
+    $("#btnModalAgregar").on("click", function (event) {
+        var cont;
+        console.log('count iniciando');
+        console.log(cont);
+        $('#msgErrores').html("");
+        if (!$('#FiltrarCodigoSector').val()) {
+            $('#msgErrores').append("<li>Ingrese el sector</li>");
+            cont = true;
+        }
+        if (!$('#FiltrarCodigoManzana').val()) {
+            $('#msgErrores').append("<li>Ingrese la Manzana</li>");
+            cont = true;
+        }
+        if (!$('#FiltrarCodigoLote').val()) {
+            $('#msgErrores').append("<li>Ingrese el Lote</li>");
+            cont = true;
+        }
+        if (!$('#FiltrarEd').val()) {
+            $('#msgErrores').append("<li>Ingrese la Edificación</li>");
+            cont = true;
+        }
+        if (!$('#FiltrarEntrada').val()) {
+            $('#msgErrores').append("<li>Ingrese la Entrada</li>");
+            cont = true;
+        }
+        if (!$('#FiltrarPiso').val()) {
+            $('#msgErrores').append("<li>Ingrese el Piso</li>");
+            cont = true;
+        }
+        if (!$('#FiltrarUnidad').val()) {
+            $('#msgErrores').append("<li>Ingrese la Unidad</li>");
+            cont = true;
+        }
+
+
+
+        if ($('#FiltrarCodigoSector').val().length !== 2) {
+            $('#msgErrores').append("<li>Sector: Ingrese 2 dígitos</li>");
+            cont = true;
+        }
+        if ($('#FiltrarCodigoManzana').val().length !== 3) {
+            $('#msgErrores').append("<li>Manzana: Ingrese 3 dígitos</li>");
+            cont = true;
+        }
+        if ($('#FiltrarCodigoLote').val().length !== 3) {
+            $('#msgErrores').append("<li>Lote: Ingrese 3 dígitos</li>");
+            cont = true;
+        }
+        if ($('#FiltrarEd').val().length !== 2) {
+            $('#msgErrores').append("<li>Edificación: Ingrese 2 dígitos</li>");
+            cont = true;
+        }
+        if ($('#FiltrarEntrada').val().length !== 2) {
+            $('#msgErrores').append("<li>Entrada: Ingrese 2 dígitos</li>");
+            cont = true;
+        }
+        if ($('#FiltrarPiso').val().length !== 2) {
+            $('#msgErrores').append("<li>Piso: Ingrese 2 dígitos</li>");
+            cont = true;
+        }
+        if ($('#FiltrarUnidad').val().length !== 3) {
+            $('#msgErrores').append("<li>Unidad: Ingrese 3 dígitos</li>");
+            cont = true;
+        }
+
+        if ($('#FiltrarUnidad').val() != 'XXX') {
+            toastr.warning("Debe ingresar un código de Bien Común válido", "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+            cont = true;
+        }
+
+      
+
+
+        if (!cont) {
+
+            switch (inpRadio) {
+                case "1":
+
+                    var UcAgregar = {
+                        CodigoDistrito: $('#FiltrarCodigoDistrito').val(), CodigoSector: $('#FiltrarCodigoSector').val(), CodigoManzana: $('#FiltrarCodigoManzana').val(), CodigoLote: $('#FiltrarCodigoLote').val(),
+                        Ed: $('#FiltrarEd').val(), Entrada: $('#FiltrarEntrada').val(), Piso: $('#FiltrarPiso').val(), Unidad: $('#FiltrarUnidad').val(),
+                        CodigoNumeroSolicitud: $('#FiltrarNumeroSolicitud').val(), CodigoTipoSolicitud: $('#FiltrarCodigoTipoSolicitud').val(),
+                        CodigoTipoDocumento: $('#FiltrarCodigoTipoDocumentoReg').val()
+                    };
+
+                    $.post("@Url.Content("~/UnidadCatastral/ValidarUnidadNuevo")", { model: UcAgregar }, function (response) {
+                        console.log("response.ListEstadoProceso");
+                        console.log(response.ListEstadoProceso);
+                        var item = response.ListEstadoProceso;
+
+                        if (item.Ok === false) {
+                            toastr.warning(item.MENSAJE, "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+                            $('#msgErrores').append("<li>" + item.MENSAJE + "</li>");
+                            console.log(item.MENSAJE);
+                            cont = true;
+                            console.log('COnstador');
+                            console.log(cont);
+
+                        } else {
+                            tablaUnidadCatastralNueva.rows().every(function () {
+                                var data = this.data();
+                                if (data.CodigoSector === $('#FiltrarCodigoSector').val() && data.CodigoManzana === $('#FiltrarCodigoManzana').val() && data.CodigoLote === $('#FiltrarCodigoLote').val()
+                                    && data.Ed === $('#FiltrarEd').val() && data.Entrada === $('#FiltrarEntrada').val() && data.Piso === $('#FiltrarPiso').val() && data.Unidad === $('#FiltrarUnidad').val()) {
+                                    console.log('a');
+                                    $('#msgErrores').append("<li>El código catastral ya ha sido ingresado</li>");
+                                    cont = true;
+                                }
+                            });
+                            if (!cont) {
+                                $('#msgErrores').html("");
+                                tablaUnidadCatastralNueva.row.add({
+                                    "CodigoDistrito": "31",
+                                    "CodigoSector": $('#FiltrarCodigoSector').val(),
+                                    "CodigoManzana": $('#FiltrarCodigoManzana').val(),
+                                    "CodigoLote": $('#FiltrarCodigoLote').val(),
+                                    "Ed": $('#FiltrarEd').val(),
+                                    "Entrada": $('#FiltrarEntrada').val(),
+                                    "Piso": $('#FiltrarPiso').val(),
+                                    "Unidad": $('#FiltrarUnidad').val(),
+                                    "Ubicacion": ""
+                                }).draw();
+
+
+                                $('#FiltrarCodigoSector').val($('#FiltrarCodigoSector').val()),
+                                $('#FiltrarCodigoManzana').val( $('#FiltrarCodigoManzana').val()),
+                                $('#FiltrarCodigoLote').val($('#FiltrarCodigoLote').val()) 
+                                $('#FiltrarEd').val($('#FiltrarEd').val())
+                            }
+                        }
+
+                        tablaUnidadCatastral.ajax.reload();
+                        $(".AcumulacionFin").prop('disabled', true);
+
+
+                    }); break;
+                case "2":
+
+
+                    var UcAgregar = {
+                        CodigoDistrito: $('#FiltrarCodigoDistrito').val(), CodigoSector: $('#FiltrarCodigoSector').val(), CodigoManzana: $('#FiltrarCodigoManzana').val(), CodigoLote: $('#FiltrarCodigoLote').val(),
+                        Ed: $('#FiltrarEd').val(), Entrada: $('#FiltrarEntrada').val(), Piso: $('#FiltrarPiso').val(), Unidad: $('#FiltrarUnidad').val(),
+                        CodigoNumeroSolicitud: $('#FiltrarNumeroSolicitud').val(), CodigoTipoSolicitud: $('#FiltrarCodigoTipoSolicitud').val(),
+                        CodigoTipoDocumento: $('#FiltrarCodigoTipoDocumentoReg').val()
+                    };
+
+                    $.post("@Url.Content("~/UnidadCatastral/ValidarUnidadNuevo")", { model: UcAgregar }, function (response) {
+                        console.log("response.ListEstadoProceso");
+                        console.log(response.ListEstadoProceso);
+                        var item = response.ListEstadoProceso;
+
+                        if (item.Ok === false) {
+                            toastr.warning(item.MENSAJE, "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+                            $('#msgErrores').append("<li>" + item.MENSAJE + "</li>");
+                            console.log(item.MENSAJE);
+                            cont = true;
+                            console.log('COnstador');
+                            console.log(cont);
+
+                        } else {
+                            tablaUnidadCatastralNueva.rows().every(function () {
+                                var data = this.data();
+                                if (data.CodigoSector === $('#FiltrarCodigoSector').val() && data.CodigoManzana === $('#FiltrarCodigoManzana').val() && data.CodigoLote === $('#FiltrarCodigoLote').val()
+                                    && data.Ed === $('#FiltrarEd').val() && data.Entrada === $('#FiltrarEntrada').val() && data.Piso === $('#FiltrarPiso').val() && data.Unidad === $('#FiltrarUnidad').val()) {
+                                    console.log('a');
+                                    $('#msgErrores').append("<li>El código catastral ya ha sido ingresado</li>");
+                                    cont = true;
+                                }
+                            });
+                            if (!cont) {
+                                $('#msgErrores').html("");
+                                tablaUnidadCatastralNueva.row.add({
+                                    "CodigoDistrito": "31",
+                                    "CodigoSector": $('#FiltrarCodigoSector').val(),
+                                    "CodigoManzana": $('#FiltrarCodigoManzana').val(),
+                                    "CodigoLote": $('#FiltrarCodigoLote').val(),
+                                    "Ed": $('#FiltrarEd').val(),
+                                    "Entrada": $('#FiltrarEntrada').val(),
+                                    "Piso": $('#FiltrarPiso').val(),
+                                    "Unidad": $('#FiltrarUnidad').val(),
+                                    "Ubicacion": ""
+                                }).draw();
+
+
+                                $('#FiltrarCodigoSector').val($('#FiltrarCodigoSector').val()),
+                                $('#FiltrarCodigoManzana').val( $('#FiltrarCodigoManzana').val()),
+                                $('#FiltrarCodigoLote').val($('#FiltrarCodigoLote').val()) 
+                                $('#FiltrarEd').val($('#FiltrarEd').val())
+                            }
+                        }
+
+                        tablaUnidadCatastral.ajax.reload();
+                        $(".NewCodigo").prop('disabled', true);
+                        //$("input").prop('disabled', false);
+                    }); break;
+
+            }
+
+        }
+
+
+        
+
+
+        
+    });
+
+</script>

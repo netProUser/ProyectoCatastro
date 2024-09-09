@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>NReco.PdfGenerator</id>
+    <version>1.1.15</version>
+    <title>HTML-to-PDF Generator</title>
+    <authors>Vitalii Fedorchenko</authors>
+    <owners>Vitalii Fedorchenko</owners>
+    <licenseUrl>https://www.nrecosite.com/pdf_generator_net.aspx</licenseUrl>
+    <projectUrl>https://www.nrecosite.com/pdf_generator_net.aspx</projectUrl>
+    <iconUrl>https://www.nrecosite.com/img/nreco-logo-200.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>HTML-to-PDF converter for C#/.NET (WkHtmlToPdf wrapper). Generates pretty-looking PDF by HTML template or web page URL. Web page is rendered with Qt WebKit and PDF result is very similar to web browser view. Engine supports page header/footer, page numbering, custom fonts, javascript execution. 
+PdfGenerator can be used for free in a single-deployment projects. 
+
+This package embeds wkhtmltopdf binaries (x86 windows) and they're extracted on first use - you don't need to deploy wkhtmltopdf separately.</description>
+    <summary />
+    <releaseNotes>For Mono / .NET Core / custom wkhtmltopdf build use:
+https://www.nuget.org/packages/NReco.PdfGenerator.LT/
+
+More info (PdfGenerator online demo, examples): https://www.nrecosite.com/pdf_generator_net.aspx
+
+v.1.1.15 changes:
+- added GeneratePdfFromFiles overload that accepts individual options (like header/footer) for each input
+
+v.1.1.14 changes:
+- WkHtmlToPdf tool upgraded to version 0.12.4 (released 2016-Nov-22)
+- all necessary VC++ Runtime 2015  dlls are included
+- now for ASP.NET apps wkhtmltopdf binaries are extracted to App_Data\wkhtmltopdf by default
+
+v.1.1.12 changes:
+- WkHtmlToPdf tool upgraded to version 0.12.3.1 (released 2016-Jan-30).
+- fixed bug in batch mode (null reference exception for large HTML input)</releaseNotes>
+    <copyright>Copyright 2013-2017 Vitalii Fedorchenko</copyright>
+    <tags>PDF Html Converter WkHtmlToPdf html-to-pdf html2pdf htmltopdf html-to-pdf-converter free-html-to-pdf pdf-generation c# wrapper PdfGenerator</tags>
+  </metadata>
+</package>

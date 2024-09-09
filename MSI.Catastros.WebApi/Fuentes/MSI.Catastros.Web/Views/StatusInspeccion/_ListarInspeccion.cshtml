@@ -1,0 +1,89 @@
+﻿@model IEnumerable<MSI.Catastros.Web.Funcionalidad.StatusInspeccion.Inspecciones>
+
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
+<table class="table responsive display table-striped table-bordered table-hover" style="width: 100%" >
+    <tr>
+        <th width="30px">
+            @Html.DisplayNameFor(model => model.NroInspeccion)
+        </th>
+        <th width="30px">
+            @Html.DisplayNameFor(model => model.NroSolicitud)
+        </th>
+        <th width="30px">
+            @Html.DisplayNameFor(model => model.FechaInspeccion)
+        </th>
+        <th width="15px">
+            @Html.DisplayNameFor(model => model.HoraInspeccion)
+        </th>
+        <th width="270px">
+            @Html.DisplayNameFor(model => model.Inspectores)
+        </th>
+        <th width="270px">
+            @Html.DisplayNameFor(model => model.Responsable)
+        </th>
+        <th width="180px">
+            @Html.DisplayNameFor(model => model.CodCatastral)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Observacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EstadoInspeccion)
+        </th>
+        @*<th></th>*@
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NroInspeccion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NroSolicitud)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaInspeccion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HoraInspeccion)
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.Inspectores)*@
+                @Html.Raw(item.Inspectores)
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.Inspectores)*@
+                @Html.Raw(item.Responsable)
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.CodCatastral)*@
+                @Html.Raw(item.CodCatastral)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Observacion)
+            </td>
+            <td>
+                @if (item.EstadoInspeccion == "PROGRAMADA")
+                {
+                    <span class="label label-primary">@Html.DisplayFor(modelItem => item.EstadoInspeccion)</span>
+                }
+                else if (item.EstadoInspeccion == "ATENDIDA")
+                {
+                    <span class="label label-success">@Html.DisplayFor(modelItem => item.EstadoInspeccion)</span>
+                }
+
+            </td>
+            @*<td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>*@
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="ACUMOBSADIC" targetNamespace="http://tempuri.org/ACUMOBSADIC.xsd" xmlns:mstns="http://tempuri.org/ACUMOBSADIC.xsd" xmlns="http://tempuri.org/ACUMOBSADIC.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="ACUMOBSADIC" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="ACUMOBSADIC" msprop:Generator_UserDSName="ACUMOBSADIC">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ACUMOBSADIC" msprop:Generator_TableClassName="ACUMOBSADICDataTable" msprop:Generator_TableVarName="tableACUMOBSADIC" msprop:Generator_TablePropName="_ACUMOBSADIC" msprop:Generator_RowDeletingName="ACUMOBSADICRowDeleting" msprop:Generator_RowChangingName="ACUMOBSADICRowChanging" msprop:Generator_RowEvHandlerName="ACUMOBSADICRowChangeEventHandler" msprop:Generator_RowDeletedName="ACUMOBSADICRowDeleted" msprop:Generator_UserTableName="ACUMOBSADIC" msprop:Generator_RowChangedName="ACUMOBSADICRowChanged" msprop:Generator_RowEvArgName="ACUMOBSADICRowChangeEvent" msprop:Generator_RowClassName="ACUMOBSADICRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="TXTOBS" msprop:Generator_ColumnVarNameInTable="columnTXTOBS" msprop:Generator_ColumnPropNameInRow="TXTOBS" msprop:Generator_ColumnPropNameInTable="TXTOBSColumn" msprop:Generator_UserColumnName="TXTOBS" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

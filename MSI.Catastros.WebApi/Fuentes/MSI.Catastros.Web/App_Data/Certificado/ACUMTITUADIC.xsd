@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="ACUMTITUADIC" targetNamespace="http://tempuri.org/ACUMTITUADIC.xsd" xmlns:mstns="http://tempuri.org/ACUMTITUADIC.xsd" xmlns="http://tempuri.org/ACUMTITUADIC.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="ACUMTITUADIC" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="ACUMTITUADIC" msprop:Generator_UserDSName="ACUMTITUADIC">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ACUMTITUADIC" msprop:Generator_TableClassName="ACUMTITUADICDataTable" msprop:Generator_TableVarName="tableACUMTITUADIC" msprop:Generator_TablePropName="_ACUMTITUADIC" msprop:Generator_RowDeletingName="ACUMTITUADICRowDeleting" msprop:Generator_RowChangingName="ACUMTITUADICRowChanging" msprop:Generator_RowEvHandlerName="ACUMTITUADICRowChangeEventHandler" msprop:Generator_RowDeletedName="ACUMTITUADICRowDeleted" msprop:Generator_UserTableName="ACUMTITUADIC" msprop:Generator_RowChangedName="ACUMTITUADICRowChanged" msprop:Generator_RowEvArgName="ACUMTITUADICRowChangeEvent" msprop:Generator_RowClassName="ACUMTITUADICRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="TXTTITULAR" msprop:Generator_ColumnVarNameInTable="columnTXTTITULAR" msprop:Generator_ColumnPropNameInRow="TXTTITULAR" msprop:Generator_ColumnPropNameInTable="TXTTITULARColumn" msprop:Generator_UserColumnName="TXTTITULAR" type="xs:string" minOccurs="0" />
+              <xs:element name="CONDTITULAR" msprop:Generator_ColumnVarNameInTable="columnCONDTITULAR" msprop:Generator_ColumnPropNameInRow="CONDTITULAR" msprop:Generator_ColumnPropNameInTable="CONDTITULARColumn" msprop:Generator_UserColumnName="CONDTITULAR" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

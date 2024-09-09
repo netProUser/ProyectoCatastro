@@ -1,0 +1,163 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Mantenimientos.TablaViewModel
+
+<div id="RegistrarSectoresContainer">
+    @using (Html.BeginForm("Registrar", "Mantenimientos", FormMethod.Post, new { id = "frmMantenimientos", name = "frmMantenimientos" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close"  data-dismiss="modal" aria-hidden="true">&times;</button>
+                    @if (@Model.Estado == 2) {
+                        <h4>Modificando @Model.NombreCampo</h4>
+                    }
+                    else {
+                        <h4>Registrar</h4>
+                    }
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true)
+                        <div class="form-group ">
+                            @if (@Model.TipoMantenimiento == "Inscripcion") {
+                                <label class="control-label col-md-3" for="CodigoCampo">Código</label>
+                            }
+                            else if (@Model.TipoMantenimiento == "UsoPredio")
+                            {
+                                <label class="control-label col-md-3" for="CodigoCampo">Código del Uso</label>
+                            }
+                            else if (@Model.TipoMantenimiento == "Puerta")
+                            {
+                                <label class="control-label col-md-3" for="CodigoCampo">Código</label>
+                            }
+                            else if (@Model.TipoMantenimiento == "TipoInterior")
+                            {
+                                <label class="control-label col-md-3" for="CodigoCampo">Código</label>
+                            }
+                            else if (@Model.TipoMantenimiento == "Edificacion")
+                            {
+                                <label class="control-label col-md-3" for="CodigoCampo">Código Edificación</label>
+                            }
+                            else if (@Model.TipoMantenimiento == "OtrosDocumentos")
+                            {
+                                <label class="control-label col-md-3" for="CodigoCampo">Código Otros Documentos</label>
+                            }
+                            else if (@Model.TipoMantenimiento == "Zonificacion")
+                            {
+                                <label class="control-label col-md-3" for="CodigoCampo">Código Zonificacion</label>
+                            }
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.CodigoCampo, new { @class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.CodigoCampo)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @if (@Model.TipoMantenimiento == "Inscripcion")
+                            {
+                                <label class="control-label col-md-3" for="CodigoCampo">Nombre Inscripción</label>
+                            }
+                            else if (@Model.TipoMantenimiento == "UsoPredio")
+                            {
+                                <label class="control-label col-md-3" for="CodigoCampo">Nombre del Uso</label>
+                            }
+                            else if (@Model.TipoMantenimiento == "Puerta")
+                            {
+                                <label class="control-label col-md-3" for="CodigoCampo">Nombre de la Puerta</label>
+                            }
+                            else if (@Model.TipoMantenimiento == "TipoInterior")
+                            {
+                                <label class="control-label col-md-3" for="CodigoCampo">Nombrel del Tipo de Interior</label>
+                            }
+                            else if (@Model.TipoMantenimiento == "Edificacion")
+                            {
+                                <label class="control-label col-md-3" for="CodigoCampo">Nombre de la Edificación</label>
+                            }
+                            else if (@Model.TipoMantenimiento == "OtrosDocumentos")
+                            {
+                            <label class="control-label col-md-3" for="CodigoCampo">Nombre de Otro Documento</label>
+                            }
+                            else if (@Model.TipoMantenimiento == "Zonificacion")
+                            {
+                                <label class="control-label col-md-3" for="CodigoCampo">Nombre</label>
+                            }
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.NombreCampo, new { @class = "form-control", autofocus = "autofocus" , @style = "text-transform:none;" })
+                                @Html.ValidationMessageFor(model => model.NombreCampo)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @if (@Model.TipoMantenimiento == "Inscripcion")
+                            {
+                                <label class="control-label col-md-3" for="CodigoCampo">Tipo Anterior</label>
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(model => model.NombreAdicional, new { @class = "form-control", maxlenght = "1", autofocus = "autofocus", @style = "text-transform:none;" })
+                                    @Html.ValidationMessageFor(model => model.NombreAdicional)
+                                </div>
+                            }
+                            else if (@Model.TipoMantenimiento == "Puerta")
+                            {
+                                <label class="control-label col-md-3" for="CodigoCampo">Abreviatura</label>
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(model => model.NombreAdicional, new { @class = "form-control", maxlenght = "1", autofocus = "autofocus", @style = "text-transform:none;" })
+                                    @Html.ValidationMessageFor(model => model.NombreAdicional)
+                                </div>
+                            }
+                            else if (@Model.TipoMantenimiento == "TipoInterior")
+                            {
+                                <label class="control-label col-md-3" for="CodigoCampo">Abreviatura</label>
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(model => model.NombreAdicional, new { @class = "form-control", maxlenght = "4", autofocus = "autofocus",  @style = "text-transform:none;" })
+                                    @Html.ValidationMessageFor(model => model.NombreAdicional)
+                                </div>
+                            }
+                            else if (@Model.TipoMantenimiento == "Edificacion")
+                            {
+                                <label class="control-label col-md-3" for="CodigoCampo">Abreviatura</label>
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(model => model.NombreAdicional, new { @class = "form-control", maxlenght = "1", autofocus = "autofocus",  @style = "text-transform:none;" })
+                                    @Html.ValidationMessageFor(model => model.NombreAdicional)
+                                </div>
+                            }
+                            else if (@Model.TipoMantenimiento == "UsoPredio")
+                            {
+                                <label class="control-label col-md-3" for="CodigoCampo">Clase de Uso</label>
+                                <div class="col-md-9">
+                                    @Html.DropDownListFor(model => model.CodigoAdicional, new SelectList(Model.ListaCampo, "Value", "Text"), "Seleccione...",
+                                        new { @class = "chosen-seleccionar form-control", style = "width:100%;" })
+                                    @Html.ValidationMessageFor(model => model.NombreAdicional)
+                                </div>
+                            }
+                            else if (@Model.TipoMantenimiento == "Zonificacion")
+                            {
+                                <label class="control-label col-md-3" for="CodigoCampo">Abreviatura</label>
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(model => model.AbreviaturaCampo, new { @class = "form-control", maxlenght = "3", autofocus = "autofocus", @style = "text-transform:none;" })
+                                    @Html.ValidationMessageFor(model => model.AbreviaturaCampo)
+                                </div>
+                            }
+
+                        </div>
+                        @Html.TextBoxFor(model => model.Estado, new { type = "hidden", @class = "form-control" })
+                        @Html.TextBoxFor(model => model.TipoMantenimiento, new { type = "hidden", value = @Model.TipoMantenimiento })
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input id="btnSubmit" type="submit" value="Grabar" class="btn btn-green" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".chosen-seleccionar").chosen({ width: "100%", placeholder_text_single: "Seleccione una opción" });
+        $("#frmMantenimientos").on("submit", function (event) {
+            validarFormularioMant(event, $('#btnSubmit'), "Mantenimientos", "@Model.TipoMantenimiento");
+        });
+    });
+</script>

@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="NOMENCLATURAURBANIZACION" targetNamespace="http://tempuri.org/NOMENCLATURAURBANIZACION.xsd" xmlns:mstns="http://tempuri.org/NOMENCLATURAURBANIZACION.xsd" xmlns="http://tempuri.org/NOMENCLATURAURBANIZACION.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="NOMENCLATURAURBANIZACION" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="NOMENCLATURAURBANIZACION" msprop:Generator_UserDSName="NOMENCLATURAURBANIZACION">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="DatosNomenclaUrba" msprop:Generator_TableClassName="DatosNomenclaUrbaDataTable" msprop:Generator_TableVarName="tableDatosNomenclaUrba" msprop:Generator_TablePropName="DatosNomenclaUrba" msprop:Generator_RowDeletingName="DatosNomenclaUrbaRowDeleting" msprop:Generator_RowChangingName="DatosNomenclaUrbaRowChanging" msprop:Generator_RowEvHandlerName="DatosNomenclaUrbaRowChangeEventHandler" msprop:Generator_RowDeletedName="DatosNomenclaUrbaRowDeleted" msprop:Generator_UserTableName="DatosNomenclaUrba" msprop:Generator_RowChangedName="DatosNomenclaUrbaRowChanged" msprop:Generator_RowEvArgName="DatosNomenclaUrbaRowChangeEvent" msprop:Generator_RowClassName="DatosNomenclaUrbaRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="URBANIZACION" msprop:Generator_ColumnVarNameInTable="columnURBANIZACION" msprop:Generator_ColumnPropNameInRow="URBANIZACION" msprop:Generator_ColumnPropNameInTable="URBANIZACIONColumn" msprop:Generator_UserColumnName="URBANIZACION" type="xs:string" minOccurs="0" />
+              <xs:element name="MANZANA" msprop:Generator_ColumnVarNameInTable="columnMANZANA" msprop:Generator_ColumnPropNameInRow="MANZANA" msprop:Generator_ColumnPropNameInTable="MANZANAColumn" msprop:Generator_UserColumnName="MANZANA" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

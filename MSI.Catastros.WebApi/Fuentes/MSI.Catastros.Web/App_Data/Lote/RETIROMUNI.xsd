@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="retiromuni" targetNamespace="http://tempuri.org/FichaLoteCatas.xsd" xmlns:mstns="http://tempuri.org/FichaLoteCatas.xsd" xmlns="http://tempuri.org/FichaLoteCatas.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="retiromuni" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="retiromuni" msprop:Generator_UserDSName="retiromuni">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Retiro" msprop:Generator_TableClassName="RetiroDataTable" msprop:Generator_TableVarName="tableRetiro" msprop:Generator_TablePropName="Retiro" msprop:Generator_RowDeletingName="RetiroRowDeleting" msprop:Generator_RowChangingName="RetiroRowChanging" msprop:Generator_RowEvHandlerName="RetiroRowChangeEventHandler" msprop:Generator_RowDeletedName="RetiroRowDeleted" msprop:Generator_UserTableName="Retiro" msprop:Generator_RowChangedName="RetiroRowChanged" msprop:Generator_RowEvArgName="RetiroRowChangeEvent" msprop:Generator_RowClassName="RetiroRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CODVIA" msprop:Generator_ColumnVarNameInTable="columnCODVIA" msprop:Generator_ColumnPropNameInRow="CODVIA" msprop:Generator_ColumnPropNameInTable="CODVIAColumn" msprop:Generator_UserColumnName="CODVIA" type="xs:string" minOccurs="0" />
+              <xs:element name="TIPOVIA" msprop:Generator_ColumnVarNameInTable="columnTIPOVIA" msprop:Generator_ColumnPropNameInRow="TIPOVIA" msprop:Generator_ColumnPropNameInTable="TIPOVIAColumn" msprop:Generator_UserColumnName="TIPOVIA" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTVIA" msprop:Generator_ColumnVarNameInTable="columnTXTVIA" msprop:Generator_ColumnPropNameInRow="TXTVIA" msprop:Generator_ColumnPropNameInTable="TXTVIAColumn" msprop:Generator_UserColumnName="TXTVIA" type="xs:string" minOccurs="0" />
+              <xs:element name="OFIRETI" msprop:Generator_ColumnVarNameInTable="columnOFIRETI" msprop:Generator_ColumnPropNameInRow="OFIRETI" msprop:Generator_ColumnPropNameInTable="OFIRETIColumn" msprop:Generator_UserColumnName="OFIRETI" type="xs:string" minOccurs="0" />
+              <xs:element name="NUMRETIMUNI" msprop:Generator_ColumnVarNameInTable="columnNUMRETIMUNI" msprop:Generator_ColumnPropNameInRow="NUMRETIMUNI" msprop:Generator_ColumnPropNameInTable="NUMRETIMUNIColumn" msprop:Generator_UserColumnName="NUMRETIMUNI" type="xs:string" minOccurs="0" />
+              <xs:element name="FLGOCUPRETI" msprop:Generator_ColumnVarNameInTable="columnFLGOCUPRETI" msprop:Generator_ColumnPropNameInRow="FLGOCUPRETI" msprop:Generator_ColumnPropNameInTable="FLGOCUPRETIColumn" msprop:Generator_UserColumnName="FLGOCUPRETI" type="xs:string" minOccurs="0" />
+              <xs:element name="CODDESCRETI" msprop:Generator_ColumnVarNameInTable="columnCODDESCRETI" msprop:Generator_ColumnPropNameInRow="CODDESCRETI" msprop:Generator_ColumnPropNameInTable="CODDESCRETIColumn" msprop:Generator_UserColumnName="CODDESCRETI" type="xs:string" minOccurs="0" />
+              <xs:element name="OFIJARDIN" msprop:Generator_ColumnVarNameInTable="columnOFIJARDIN" msprop:Generator_ColumnPropNameInRow="OFIJARDIN" msprop:Generator_ColumnPropNameInTable="OFIJARDINColumn" msprop:Generator_UserColumnName="OFIJARDIN" type="xs:string" minOccurs="0" />
+              <xs:element name="NUMJARDAISL" msprop:Generator_ColumnVarNameInTable="columnNUMJARDAISL" msprop:Generator_ColumnPropNameInRow="NUMJARDAISL" msprop:Generator_ColumnPropNameInTable="NUMJARDAISLColumn" msprop:Generator_UserColumnName="NUMJARDAISL" type="xs:string" minOccurs="0" />
+              <xs:element name="FLGOCUPJARD" msprop:Generator_ColumnVarNameInTable="columnFLGOCUPJARD" msprop:Generator_ColumnPropNameInRow="FLGOCUPJARD" msprop:Generator_ColumnPropNameInTable="FLGOCUPJARDColumn" msprop:Generator_UserColumnName="FLGOCUPJARD" type="xs:string" minOccurs="0" />
+              <xs:element name="CODDESCJARD" msprop:Generator_ColumnVarNameInTable="columnCODDESCJARD" msprop:Generator_ColumnPropNameInRow="CODDESCJARD" msprop:Generator_ColumnPropNameInTable="CODDESCJARDColumn" msprop:Generator_UserColumnName="CODDESCJARD" type="xs:string" minOccurs="0" />
+              <xs:element name="NUMANCHVIA" msprop:Generator_ColumnVarNameInTable="columnNUMANCHVIA" msprop:Generator_ColumnPropNameInRow="NUMANCHVIA" msprop:Generator_ColumnPropNameInTable="NUMANCHVIAColumn" msprop:Generator_UserColumnName="NUMANCHVIA" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

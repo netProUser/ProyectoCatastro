@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="otrasinstalac" targetNamespace="http://tempuri.org/otrasinstalac.xsd" xmlns:mstns="http://tempuri.org/otrasinstalac.xsd" xmlns="http://tempuri.org/otrasinstalac.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="otrasinstalac" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="otrasinstalac" msprop:Generator_UserDSName="otrasinstalac">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Otrasinstalac" msprop:Generator_TableClassName="OtrasinstalacDataTable" msprop:Generator_TableVarName="tableOtrasinstalac" msprop:Generator_TablePropName="Otrasinstalac" msprop:Generator_RowDeletingName="OtrasinstalacRowDeleting" msprop:Generator_RowChangingName="OtrasinstalacRowChanging" msprop:Generator_RowEvHandlerName="OtrasinstalacRowChangeEventHandler" msprop:Generator_RowDeletedName="OtrasinstalacRowDeleted" msprop:Generator_UserTableName="Otrasinstalac" msprop:Generator_RowChangedName="OtrasinstalacRowChanged" msprop:Generator_RowEvArgName="OtrasinstalacRowChangeEvent" msprop:Generator_RowClassName="OtrasinstalacRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CODINSTALACION" msprop:Generator_ColumnVarNameInTable="columnCODINSTALACION" msprop:Generator_ColumnPropNameInRow="CODINSTALACION" msprop:Generator_ColumnPropNameInTable="CODINSTALACIONColumn" msprop:Generator_UserColumnName="CODINSTALACION" type="xs:string" minOccurs="0" />
+              <xs:element name="NUMCAPACIDAD" msprop:Generator_ColumnVarNameInTable="columnNUMCAPACIDAD" msprop:Generator_ColumnPropNameInRow="NUMCAPACIDAD" msprop:Generator_ColumnPropNameInTable="NUMCAPACIDADColumn" msprop:Generator_UserColumnName="NUMCAPACIDAD" type="xs:string" minOccurs="0" />
+              <xs:element name="NUMCANTIDAD" msprop:Generator_ColumnVarNameInTable="columnNUMCANTIDAD" msprop:Generator_ColumnPropNameInRow="NUMCANTIDAD" msprop:Generator_ColumnPropNameInTable="NUMCANTIDADColumn" msprop:Generator_UserColumnName="NUMCANTIDAD" type="xs:string" minOccurs="0" />
+              <xs:element name="FECHA" msprop:Generator_ColumnVarNameInTable="columnFECHA" msprop:Generator_ColumnPropNameInRow="FECHA" msprop:Generator_ColumnPropNameInTable="FECHAColumn" msprop:Generator_UserColumnName="FECHA" type="xs:string" minOccurs="0" />
+              <xs:element name="CODESTACONSE" msprop:Generator_ColumnVarNameInTable="columnCODESTACONSE" msprop:Generator_ColumnPropNameInRow="CODESTACONSE" msprop:Generator_ColumnPropNameInTable="CODESTACONSEColumn" msprop:Generator_UserColumnName="CODESTACONSE" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

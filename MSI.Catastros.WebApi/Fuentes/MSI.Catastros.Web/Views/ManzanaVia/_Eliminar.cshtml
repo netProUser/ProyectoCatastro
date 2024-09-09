@@ -1,0 +1,47 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.ManzanaVia.RegistroManzanaViaViewModel
+
+<div id="EditManzanaViaContainer">
+    @using (Html.BeginForm("Eliminar", "ManzanaVia", FormMethod.Post, new { id = "frmEliminarManzanaVia", name = "frmEliminarManzanaVia" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4>Eliminar @Model.CodigoManzanaViaReg</h4>
+                    @Html.TextBoxFor(model => model.Estado, new { type = "hidden", @class = "form-control" })
+                    @Html.TextBoxFor(model => model.CodigoSectorReg, new { type = "hidden", @class = "form-control" })
+                    @Html.TextBoxFor(model => model.CodigoManzanaReg, new { type = "hidden", @class = "form-control" })
+                    @Html.TextBoxFor(model => model.CodigoViaReg, new { type = "hidden", @class = "form-control" })
+                    @Html.TextBoxFor(model => model.CodigoManzanaViaReg, new { type = "hidden" })
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            ¿Esta seguro de eliminar el registro?
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input id="btnSubmit" type="submit" value="Eliminar" class="btn btn-green" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#frmEliminarManzanaVia").on("submit", function (event) {
+            eliminarFormulario(event, $('#btnSubmit'), "ManzanaVia");
+        });
+    });
+
+</script>

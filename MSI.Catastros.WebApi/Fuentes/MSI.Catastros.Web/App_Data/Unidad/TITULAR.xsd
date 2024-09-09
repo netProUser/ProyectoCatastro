@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="TITULAR" targetNamespace="http://tempuri.org/TITULAR.xsd" xmlns:mstns="http://tempuri.org/TITULAR.xsd" xmlns="http://tempuri.org/TITULAR.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="TITULAR" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="TITULAR" msprop:Generator_UserDSName="TITULAR">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="TITULAR" msprop:Generator_TableClassName="TITULARDataTable" msprop:Generator_TableVarName="tableTITULAR" msprop:Generator_TablePropName="_TITULAR" msprop:Generator_RowDeletingName="TITULARRowDeleting" msprop:Generator_RowChangingName="TITULARRowChanging" msprop:Generator_RowEvHandlerName="TITULARRowChangeEventHandler" msprop:Generator_RowDeletedName="TITULARRowDeleted" msprop:Generator_UserTableName="TITULAR" msprop:Generator_RowChangedName="TITULARRowChanged" msprop:Generator_RowEvArgName="TITULARRowChangeEvent" msprop:Generator_RowClassName="TITULARRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DOI" msprop:Generator_ColumnVarNameInTable="columnDOI" msprop:Generator_ColumnPropNameInRow="DOI" msprop:Generator_ColumnPropNameInTable="DOIColumn" msprop:Generator_UserColumnName="DOI" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTRAZONSOCIAL" msprop:Generator_ColumnVarNameInTable="columnTXTRAZONSOCIAL" msprop:Generator_ColumnPropNameInRow="TXTRAZONSOCIAL" msprop:Generator_ColumnPropNameInTable="TXTRAZONSOCIALColumn" msprop:Generator_UserColumnName="TXTRAZONSOCIAL" type="xs:string" minOccurs="0" />
+              <xs:element name="CODCONTRIBUYENTE" msprop:Generator_ColumnVarNameInTable="columnCODCONTRIBUYENTE" msprop:Generator_ColumnPropNameInRow="CODCONTRIBUYENTE" msprop:Generator_ColumnPropNameInTable="CODCONTRIBUYENTEColumn" msprop:Generator_UserColumnName="CODCONTRIBUYENTE" type="xs:string" minOccurs="0" />
+              <xs:element name="NUMPORCTITU" msprop:Generator_ColumnVarNameInTable="columnNUMPORCTITU" msprop:Generator_ColumnPropNameInRow="NUMPORCTITU" msprop:Generator_ColumnPropNameInTable="NUMPORCTITUColumn" msprop:Generator_UserColumnName="NUMPORCTITU" type="xs:string" minOccurs="0" />
+              <xs:element name="CODTIPODOCIDENTIDAD" msprop:Generator_ColumnVarNameInTable="columnCODTIPODOCIDENTIDAD" msprop:Generator_ColumnPropNameInRow="CODTIPODOCIDENTIDAD" msprop:Generator_ColumnPropNameInTable="CODTIPODOCIDENTIDADColumn" msprop:Generator_UserColumnName="CODTIPODOCIDENTIDAD" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTCONDTITU" msprop:Generator_ColumnVarNameInTable="columnTXTCONDTITU" msprop:Generator_ColumnPropNameInRow="TXTCONDTITU" msprop:Generator_ColumnPropNameInTable="TXTCONDTITUColumn" msprop:Generator_UserColumnName="TXTCONDTITU" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

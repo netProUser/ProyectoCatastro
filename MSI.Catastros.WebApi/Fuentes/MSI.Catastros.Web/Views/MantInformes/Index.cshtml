@@ -1,0 +1,209 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.MantInformes.InformesConfigViewModel
+@{
+    ViewBag.Title = "Cartas";
+}
+
+<div class="row" id="Informes">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="overflow: hidden">
+                @*<div class="row">
+                        <div class="col-md-6 col-xs-12"><strong>Informes</strong></div><div class="col-md-4"></div>
+                    </div>*@
+                <div class="row">
+                    <div class="col-md-6 col-xs-12"><strong>MantInformes</strong></div><div class="col-md-4"></div>
+                    <div class="col-md-2 col-xs-12">
+                        <span><button id="GrabarGeneral" type="button" disabled class="btn btn-green mr-2 btn-block" style="float:right" onclick="GrabarCartas()"><span class="glyphicon glyphicon-ok mr-2"></span> Grabar</button></span>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    
+                </div>
+                <input type="hidden" id="CodigoOficina" />
+
+                <fieldset class="formulario p-3">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ListTipoInforme , htmlAttributes: new { @class = "control-label" })
+                                @Html.DropDownListFor(m => m.FiltrarCodigoTipoInforme, Model.ListTipoInforme, "- Seleccione el tipo de informe -", new { @class = "form-control searchFilter", onchange = "CargarCodigoCarta()" })
+                                <span class="field-validation-valid inputUtil" data-valmsg-for="ListTipoInforme" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm text-center" style="float: left; width: 3%">
+                            <div class="form-group"><br /><button id="btnAgregarInforme" data-toggle="tooltip" title="Agregar Informe" type="button" value="" class="btn btn-success btn-block glyphicon glyphicon-plus" style="margin-top: 5px"></button></div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ListCodigoCarta, htmlAttributes: new { @class = "control-label" })
+                                @Html.DropDownListFor(m => m.FiltrarCodigoCarta, Model.ListCodigoCarta, "- Seleccione el tipo de informe -", new { @class = "form-control searchFilter" })
+                                <span class="field-validation-valid inputUtil" data-valmsg-for="ListTipoInforme" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-1 text-center">
+                            <div class="form-group"><br /><button id="btnBuscar" type="button" value="" class="btn btn-default btn-block glyphicon glyphicon-search" style="margin-top: 5px"></button></div>
+                        </div>
+                        
+                    </div>
+                </fieldset>
+                <div id="tabInforme" style="display:none;">
+                    <fieldset class="formulario p-3">
+                        <legend style="margin-bottom:-10px;">Mantenimiento de Carta</legend>
+                        <div id="cuerpoInforme" class="mx-5"></div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section datatables {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    <script>
+    $('.tabs').tabslet();
+    //DATA DE PRUEBA
+    $('#FiltrarCodigoTipoSolicitud').val('010003'); $('#FiltrarNumeroSolicitud').val('000283');
+
+    function CrearCarta() {
+        $.post("@Url.Content("~/MantCartas/Grabar")", {
+            FiltrarCodigoTipoInforme: $('#FiltrarCodigoTipoInforme').val()
+        }, function (response) {
+            toastr.success("Informe Creado Correctamente", "Mensaje del Sistema", { "progressBar": true });
+            CargarCodigoCarta();
+        });
+    }
+
+    function CargarCodigoCarta() {
+        $.post("@Url.Content("~/MantCartas/ListarCodigo")", { FiltrarCodigoTipoInforme: $('#FiltrarCodigoTipoInforme').val() }, function (data) {
+            $('#FiltrarCodigoCarta').children('option:not(:first)').remove();
+            $.each(data, function (i, obj) {
+                $('#FiltrarCodigoCarta').append($('<option>').text(obj.Text).attr('value', obj.Value));
+            });
+
+        });
+        $('#tabInforme div').show();
+        //if (this.value == '010004') {
+        //    $('#lblSubtitulo1').text('Documento Simple:'); $('#lblSubtitulo2').text('Calidad de Verificación A1:');
+        //    $('#lblSubtitulo3').text('Código Catastral:'); $('#lblSubtitulo4').text('Fecha Inspección:');
+        //    $('#divSub5').hide(); $('#divSub6').hide(); $('#divSub7').hide();
+        //    $('#lblParrafo1').text('Sr.:');
+        //    $('#lblParrafo2').text('Ubicacion:'); $('#Parrafo2').unmask();
+        //    $('#lblParrafo3').text('Fecha de Citación:'); $("#Parrafo3").datepicker({ format: "dd/mm/yyyy", language: "es", calendarWeeks: true });
+        //    $('#lblParrafo4').text('Horario Ini.:'); $("#Parrafo4").datepicker("destroy"); $("#Parrafo4").mask("99:99", { placeholder: "HH:MM" });
+        //    $('#lblParrafo5').text('Horario Fin:'); $("#Parrafo5").mask("99:99", { placeholder: "HH:MM" });
+        //    $('#divParrafo6').hide(); $('#divParrafo7').hide(); $('#divParrafo8').hide(); $('#divParrafo9').hide(); $('#divParrafo10').hide();
+        //    $('#lblFirma1').text('Inspector:'); $('#lblFirma2').text('Telefono:'); $('#lblFirma3').text('Nombre:');
+        //    $('#lblFirma4').text('DNI:'); $("#Firma4").datepicker({ format: "dd/mm/yyyy", language: "es", calendarWeeks: true });
+        //    $('#lblFirma5').text('Telefono');
+        //} else if (this.value == '010005') {
+        //    $('#lblSubtitulo1').text('Referencia:'); $('#lblSubtitulo2').text('Código de Referencia Catastral');
+        //    $('#lblSubtitulo3').text('N° Calidad de Verificación');
+        //    $('#divSub4').hide(); $('#divSub5').hide(); $('#divSub6').hide(); $('#divSub7').hide();
+        //    $('#lblParrafo1').text('Sr.:');
+        //    $('#lblParrafo2').text('Hora:'); $("#Parrafo2").mask("99:99", { placeholder: "HH:MM" });
+        //    $('#lblParrafo3').text('Ubicacion:'); $("#Parrafo3").datepicker("destroy");
+        //    $('#lblParrafo4').text('Fecha:'); $('#Parrafo4').unmask(); $("#Parrafo4").datepicker({ format: "dd/mm/yyyy", language: "es", calendarWeeks: true });
+        //    $('#divParrafo5').hide(); $('#Parrafo5').unmask();
+        //    $('#divParrafo6').hide(); $('#divParrafo7').hide(); $('#divParrafo8').hide(); $('#divParrafo9').hide(); $('#divParrafo10').hide();
+        //    $('#lblFirma1').text('Nombre::'); $('#lblFirma2').text('DNI:'); $('#lblFirma3').text('Inspector:');
+        //    $('#lblFirma4').text('Fecha:'); $("#Firma4").datepicker({ format: "dd/mm/yyyy", language: "es", calendarWeeks: true });
+        //    $('#divFirma5').hide();
+        //} else if (this.value == '010006') {
+        //    $('#lblSubtitulo1').text('Señor(es):'); $('#lblSubtitulo2').text('Ubicación:');
+        //    $('#lblSubtitulo3').text('Urbanización:'); $('#lblSubtitulo4').text('Distrito:');
+        //    $('#divSub5').hide(); $('#divSub6').hide(); $('#divSub7').hide();
+        //    $('#lblParrafo1').text('Asunto:');
+        //    $('#lblParrafo2').text('Documento Simple:'); $('#Parrafo2').unmask();
+        //    $('#lblParrafo3').text('Ubicado:'); $("#Parrafo3").datepicker("destroy");
+        //    $('#lblParrafo4').text('Días:'); $('#Parrafo4').unmask(); $("#Parrafo4").datepicker("destroy");
+        //    $('#divParrafo5').hide(); $('#divParrafo6').hide(); $('#divParrafo7').hide(); $('#divParrafo8').hide(); $('#divParrafo9').hide(); $('#divParrafo10').hide();
+        //    $('#divFirma1').hide(); $('#divFirma2').hide(); $('#divFirma3').hide(); $('#divFirma4').hide(); $('#divFirma5').hide();
+        //}
+        $('#tabInforme').hide();
+    }
+    $('#FiltrarCodigoTipoSolicitud').change(function () {
+        if (this.value === "010003") {
+            $('#divTipoDocumento').hide(); $('#FiltrarCodigoTipoDocumentoReg').find('option:not(:first)').remove();
+        } else {
+            $('#divTipoDocumento').show(); var URL = (this.value === "010001") ? "/RecepcionDocumentos/DocExterno" : "/RecepcionDocumentos/DocInterno";
+            $.post(URL, function (data) {
+                $('#FiltrarCodigoTipoDocumentoReg').find('option:not(:first)').remove(); var items = '<option value="">Seleccione el tipo de documento</option>';
+                $.each(data, function (i, item) { items += "<option value='" + item.Value + "'>" + item.Text + "</option>"; }); $('#FiltrarCodigoTipoDocumentoReg').html(items).trigger("chosen:updated");
+            });
+        }
+    });
+    $('.searchFilter').change(function () {
+        $('#tabInforme').hide();
+    });
+    $('#btnAgregarInforme').click(function () {
+        bootbox.confirm({
+            title: "Mensaje del Sistema", message: "¿Desea agregar una carta?",
+            buttons: { confirm: { label: '<i class="fa fa-save"></i> Crear ', className: "btn btn-primary" }, cancel: { label: '<i class="fa fa-times"></i> Cancelar' } },
+            callback: function (result) {
+                if (result) {
+                    $.post("@Url.Content("~/MantCartas/AgregarInforme")", {
+                        FiltrarCodigoTipoInforme: $('#FiltrarCodigoTipoInforme').val()
+                    }, function (r) {
+                        CargarCodigoCarta();
+                        toastr.success("Informe Agregado Correctamente", "Mensaje del Sistema", { "progressBar": true });
+                    });
+                }
+            }
+        });
+    });
+    $('#btnBuscar').click(function () {
+        $.post("@Url.Content("~/MantCartas/BuscarInforme")", {
+                FiltrarCodigoTipoInforme: $('#FiltrarCodigoTipoInforme').val(), FiltrarCodigoCarta: $('#FiltrarCodigoCarta').val()
+            }, function (r) {
+                console.log('Buscar', r);
+                if (r.success !== false) {
+                    //var itm = r.Carta;
+                    LimpiarForm();
+                    $('#tabInforme').show();
+                    $('#cuerpoInforme').html(r);
+                    $('#GrabarGeneral').removeAttr('disabled');
+                    //if (r.success === true) {
+                    //    //   $('#CodigoOficina').val(itm.CodigoOficina);
+                    //    $('#ConfSubtitulo1').val(itm.ConfSubtitulo1); $('#ConfSubtitulo2').val(itm.ConfSubtitulo2); $('#ConfSubtitulo3').val(itm.ConfSubtitulo3); $('#ConfSubtitulo4').val(itm.ConfSubtitulo4);
+                    //    $('#ConfSubtitulo5').val(itm.ConfSubtitulo5); $('#ConfSubtitulo6').val(itm.ConfSubtitulo6); $('#ConfSubtitulo7').val(itm.ConfSubtitulo7);
+                    //    $('#ConfParrafo1').val(itm.ConfParrafo1); $('#ConfParrafo2').val(itm.ConfParrafo2);$('#ConfParrafo3').val(itm.ConfParrafo3);$('#ConfParrafo4').val(itm.ConfParrafo4);$('#ConfParrafo5').val(itm.ConfParrafo5);
+                    //    $('#ConfParrafo6').val(itm.ConfParrafo6); $('#ConfParrafo7').val(itm.ConfParrafo7); $('#ConfParrafo8').val(itm.ConfParrafo8); $('#ConfParrafo9').val(itm.ConfParrafo9); $('#ConfParrafo10').val(itm.ConfParrafo10);
+                    //    $('#ConfFirma1').val(itm.ConfFirma1); $('#ConfFirma2').val(itm.ConfFirma2); $('#ConfFirma3').val(itm.ConfFirma3);$('#ConfFirma4').val(itm.ConfFirma4);
+                    //    $('#ConfFirma5').val(itm.ConfFirma5); $('#ConfPiePagina').val(itm.ConfPiePagina);
+                    //    $('#GrabarGeneral').removeAttr('disabled'); $('#tabInforme').show();
+                    //} else {
+                    //    $('#tabInforme').hide();
+                    //}
+                } else {
+                    $('#GrabarGeneral').attr('disabled','disabled');
+                    $('#tabInforme').hide();
+                }
+            });
+        });
+
+        function LimpiarForm() {
+            $('#tabInforme input').val('').removeAttr('disabled'); $('#tabInforme textarea').val('');
+            $('#GrabarGeneral').attr('disabled', 'disabled');
+            $('#NombreAnio').val('"Año del Diálogo y Reconciliación Nacional"'); $('#CodigoOficina').val('@System.Configuration.ConfigurationManager.AppSettings["CODAREA"]');
+        }
+        function GrabarCartas() {
+            $.post("@Url.Content("~/MantCartas/Grabar")", {
+            FiltrarCodigoTipoInforme: $('#FiltrarCodigoTipoInforme').val(), FiltrarCodigoCarta: $('#FiltrarCodigoCarta').val(), TituloGeneral: $('#TituloGeneral').val(), CodigoOficina: $('#CodigoOficina').val(),
+            ConfSubtitulo1: $('#ConfSubtitulo1').val(), ConfSubtitulo2: $('#ConfSubtitulo2').val(), ConfSubtitulo3: $('#ConfSubtitulo3').val(), ConfSubtitulo4: $('#ConfSubtitulo4').val(),
+            ConfSubtitulo5: $('#ConfSubtitulo5').val(), ConfSubtitulo6: $('#ConfSubtitulo6').val(), ConfSubtitulo7: $('#ConfSubtitulo7').val(),
+            ConfParrafo1: $('#ConfParrafo1').val(), ConfParrafo2: $('#ConfParrafo2').val(), ConfParrafo3: $('#ConfParrafo3').val(), ConfParrafo4: $('#ConfParrafo4').val(), ConfParrafo5: $('#ConfParrafo5').val(),
+            ConfParrafo6: $('#ConfParrafo6').val(), ConfParrafo7: $('#ConfParrafo7').val(), ConfParrafo8: $('#ConfParrafo8').val(), ConfParrafo9: $('#ConfParrafo9').val(), ConfParrafo10: $('#ConfParrafo10').val(),
+            ConfFirma1: $('#ConfFirma1').val(), ConfFirma2: $('#ConfFirma2').val(), ConfFirma3: $('#ConfFirma3').val(), ConfFirma4: $('#ConfFirma4').val(), ConfFirma5: $('#ConfFirma5').val(),
+            NombreAnio: $('#NombreAnio').val(), ConfPiePagina: $('#ConfPiePagina').val()
+        }, function (response) {
+            toastr.success("Informe Actualizado Correctamente", "Mensaje del Sistema", { "progressBar": true });
+        });
+
+    }
+
+    </script>
+}

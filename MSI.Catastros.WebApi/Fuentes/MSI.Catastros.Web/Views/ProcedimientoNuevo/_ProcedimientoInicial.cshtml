@@ -1,0 +1,255 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.ProcedimientoNuevo.ProcedimientoInicialViewModel
+
+@using (Html.BeginForm("EditarProcedimientoInicial", "ProcedimientoNuevo", FormMethod.Post, new { id = "frmProcedimientoInicial", name = "frmProcedimientoInicial", @autocomplete = "off" }))
+{
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn btn-default mr-2 px-5" style="margin-top:-2px;float: right;" data-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i> Salir</button>
+                <button id="btnModalProcNuevoGrabar" disabled type="button" class="btn btnModalProcNuevoGrabar btn-green mr-2 px-5" style="margin-top:-2px;float: right;">Grabar</button>
+                <h4 class="modal-title" id="exampleModalLongTitle" >Requerimiento Analista</h4>
+            </div>
+            <div class="modal-body">
+                @Html.TextBoxFor(model => model.cadfechasolicitud, new { @class = "form-control", type = "hidden" })
+                @Html.TextBoxFor(model => model.CodigoEstadoPrevio, new { @class = "form-control", type = "hidden" })
+                @Html.TextBoxFor(model => model.CodigoCargoResponsable, new { @class = "form-control", type = "hidden" })
+                @Html.TextBoxFor(model => model.CodigoTipoSolicitud, new { @class = "form-control", type = "hidden" })
+                @Html.TextBoxFor(model => model.Folio, new { @class = "form-control", type = "hidden" })
+                @Html.TextBoxFor(model => model.anosolicitud, new { @class = "form-control", type = "hidden" })
+                @Html.TextBoxFor(model => model.CodigoCargoAnterior, new { @class = "form-control", type = "hidden" })
+                @Html.TextBoxFor(model => model.EstadoSolicitudPrevio, new { @class = "form-control", type = "hidden" })
+                @Html.TextBoxFor(model => model.CodigoCorrelativo, new { @class = "form-control", type = "hidden" })
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>Nro Solicitud</label>
+                        @Html.TextBoxFor(model => model.NumeroSolicitud, new { @class = "form-control", @readonly="readonly" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label>Asunto</label>
+                        @Html.TextBoxFor(model => model.Asunto, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>Responsable Previo</label>
+                        @Html.TextBoxFor(model => model.ResponsablePrevio, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                    <div class="col-sm-6">
+                        <label>Estado de Atencion Previo</label>
+                        @Html.TextBoxFor(model => model.EstadoSolicitudPrevio, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label>Tipo de Procedimiento</label>
+                        @Html.DropDownListFor(m => m.CodigoTipoProcedimiento, Model.ListTipoProcedimiento, "- Seleccione el tipo de procedimiento -", new { @class = "form-control", @onchange = "CambiarTipoProcedimiento()", disabled = true })
+                        <span class="" data-valmsg-for="CodigoTipoProcedimiento" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label>Tipo de Requerimiento</label>
+                        @Html.DropDownListFor(m => m.CodigoTipoRequerimiento, Model.ListTipoRequerimiento, "- Seleccione el tipo de requerimiento -", new { @class = "form-control", disabled = true })
+                        <span class="" data-valmsg-for="CodigoTipoRequerimiento" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>Asignar Responsable</label>
+                        @Html.DropDownListFor(m => m.CodigoAsignarReponsable, Model.ListAsignarReponsable, "- Seleccione al responsable -", new { @class = "form-control", @onchange = "CambiarResponsable()", disabled = true })
+                        <span class="" data-valmsg-for="CodigoAsignarReponsable" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <label>Puesto de Responsable</label>
+                        @Html.TextBoxFor(model => model.PuestoResponsable, new { @class = "form-control", @readonly = "readonly" })
+                        @*<input type="text" class="form-control" id="PuestoResponsable" readonly="readonly" />*@
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label>Tipo de llenado</label>
+                        @Html.DropDownListFor(m => m.CodigoTipoLlenado, Model.ListTipoLlenado, "- Seleccione el tipo de llenado -", new { @class = "form-control", @onchange = "CambiarTipoLlenado()", disabled = true })
+                        @*@Html.DropDownList("CodigoTipoLlenado", new SelectList(Model.ListTipoLlenado, "Value", "Text"), "- Seleccione el tipo de llenado -", new { @class = "form-control" })*@
+                        <span class="" data-valmsg-for="CodigoTipoLlenado" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>Numero calidad de Verificación</label>
+                        <div class="col-sm-6" style="padding-left:0">
+                            
+                            @*@Html.TextBoxFor(model => model.NumeroTramite, new { @class = "form-control" })*@
+                            <input type="text" disabled class="form-control" id="NumeroVerificacion" />
+                            <span class="" data-valmsg-for="NumeroVerificacion" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="col-sm-6" style="padding-right:0">
+                            @*@Html.TextBoxFor(model => model.AnoVerificacion, new { @class = "form-control" })*@
+                            <input type="text" disabled class="form-control" id="AnoVerificacion" />
+                            <span class="" data-valmsg-for="AnoVerificacion" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <label>Fecha limite</label>
+                        @Html.TextBoxFor(model => model.fechaLimite, new { @class = "form-control", @readonly = true })
+                        @*<input type="text" class="form-control" id="fechaLimite" readonly="readonly" />*@
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>Fecha programación inspeccion</label>
+                        @Html.TextBoxFor(model => model.fechaProgIns, new { @class = "form-control", @readonly = true })
+                        @*<input type="text" class="form-control" id="fechaProgIns" readonly="readonly" />*@
+                    </div>
+                    <div class="col-sm-6">
+                        <label>Fecha limite - inspeccion</label>
+                        @Html.TextBoxFor(model => model.fechaProcIns, new { @class = "form-control", @readonly = true })
+                        @*<input type="text" class="form-control" id="fechaProcIns" readonly="readonly" />*@
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>Fecha limite actualizacion</label>
+                        @Html.TextBoxFor(model => model.fechaProcAct, new { @class = "form-control", @readonly = true })
+                        @*<input type="text" class="form-control" id="fechaProcAct" readonly="readonly" />*@
+                    </div>
+                    <div class="col-sm-6">
+                        <label>Fecha limite - Informe analista</label>
+                        @Html.TextBoxFor(model => model.fechaAnalista, new { @class = "form-control", @readonly = true })
+                        @*<input type="text" class="form-control" id="fechaAnalista" readonly="readonly" />*@
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>Fecha derivacion previa  </label>
+                        @*<input type="text" class="form-control" id="cadfechaenvio" readonly="readonly" />*@
+                        @Html.TextBoxFor(model => model.cadfechaenvio, new { @class = "form-control", @readonly = true })
+                        <span class="" data-valmsg-for="cadfechaenvio" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <label>Fecha recepcion</label>
+                        @*<input type="text" class="form-control" id="cadfecharecepcion" readonly="readonly" />*@
+                        @Html.TextBoxFor(model => model.cadfecharecepcion, new { @class = "form-control", @readonly = true })
+                        <span class="" data-valmsg-for="cadfecharecepcion" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label>Accion</label>
+                        @*@Html.DropDownList("CodigoTipoAccion", new SelectList(Model.ListTipoAccion, "Value", "Text"), "- Seleccione Acción -", new { @class = "form-control" })*@
+                        @Html.DropDownListFor(m => m.CodigoTipoAccion, Model.ListTipoAccion, "- Seleccione la acción-", new { @class = "form-control", disabled = true })
+                        <span class="" data-valmsg-for="CodigoTipoAccion" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label>Observacion remitente</label>
+                        @Html.TextAreaFor(model => model.ObservacionRemitente, new { @class = "form-control", @readonly = true, rows = 3 })
+                        @*<textarea class="form-control" id="ObservacionRemitente" readonly="readonly"></textarea>*@
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label>Observacion recepcion</label>
+                        @*<textarea class="form-control" id="ObservacionRecepcion"></textarea>*@
+                        @Html.TextAreaFor(model => model.ObservacionRecepcion, new { @class = "form-control", rows = 3, disabled = true })
+                        <span class="" data-valmsg-for="ObservacionRecepcion" data-valmsg-replace="true"></span>
+
+                    </div>
+                </div>
+            </div>
+            @*<div class="modal-footer">
+                <button type="button" id="btnGrabar" value="Grabar" class="btn btn-sm btn-green">Grabar</button>
+                <div class="row">
+                    <div class="col-sm-offset-10  col-sm-2 text-right">
+                        <button id="btnRegistrar" type="button" data-dismiss="modal" aria-label="Close" value="Registrar" class="btn btn-sm btn-green">
+                            Salir
+                        </button>
+                    </div>
+                </div>
+            </div>*@
+        </div>
+    </div>
+}
+<script>
+
+    function CambiarTipoProcedimiento(valini) {
+        var URL = "@Url.Content("~")" + "ProcedimientoNuevo/AsignarResponsable?idProc=" + $('#CodigoTipoProcedimiento').val();
+        $.post(URL, function (data) {
+            $('#CodigoAsignarReponsable').find('option:not(:first)').remove();
+            var items = '<option value="">Seleccione un responsable</option>';
+            $.each(data, function (i, item) {
+                items += "<option value='" + item.Value + "'>" + item.Text + "</option>";
+            });
+            $('#CodigoAsignarReponsable').html(items);
+            if (valini) {
+                $('#CodigoAsignarReponsable').val(valini)
+                CambiarResponsable();
+            }
+        });
+    }
+    function CambiarTipoLlenado(valini) {
+        var codigotipo = (valini) ? valini : $('#CodigoTipoLlenado').val();
+
+        var URL = "@Url.Content("~")" + "ProcedimientoInicial/TipoLlenadoDias?IdTipLlen=" + codigotipo + "&fechasoli=" + $('#cadfechasolicitud').val();
+        $.post(URL, function (data) {
+            console.log(data);
+            $('#fechaLimite').val(data.fechaLimite);
+            $('#fechaProgIns').val(data.fechaProgIns);
+            $('#fechaProcIns').val(data.fechaProcIns);
+            $('#fechaProcAct').val(data.fechaProcAct);
+            $('#fechaAnalista').val(data.fechaAnalista);
+        });
+    }
+    function CambiarResponsable(valini) {
+        var URL = "@Url.Content("~")" + "ProcedimientoInicial/CargoResponsable?usuario=" + $('#CodigoAsignarReponsable').val();
+        if ($('#CodigoAsignarReponsable').val()) {
+            $.post(URL, function (data) {
+                console.log(data);
+                $('#PuestoResponsable').val(data.cargo);
+                $('#CodigoCargoResponsable').val(data.cod_cargo);
+            });
+        } else {
+            $('#PuestoResponsable').val('');
+            $('#CodigoCargoResponsable').val('');
+        }
+    }
+
+    $('#btnModalProcNuevoGrabar').click(function () {
+        event.preventDefault();
+        $(this).attr('disabled', 'disabled');
+        var url = "@Url.Content("~")" + $('#frmProcedimientoInicial').attr("action");
+        var formData = $('#frmProcedimientoInicial').serialize();
+        $.ajax({
+            url: url, type: "POST",data: formData, dataType: "json",
+            success: function (response) {
+                if (response.success) {
+                    $('#FiltrarCodigoTipoSolicitud').val(''); $('#FiltrarNumeroSolicitud').val('');
+                    $('#modalProcedimientoInicial').modal('hide');
+                    toastr.success("Registro Actualizado correctamente", "Mensaje del Sistema", { "progressBar": true });
+                } else { toastr.error(response.responseText, "Mensaje del Sistema", { "progressBar": true }); }
+            },
+            error: function (response) {
+                $('#btnModalProcNuevoGrabar').removeAttr('disabled');
+                var modelStateErrors = response.responseJSON;
+                if (modelStateErrors) {
+                    for (var i = 0; i < modelStateErrors.length; i++) { $('span[data-valmsg-for="' + modelStateErrors[i].key + '"]').text(modelStateErrors[i].errors[0]).addClass('has-error'); }
+                }
+            },
+            complete: function () { $('#btnModalProcNuevoGrabar').removeAttr('disabled'); }
+        });
+    });
+
+
+    var Responsable = '@Model.CodigoAsignarReponsable';
+    var TipoLlenado = '@Model.CodigoTipoLlenado';
+    if (Responsable) {
+        CambiarTipoProcedimiento(Responsable);
+    }
+    if (TipoLlenado) {
+        CambiarTipoLlenado(TipoLlenado);
+    }
+</script>

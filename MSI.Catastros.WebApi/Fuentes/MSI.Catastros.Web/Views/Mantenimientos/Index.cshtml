@@ -1,0 +1,742 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Mantenimientos.MantenimientosViewModel
+@{
+    ViewBag.Title = "Mantenimientos";
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="overflow: hidden">
+                <label class="fonts14 mt-2">Mantenimientos</label>
+            </div>
+            <div class="panel-body">
+                <div class='tabs' id="TabMantenimientos" style="display:none;">
+                    <ul>
+                        <li><a href="#tab-1">Uso del Predio</a></li>
+                        <li id="mtab2"><a href="#tab-2">Inscripción</a></li>
+                        <li id="mtab3"><a href="#tab-3">Puerta</a></li>
+                        <li id="mtab4"><a href="#tab-4">Tipo de Interior</a></li>
+                        <li id="mtab5"><a href="#tab-5">Edificación</a></li>
+                        <li id="mtab6"><a href="#tab-6">Otros Documentos</a></li>
+                        <li id="mtab7"><a href="#tab-7">Zonificación</a></li>
+                    </ul>
+                    <div id='tab-1'>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span class="icon-add">
+                                    @Ajax.ActionLink(" Agregar", "RegistrarUso", "Mantenimientos"
+                                        , new { tipo = "UsoPredio" }
+                                        , new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "modalMantenimientos", OnComplete = "mostrarModal('Mantenimientos')" }
+                                        , new { @class = "btn btn-green pull-right px-5 glyphicon glyphicon-plus-sign" })
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                @using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "SeccionListaSectores" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.FiltrarCodigoUso, htmlAttributes: new { @class = "control-label mr-2" })
+                                                @Html.TextBoxFor(model => model.FiltrarCodigoUso, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.FiltrarNombreUso, htmlAttributes: new { @class = "control-label mr-2" })
+                                                @Html.TextBoxFor(model => model.FiltrarNombreUso, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-md-8 pr-0"><input id="btnBuscar" type="button" value="Buscar" class="btn btn-block btn-primary" style="margin-top:5px" /></div>
+                                                    <div class="col-md-4 pl-0"><button id="btnLimpiar" type="button" class="btn btn-default py-3 fa fa-refresh mx-3" style="margin-top:5px"></button></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table id="tablaUsoPredio" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th width="120px">Acciones</th>
+                                                        <th width="100px">Código</th>
+                                                        <th>Nombre del Uso</th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div id='tab-2'>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span class="icon-add">
+                                    @Ajax.ActionLink(" Agregar", "Registrar", "Mantenimientos"
+                                        , new { tipo = "Inscripcion" }
+                                        , new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "modalMantenimientos", OnComplete = "mostrarModal('Mantenimientos')" }
+                                        , new { @class = "btn btn-green pull-right px-5 glyphicon glyphicon-plus-sign" })
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                @using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "SeccionListaInscripcion" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.FiltrarCodigoInscripcion, htmlAttributes: new { @class = "control-label mr-2" })
+                                                @Html.TextBoxFor(model => model.FiltrarCodigoInscripcion, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.FiltrarNombreInscripcion, htmlAttributes: new { @class = "control-label mr-2" })
+                                                @Html.TextBoxFor(model => model.FiltrarNombreInscripcion, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-md-8 pr-0"><input id="btnBuscarIns" type="button" value="Buscar" class="btn btn-block btn-primary" style="margin-top:5px" /></div>
+                                                    <div class="col-md-4 pl-0"><button id="btnLimpiarIns" type="button" class="btn btn-default py-3 fa fa-refresh mx-3" style="margin-top:5px"></button></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table id="tablaInscripcion" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th width="100px">Acciones</th>
+                                                        <th width="100px">Código</th>
+                                                        <th>Nombre de la Inscripción</th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                </div>
+                <div id='tab-3'>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span class="icon-add">
+                                @Ajax.ActionLink(" Agregar", "Registrar", "Mantenimientos"
+                                        , new { tipo = "Puerta" }
+                                        , new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "modalMantenimientos", OnComplete = "mostrarModal('Mantenimientos')" }
+                                        , new { @class = "btn btn-green pull-right px-5 glyphicon glyphicon-plus-sign" })
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            @using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "SeccionListaPuerta" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.FiltrarCodigoPuerta, htmlAttributes: new { @class = "control-label mr-2" })
+                                            @Html.TextBoxFor(model => model.FiltrarCodigoPuerta, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.FiltrarNombrePuerta, htmlAttributes: new { @class = "control-label mr-2" })
+                                            @Html.TextBoxFor(model => model.FiltrarNombrePuerta, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-md-8 pr-0"><input id="btnBuscarPuer" type="button" value="Buscar" class="btn btn-block btn-primary" style="margin-top:5px" /></div>
+                                                <div class="col-md-4 pl-0"><button id="btnLimpiarPuer" type="button" class="btn btn-default py-3 fa fa-refresh mx-3" style="margin-top:5px"></button></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table id="tablaPuerta" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th width="100px">Acciones</th>
+                                                        <th width="100px">Código</th>
+                                                        <th>Nombre de la Puerta</th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div id='tab-4'>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span class="icon-add">
+                                @Ajax.ActionLink(" Agregar", "Registrar", "Mantenimientos"
+                                        , new { tipo = "TipoInterior" }
+                                        , new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "modalMantenimientos", OnComplete = "mostrarModal('Mantenimientos')" }
+                                        , new { @class = "btn btn-green pull-right px-5 glyphicon glyphicon-plus-sign" })
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            @using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "SeccionListaTipoInterior" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.FiltrarCodigoTipoInterior, htmlAttributes: new { @class = "control-label mr-2" })
+                                            @Html.TextBoxFor(model => model.FiltrarCodigoTipoInterior, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.FiltrarNombreTipoInterior, htmlAttributes: new { @class = "control-label mr-2" })
+                                            @Html.TextBoxFor(model => model.FiltrarNombreTipoInterior, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-md-8 pr-0"><input id="btnBuscarTipInt" type="button" value="Buscar" class="btn btn-block btn-primary" style="margin-top:5px" /></div>
+                                                <div class="col-md-4 pl-0"><button id="btnLimpiarTipInt" type="button" class="btn btn-default py-3 fa fa-refresh mx-3" style="margin-top:5px"></button></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table id="tablaTipoInterior" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th width="100px">Acciones</th>
+                                                    <th width="100px">Código</th>
+                                                    <th>Nombre Tipo Interior</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div id='tab-5'>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span class="icon-add">
+                                @Ajax.ActionLink(" Agregar", "Registrar", "Mantenimientos"
+                                        , new { tipo = "Edificacion" }
+                                        , new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "modalMantenimientos", OnComplete = "mostrarModal('Mantenimientos')" }
+                                        , new { @class = "btn btn-green pull-right px-5 glyphicon glyphicon-plus-sign" })
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            @using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "SeccionListaEdificacion" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.FiltrarCodigoEdificacion, htmlAttributes: new { @class = "control-label mr-2" })
+                                            @Html.TextBoxFor(model => model.FiltrarCodigoEdificacion, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.FiltrarNombreEdificacion, htmlAttributes: new { @class = "control-label mr-2" })
+                                            @Html.TextBoxFor(model => model.FiltrarNombreEdificacion, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-md-8 pr-0"><input id="btnBuscarEdif" type="button" value="Buscar" class="btn btn-block btn-primary" style="margin-top:5px" /></div>
+                                                <div class="col-md-4 pl-0"><button id="btnLimpiarEdif" type="button" class="btn btn-default py-3 fa fa-refresh mx-3" style="margin-top:5px"></button></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table id="tablaEdificacion" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th width="100px">Acciones</th>
+                                                    <th width="100px">Código</th>
+                                                    <th>Nombre Tipo Interior</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div id='tab-6'>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span class="icon-add">
+                                    @Ajax.ActionLink(" Agregar", "Registrar", "Mantenimientos"
+                                        , new { tipo = "OtrosDocumentos" }
+                                        , new AjaxOptions {
+                                            HttpMethod = "Get", UpdateTargetId = "modalMantenimientos", OnComplete = "mostrarModal('Mantenimientos')" }
+                                        , new { @class = "btn btn-green pull-right px-5 glyphicon glyphicon-plus-sign" })
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                @using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "SeccionListaEdificacion" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.FiltrarCodigoOtroDocumento, htmlAttributes: new { @class = "control-label mr-2" })
+                                                @Html.TextBoxFor(model => model.FiltrarCodigoOtroDocumento, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.FiltrarNombreOtroDocumento, htmlAttributes: new { @class = "control-label mr-2" })
+                                                @Html.TextBoxFor(model => model.FiltrarNombreOtroDocumento, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-md-8 pr-0"><input id="btnBuscarOtroDoc" type="button" value="Buscar" class="btn btn-block btn-primary" style="margin-top:5px" /></div>
+                                                    <div class="col-md-4 pl-0"><button id="btnLimpiarOtroDoc" type="button" class="btn btn-default py-3 fa fa-refresh mx-3" style="margin-top:5px"></button></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table id="tablaOtrosDocumentos" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th width="100px">Acciones</th>
+                                                        <th width="100px">Código</th>
+                                                        <th>Nombre Otro Documento</th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id='tab-7'>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span class="icon-add">
+                                    @Ajax.ActionLink(" Agregar", "Registrar", "Mantenimientos"
+                                        , new { tipo = "Zonificacion" }
+                                        , new AjaxOptions
+                                        {
+                                            HttpMethod = "Get",
+                                            UpdateTargetId = "modalMantenimientos",
+                                            OnComplete = "mostrarModal('Mantenimientos')"
+                                        }
+                                        , new { @class = "btn btn-green pull-right px-5 glyphicon glyphicon-plus-sign" })
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                @using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "SeccionListaZonificacion" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.FiltrarNombreZonificacion, htmlAttributes: new { @class = "control-label mr-2" })
+                                                @Html.TextBoxFor(model => model.FiltrarNombreZonificacion, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.FiltrarAbreviaturaZonificacion, htmlAttributes: new { @class = "control-label mr-2" })
+                                                @Html.TextBoxFor(model => model.FiltrarAbreviaturaZonificacion, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                       
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-md-8 pr-0"><input id="btnBuscarZonificacion" type="button" value="Buscar" class="btn btn-block btn-primary" style="margin-top:5px" /></div>
+                                                    <div class="col-md-4 pl-0"><button id="btnLimpiarZonificacion" type="button" class="btn btn-default py-3 fa fa-refresh mx-3" style="margin-top:5px"></button></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table id="tablaZonificacion" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th width="100px">Acciones</th>
+                                                        <th width="100px">Código</th>
+                                                        <th>Nombre Zonificación</th>
+                                                        <th>Abreviatura Zonificación</th>
+                                                        <th>Estado</th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                      <!-- /.row (nested) -->
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
+<!-- Modal -->
+<div id="modalMantenimientos" class="modal fade" tabindex="-1" role="dialog"></div>
+<!-- Modal -->
+<div id="modalEliminar" class="modal fade" tabindex="-1" role="dialog"></div>
+
+@section datatables {
+    <script>
+        $(document).ready(function () {
+            $('.tabs').tabslet({
+                animation: true
+            });
+            $('#TabMantenimientos').show();
+            $('#mtab2').click(function () {
+                tablaIns.columns.adjust().draw(false);
+            });
+            $('#mtab3').click(function () {
+                tablaPuer.columns.adjust().draw(false);
+            });
+            $('#mtab4').click(function () {
+                tablaTipInt.columns.adjust().draw(false);
+            });
+            $('#mtab5').click(function () {
+                tablaEdif.columns.adjust().draw(false);
+            });
+            $('#mtab6').click(function () {
+                tablaOtrosDoC.columns.adjust().draw(false);
+            });
+            $('#mtab7').click(function () {
+                tablaZo.columns.adjust().draw(false);
+            });
+            var nombreEntidad = "UsoPredio";
+            var table = "";
+            var table = $("#tabla" + nombreEntidad).DataTable({
+                "ajax": {
+                    "url": "@Url.Content("~/Mantenimientos/CargarGridUso")", "type": "POST", "datatype": "json",
+                    "data": function (d) {
+                        d.FiltrarCodigoUso = $('#FiltrarCodigoUso').val(); d.FiltrarNombreUso = $('#FiltrarNombreUso').val();
+                    }
+                },
+                "columns": [
+                    { "render": function (data, type, full, meta) {
+                        return '<a data-toggle="tooltip" title="Editar" class="btn btn-default glyphicon glyphicon-edit" href="Mantenimientos/Editar?tipo=' + nombreEntidad + '&id=' + full.CodigoCampo + '"></a>' +
+                            ' <a data-toggle="tooltip" title="Eliminar" class="btn btn-danger glyphicon glyphicon-remove" href="Mantenimientos/Eliminar?tipo=' + nombreEntidad + '&id=' + full.CodigoCampo + '"></a>';
+                        }, "className": "text-center",
+                    },
+                    { "data": "CodigoCampo", "name": "Codigo", "autoWidth": true, "className": "text-center" },
+                    { "data": "NombreCampo", "name": "Nombre del Sector", "autoWidth": true },
+                ]
+            });
+            $("#tabla" + nombreEntidad + " tbody").on('click', 'a', function (event) {
+                event.preventDefault();
+                var enlace = $(this).attr('href');
+                $.get(enlace, function (response) {
+                    var id = "#modal".concat((enlace.indexOf("Editar") !== -1) ? "Mantenimientos" : "Eliminar"); $(id).modal().html(response);
+                });
+            });
+            $('#btnBuscar').click(function () {
+                table.ajax.reload();
+            })
+            $('#btnLimpiar').click(function () {
+                $('#FiltrarCodigoUso').val('');
+                $('#FiltrarNombreUso').val('');
+                table.ajax.reload();
+            });
+            //INSCRIPCIONES ---------------------------------------------------------------------------------------------------------------------------------------------------------------||
+            var nombreEntidadIns = "Inscripcion";
+            var tablaIns = $("#tabla" + nombreEntidadIns).DataTable({
+                "ajax": {
+                    "url": "@Url.Content("~/Mantenimientos/CargarGridInscripcion")", "type": "POST", "datatype": "json",
+                    "data": function (d) { d.FiltrarCodigoInscripcion = $('#FiltrarCodigoInscripcion').val(); d.FiltrarNombreInscripcion = $('#FiltrarNombreInscripcion').val(); }
+                },
+                "columns": [
+                    { "render": function (data, type, full, meta) {
+                        return '<a data-toggle="tooltip" title="Editar" class="btn btn-default glyphicon glyphicon-edit" href="Mantenimientos/Editar?tipo=' + nombreEntidadIns + '&id=' + full.CodigoCampo + '"></a>' +
+                        ' <a data-toggle="tooltip" title="Eliminar" class="btn btn-danger glyphicon glyphicon-remove" href="Mantenimientos/Eliminar?tipo=' + nombreEntidadIns + '&id=' + full.CodigoCampo + '"></a>';
+                    }, "className": "text-center",
+                    },
+                    { "data": "CodigoCampo", "autoWidth": true, "name": "Codigo", "className": "text-center" },
+                    { "data": "NombreCampo", "autoWidth": true, "name": "Nombre del Sector", },
+                ]
+            });
+            $("#tabla" + nombreEntidadIns + " tbody").on('click', 'a', function (event) {
+                event.preventDefault();var enlace = $(this).attr('href');
+                $.get(enlace, function (response) {
+                    var id = "#modal".concat((enlace.indexOf("Editar") !== -1) ? "Mantenimientos" : "Eliminar"); $(id).modal().html(response);
+                });
+            });
+            $('#btnBuscarIns').click(function () {
+                tablaIns.ajax.reload();
+            })
+            $('#btnLimpiarIns').click(function () {
+                $('#FiltrarCodigoInscripcion').val('');
+                $('#FiltrarNombreInscripcion').val('');
+                table.ajax.reload();
+            });
+            //ZONIFICACION ---------------------------------------------------------------------------------------------------------------------------------------------------------------||
+            var nombreEntidadZo = "Zonificacion";
+            var tablaZo = $("#tabla" + nombreEntidadZo).DataTable({
+                "ajax": {
+                    "url": "@Url.Content("~/Mantenimientos/CargarGridZonificacion")", "type": "POST", "datatype": "json",
+                    "data": function (d) { d.FiltrarAbreviaturaZonificacion = $('#FiltrarAbreviaturaZonificacion').val(); d.FiltrarNombreZonificacion = $('#FiltrarNombreZonificacion').val(); }
+            },
+                "columns": [
+        {  "responsivePriority": -2,
+            "render": function (data, type, full, meta) {
+                var disable = full.EstadoCampo == "INACTIVO" ? "disabled" : "";
+                return '<a data-toggle="tooltip" title="Editar" class="btn btn-default glyphicon glyphicon-edit" href="Mantenimientos/Editar?tipo=' + nombreEntidadZo + '&id=' + full.CodigoCampo + '"></a>' +
+                ' <a data-toggle="tooltip" title="Eliminar" class="btn btn-danger glyphicon glyphicon-remove" href="Mantenimientos/Eliminar?tipo=' + nombreEntidadZo + '&id=' + full.CodigoCampo + '"></a>';
+            }, "className": "text-center", "responsivePriority": -2,
+            },
+                    { "data": "CodigoCampo", "autoWidth": true, "name": "Codigo", "className": "text-center" },
+                    { "data": "NombreCampo", "autoWidth": true, "name": "Nombre del Sector", },
+                    { "data": "AbreviaturaCampo", "autoWidth": true, "name": "AbreviaturaCampo", "className": "text-center" },
+                    { "data": "EstadoCampo", "autoWidth": true, "name": "EstadoCampo", "className": "text-center" },
+
+        ]
+        });
+            $("#tabla" + nombreEntidadZo + " tbody").on('click', 'a', function (event) {
+            event.preventDefault();var enlace = $(this).attr('href');
+            $.get(enlace, function (response) {
+                var id = "#modal".concat((enlace.indexOf("Editar") !== -1) ? "Mantenimientos" : "Eliminar"); $(id).modal().html(response);
+            });
+        });
+        $('#btnBuscarZonificacion').click(function () {
+            tablaZo.ajax.reload();
+        })
+        $('#btnLimpiarPuer').click(function () {
+            $('#FiltrarCodigoPuerta').val('');
+            $('#FiltrarNombrePuerta').val('');
+            tablaZo.ajax.reload();
+        });
+
+            @*var nombreEntidadZonificacion = "Zonificacion";
+            var tableZoni = "";
+            var tableZoni = $("#tabla" + nombreEntidadZonificacion).DataTable({
+                "ajax": {
+                    "url": "@Url.Content("~/Mantenimientos/CargarGridZonificacion")", "type": "POST", "datatype": "json",
+                "data": function (d) {
+                    d.FiltrarNombreZonificacion = $('#FiltrarNombreZonificacion').val();
+                    d.FiltrarAbreviaturaZonificacion = $('#FiltrarAbreviaturaZonificacion').val();
+                }
+            },
+                "columns": [
+        { "render": function (data, type, full, meta) {
+                return '<a data-toggle="tooltip" title="Editar" class="btn btn-default glyphicon glyphicon-edit" href="Mantenimientos/Editar?tipo=' + nombreEntidadZonificacion + '&id=' + full.CodigoCampo + '"></a>' +
+                        '<a data-toggle="tooltip" title="Eliminar" class="btn btn-danger glyphicon glyphicon-remove" href="Mantenimientos/Eliminar?tipo=' + nombreEntidadZonificacion + '&id=' + full.CodigoCampo + '"></a>';
+            }, "className": "text-center",
+            },
+                    { "data": "CodigoCampo", "name": "Codigo", "autoWidth": true, "className": "text-center" },
+                    
+                    { "data": "NombreCampo", "name": "Nombre del Sector", "autoWidth": true },
+                    { "data": "AbreviaturaCampo", "name": "Nombre del Sector", "autoWidth": true },
+                    { "data": "EstadoCampo", "name": "Nombre del Sector", "autoWidth": true },
+        ]
+        });
+        $("#tabla" + nombreEntidadZonificacion + " tbody").on('click', 'a', function (event) {
+            event.preventDefault();
+            var enlace = $(this).attr('href');
+            $.get(enlace, function (response) {
+                var id = "#modal".concat((enlace.indexOf("Editar") !== -1) ? "Mantenimientos" : "Eliminar"); $(id).modal().html(response);
+            });
+        });
+        $('#btnBuscarZonificacion').click(function () {
+            tableZoni.ajax.reload();
+        })
+        $('#btnLimpiarZonificacion').click(function () {
+            $('#FiltrarNombreZonificacion').val('');
+            $('#FiltrarAbreviaturaZonificacion').val('');
+            tableZoni.ajax.reload();
+        });*@
+
+        // ---------------------------------------------------------------------------------------------------------------------------------------------------------------||
+
+            //PUERTAS --------------------------------------------------------------------------------------------------------------------------------------------------------------------||
+            var nombreEntidadPuer = "Puerta";
+            var tablaPuer = $("#tabla" + nombreEntidadPuer).DataTable({
+                "ajax": {
+                    "url": "@Url.Content("~/Mantenimientos/CargarGridPuerta")", "type": "POST", "datatype": "json",
+                    "data": function (d) { d.FiltrarCodigoPuerta = $('#FiltrarCodigoPuerta').val(); d.FiltrarNombrePuerta = $('#FiltrarNombrePuerta').val(); }
+                },
+                "columns": [
+                    { "render": function (data, type, full, meta) {
+                        return '<a data-toggle="tooltip" title="Editar" class="btn btn-default glyphicon glyphicon-edit" href="Mantenimientos/Editar?tipo=' + nombreEntidadPuer + '&id=' + full.CodigoCampo + '"></a>' +
+                        ' <a data-toggle="tooltip" title="Eliminar" class="btn btn-danger glyphicon glyphicon-remove" href="Mantenimientos/Eliminar?tipo=' + nombreEntidadPuer + '&id=' + full.CodigoCampo + '"></a>';
+                        }, "className": "text-center",
+                    },
+                    { "data": "CodigoCampo", "autoWidth": true, "name": "Codigo", "className": "text-center" },
+                    { "data": "NombreCampo", "autoWidth": true, "name": "Nombre del Sector", },
+                ]
+            });
+            $("#tabla" + nombreEntidadPuer + " tbody").on('click', 'a', function (event) {
+                event.preventDefault();var enlace = $(this).attr('href');
+                $.get(enlace, function (response) {
+                    var id = "#modal".concat((enlace.indexOf("Editar") !== -1) ? "Mantenimientos" : "Eliminar"); $(id).modal().html(response);
+                });
+             });
+            $('#btnBuscarPuer').click(function () {
+                tablaPuer.ajax.reload();
+            })
+            $('#btnLimpiarPuer').click(function () {
+                $('#FiltrarCodigoPuerta').val('');
+                $('#FiltrarNombrePuerta').val('');
+                tablaPuer.ajax.reload();
+            });
+
+            //TIPO INERIORES-----------------------------------------------------------------------------------------------------------------------------------------------------------------||
+            var nombreEntidadTipInt = "TipoInterior";
+            var tablaTipInt = $("#tabla" + nombreEntidadTipInt).DataTable({
+                "ajax": {
+                    "url": "@Url.Content("~/Mantenimientos/CargarGridTipoInterior")", "type": "POST", "datatype": "json",
+                    "data": function (d) { d.FiltrarCodigoTipoInterior = $('#FiltrarCodigoTipoInterior').val(); d.FiltrarNombreTipoInterior = $('#FiltrarNombreTipoInterior').val(); }
+                },
+                "columns": [
+                    { "render": function (data, type, full, meta) {
+                        return '<a data-toggle="tooltip" title="Editar" class="btn btn-default glyphicon glyphicon-edit" href="Mantenimientos/Editar?tipo=' + nombreEntidadTipInt + '&id=' + full.CodigoCampo + '"></a>' +
+                           ' <a data-toggle="tooltip" title="Eliminar" class="btn btn-danger glyphicon glyphicon-remove" href="Mantenimientos/Eliminar?tipo=' + nombreEntidadTipInt + '&id=' + full.CodigoCampo + '"></a>';
+                    }, "className": "text-center",
+                    },
+                    { "data": "CodigoCampo", "autoWidth": true, "name": "Codigo", "className": "text-center" },
+                    { "data": "NombreCampo", "autoWidth": true, "name": "Nombre del Sector", },
+                ]
+            });
+            $("#tabla" + nombreEntidadTipInt + " tbody").on('click', 'a', function (event) {
+                event.preventDefault();var enlace = $(this).attr('href');
+                $.get(enlace, function (response) {
+                    var id = "#modal".concat((enlace.indexOf("Editar") !== -1) ? "Mantenimientos" : "Eliminar"); $(id).modal().html(response);
+                });
+            });
+            $('#btnBuscarTipInt').click(function () {
+                tablaTipInt.ajax.reload();
+            })
+            $('#btnLimpiarTipInt').click(function () {
+                $('#FiltrarCodigoInscripcion').val('');
+                $('#FiltrarNombreInscripcion').val('');
+                tablaTipInt.ajax.reload();
+            });
+
+            //EDIFICACION --------------------------------------------------------------------------------------------------------------------------------------------------------------------||
+            var nombreEntidadEdif = "Edificacion";
+            var tablaEdif = $("#tabla" + nombreEntidadEdif).DataTable({
+                "ajax": {
+                    "url": "@Url.Content("~/Mantenimientos/CargarGridEdificacion")", "type": "POST", "datatype": "json",
+                    "data": function (d) { d.FiltrarCodigoEdificacion = $('#FiltrarCodigoEdificacion').val(); d.FiltrarNombreEdificacion = $('#FiltrarNombreEdificacion').val(); }
+                },
+                "columns": [
+                    { "render": function (data, type, full, meta) {
+                        return '<a data-toggle="tooltip" title="Editar" class="btn btn-default glyphicon glyphicon-edit" href="Mantenimientos/Editar?tipo=' + nombreEntidadEdif + '&id=' + full.CodigoCampo + '"></a>' +
+                        ' <a data-toggle="tooltip" title="Eliminar" class="btn btn-danger glyphicon glyphicon-remove" href="Mantenimientos/Eliminar?tipo=' + nombreEntidadEdif + '&id=' + full.CodigoCampo + '"></a>';
+                        }, "className": "text-center",
+                    },
+                    { "data": "CodigoCampo", "autoWidth": true, "name": "Codigo", "className": "text-center" },
+                    { "data": "NombreCampo", "autoWidth": true, "name": "Nombre del Sector", },
+                ]
+            });
+            $("#tabla" + nombreEntidadEdif + " tbody").on('click', 'a', function (event) {
+                event.preventDefault();var enlace = $(this).attr('href');
+                $.get(enlace, function (response) {
+                    var id = "#modal".concat((enlace.indexOf("Editar") !== -1) ? "Mantenimientos" : "Eliminar"); $(id).modal().html(response);
+                });
+            });
+            $('#btnBuscarEdif').click(function () {
+                tablaEdif.ajax.reload();
+            })
+            $('#btnLimpiarEdif').click(function () {
+                $('#FiltrarCodigoEdificacion').val('');
+                $('#FiltrarNombreEdificacion').val('');
+                tablaEdif.ajax.reload();
+            });
+            //OTROS DOCUMENTOS --------------------------------------------------------------------------------------------------------------------------------------------------------------------||
+            var nombreOtroDocumentos = "OtrosDocumentos";
+            var tablaOtrosDoC = $("#tabla" + nombreOtroDocumentos).DataTable({
+                "ajax": {
+                    "url": "@Url.Content("~/Mantenimientos/CargarOtrosDocumentos")", "type": "POST", "datatype": "json",
+                    "data": function (d) {
+                        d.FiltrarCodigoOtroDocumento = $('#FiltrarCodigoOtroDocumento').val();
+                        d.FiltrarNombreOtroDocumento = $('#FiltrarNombreOtroDocumento').val();
+                    }
+            },
+                "columns": [
+        { "render": function (data, type, full, meta) {
+            return '<a data-toggle="tooltip" title="Editar" class="btn btn-default glyphicon glyphicon-edit" href="Mantenimientos/Editar?tipo=' + nombreOtroDocumentos + '&id=' + full.CodigoCampo + '"></a>' +
+                ' <a data-toggle="tooltip" title="Eliminar" class="btn btn-danger glyphicon glyphicon-remove" href="Mantenimientos/Eliminar?tipo=' + nombreOtroDocumentos + '&id=' + full.CodigoCampo + '"></a>';
+            }, "className": "text-center",
+            },
+                    { "data": "CodigoCampo", "autoWidth": true, "name": "Codigo", "className": "text-center" },
+                    { "data": "NombreCampo", "autoWidth": true, "name": "Nombre del Sector", },
+        ]
+            });
+            $("#tabla" + nombreOtroDocumentos + " tbody").on('click', 'a', function (event) {
+                event.preventDefault();
+                var enlace = $(this).attr('href');
+                $.get(enlace, function (response) {
+                    var id = "#modal".concat((enlace.indexOf("Editar") !== -1) ? "Mantenimientos" : "Eliminar"); $(id).modal().html(response);
+                });
+            });
+
+            $('#btnLimpiarOtroDoc').click(function () {
+                $('#FiltrarCodigoOtroDocumento').val('');
+                $('#FiltrarNombreOtroDocumento').val('');
+                tablaOtrosDoC.ajax.reload();
+            });
+            $('#btnBuscarOtroDoc').click(function () {
+                tablaOtrosDoC.ajax.reload();
+            })
+        });
+
+        
+    </script>
+}

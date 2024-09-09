@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="LoteDetalleUso" targetNamespace="http://tempuri.org/LoteDetalleUso.xsd" xmlns:mstns="http://tempuri.org/LoteDetalleUso.xsd" xmlns="http://tempuri.org/LoteDetalleUso.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="LoteDetalleUso" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="LoteDetalleUso" msprop:Generator_UserDSName="LoteDetalleUso">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="DatosDetalleUso" msprop:Generator_TableClassName="DatosDetalleUsoDataTable" msprop:Generator_TableVarName="tableDatosDetalleUso" msprop:Generator_TablePropName="DatosDetalleUso" msprop:Generator_RowDeletingName="DatosDetalleUsoRowDeleting" msprop:Generator_RowChangingName="DatosDetalleUsoRowChanging" msprop:Generator_RowEvHandlerName="DatosDetalleUsoRowChangeEventHandler" msprop:Generator_RowDeletedName="DatosDetalleUsoRowDeleted" msprop:Generator_UserTableName="DatosDetalleUso" msprop:Generator_RowChangedName="DatosDetalleUsoRowChanged" msprop:Generator_RowEvArgName="DatosDetalleUsoRowChangeEvent" msprop:Generator_RowClassName="DatosDetalleUsoRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CODSECTOR" msprop:Generator_ColumnVarNameInTable="columnCODSECTOR" msprop:Generator_ColumnPropNameInRow="CODSECTOR" msprop:Generator_ColumnPropNameInTable="CODSECTORColumn" msprop:Generator_UserColumnName="CODSECTOR" type="xs:string" minOccurs="0" />
+              <xs:element name="CODLOTE" msprop:Generator_ColumnVarNameInTable="columnCODLOTE" msprop:Generator_ColumnPropNameInRow="CODLOTE" msprop:Generator_ColumnPropNameInTable="CODLOTEColumn" msprop:Generator_UserColumnName="CODLOTE" type="xs:string" minOccurs="0" />
+              <xs:element name="USOPREDIO" msprop:Generator_ColumnVarNameInTable="columnUSOPREDIO" msprop:Generator_ColumnPropNameInRow="USOPREDIO" msprop:Generator_ColumnPropNameInTable="USOPREDIOColumn" msprop:Generator_UserColumnName="USOPREDIO" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,101 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Login.FilterLoginViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>.::LOGIN - MSI::.</title>
+    @*@Styles.Render("~/Content/css")*@
+    @*@Scripts.Render("~/bundles/modernizr")*@
+
+    <!-- Bootstrap Core CSS -->
+    <link href="@Url.Content("~/assets/vendor/bootstrap/css/bootstrap.min.css")" rel="stylesheet">
+    <!-- MetisMenu CSS -->
+    <link href="@Url.Content("~/assets/vendor/metisMenu/metisMenu.min.css")" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="@Url.Content("~/assets/dist/css/sb-admin-2.css")" rel="stylesheet">
+    <!-- Morris Charts CSS -->
+    <link href="@Url.Content("~/assets/vendor/morrisjs/morris.css")" rel="stylesheet">
+    <link rel="icon" type="imagen/png" href="~/assets/Images/favicon.jpg">
+
+    <!-- Custom Fonts -->
+    <link href="@Url.Content("~/assets/vendor/font-awesome/css/font-awesome.min.css")" rel="stylesheet" type="text/css">
+    <link href="@Url.Content("~/assets/css/msi.css")" rel="stylesheet" type="text/css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Login  - 20201207 </h3>
+                    </div>
+                    <div class="panel-body">
+                        @using (Html.BeginForm("Autenticate","Login"))
+                        {
+                            @Html.AntiForgeryToken()
+                            <fieldset>
+
+                                <div class="form-group">
+                                    @*@Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control mb-2", placeholder = "USUARIO" })
+                                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "has-error" })
+
+                                </div>
+
+                                <div class="form-group">
+                                    @*@Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                                    @Html.PasswordFor(model => model.Password, new { @class = "form-control mb-2", placeholder = "CONTRASEÑA" })
+                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "has-error" })
+
+                                </div>
+                                <div class="checkbox checkbox-success">
+                                    <input name="remember" id="remember" type="checkbox" value="Recuerdame" />
+                                    <label class="form-check-label" for="remember" style="font-weight:400;">Recuérdame</label>
+                                </div>
+                                <div class="has-error px-3 pb-3">
+                                    @*<div class="form-group text-center">
+                                        @Html.ValidationMessage("CustomError", new { @class = "text-danger" })
+                                    </div>*@
+                                    @Html.ValidationSummary(true)
+                                </div>
+                                <!-- Change this to a button or input when using this as a form -->
+                                <input type="submit" value="Iniciar Sesion" class="btn btn-lg btn-success btn-block" />
+
+                            </fieldset>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    <script>
+        $(function () {
+            //DATOS A ELIMINAR
+            //$('#UserName').val('NCUPE');
+            //$('#Password').val('123456');
+            //DATOS A ELIMINAR
+
+
+            $('#UserName').keyup(function () { this.value = this.value.toLocaleUpperCase() });
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,718 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.LoteRRPP.FiltrarLoteRRPP
+@using System.Configuration;
+@{  ViewBag.Title = "Lotes";  }
+<style>
+    ::-webkit-inner-spin-button {
+        display: none;
+    }
+
+    ::-webkit-calendar-picker-indicator {
+        background: radial-gradient(233,233,233);
+        color: white;
+    }
+</style>
+<div class="row" id="Lotes">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="overflow: hidden">
+                <div class="row">
+                    <div class="col-md-6 col-xs-12"><strong>Lote Catastral - Edición de Documentos RRPP</strong></div><div class="col-md-4"></div>
+                    <div class="col-md-2 col-xs-12">
+                        <span><button id="GrabarGeneral" type="button" class="btn btn-green mr-2 btn-block" style="float:right" onclick="GrabarLote()"><span class="glyphicon glyphicon-ok mr-2"></span> Grabar</button></span>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xl-6 ">
+                        <table border="0">
+                            <tr>
+                                <td width="12%"><label class="form-label">Dist.</label></td>
+                                <td width="12%"><label class="form-label">Sec</label></td>
+                                <td width="12%"><label class="form-label">Mz</label></td>
+                                <td width="12%"><label class="form-label">Lote</label></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoDistrito, new { @class = "form-control text-center px-3", @readonly = "true", })</td>
+                                <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoSector, new { @class = "form-control text-center px-3", maxlength = "2", @onkeypress = "if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" })</td>
+                                <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoManzana, new { @class = "form-control text-center px-3", maxlength = "3", @onkeypress = "if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" })</td>
+                                <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoLote, new { @class = "form-control text-center px-3", maxlength = "3", @onkeypress = "if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" })</td>
+                                <td>
+                                    <div class="">
+                                        <button id="btnBuscarEstatico" type="button" value="" class="btn btn-default glyphicon glyphicon-search" style="padding: 6px 35px"></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">
+                                    <div class="has-error ml-3 mt-2">
+                                        <ul id="msgErrores"></ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <table id="tablaUnidadCatastralEstatico" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th width="15%">Dist</th>
+                                    <th width="15%">Sec</th>
+                                    <th width="15%">Mz</th>
+                                    <th width="15%">Lote</th>
+                                    <th width="15%">Referencia</th>
+                                    <th width="15%">Estado</th>
+                                    <th style="display:none"></th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="tabLotes" style="display:none;">
+                <div class='tabs mt-4'>
+                    <ul>
+                        <li><a href="#tab-6">Documentación</a></li>
+                    </ul>
+                    <div id='tab-6'>
+                        <fieldset class="formulario">
+                            <legend>Documentos RRPP</legend>
+                            <div class="relative">
+                                <button data-toggle="collapse" href="#panel1" class="btn btn-xs btn-success fa fa-caret-down absolute"></button>
+                                <div class="row collapse in m-2" id="panel1"> 
+                                    <div class="col-md-12 px-0">
+                                        <table id="DocumentosRrpp">
+                                            <tr>
+                                                <td width="7%">Item</td>
+                                                <td width="27%">Tipo Documento</td>
+                                                <td width="20%">Partida Electrónica</td>
+                                                <td width="8%">Tomo - Ficha</td>
+                                                <td width="8%">Folio</td>
+                                                <td width="10%">Asiento</td>
+                                                <td width="10%">Fecha Documento RRPP</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr id="loteDocumRRPPPrimeraFila" style="height:45px">
+                                                <td class="pr-4"><input id="docum_lote_item_00001" value="00001" disabled type="text" class="form-control item_lote_documr" /></td>
+                                                <td class="pr-4"><select id="docum_lote_tipodoc_00001" disabled class=" form-control tipodoc_lote_docum chosen-seleccionar"><option value="">- Seleccione -</option></select></td>
+                                                <td class="pr-4"><input id="docum_lote_partida_00001" disabled type="text" class="form-control partida_lote_documr" /></td>
+                                                <td class="pr-4"><input id="docum_lote_tomoficha_00001" style="text-align:center;" disabled type="text" class="form-control tomoficha_lote_documr" /></td>
+                                                <td class="pr-4"><input id="docum_lote_folio_00001" style="text-align:center;" disabled type="text" class="form-control folio_lote_documr" /></td>
+                                                <td class="pr-4"><input id="docum_lote_asiento_00001" disabled type="text" class="form-control asiento_lote_documr" /></td>
+                                                <td class="pr-4">
+                                                    <input id="docum_lote_fechadoc_00001" style="text-align:center;" maxlength="10" disabled type="text" class="form-control fechadoc_lote_documr" />
+                                                </td>
+                                                <td style="display:none;"><input id="docum_lote_id_00001" type="hidden" class="form-control id_lote_documr" /></td>
+                                                <td style="display:none;"><input id="docum_lote_ruta_00001" type="hidden" class="form-control ruta_lote_documr" /></td>
+                                                <td align="right">
+                                                    <div style="width:150px">
+                                                        <button onclick="CrearCamposDocumentacion(1, 'DocumentosRrpp', 'docum_lote_tipodoc','','disabled')" class="btn btn-sm btn-success mr-1 px-2 py-1 glyphicon glyphicon-plus"></button>
+                                                        <button onclick="EditarCampoDocumentacion(1, 'DocumentosRrpp', '00001', 'docum_lote_tipodoc')" class="btn btn-sm btn-success mr-1 px-2 py-1 glyphicon glyphicon-edit"></button>
+                                                        <button onclick="EliminarCampoDocumentacion(1, this, '00001', 'item_lote_obser')" class="btn btn-sm btn-success px-2 py-1 glyphicon glyphicon-trash"></button>
+                                                        <form class="form-cell" enctype="multipart/form-data" id="formima_00001">
+                                                            <label id="docum_subir_00001" class="btn btn-sm btn-success buttonup px-2 py-1 glyphicon glyphicon-folder-open">
+                                                                <input name="Archivo" id="docum_lote_archivo_00001" class="form-control archivo_lote_documr" type="file" />
+                                                            </label>
+                                                        </form>
+                                                        <button id="docum_descargar_00001" disabled onclick="DescargarArchivo('00001')" class="btn btn-sm btn-success docum_descargar px-2 py-1 glyphicon glyphicon-search"></button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section datatables {
+<script>
+
+    var ROOT = '@Url.Content("~")';
+    var Estatico = false;
+    var Consultas = 'False';
+    var deshabilitar = '';
+          
+            $('.glyphicon-folder-open').attr('disabled', 'disabled');
+           
+            $('#FiltrarCodigoSector').removeAttr('disabled');
+            $('#FiltrarCodigoManzana').removeAttr('disabled');
+            $('#FiltrarCodigoLote').removeAttr('disabled');
+            $('#btnBuscarEstatico').removeAttr('disabled');
+            $('#FiltrarCodigoDistrito').val('31');
+            var ListVBTipoDocRRPP = @Html.Raw(Json.Encode(ViewBag.TipoDocRRPP));
+    if ('False' != 'False') {
+       
+        deshabilitar = ' disabled ';
+        $('button').attr('disabled', 'disabled');
+        $('select').attr('disabled', 'disabled');
+      
+    } 
+</script>
+<script src="@Url.Content("~/Scripts/dcalendar.picker.js")"></script>
+<script src="@Url.Content("~/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js")"></script>
+
+<script>
+    $('#FiltrarCodigoSector').change(function () {
+        var texto;
+        texto = ZeroIzqCaracter($('#FiltrarCodigoSector').val(), 2);
+        $('#FiltrarCodigoSector').val(texto);
+    });
+
+    $('#FiltrarCodigoManzana').change(function () {
+        var texto;
+        texto = ZeroIzqCaracter($('#FiltrarCodigoManzana').val(), 3);
+        $('#FiltrarCodigoManzana').val(texto);
+    });
+
+    $('#FiltrarCodigoLote').change(function () {
+        var texto;
+        texto = ZeroIzqCaracter($('#FiltrarCodigoLote').val(), 3);
+        $('#FiltrarCodigoLote').val(texto);
+    });
+
+    $('#FiltrarCodigoSector').keyup(function (e) {
+        if ((e.keyCode > 36 && e.keyCode <= 40) || e.keyCode == 9 || e.keyCode == 16 || e.keyCode == 17) return;
+        if ($(this).val().length > 1) {
+            $('#FiltrarCodigoManzana').focus().select();
+        }
+    });
+    $('#FiltrarCodigoManzana').on('keyup', function (e) {
+        if ((e.keyCode > 36 && e.keyCode <= 40) || e.keyCode == 9 || e.keyCode == 16 || e.keyCode == 17) return;
+        if (e.keyCode === 8 && !this.value) {
+            $('#FiltrarCodigoSector').focus().select();
+        }
+        if ($(this).val().length > 2) {
+            $('#FiltrarCodigoLote').focus().select();
+        }
+    });
+    $('#FiltrarCodigoLote').on('keyup', function (e) {
+        if ((e.keyCode > 36 && e.keyCode <= 40) || e.keyCode == 9 || e.keyCode == 16 || e.keyCode == 17) return;
+        if (e.keyCode === 8 && !this.value) {
+            $('#FiltrarCodigoManzana').focus().select();
+        }
+        if ($(this).val().length > 2) {
+            $('#btnBuscarEstatico').focus();
+        }
+    });
+
+    $('#btnBuscarEstatico').click(function () {
+        var codSect = $('#FiltrarCodigoSector').val(); var codManz = $('#FiltrarCodigoManzana').val(); var codLote = $('#FiltrarCodigoLote').val(); var cont;
+        if (!$('#FiltrarCodigoSector').val()) { $('#msgErrores').append("<li>Ingrese el código del sector</li>"); cont = true; }
+        if (!$('#FiltrarCodigoManzana').val()) { $('#msgErrores').append("<li>Ingrese el código de la manzana</li>"); cont = true; }
+        //if (!$('#FiltrarCodigoLote').val()) { $('#msgErrores').append("<li>Ingrese el código del lote</li>"); cont = true; }
+
+        if (!cont) {
+            $('#msgErrores').html("");
+            $.ajax({
+                url: ROOT + "Lotes/BuscarSolicitudEstatico", type: "POST", dataType: "json",
+                data: { FiltrarCodigoSector: codSect, FiltrarCodigoManzana: codManz, FiltrarCodigoLote: codLote, Estatico: true },
+                success: function (response) {
+                    if (response.success) {
+                        $('#CodDist').val(response.ProcedimientoNuevo.CodigoDistrito); $('#CodSect').val(response.ProcedimientoNuevo.CodigoSector);
+                        $('#CodManz').val(response.ProcedimientoNuevo.CodigoManzana); $('#CodLote').val(response.ProcedimientoNuevo.CodigoLote);
+
+                        $('#tabLotes').hide(); $('.tabs').trigger('show', '#tab-1'); $('#GenFicha').attr('disabled', 'disabled');
+                        $('#GenFichaManzana').attr('disabled', 'disabled');
+                        $('#GrabarGeneral').attr('disabled', 'disabled');
+                        $('#btnNuevoLote').removeAttr('disabled');
+                        tablaUnidadCatastralEstatico.ajax.reload(function (res) {
+                            var alto = $('#tablaUnidadCatastralEstatico_wrapper .dataTables_scrollBody').height();
+                            if (alto < 399) {
+                                $('#tablaUnidadCatastralEstatico_wrapper .dataTables_scrollHead').removeClass('pr-4');
+                            } else {
+                                $('#tablaUnidadCatastralEstatico_wrapper .dataTables_scrollHead').addClass('pr-4');
+                            }
+                        });
+                    } else {
+                        $('#GenFicha').attr('disabled', 'disabled');
+                        $('#GrabarGeneral').attr('disabled', 'disabled');
+                        $('#tabLotes').hide();
+                        tablaUnidadCatastralEstatico.rows().remove().draw();
+                        toastr.error("No se ha encontrado el lote", "Mensaje del Sistema", { "progressBar": true });
+                    }
+                },
+                complete: function (response) {
+                }
+            });
+        }
+    });
+
+    var tablaUnidadCatastralEstatico = $("#tablaUnidadCatastralEstatico").DataTable({
+        "ajax": {
+            "url": ROOT + "Lotes/CargarSolUnidadEstatico", "type": "POST", "datatype": "json",
+            "data": function (d) {
+                d.FiltrarCodigoDistrito = $('#FiltrarCodigoDistrito').val();
+                d.FiltrarCodigoSector = $('#FiltrarCodigoSector').val();
+                d.FiltrarCodigoManzana = $('#FiltrarCodigoManzana').val();
+                d.FiltrarCodigoLote = $('#FiltrarCodigoLote').val();
+                d.Estatico = true;
+            }
+        },
+        "language": { "lengthMenu": "", "info": "", "emptyTable": "" }, "processing": true, "serverSide": false,
+        "scrollY": "400px",
+        "scrollCollapse": true,
+        "paging": false,
+        "columns": [
+            { "data": "CodigoDistrito", "className": "text-center", "width": "15%" }, { "data": "CodigoSector", "className": "text-center" },
+            { "data": "CodigoManzana", "className": "text-center" }, { "data": "CodigoLote", "className": "text-center" },
+            { "data": "Referencia", "className": "text-center" }, { "data": "EstadoUnidad", "className": "text-center" }, { "data": "FlagTrabajo", "className": "hide_column" },
+            {
+                'render': function (data, type, full, meta) {
+                    if (full.Referencia ) {
+                        return '<button data-toggle="tooltip" title="Eliminar" class="btn mr-1 text-center btnBorrarLote btn-default  glyphicon glyphicon-minus" type="button" ></button>';
+                    } else {
+                        return '';
+                    }
+                }, "className": "text-center"
+            },
+        ]
+    });
+
+    $('#tablaUnidadCatastralEstatico tbody').on('click', 'tr', function () {
+        var row = $(this); var data = tablaUnidadCatastralEstatico.row(row).data();
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+            $('#tabLotes').hide(); 
+            $('#GenFicha').attr('disabled', 'disabled'); 
+            $('#GenFichaManzana').attr('disabled', 'disabled'); 
+            $('#GrabarGeneral').attr('disabled', 'disabled'); 
+        }
+        else {
+            if (tablaUnidadCatastralEstatico.rows('.selected').data().length === 1) {
+                tablaUnidadCatastralEstatico.rows().every(function () {
+                    this.nodes().to$().removeClass('selected')
+                })
+            }
+            Estatico = true;
+            console.log('Dist', $('#FiltrarCodigoDistrito').val());
+           
+            //iniTab02 = 0;
+            iniTab04 = 0; iniTab06 = 0;
+            
+            RecuperarLote(Estatico);
+            $('#GrabarGeneral').removeAttr('disabled');$('#GenFichaManzana').removeAttr('disabled');
+            $('#tabLotes').show();
+            //});
+        }
+    });
+    function ActGrab() {
+        //iniTab02 == 1 && 
+        if (iniTab04 === 1 && iniTab06 === 1) {
+            if (Consultas === 'False') {
+                $('#GrabarGeneral').removeAttr('disabled');
+            }
+        }
+    }
+    function RecuperarLote(estatico) {
+        RecuperarDocumentoRRPP(estatico);
+    }
+    function RecuperarDocumentoRRPP(estatico) {
+        var URLDocumentoRRPP = ROOT + "Lotes/BuscarLoteDocumentosRRPP";
+        $('#loteDocumRRPPPrimeraFila .docum_descargar').attr('disabled', 'disabled');
+        $('#docum_subir_00001').addClass('btn-success').removeClass('btn-warning');
+        $.post(URLDocumentoRRPP, {
+            CodigoDistrito: $('#FiltrarCodigoDistrito').val(), CodigoLote: $('#FiltrarCodigoLote').val(), CodigoManzana: $('#FiltrarCodigoManzana').val(), CodigoSector: $('#FiltrarCodigoSector').val(), Estatico : Estatico
+        }, function (r) {
+            contLoteDocumRRPP = 1;contIdLoteDocumRRPP = 1;
+            $('#DocumentosRrpp tr').each(function (index, item) {
+                if (index === 0) return true;
+                if (index === 1) {
+                    var id = '#loteDocumRRPPPrimeraFila'; $(id + ' .tipodoc_lote_docum').val(item.CodigoDocumento).attr('disabled', 'disabled');
+                    $(id + ' .partida_lote_documr').val(item.PartidaElectronica).attr('disabled', 'disabled'); $(id + ' .tomoficha_lote_documr').val(item.TomoFicha).attr('disabled', 'disabled');
+                    $(id + ' .folio_lote_documr').val(item.Folio).attr('disabled', 'disabled'); $(id + ' .asiento_lote_documr').val(item.Asiento).attr('disabled', 'disabled');
+                    $(id + ' .fechadoc_lote_documr').val(item.Fecha).attr('disabled', 'disabled'); $(id + ' .id_lote_documr').val(item.Codigo).attr('disabled', 'disabled');
+                    pickmeup('#docum_lote_fechadoc_00001').set_date(item.Fecha);
+                    $(id + ' .ruta_lote_documr').val("").attr('disabled', 'disabled');
+                    return true;
+                }
+                item.remove();
+            });
+            if (r.LoteObservacion.length === 0) {
+                iniTab06 = 1;
+                $("#tab-6").LoadingOverlay("hide");
+                ActGrab();
+            }
+            $.each(r.LoteObservacion, function (index, item) {
+                if (index === 0) {
+                    var id = '#loteDocumRRPPPrimeraFila'; $(id + ' .tipodoc_lote_docum').val(item.CodigoDocumento);
+                    $(id + ' .partida_lote_documr').val(item.PartidaElectronica);       $(id + ' .tomoficha_lote_documr').val(item.TomoFicha);
+                    $(id + ' .folio_lote_documr').val(item.Folio);                      $(id + ' .asiento_lote_documr').val(item.Asiento);
+                    $(id + ' .fechadoc_lote_documr').val(item.Fecha); $(id + ' .id_lote_documr').val(item.Codigo);
+                
+                    $(id + ' .ruta_lote_documr').val(item.Ruta);
+                    if ((index + 1) === r.LoteObservacion.length) {
+                        iniTab06 = 1;
+                        $("#tab-6").LoadingOverlay("hide");
+                        ActGrab();
+                    }
+                    if (item.Ruta) {
+                        $(id + ' .docum_descargar').removeAttr('disabled');
+                        $('#docum_subir_00001').removeClass('btn-success').addClass('btn-warning');
+                    }
+                } else {
+                    var datos = {
+                        'Fecha': item.Fecha, 'Detalle': item.Detalle, 'CodigoDocumento': item.CodigoDocumento, 'PartidaElectronica': item.PartidaElectronica,
+                        'TomoFicha': item.TomoFicha, 'Folio': item.Folio, 'Asiento': item.Asiento, 'Codigo': item.Codigo, 'Ruta': item.Ruta
+                    };
+                    var disabled;
+                    if (!item.Ruta) {
+                        disabled = 'disabled';
+                    }
+                    var ultima = false;
+                    if ((index + 1) === r.LoteObservacion.length) {
+                        ultima = true;
+                    }
+                    CrearCamposDocumentacion(1, 'DocumentosRrpp', 'docum_lote_tipodoc', datos, disabled, 'disabled', ultima);
+                }
+            });
+        });
+    }
+    function CrearCamposDocumentacion(tipo, tabla, focus, datos, disabled, disabledtot, ultima) {
+        if (!datos) {
+            datos = {};
+        }
+        var value_fecha = (datos.Fecha === undefined) ? "" : datos.Fecha;                       
+        var value_detalle = (datos.Detalle === undefined) ? "" : datos.Detalle;
+        var value_codigo = (datos.Codigo === undefined) ? "" : datos.Codigo;                    
+        var value_numero = (datos.Numero === undefined) ? "" : datos.Numero;
+        var value_solicitante = (datos.Solicitante === undefined) ? "" : datos.Solicitante;     
+        var value_documento = (datos.Documento === undefined) ? "" : datos.Documento;
+        var value_observacion = (datos.Detalle === undefined) ? "" : datos.Detalle;
+        var value_correl = (datos.Correlativo === undefined) ? "" : datos.Correlativo; var value_flag = (datos.Flag === undefined) ? "" : datos.Flag;
+        var value_ruta = (datos.Ruta === undefined) ? "" : datos.Ruta; var value_codsoli = (datos.CodSoli === undefined) ? "" : datos.CodSoli;
+        var value_codigoDocumento = (datos.CodigoDocumento === undefined) ? "" : datos.CodigoDocumento;
+        var value_partidaElectronica = (datos.PartidaElectronica === undefined) ? "" : datos.PartidaElectronica;
+        var value_tomoFicha = (datos.TomoFicha === undefined) ? "" : datos.TomoFicha; var value_folio = (datos.Folio === undefined) ? "" : datos.Folio;
+        var value_asiento = (datos.Asiento === undefined) ? "" : datos.Asiento;
+
+        var classButton = ' btn-warning ';
+        var value_disabled = ''
+        if (disabled) {
+            value_disabled = disabled;
+            classButton = ' btn-success ';
+        }
+        //console.log('btn', classButton, disabled);
+
+        if (!disabledtot) {
+            disabledtot = '';
+        }
+        var numeroItem, idItem;
+        if (tipo === 1) {
+            contLoteDocumRRPP++; contIdLoteDocumRRPP++;
+            numeroItem = LeftZero(contLoteDocumRRPP, 5);
+            idItem = LeftZero(contIdLoteDocumRRPP, 5); fieldset = "docum";
+            columnas = lblTd + '<input type="text" id="docum_lote_item_' + idItem + '"  disabled value="' + numeroItem + '" class="form-control item_lote_documr"></td>' +
+                    lblTd + '<select ' + disabledtot + ' ' + deshabilitar + ' id="docum_lote_tipodoc_' + idItem + '" class="form-control tipodoc_lote_docum"><option value="">- Seleccione -</option></select></td>' +
+                    lblTd + '<input ' + disabledtot + ' ' + deshabilitar + ' id="docum_lote_partida_' + idItem + '"  value="' + value_partidaElectronica + '" type="text" class="form-control partida_lote_documr"></td>' +
+                    lblTd + '<input ' + disabledtot + ' ' + deshabilitar + ' id="docum_lote_tomoficha_' + idItem + '" style="text-align:center;" value="' + value_tomoFicha + '" type="text" class="form-control tomoficha_lote_documr"></td>' +
+                    lblTd + '<input ' + disabledtot + ' ' + deshabilitar + ' id="docum_lote_folio_' + idItem + '" style="text-align:center;" value="' + value_folio + '" type="text" class="form-control folio_lote_documr"></td>' +
+                    lblTd + '<input ' + disabledtot + ' ' + deshabilitar + ' id="docum_lote_asiento_' + idItem + '" value="' + value_asiento + '" type="text" class="form-control asiento_lote_documr"></td>' +
+                    lblTd + '<input ' + disabledtot + ' ' + deshabilitar + ' id="docum_lote_fechadoc_' + idItem + '" maxlength="10" style="text-align:center;" value="' + value_fecha + '" type="text" class="form-control fechadoc_lote_documr"></td>' +
+                    '<td style="display:none;">' + '<input ' + deshabilitar + ' id="docum_lote_id_' + idItem + '" value="' + value_codigo + '" type="hidden" class="form-control id_lote_documr"></td>' +
+                    '<td style="display:none;">' + '<input ' + deshabilitar + ' id="docum_lote_ruta_' + idItem + '" value="' + value_ruta + '" type="hidden" class="form-control ruta_lote_documr"></td>';;
+        
+            if (ultima === true) {
+                iniTab06 = 1;
+                $("#tab-6").LoadingOverlay("hide");
+                ActGrab();
+            }
+
+        } else {
+            if (tipo === 2) { fieldset = "exped"; contLoteExpediente++; contLoteIdExpediente++; numeroItem = LeftZero(contLoteExpediente, 5); idItem = LeftZero(contLoteIdExpediente, 5); }
+        
+            columnas = lblTd + '<input ' + deshabilitar + ' type="text" disabled value="' + numeroItem + '" class="form-control item_lote_' + fieldset + '"></td>' +
+                   lblTd + '<input ' + deshabilitar + ' disabled id="' + fieldset + '_lote_solici_' + idItem + '" value="' + value_solicitante + '" type="text" class="form-control solici_lote_' + fieldset + '"></td>' +
+                   lblTd + '<input ' + deshabilitar + ' disabled id="' + fieldset + '_lote_documento_' + idItem + '" value="' + value_documento + '" type="text" class="form-control documento_lote_' + fieldset + '"></td>' +
+                   lblTd + '<input ' + deshabilitar + ' disabled id="' + fieldset + '_lote_numero_' + idItem + '" value="' + value_numero + '" type="text" class="form-control numero_lote_' + fieldset + '"></td>' +
+                   lblTd + '<input ' + deshabilitar + ' disabled id="' + fieldset + '_lote_fecha_' + idItem + '" value="' + value_fecha + '" type="date" class="form-control fecha_lote_' + fieldset + '"></td>' +
+                   lblTd + '<input ' + deshabilitar + ' id="' + fieldset + '_lote_obser_' + idItem + '" value="' + value_detalle + '" autocomplete="off" type="text" class="form-control obser_lote_' + fieldset + '"></td>' +
+                   '<td style="display:none;">' + '<input id="' + fieldset + '_lote_id_' + idItem + '" value="' + value_codigo + '" type="hidden" class="id_lote_' + fieldset + '"></td>' +
+                   '<td style="display:none;">' + '<input id="' + fieldset + '_lote_correl_' + idItem + '" value="' + value_correl + '" type="hidden" class="correl_lote_' + fieldset + '"></td>' +
+                   '<td style="display:none;">' + '<input id="' + fieldset + '_lote_flag_' + idItem + '" value="' + value_flag + '" type="hidden" class="flag_lote_' + fieldset + '"></td>' +
+                   '<td style="display:none;">' + '<input id="' + fieldset + '_lote_codsoli_' + idItem + '" value="' + value_codsoli + '" type="hidden" class="codsoli_lote_' + fieldset + '"></td>';
+        }
+        $('#' + tabla + ' input').attr('disabled', 'disabled');
+        $('#' + tabla + ' select').attr('disabled', 'disabled');
+        $('.tipodoc_lote_docum').attr('disabled', 'disabled').trigger("chosen:updated");
+        if (Consultas === 'False') {
+            $('#' + tabla + ' input[type="file"]').removeAttr('disabled');
+            $('input.obser_lote_exped').removeAttr('disabled');
+        } else {
+            $('input.obser_lote_exped').attr('disabled','disabled');
+        }
+        var botonesMant = (tipo === 1) ? '<button ' + deshabilitar + ' onclick="CrearCamposDocumentacion(' + tipo + ',\'' + tabla + '\',\'' + focus + '\', \'\', \'' + disabled + '\' )"  class="btn btn-sm btn-success mr-2 px-2 py-1 glyphicon glyphicon-plus"></button>' +
+                        '<button ' + deshabilitar + ' onclick="EditarCampoDocumentacion(' + tipo + ',\'' + tabla + '\',\'' + idItem + '\',\'' + focus + '\')" class="btn btn-sm btn-success mr-2 px-2 py-1 glyphicon glyphicon-edit"></button>' +
+                        '<button ' + deshabilitar + ' onclick="EliminarCampoDocumentacion(' + tipo + ',this, ' + idItem + ', \'item_lote_' + fieldset + '\')" class="btn btn-sm btn-success mr-2 px-2 py-1 glyphicon glyphicon-trash"></button>' +
+                        '<form enctype="multipart/form-data" class="form-cell" id="formima_' + idItem + '"><label ' + deshabilitar + ' id="docum_subir_' + idItem + '" class="btn btn-sm ' + classButton + 'buttonup mr-2 px-2 py-1 glyphicon glyphicon-folder-open"> ' +
+                            '<input ' + deshabilitar + ' name="Archivo" id="docum_lote_archivo_' + idItem + '" class="form-control archivo_lote_documr" type="file" />' +
+                        '</label></form>' +
+                        '<button ' + '' + ' id="docum_descargar_' + idItem + '" onclick="DescargarArchivo(\'' + idItem + '\')" class="btn btn-sm btn-success px-2 py-1 glyphicon glyphicon-search"></button></div></td></tr>' : '';
+        var newTR = document.createElement('tr');
+        newTR.style.height = "45px";
+        newTR.innerHTML = columnas + '<td align="right"><div style="width:150px">' + botonesMant + ((tipo === 2) ? '<button ' + deshabilitar + ' onclick="" class="btn btn-sm btn-success px-2 py-1 glyphicon glyphicon-search"></button>' : '' ) + '</div></td>';
+        var cadena = '<tr style="height:45px">' + columnas + '<td align="right"><div style="width:150px">' +
+                        botonesMant +
+                        '<button ' + deshabilitar + ' onclick="" class="btn btn-sm btn-success px-2 py-1 glyphicon glyphicon-search"></button></div></td></tr>';
+        var table = document.getElementById(tabla);
+        table.appendChild(newTR);
+        if (tipo === 1) { 
+            CargarTipoDocumento("#docum_lote_tipodoc_" + idItem, value_codigoDocumento);
+        }
+        //document.getElementById(tabla).innerHTML = cadena;
+
+        if (tipo === 1) { 
+            pickmeup('#docum_lote_fechadoc_' + idItem, { format: 'd/m/Y' });
+            if (value_fecha) { 
+                pickmeup('#docum_lote_fechadoc_' + idItem).set_date(value_fecha);
+            }
+        }
+        //$('#' + focus + '_' + idItem).focus().select();
+    }
+    function EditarCampoDocumentacion(tipo, tabla, value, focus) {
+        $('#' + tabla + ' input').attr('disabled', 'disabled');
+        $('#' + tabla + ' select').attr('disabled', 'disabled');
+        $('.tipodoc_lote_docum').attr('disabled', 'disabled').trigger("chosen:updated");
+        if (tipo === 1) {
+            $('#docum_lote_tipodoc_' + value).removeAttr('disabled').trigger("chosen:updated"); $('#docum_lote_partida_' + value).removeAttr('disabled');
+            $('#docum_lote_tomoficha_' + value).removeAttr('disabled'); $('#docum_lote_folio_' + value).removeAttr('disabled');
+            $('#docum_lote_asiento_' + value).removeAttr('disabled'); $('#docum_lote_fechadoc_' + value).removeAttr('disabled');
+            $('#docum_lote_archivo_' + value).removeAttr('disabled');
+        
+        } else {
+            $('#exped_lote_solici_' + value).removeAttr('disabled'); $('#exped_lote_documento_' + value).removeAttr('disabled');
+            $('#exped_lote_numero_' + value).removeAttr('disabled'); $('#exped_lote_fecha_' + value).removeAttr('disabled');
+            $('#exped_lote_obser_' + value).removeAttr('disabled');
+        }
+        $('#' + focus + '_' + value).focus().select();
+    }
+    function EliminarCampoDocumentacion(tipo, element, index, item) {
+        if (index !== '00001') {
+            if (tipo === 1) { contLoteDocumRRPP--; }
+            else { contLoteExpediente--; }
+            $(element).closest("tr").hide().attr('name', 'delete');
+            var items = $('.' + item);
+            ActualizarIndex(items);
+        }
+    }
+    CargarTipoDocumento();
+    var contLoteDocumRRPP = 1;var contIdLoteDocumRRPP = 1;var contLoteExpediente, contLoteIdExpediente, columnas, fieldset;
+    contLoteDocumRRPP = contIdLoteDocumRRPP = contLoteExpediente = contLoteIdExpediente = 1;
+    var lblTd = '<td class="pr-4">';
+
+    function CargarTipoDocumento(idlado,  valuelado) {
+        //console.log(idlado, valuelado);
+        CrearCombobox((idlado) ? idlado : '.tipodoc_lote_docum', ListVBTipoDocRRPP, valuelado)
+    }
+    function CrearCombobox(Combobox, data, valuelado) {
+    
+        $(Combobox).find('option:not(:first)').remove();
+        var items = "<option value=''>Seleccione...</option>";
+        var option = document.createElement('option'); option.text = 'Seleccione...';
+        var option1 = '';
+        document.querySelector(Combobox).appendChild(option, 0);
+        $.each(data, function (i, item) {
+            option1 = document.createElement('option'); option1.text = item.Text; option1.value = item.Value;
+            document.querySelector(Combobox).appendChild(option1, (i + 1));
+            items += "<option value='" + item.Value + "'>" + item.Text + "</option>";
+        });
+        //console.log('AD','|' + Combobox+ "|", data, valuelado, items);
+        //$(Combobox).append(items)
+        $(Combobox).val(valuelado);
+        //$('.chosen-seleccionar').trigger("chosen:updated");
+    }
+    function DescargarArchivo(num_item) {
+        window.open(ROOT + 'Lotes/DescargarLoteDocumentoRRPP?CodigoDistrito=' + $('#FiltrarCodigoDistrito').val() + '&CodigoSector=' + $('#FiltrarCodigoSector').val() + '&Estatico=true'  + '&CodigoManzana=' + $('#FiltrarCodigoManzana').val() + '&CodigoLote=' + $('#FiltrarCodigoLote').val() + '&Codigo=' + $('#docum_lote_id_' + num_item).val());
+        var modelDocum = {
+            CodigoDistrito: $('#FiltrarCodigoDistrito').val(), CodigoLote: $('#FiltrarCodigoLote').val(), CodigoManzana: $('#FiltrarCodigoManzana').val(), CodigoSector: $('#FiltrarCodigoSector').val(), Codigo: $('#docum_lote_id_' + num_item).val()
+        };
+    }
+    function ActualizarIndex(objeto) {
+        var indice = 0;
+        objeto.each(function (index, item) {
+            item.value = LeftZero((indice + 1), 5);
+            if ($(item).closest("tr").attr('name') !== 'delete') indice++;
+        });
+    }
+
+    function GrabarLote() {
+        var mensaje = "¿Esta seguro de grabar los cambios?";
+
+        $.post(ROOT + "Lotes/BuscarLoteSolicitud", {
+            CodigoDistrito: $('#FiltrarCodigoDistrito').val(), FiltrarCodigoLote: $('#FiltrarCodigoLote').val(), FiltrarCodigoManzana: $('#FiltrarCodigoManzana').val(), FiltrarCodigoSector: $('#FiltrarCodigoSector').val()
+        }, function (response) {
+            if (response.Lotes  && Estatico) {
+                var solicitudes = "";
+                (response.Lotes).forEach( function(item) {
+                    solicitudes = solicitudes + "," + item.CodigoNumeroSolicitud
+                });
+                mensaje = "¿Esta seguro de grabar los cambios se han encontrado la(s) siguiente(s) solicitud(es) abierta(s) " + solicitudes.substring(1) + "? Se recomienda realizar las coordinaciones correspondientes.";
+            }
+            bootbox.confirm({
+                title: "Mensaje del Sistema", message: mensaje,
+                buttons: { confirm: { label: '<i class="fa fa-check"></i> Grabar ', className: "btn btn-success" }, cancel: { label: '<i class="fa fa-times"></i> Cancelar' } },
+                callback: function (result) {
+                    if (result) {
+                            var modelDocRRPP = GrabarCamposDocumentacion(1);                     
+                    }
+                }
+            });
+
+        });
+    }
+    function GrabarCamposDocumentacion(tipoObjeto) {
+        var datosParseados = [];
+        var tablaDocumentos;
+        var validado = 0;
+        switch (tipoObjeto) {
+            case 1: tablaDocumentos = $('#DocumentosRrpp tr'); break;
+           
+        }
+        if (tipoObjeto === 1) {
+            console.log('TABLA', tablaDocumentos);
+            var totalFilas = tablaDocumentos.length - 1;
+            tablaDocumentos.each(function (index, item) {
+                var del = '0';
+                if (index === 0) return true;
+                if ($(item).closest("tr").attr('name') === 'delete') del = '1';
+                var ind, tipodoc, partida, tomoficha, folio, asiento, fechadoc, codigo, archivo;var num_item;
+                $(item).children("td").each(function () {
+                    var input = $(this).children(".form-control");
+
+                    if (input.hasClass("tipodoc_lote_docum")) { tipodoc = input.val(); num_item = input.attr('id').substring(19,24); } else if (input.hasClass("partida_lote_documr")) { partida = input.val(); }
+                    else if (input.hasClass("tomoficha_lote_documr")) { tomoficha = input.val(); } else if (input.hasClass("folio_lote_documr")) { folio = input.val(); }
+                    else if (input.hasClass("asiento_lote_documr")) { asiento = input.val(); } else if (input.hasClass("fechadoc_lote_documr")) { fechadoc = input.val(); }
+                    else if (input.hasClass("id_lote_documr")) { codigo = input.val(); } else if (input.hasClass("item_lote_documr")) { ind = input.val(); }
+                });
+                if (!tipodoc || !partida || !tomoficha || !folio || !asiento || !fechadoc) {
+                    validado++;
+                }
+                archivo = $('#docum_lote_archivo_' + num_item)[0].files[0];
+            
+                var modelDocum = {
+                    "Codigo": codigo, "Estado": del, "CodigoDocumento": tipodoc, "PartidaElectronica": partida, "Item": ind, //"Archivo": archivo,
+                    "TomoFicha": tomoficha, "Folio": folio, "Asiento": asiento, "Fecha": fechadoc, CodigoDistrito: $('#FiltrarCodigoDistrito').val(), CodigoLote: $('#FiltrarCodigoLote').val(), CodigoManzana: $('#FiltrarCodigoManzana').val(), CodigoSector: $('#FiltrarCodigoSector').val(),
+                    "Estatico" : Estatico
+                };
+                console.log('DOCS', modelDocum);
+
+                $('#DocumentosRrpp input').attr('disabled', 'disabled');
+                $('#DocumentosRrpp select').attr('disabled', 'disabled');
+                $('#DocumentosRrpp .archivo_lote_documr').removeAttr('disabled');
+                //data.append(codigo, del, tipodoc, partida, ind, archivo, tomoficha, folio, asiento, fechadoc, $('#CodDist').val(), $('#CodLote').val(), $('#CodManz').val(), $('#CodSect').val());
+                console.log("LoteDocumRRPP", modelDocum);
+                $.post(ROOT + "Lotes/GrabarLoteDocumentoRRPP  ", {
+                    model: modelDocum
+                }, function (response) {
+                    //SUBIR IMAGEN
+
+                    if (archivo) {
+                        var form = $('#formima_' + num_item)[0];
+                        var dataString = new FormData(form);
+                        dataString.append('CodigoDistrito', $('#FiltrarCodigoDistrito').val());
+                        dataString.append('CodigoSector', $('#FiltrarCodigoSector').val());
+                        dataString.append('CodigoManzana', $('#FiltrarCodigoManzana').val());
+                        dataString.append('CodigoLote', $('#FiltrarCodigoLote').val());
+                        dataString.append('Archivo', archivo);
+                        dataString.append('Estatico', Estatico);
+                        dataString.append('Codigo', response.responseText);
+                        $('#docum_lote_id_' + num_item).val(response.responseText);
+                        GrabarCamposDocumentacionImagen(dataString, num_item)
+                    }
+                    if (totalFilas === index) {
+                        RecuperarDocumentoRRPP(Estatico);
+                    }
+                });
+            });
+        } 
+        validDocRRPP = (validado === 0) ? true : false;
+        return datosParseados;
+    }
+    $(document).on("change", 'input.archivo_lote_documr[type="file"]', function (evt) {
+        if (evt.target.files.length === 0) {
+            toastr.warning("Archivo deseleccionado", "Mensaje del Sistema", { "progressBar": true });
+        } else {
+            var num_item = evt.target.id.substring( evt.target.id.length - 5)
+            var del = '0';
+        
+            var ind, tipodoc, partida, tomoficha, folio, asiento, fechadoc, codigo, archivo;
+        
+            
+
+            tipodoc = $('#docum_lote_tipodoc_'+num_item).val(); 
+            partida = $('#docum_lote_partida_'+num_item).val();tomoficha = $('#docum_lote_tomoficha_'+num_item).val(); folio = $('#docum_lote_folio_'+num_item).val(); 
+            asiento = $('#docum_lote_asiento_'+num_item).val();fechadoc = $('#docum_lote_fechadoc_').val(); 
+            codigo = $('#docum_lote_id_'+num_item).val();  $('#docum_lote_item_'+num_item).val(); 
+        
+            archivo = $('#docum_lote_archivo_' + num_item)[0].files[0];
+            var modelDocum = {
+                "Codigo": codigo, "Estado": del, "CodigoDocumento": tipodoc, "PartidaElectronica": partida, "Item": ind, //"Archivo": archivo,
+                "TomoFicha": tomoficha, "Folio": folio, "Asiento": asiento, "Fecha": fechadoc, 
+                CodigoDistrito: $('#FiltrarCodigoDistrito').val(), CodigoLote: $('#FiltrarCodigoLote').val(), CodigoManzana: $('#FiltrarCodigoManzana').val(), CodigoSector: $('#FiltrarCodigoSector').val(),
+                "Estatico": Estatico 
+            };
+            $('#DocumentosRrpp input').attr('disabled', 'disabled');
+            $('#DocumentosRrpp select').attr('disabled', 'disabled');
+            $('#DocumentosRrpp .archivo_lote_documr').removeAttr('disabled');
+            //data.append(codigo, del, tipodoc, partida, ind, archivo, tomoficha, folio, asiento, fechadoc, $('#CodDist').val(), $('#CodLote').val(), $('#CodManz').val(), $('#CodSect').val());
+            $.post(ROOT + "Lotes/GrabarLoteDocumentoRRPP  ", {
+                model: modelDocum
+            }, function (response) {
+                //SUBIR IMAGEN
+                if (response.success === true) {
+                    var correl = response.responseText;
+
+                    $('#docum_lote_id_' + num_item).val(correl);
+
+                    if (archivo) {
+                        var form = $('#formima_' + num_item)[0];
+                        var dataString = new FormData(form);
+                        dataString.append('CodigoDistrito', $('#FiltrarCodigoDistrito').val());
+                        dataString.append('CodigoSector', $('#FiltrarCodigoSector').val());
+                        dataString.append('CodigoManzana', $('#FiltrarCodigoManzana').val());
+                        dataString.append('CodigoLote', $('#FiltrarCodigoLote').val());
+                        dataString.append('Archivo', archivo);
+                        dataString.append('Estatico', 'true');
+                        dataString.append('Codigo', response.responseText);
+                        $('#docum_lote_id_' + num_item).val(response.responseText);
+                        GrabarCamposDocumentacionImagen(dataString, num_item)
+                    }
+                }
+
+            
+
+
+            });
+        }
+    });
+
+    function GrabarCamposDocumentacionImagen(dataString, num_item,mensaje) {
+        $.ajax({
+            url: ROOT + "Lotes/GrabarLoteDocumentoRRPPImagen",
+            type: 'POST',
+            dataType: 'json', data: dataString,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                if (response.success) {
+                    $('#docum_descargar_' + num_item).removeAttr('disabled');
+                    $('#docum_subir_' + num_item).removeClass('btn-success').addClass('btn-warning');
+                    if (mensaje) {
+                        toastr.success("Archivo agregado correctamente", "Mensaje del Sistema", { "progressBar": true });
+                    }
+                }
+            }
+        });
+    }
+</script>
+    }

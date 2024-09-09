@@ -1,0 +1,209 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Cartas.CartasViewModel
+
+
+<fieldset class="formulario p-3">
+    <legend id="legInforme" style="margin-bottom:-10px;">Citación</legend>
+        @using (Html.BeginForm("Registrar", "Cartas", FormMethod.Post, new { id = "frmCitacion", name = "frmCitacion" }))
+        {
+            @*<input type="hidden" id="FiltrarCodigoCorrelativo" />
+            <input type="hidden" id="FiltrarCodigoCarta" />*@
+            @Html.TextBoxFor(m => m.FiltrarCodigoCorrelativo, new { @class = "form-control change", type = "hidden" })
+            @Html.TextBoxFor(m => m.FiltrarCodigoCarta, new { @class = "form-control change", type = "hidden" })
+            @Html.AntiForgeryToken()
+            @*<div class="row">
+                <div class="col-md-2 mr-3 pull-right">
+                    <button id="GenFicha" type="button" class="btn pull-right btn-success btn-sm glyphicon glyphicon-print btn-block" style="float:right" onclick="GenerarCarta()"><span style="font-family:'Open Sans'" id="spanGenFicha"> Generar Carta</span></button>
+                </div>
+            </div>*@
+        <div class="px-3 mt-3">
+            <table class="table editable table-bordered table-striped ">
+                <thead><tr><th width="160px">Inspección</th><th width="180px">Fecha Inspección</th><th width="100px">Hora</th><th width="160px">Estado Inspección</th><th>Códigos Catastrales</th></tr></thead>
+                <tbody class="CamposInspeccion"></tbody>
+            </table>
+        </div>
+        <div class="px-3 mt-3">
+            <table class="table editable table-bordered table-striped ">
+                <thead><tr><th width="240px">Código Catastral</th><th>Ubicación</th><th width="28%">Titular</th></tr></thead>
+                <tbody class="CamposCatastrales"></tbody>
+            </table>
+        </div>
+
+        <div class="row  px-3">
+            <div class="col-md-2">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ListTipoPersona, htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownListFor(m => m.TipoPersonas, Model.ListTipoPersona, "- Tipo Destinatario -", new { @class = "form-control" })
+                </div>
+            </div>
+            <div id="divParrafo1" class=" col-md-6">
+                <div class="form-group">
+                    <label class="control-label" id="lblParrafo1" for="Parrafo1">Parrafo1</label>
+                    @*@Html.TextBoxFor(m => m.Parrafo1, new { @class = "form-control change" })*@
+                    @*@Html.DropDownListFor(m => m.Parrafo1, Model.ListTitulares, " - Seleccionar Titulares -",
+                        new { @class = "chosen-seleccionar form-control", style = "width:100%;" })*@
+                    @Html.TextBoxFor(m => m.Parrafo1, new { @class = "form-control change" })
+                </div>
+            </div>
+
+            @*@Html.TextBoxFor(m => m.Parrafo7, new { @class = "", type = "hidden" })*@
+
+            <div id="divParrafo6" class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label" id="lblParrafo6" for="Parrafo6">Parrafo6</label>
+                    @Html.TextAreaFor(m => m.Parrafo6, new { @class = "form-control change" })
+                </div>
+            </div>
+
+            
+            <div class="col-md-2" style="display:none;">
+                <div class="form-group">
+                    <label class="control-label" id="lblInspecciones" for="Inspecciones1">Inspecciones</label>
+                    <textarea id="Inspecciones1" class="form-control" rows="3"></textarea>
+                </div>
+            </div>
+            
+            <div id="divSub3" class="col-md-3" style="display:none;">
+                <div class="form-group">
+                    <label class="control-label" id="lblSubtitulo3" for="Subtitulo3">Subtitulo3</label>
+                    @Html.TextAreaFor(m => m.Subtitulo3, new { @class = "form-control change", rows = "3" })
+                </div>
+            </div>
+            <div id="divSub4" class="col-md-2" style="display:none;">
+                <div class="form-group">
+                    <label class="control-label" id="lblSubtitulo4" for="Subtitulo4">Subtitulo4</label>
+                    @Html.TextBoxFor(m => m.Subtitulo4, new { @class = "form-control change" })
+                </div>
+            </div>
+        </div>
+        <hr class="mx-3 mt-1 mb-0" />
+        <div class="row  px-3">
+            <div id="divSub1" class="col-md-2">
+                <div class="form-group">
+                    <label class="control-label" id="lblSubtitulo1" for="Subtitulo1">Subtitulo1</label>
+                    @Html.TextBoxFor(m => m.Subtitulo1, new { @class = "form-control change" })
+                </div>
+            </div>
+            <div id="divSub2" class="col-md-2">
+                <div class="form-group">
+                    <label class="control-label" id="lblSubtitulo2" for="Subtitulo2">Subtitulo2</label>
+                    @Html.TextAreaFor(m => m.Parrafo7, new { @class = "form-control change", rows = "1" })
+                </div>
+            </div>
+            <div id="divParrafo2" class=" col-md-4" style="display:none;">
+                <div class="form-group">
+                    <label class="control-label" id="lblParrafo2" for="Parrafo2">Parrafo2</label>
+                    @Html.TextBoxFor(m => m.Parrafo2, new { @class = "form-control change" })
+                    @*@Html.DropDownListFor(m => m.Parrafo2, Model.ListTipoUbicacion, " - Seleccionar Ubicación -",
+                        new { @class = "chosen-seleccionar form-control", style = "width:100%;" })*@
+                </div>
+            </div>
+            
+            <div id="divParrafo3" class=" col-md-2">
+                <div class="form-group">
+                    <label class="control-label" id="lblParrafo3" for="Parrafo3">Parrafo3</label>
+                    @Html.TextBoxFor(m => m.Parrafo3, new { @class = "form-control change" })
+                </div>
+            </div>
+            <div id="divParrafo4" class=" col-md-2">
+                <div class="form-group">
+                    <label class="control-label" id="lblParrafo4" for="Parrafo1">Parrafo4</label>
+                    @Html.TextBoxFor(m => m.Parrafo4, new { @class = "form-control change" })
+                </div>
+            </div>
+            <div id="divParrafo5" class="col-md-2">
+                <div class="form-group">
+                    <label class="control-label" id="lblParrafo5" for="Parrafo5">Parrafo1</label>
+                    @Html.TextBoxFor(m => m.Parrafo5, new { @class = "form-control change" })
+                </div>
+            </div>
+        </div>
+        <hr class="mx-3 mt-1 mb-0" />
+        <div class="row  px-3">
+            <div id="divFirma1" class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label" id="lblFirma1" for="Firma1">Firma1</label>
+                    @*@Html.TextBoxFor(m => m.Firma1, new { @class = "form-control change" })*@
+                    @Html.DropDownListFor(m => m.Firma1, Model.ListTipoInspectores, " - Seleccionar al Inspector -",
+                        new { @class = "chosen-seleccionar form-control", style = "width:100%;" })
+                </div>
+            </div>
+            <div id="divFirma2" class="col-md-2">
+                <div class="form-group">
+                    <label class="control-label" id="lblFirma2" for="Firma1">Firma2</label>
+                    @Html.TextBoxFor(m => m.Firma2, new { @class = "form-control change" })
+                </div>
+            </div>
+            <div id="divFirma5" class="col-md-2" style="display:none;">
+                <div class="form-group">
+                    <label class="control-label" id="lblFirma5" for="Firma5">Firma5</label>
+                    @Html.TextBoxFor(m => m.Firma5, new { @class = "form-control change" })
+                </div>
+            </div>
+            <div class="col-md-4" style="display:none;">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.NombreAnio, htmlAttributes: new { @class = "control-label" })@Html.TextBoxFor(m => m.NombreAnio, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="row  px-3" style="display:none;">
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.PiePagina, htmlAttributes: new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.PiePagina, new { @class = "form-control change" })
+                </div>
+            </div>
+        </div>
+        <hr class="mx-3 mt-1 mb-0" />
+        <div class="px-3 pt-3">
+            <div style="width:99%;">
+                <div class="row">
+                    
+                </div>
+            </div>
+        </div>
+        <hr class="mx-3 mt-0 mb-3" />
+        }
+</fieldset>
+
+<script>
+    if ($('#NombreAreaSolicitante').val() == "") {
+        $('#NombreTipoDocumento').val("");
+    }
+    //titularesTemp = '@Model.Parrafo1';
+    //ubicacionTemp = '@Model.Parrafo2';
+
+    if ($('#Subtitulo3').val()) {
+        codigosTemp = $('#Subtitulo3').val().split("|");
+    }
+    if ($('#Parrafo2').val()) {
+        ubicacionTemp = $('#Parrafo2').val().split("|");
+    }
+    $('#Parrafo3').val('');
+
+    $('#lblSubtitulo1').text('Documento Simple:'); $('#lblSubtitulo2').text('Calidad de Verificación A1:');
+    $('#lblSubtitulo3').text('Código Catastral:'); $('#Subtitulo3').attr('rows', '3'); $('#lblSubtitulo4').text('Fecha Inspección:');
+
+    $('#lblParrafo1').text('Destinatario:');
+    $('#lblParrafo2').text('Ubicacion:');
+    $('#lblParrafo3').text('Fecha de Citación:'); $("#Parrafo3").datepicker({ format: "dd/mm/yyyy", language: "es", calendarWeeks: true });
+    $('#lblParrafo4').text('Horario Ini.:'); $("#Parrafo4").mask("99:99", { placeholder: "HH:MM" });
+    $('#lblParrafo5').text('Horario Fin:'); $("#Parrafo5").mask("99:99", { placeholder: "HH:MM" });
+    $('#lblParrafo6').text('Observaciones:');
+    $('#lblFirma1').text('Inspector:'); $('#lblFirma2').text('Telefono:'); $('#lblFirma3').text('Nombre:');
+    $('#lblFirma4').text('DNI:'); $("#Firma4").datepicker({ format: "dd/mm/yyyy", language: "es", calendarWeeks: true });
+    $('#lblFirma5').text('Telefono');
+
+    $('#divParrafo6').hide();
+
+    $('#Firma1').change(function () {
+        var URLInspectores = "@Url.Content("~/Cartas/BuscarTelefono")";
+        var codUsua = $('#Firma1').val(); var cont = codUsua.indexOf("|");
+        $.post(URLInspectores, { id: codUsua.substring(0, cont) }, function (r) {
+            $('#Firma2').val(r.Datos);
+        });
+    });
+    
+
+
+
+</script>

@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="INFORME" targetNamespace="http://tempuri.org/INFORME.xsd" xmlns:mstns="http://tempuri.org/INFORME.xsd" xmlns="http://tempuri.org/INFORME.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="INFORME" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="INFORME" msprop:Generator_UserDSName="INFORME">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="DatosInforme" msprop:Generator_TableClassName="DatosInformeDataTable" msprop:Generator_TableVarName="tableDatosInforme" msprop:Generator_RowChangedName="DatosInformeRowChanged" msprop:Generator_TablePropName="DatosInforme" msprop:Generator_RowDeletingName="DatosInformeRowDeleting" msprop:Generator_RowChangingName="DatosInformeRowChanging" msprop:Generator_RowEvHandlerName="DatosInformeRowChangeEventHandler" msprop:Generator_RowDeletedName="DatosInformeRowDeleted" msprop:Generator_RowClassName="DatosInformeRow" msprop:Generator_UserTableName="DatosInforme" msprop:Generator_RowEvArgName="DatosInformeRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CODINFORME" msprop:Generator_ColumnVarNameInTable="columnCODINFORME" msprop:Generator_ColumnPropNameInRow="CODINFORME" msprop:Generator_ColumnPropNameInTable="CODINFORMEColumn" msprop:Generator_UserColumnName="CODINFORME" type="xs:string" minOccurs="0" />
+              <xs:element name="CODANOINFO" msprop:Generator_ColumnVarNameInTable="columnCODANOINFO" msprop:Generator_ColumnPropNameInRow="CODANOINFO" msprop:Generator_ColumnPropNameInTable="CODANOINFOColumn" msprop:Generator_UserColumnName="CODANOINFO" type="xs:string" minOccurs="0" />
+              <xs:element name="CODTIPOINFOR" msprop:Generator_ColumnVarNameInTable="columnCODTIPOINFOR" msprop:Generator_ColumnPropNameInRow="CODTIPOINFOR" msprop:Generator_ColumnPropNameInTable="CODTIPOINFORColumn" msprop:Generator_UserColumnName="CODTIPOINFOR" type="xs:string" minOccurs="0" />
+              <xs:element name="CODOFICINA" msprop:Generator_ColumnVarNameInTable="columnCODOFICINA" msprop:Generator_ColumnPropNameInRow="CODOFICINA" msprop:Generator_ColumnPropNameInTable="CODOFICINAColumn" msprop:Generator_UserColumnName="CODOFICINA" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTSIGLA" msprop:Generator_ColumnVarNameInTable="columnTXTSIGLA" msprop:Generator_ColumnPropNameInRow="TXTSIGLA" msprop:Generator_ColumnPropNameInTable="TXTSIGLAColumn" msprop:Generator_UserColumnName="TXTSIGLA" type="xs:string" minOccurs="0" />
+              <xs:element name="CODTIPOSOLI" msprop:Generator_ColumnVarNameInTable="columnCODTIPOSOLI" msprop:Generator_ColumnPropNameInRow="CODTIPOSOLI" msprop:Generator_ColumnPropNameInTable="CODTIPOSOLIColumn" msprop:Generator_UserColumnName="CODTIPOSOLI" type="xs:string" minOccurs="0" />
+              <xs:element name="CODANOSOLI" msprop:Generator_ColumnVarNameInTable="columnCODANOSOLI" msprop:Generator_ColumnPropNameInRow="CODANOSOLI" msprop:Generator_ColumnPropNameInTable="CODANOSOLIColumn" msprop:Generator_UserColumnName="CODANOSOLI" type="xs:string" minOccurs="0" />
+              <xs:element name="CODNUMESOLI" msprop:Generator_ColumnVarNameInTable="columnCODNUMESOLI" msprop:Generator_ColumnPropNameInRow="CODNUMESOLI" msprop:Generator_ColumnPropNameInTable="CODNUMESOLIColumn" msprop:Generator_UserColumnName="CODNUMESOLI" type="xs:string" minOccurs="0" />
+              <xs:element name="CTIPODOCUMENTO" msprop:Generator_ColumnVarNameInTable="columnCTIPODOCUMENTO" msprop:Generator_ColumnPropNameInRow="CTIPODOCUMENTO" msprop:Generator_ColumnPropNameInTable="CTIPODOCUMENTOColumn" msprop:Generator_UserColumnName="CTIPODOCUMENTO" type="xs:string" minOccurs="0" />
+              <xs:element name="FECINSPECCION" msprop:Generator_ColumnVarNameInTable="columnFECINSPECCION" msprop:Generator_ColumnPropNameInRow="FECINSPECCION" msprop:Generator_ColumnPropNameInTable="FECINSPECCIONColumn" msprop:Generator_UserColumnName="FECINSPECCION" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTTIPOLLENADO" msprop:Generator_ColumnVarNameInTable="columnTXTTIPOLLENADO" msprop:Generator_ColumnPropNameInRow="TXTTIPOLLENADO" msprop:Generator_ColumnPropNameInTable="TXTTIPOLLENADOColumn" msprop:Generator_UserColumnName="TXTTIPOLLENADO" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTASUNTO" msprop:Generator_ColumnVarNameInTable="columnTXTASUNTO" msprop:Generator_ColumnPropNameInRow="TXTASUNTO" msprop:Generator_ColumnPropNameInTable="TXTASUNTOColumn" msprop:Generator_UserColumnName="TXTASUNTO" type="xs:string" minOccurs="0" />
+              <xs:element name="CODCARCAT" msprop:Generator_ColumnVarNameInTable="columnCODCARCAT" msprop:Generator_ColumnPropNameInRow="CODCARCAT" msprop:Generator_ColumnPropNameInTable="CODCARCATColumn" msprop:Generator_UserColumnName="CODCARCAT" type="xs:string" minOccurs="0" />
+              <xs:element name="CODUSUASIS" msprop:Generator_ColumnVarNameInTable="columnCODUSUASIS" msprop:Generator_ColumnPropNameInRow="CODUSUASIS" msprop:Generator_ColumnPropNameInTable="CODUSUASISColumn" msprop:Generator_UserColumnName="CODUSUASIS" type="xs:string" minOccurs="0" />
+              <xs:element name="CODPERSONA" msprop:Generator_ColumnVarNameInTable="columnCODPERSONA" msprop:Generator_ColumnPropNameInRow="CODPERSONA" msprop:Generator_ColumnPropNameInTable="CODPERSONAColumn" msprop:Generator_UserColumnName="CODPERSONA" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTUNIDAD" msprop:Generator_ColumnVarNameInTable="columnTXTUNIDAD" msprop:Generator_ColumnPropNameInRow="TXTUNIDAD" msprop:Generator_ColumnPropNameInTable="TXTUNIDADColumn" msprop:Generator_UserColumnName="TXTUNIDAD" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTCODIGOUNICO" msprop:Generator_ColumnVarNameInTable="columnTXTCODIGOUNICO" msprop:Generator_ColumnPropNameInRow="TXTCODIGOUNICO" msprop:Generator_ColumnPropNameInTable="TXTCODIGOUNICOColumn" msprop:Generator_UserColumnName="TXTCODIGOUNICO" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTUNIDADDIREC" msprop:Generator_ColumnVarNameInTable="columnTXTUNIDADDIREC" msprop:Generator_ColumnPropNameInRow="TXTUNIDADDIREC" msprop:Generator_ColumnPropNameInTable="TXTUNIDADDIRECColumn" msprop:Generator_UserColumnName="TXTUNIDADDIREC" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTUNIDADTITULAR" msprop:Generator_ColumnVarNameInTable="columnTXTUNIDADTITULAR" msprop:Generator_ColumnPropNameInRow="TXTUNIDADTITULAR" msprop:Generator_ColumnPropNameInTable="TXTUNIDADTITULARColumn" msprop:Generator_UserColumnName="TXTUNIDADTITULAR" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTSOLICITANTE" msprop:Generator_ColumnVarNameInTable="columnTXTSOLICITANTE" msprop:Generator_ColumnPropNameInRow="TXTSOLICITANTE" msprop:Generator_ColumnPropNameInTable="TXTSOLICITANTEColumn" msprop:Generator_UserColumnName="TXTSOLICITANTE" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTOFICINA" msprop:Generator_ColumnVarNameInTable="columnTXTOFICINA" msprop:Generator_ColumnPropNameInRow="TXTOFICINA" msprop:Generator_ColumnPropNameInTable="TXTOFICINAColumn" msprop:Generator_UserColumnName="TXTOFICINA" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTDESCRIPCIONINFORME" msprop:Generator_ColumnVarNameInTable="columnTXTDESCRIPCIONINFORME" msprop:Generator_ColumnPropNameInRow="TXTDESCRIPCIONINFORME" msprop:Generator_ColumnPropNameInTable="TXTDESCRIPCIONINFORMEColumn" msprop:Generator_UserColumnName="TXTDESCRIPCIONINFORME" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTANIO" msprop:Generator_ColumnVarNameInTable="columnTXTANIO" msprop:Generator_ColumnPropNameInRow="TXTANIO" msprop:Generator_ColumnPropNameInTable="TXTANIOColumn" msprop:Generator_UserColumnName="TXTANIO" type="xs:string" minOccurs="0" />
+              <xs:element name="FECACTUAL" msprop:Generator_ColumnVarNameInTable="columnFECACTUAL" msprop:Generator_ColumnPropNameInRow="FECACTUAL" msprop:Generator_ColumnPropNameInTable="FECACTUALColumn" msprop:Generator_UserColumnName="FECACTUAL" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTNOMBREFIRMA" msprop:Generator_ColumnVarNameInTable="columnTXTNOMBREFIRMA" msprop:Generator_ColumnPropNameInRow="TXTNOMBREFIRMA" msprop:Generator_ColumnPropNameInTable="TXTNOMBREFIRMAColumn" msprop:Generator_UserColumnName="TXTNOMBREFIRMA" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTCARGOFIRMA" msprop:Generator_ColumnVarNameInTable="columnTXTCARGOFIRMA" msprop:Generator_ColumnPropNameInRow="TXTCARGOFIRMA" msprop:Generator_ColumnPropNameInTable="TXTCARGOFIRMAColumn" msprop:Generator_UserColumnName="TXTCARGOFIRMA" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

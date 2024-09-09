@@ -1,0 +1,113 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Reporte.ReporteViewModel
+@{
+    ViewBag.Title = "xFicha Manzana";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="overflow: hidden">
+                <div class="row">
+                    <div class="col-md-6 col-xs-12"><strong>Ficha Manzana</strong></div>
+                    <div class="col-md-6 col-xs-12">
+
+                        <div class="col-md-3 col-md-offset-6 col-sm-3">
+                            <button class="btn btn-green btn-block mr-3" id="" onclick="Limpiar()"><span class="glyphicon glyphicon-ok mr-2"></span> Nueva Busqueda </button>
+                        </div>
+                        <div class="col-md-3 col-sm-3">
+                            <button type="button" id="GenFicha" class="btn btn-create py-2 glyphicon glyphicon-plus-sign" style="float:right" onclick="GenerarFicha()"><span style="font-family:'Open Sans'"> Generar Ficha</span></button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-10">
+                            <div class="row">
+                                <div class="col-sm-3 px-3">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.CodigoSector, htmlAttributes: new { @class = "control-label" })
+                                        @Html.DropDownList("CodigoSector",
+                                                            new SelectList(Model.ParametroSector, "Value", "Text"), "Seleccione un sector",
+                                                            new { @class = "chosen-seleccionar form-control", style = "width:100%;" })
+                                        <span class="field-validation-valid" data-valmsg-for="CodigoSector" data-valmsg-replace="true"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 px-3">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.CodigoManzana, htmlAttributes: new { @class = "control-label" })
+                                        @Html.DropDownList("CodigoManzana", new SelectList(Model.ParametroManzana, "Value", "Text"), "Seleccione una manzana", new { @class = "chosen-seleccionar form-control", style = "width:100%;" })
+                                        <span class="field-validation-valid" data-valmsg-for="CodigoManzana" data-valmsg-replace="true"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@section datatables {
+    <script>
+
+        $("#CodigoSector").change(function () {
+            var URL = "@Url.Content("~")" + "Manzana/Sector/".concat($('#CodigoSector').val());
+            $.post(URL, function (data) {
+                $('#CodigoManzana').find('option:not(:first)').remove();
+                var items = '<option value="">Seleccione una manzana</option>';
+                $.each(data, function (i, item) {
+                    items += "<option value='" + item.CodigoManzana + "'>" + item.NombreManzana + "</option>";
+                });
+                $('#CodigoManzana').html(items);
+                if ('@Model.CodigoManzana') {
+                    $('#CodigoManzana').val('@Model.CodigoManzana');
+                }
+                $('#CodigoManzana').trigger("chosen:updated");
+            });
+        });
+
+        function GenerarFicha() {
+            cont = Validar();
+
+            if (cont == true) {
+                urlFICHA = "@Url.Content("~/Reportes/Reports.aspx")" + "?CodigoDistrito=31&CodigoSector=" + $('#CodigoSector').val() + '&CodigoManzana=' +$('#CodigoManzana').val() + '&CodigoReporte=03';
+                window.open(urlFICHA);
+            }
+        }
+        
+
+        function Validar() {
+            var cont = true;
+
+            RemoveValidacion();
+                       
+            if (!$('#CodigoSector').val()) {
+                $('[data-valmsg-for="CodigoSector"]').html('Seleccione el Sector').addClass('field-validation-valid has-error');
+                cont = false;
+            }
+
+            if (!$('#CodigoManzana').val()) {
+                $('[data-valmsg-for="CodigoManzana"]').html('Seleccione la Manzana').addClass('field-validation-valid has-error');
+                cont = false;
+            }
+
+            return cont
+
+        }
+
+        function RemoveValidacion() {
+            $('[data-valmsg-for="CodigoSector"]').html('').removeClass('field-validation-valid has-error');
+            $('[data-valmsg-for="CodigoManzana"]').html('').removeClass('field-validation-valid has-error');
+        }
+
+        function Limpiar() {
+            RemoveValidacion();
+            $('#CodigoSector').val('');
+            $('#CodigoManzana').html('<option value="">Seleccione una manzana</option>');
+            $('#CodigoManzana').val('');
+        }
+
+    </script>
+  
+    }

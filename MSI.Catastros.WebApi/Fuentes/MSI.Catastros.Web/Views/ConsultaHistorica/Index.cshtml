@@ -1,0 +1,433 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.ConsultaHistorica.FiltrarConsultaHistoricaViewModel
+           
+@{
+    ViewBag.Title = "Consultas Historicas";
+    
+}
+<div class="row Consultas" id="Consultas">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="overflow: hidden">
+                <div class="row">
+                    <div class="col-md-6 col-xs-12"><strong>Consulta Historica</strong></div><div class="col-md-4"></div>
+                    <div class="col-md-2 col-xs-12">
+                        <span>
+                            <button id="NuevaBus" type="button" class="btn btn-green mr-2 btn-block" style="float:right" onclick="limpiar()">
+                                Nueva Búsqueda
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <fieldset class="formulario p-3">
+                    <legend>Tipo de Documento</legend>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">Tipo de Documento</label>
+                                <select id="TipoDocumento" class="form-control">
+                                    <option value=""> - Seleccione -</option>
+                                    <option value="010001">Ficha</option>
+                                    <option value="010002">Informe</option>
+                                    <option value="010003">Certificados</option>
+                                    <option value="010004">Cartas</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label" id="TipoDocDet">Tipo</label>
+                                <select id="Tipofi" class="form-control">
+                                   <option value=""> - Seleccione -</option>
+                                  
+                                </select>
+                                <span class="" data-valmsg-for="TipoD" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset class="formulario p-3">
+                    <legend>Rango de Fechas</legend>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label class="control-label">Desde</label>
+                                <input id="Desde" type="text" maxlength="10" class="form-control" />
+                                <span class="" data-valmsg-for="DesdeF" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label class="control-label">Hasta</label>
+                                <input id="Hasta" type="text" maxlength="10" class="form-control" />
+                                <span class="" data-valmsg-for="HastaF" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset class="formulario p-3">
+                    <legend>Búsqueda</legend>
+                    <div class="row">
+                        <div class="col-md-12 pb-2">
+                            <input type="hidden" id="Nivel" value="01"/>
+                            <table>
+                                <tr>
+                                    <td width="7%"><label class="form-label">Dist.</label></td>
+                                    <td width="7%"><label class="form-label">Sec</label></td>
+                                    <td width="7%"><label class="form-label">Mz</label></td>
+                                    <td width="7%"><label class="form-label">Lote</label></td>
+                                    <td width="7%"><label class="form-label">Ed</label></td>
+                                    <td width="7%"><label class="form-label">Entr</label></td>
+                                    <td width="7%"><label class="form-label">Piso</label></td>
+                                    <td width="7%"><label class="form-label">Unidad</label></td>
+                                    <td width=""><span class="" data-valmsg-for="CodCatas" data-valmsg-replace="true"></span></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoDistrito, new { @class = "form-control text-center px-3", @readonly = "true" })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoSector, new { @class = "form-control text-center px-3", maxlength = 2 , @onkeypress = "if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;"})</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoManzana, new { @class = "form-control text-center px-3", maxlength = 3, @onkeypress = "if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoLote, new { @class = "form-control text-center px-3", maxlength = 3, @onkeypress = "if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarEd, new { @class = "form-control text-center block px-3", maxlength = 2 })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarEntrada, new { @class = "form-control text-center block px-3", maxlength = 2 })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarPiso, new { @class = "form-control text-center block px-3", maxlength = 2 })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarUnidad, new { @class = "form-control text-center block px-3", maxlength = 3 })</td>
+                                    <td>
+                                        <div class="">
+                                            <button id="btnModalBuscar" type="button" class="btn btnModalBuscar btn-green px-5 ">Buscar</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="9">
+                                        <div class="has-error">
+                                            <ul id="msgErrores"></ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset class="formulario p-3">
+                    <div class="row">
+                        <div class="col-md-12 pb-2">
+                            <table>
+                                <tr>
+                                    <td width="20%"><label class="form-label">Estado&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp:</label></td>
+                                    <td width="80%"><label class="form-label" id="lbEstado"></label></td>
+                                </tr>
+                                <tr>
+                                    <td width="20%"><label class="form-label">Ubicacion Actual&nbsp:</label></td>
+                                    <td width="80%"><label class="form-label" id="lbUbicacion"></label></td>
+                                </tr>
+                                <tr>
+                                    <td width="20%"><label class="form-label">Referencia&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp:</label></td>
+                                    <td width="80%"><label class="form-label" id="lbReferencia"></label></td>
+                                </tr>
+                            </table>
+
+                        </div>
+                    </div>
+                    
+                </fieldset>
+
+                <fieldset class="formulario p-3">
+                    <legend>Resultado de Búsqueda de Documentos</legend>
+                    <div class="table-responsive">
+                        <table id="tablaConsulta" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th width="5%">Nro</th>
+                                    <th width="10%">Versión</th>
+                                    <th width="15%">Fecha de Generación</th>
+                                    <th width="40%">Documento</th>
+                                    <th width="30%">Ficha / Informe / Certificado / Carta</th>
+                                    <th style="display:none;"></th>
+                                </tr>
+                            </thead>
+
+                        </table>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section datatables {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    <script src="@Url.Content("~/Scripts/dcalendar.picker.js")"></script>
+    <script>
+
+    $(".divOculto").hide(); $('#FiltrarCodigoDistrito').val('31'); $('#Nivel').val('01');
+    $('#panel1 select').attr('disabled', 'disabled').trigger("chosen:updated");
+    $('.NivelRadio').click(function () {
+        if (this.value === "1") { $(".block").attr('disabled', 'disabled'); $(".divOculto").hide(); $('#Nivel').val('01'); }
+        else { $(".block").removeAttr('disabled'); $(".divOculto").show(); $('#Nivel').val('02'); }
+    });
+
+    pickmeup('#Desde', { format: 'd/m/Y' });
+    pickmeup('#Hasta', { format: 'd/m/Y' });
+    $('#Desde').val('');
+    $('#Hasta').val('');
+
+
+    $('.FiltroCheck').click(function () {
+        var divParent = $(this).parents("#panel1 .row"); var selectElement = divParent.find(".form-control");
+        var isChecked = $(this).is(':checked') ? selectElement.removeAttr('disabled').trigger("chosen:updated") : selectElement.attr('disabled', 'disabled').val('').trigger("chosen:updated");
+    });
+    $(".chosen-seleccionar").chosen({ width: "100%", placeholder_text_single: "Seleccione una opción" });
+
+    var tablaConsulta = $("#tablaConsulta").DataTable({
+        "ajax": {
+            "url": "@Url.Content("~/ConsultaHistorica/CargarGrid")", "type": "POST", "datatype": "json",
+            "data": function (d) {
+                d.FiltrarCodigoDistrito = $('#FiltrarCodigoDistrito').val(); d.FiltrarCodigoSector = $('#FiltrarCodigoSector').val();
+                d.FiltrarCodigoManzana = $('#FiltrarCodigoManzana').val(); d.FiltrarCodigoLote = $('#FiltrarCodigoLote').val();
+                d.FiltrarEd = $('#FiltrarEd').val(); d.FiltrarEntrada = $('#FiltrarEntrada').val();
+                d.FiltrarPiso = $('#FiltrarPiso').val(); d.FiltrarUnidad = $('#FiltrarUnidad').val();
+                d.FECHAINI = $('#Desde').val(); d.FECHAFIN = $('#Hasta').val();
+                d.CODTIPODOC = $('#Tipofi').val();
+            }
+        },
+        //"language": { "lengthMenu": "", "info": "", "emptyTable": "" }, "processing": true, "serverSide": false, "paging": false,
+        "pageLength": 15,
+        "columns": [
+            { "data": "Nro", "className": "text-center", "width": "15%" },
+            { "data": "Version", "className": "text-center" },
+            { "data": "FechaGen", "className": "text-center" },
+            { "data": "Documento", "className": "text-center" },
+            {
+                'render': function (data, type, full, meta) {
+                    return '<button data-toggle="tooltip" title="Imprimir" class="btn mr-1 text-center btnPrint btn-default btn-xs glyphicon glyphicon-print" type="button" ></button>';
+                }, "className": "text-center"
+            },
+            { "data": "RutaDocu", "className": "hide_column" }
+        ]
+
+    });
+    $('#btnModalBuscar').click(function () {
+        if ($('#Tipofi').val() === '01') {
+            cont = ValidarCamposObligatoriosLote();
+        }
+        else {
+            cont = ValidarCamposObligatoriosUnidad();
+        }
+
+        if (cont == true) {
+            tablaConsulta.ajax.reload();
+            //LLENAR CABECERA DE LA UNIDAD
+
+            $.post("@Url.Content("~/ConsultaHistorica/ReferenciaCatas")", {
+                CodSector: $("#FiltrarCodigoSector").val(),
+                CodManzana: $("#FiltrarCodigoManzana").val(),
+                CodLote: $("#FiltrarCodigoLote").val(),
+                CodEdif: $("#FiltrarEd").val(),
+                CodEntrada: $("#FiltrarEntrada").val(),
+                CodPiso: $("#FiltrarPiso").val(),
+                CodUnidad: $("#FiltrarUnidad").val(),
+                CODTIPODOC: $('#Tipofi').val(),
+            }, function (response) {
+                console.log(response)
+
+                if (response.success == true) {
+                    $('#lbEstado').text(response.resultado.EstadoUnidad);
+                    $('#lbReferencia').text(response.resultado.Referencia);
+                    $('#lbUbicacion').text(response.resultado.Ubicacion);
+                }
+                else {
+                    console.log('b');
+                }
+            });
+        }
+        else {
+            $('#lbEstado').text('');
+            $('#lbReferencia').text('');
+            $('#lbUbicacion').text('');
+        }
+    });
+
+    $("#TipoDocumento").change(function () {
+
+        $('#Tipofi').val('');
+        var items = '<option value="">Seleccione...</option>';
+        $('#TipoDocDet').text('Tipo');
+
+        if ($("#TipoDocumento").val() === '010001') {
+            items += "<option value='01'>Ficha de Lote</option>";
+            items += "<option value='02'>Ficha de Unidad Catastral/Bien Comun</option>";
+           
+            $('#TipoDocDet').text('Tipo de Ficha Catastral');
+        }
+        if ($("#TipoDocumento").val() === '010002') {
+            items += "<option value='04'>Informe de Verificacion Catastral</option>";
+            items += "<option value='05'>Informe Tecnico</option>";
+            items += "<option value='06'>Informe de Certificado de Numeracion</option>";
+
+            $('#TipoDocDet').text('Tipo de Informe');
+        }
+        if ($("#TipoDocumento").val() === '010003') {
+            items += "<option value='07'>Certificado de Jurisdiccion</option>";
+            items += "<option value='08'>Certificado de Nomenclatura</option>";
+            items += "<option value='09'>Certificado de Numeracion</option>";
+            items += "<option value='10'>Hoja Informativa</option>";
+            items += "<option value='11'>Plano de Acumulacion</option>";
+            items += "<option value='12'>Resolucion de Numeracion</option>";
+
+            $('#TipoDocDet').text('Tipo de Certificado');
+        }
+        if ($("#TipoDocumento").val() === '010004') {
+            items += "<option value='13'>Citacion</option>";
+            items += "<option value='14'>Constancia de Visita</option>";
+            items += "<option value='15'>Programacion de Inspeccion</option>";
+
+            $('#TipoDocDet').text('Tipo de Cartas');
+        }
+        $('#Tipofi').html(items);
+    });
+
+    $("#tablaConsulta tbody").on('click', 'button.btnPrint', function (event) {
+        event.stopPropagation();
+        var data = tablaConsulta.row($(this).parents('tr')).data();
+        var codigo = data.RutaDocu;
+      
+        urlFICHA = "@Url.Content("~/ConsultaHistorica/Descargar")" + "?id=" + codigo;
+        window.open(urlFICHA);
+    });
+
+    function LimpiarForm() {
+        $('#tabInforme input').val('').removeAttr('disabled'); $('#tabInforme textarea').val('');
+        $('#legInforme').val();
+        $('#GrabarGeneral').attr('disabled', 'disabled'); $('#GenFicha').attr('disabled', 'disabled');
+        $('#NombreAnio').val('"Año del Diálogo y Reconciliación Nacional"'); $('#CodigoOficina').val('@System.Configuration.ConfigurationManager.AppSettings["CODAREA"]'); $('#FiltrarCodigoPeriodo').val((new Date()).getFullYear());
+    }
+
+    function ValidarCamposObligatoriosLote() {
+        RemoveValidacion();
+        var cont = true;
+
+        if (!$('#FiltrarCodigoSector').val() || !$('#FiltrarCodigoManzana').val() || !$('#FiltrarCodigoLote').val()) {
+            $('[data-valmsg-for="CodCatas"]').html('Ingrese Codigo Catastral Completo').addClass('field-validation-valid has-error');
+
+            cont = false;
+        }
+        if (!$('#Tipofi').val()) {
+            $('[data-valmsg-for="TipoD"]').html('Escoga Tipo de Documento').addClass('field-validation-valid has-error');
+            cont = false;
+        }
+        if (!$('#Desde').val()) {
+            $('[data-valmsg-for="DesdeF"]').html('Ingrese Fecha').addClass('field-validation-valid has-error');
+            cont = false;
+        }
+        if (!$('#Hasta').val()) {
+            $('[data-valmsg-for="HastaF"]').html('Ingrese Fecha').addClass('field-validation-valid has-error');
+            cont = false;
+        }
+
+        return cont
+    }
+
+    function ValidarCamposObligatoriosUnidad() {
+        RemoveValidacion();
+        var cont = true;
+
+        if (!$('#FiltrarCodigoSector').val() || !$('#FiltrarCodigoManzana').val() || !$('#FiltrarCodigoLote').val()
+            || !$('#FiltrarEd').val() || !$('#FiltrarEntrada').val() || !$('#FiltrarPiso').val() || !$('#FiltrarUnidad').val()) {
+            $('[data-valmsg-for="CodCatas"]').html('Ingrese Codigo Catastral Completo').addClass('field-validation-valid has-error');
+            cont = false;
+        }
+        if (!$('#Tipofi').val()) {
+            $('[data-valmsg-for="TipoD"]').html('Escoga Tipo de Documento').addClass('field-validation-valid has-error');
+            cont = false;
+        }
+        if (!$('#Desde').val()) {
+            $('[data-valmsg-for="DesdeF"]').html('Ingrese Fecha').addClass('field-validation-valid has-error');
+            cont = false;
+        }
+        if (!$('#Hasta').val()) {
+            $('[data-valmsg-for="HastaF"]').html('Ingrese Fecha').addClass('field-validation-valid has-error');
+            cont = false;
+        }
+
+        return cont
+    }
+
+    function limpiar() {
+        RemoveValidacion()    
+        $("#FiltrarCodigoSector").val('');
+        $("#FiltrarCodigoManzana").val('');
+        $("#FiltrarCodigoLote").val('');
+        $("#FiltrarEd").val('');
+        $("#FiltrarEntrada").val('');
+        $("#FiltrarPiso").val('');
+        $("#FiltrarUnidad").val('');
+        $('#Tipofi').val('');
+        $('#TipoDocumento').val('');
+        $('#Desde').val('');
+        $('#Hasta').val('');
+        $('#lbEstado').text('');
+        $('#lbReferencia').text('');     
+        $('#lbUbicacion').text('');
+        tablaConsulta.clear().draw();
+        //$('#lbUbicacion').text(response.resultado.Ubicacion);
+
+    }
+
+    function RemoveValidacion() {
+        $('[data-valmsg-for="CodCatas"]').html('').removeClass('field-validation-valid has-error');
+        $('[data-valmsg-for="TipoD"]').html('').removeClass('field-validation-valid has-error');
+        $('[data-valmsg-for="DesdeF"]').html('').removeClass('field-validation-valid has-error');
+        $('[data-valmsg-for="HastaF"]').html('').removeClass('field-validation-valid has-error');
+
+    }
+
+    $('#FiltrarCodigoSector').change(function () {
+        var texto;
+        texto = ZeroIzqCaracter($('#FiltrarCodigoSector').val(), 2);
+        $('#FiltrarCodigoSector').val(texto);
+    });
+
+    $('#FiltrarCodigoManzana').change(function () {
+        var texto;
+        texto = ZeroIzqCaracter($('#FiltrarCodigoManzana').val(), 3);
+        $('#FiltrarCodigoManzana').val(texto);
+    });
+
+    $('#FiltrarCodigoLote').change(function () {
+        var texto;
+        texto = ZeroIzqCaracter($('#FiltrarCodigoLote').val(), 3);
+        $('#FiltrarCodigoLote').val(texto);
+    });
+
+    $('#FiltrarEd').change(function () {
+        var texto;
+        texto = ZeroIzqCaracter($('#FiltrarEd').val(), 2);
+        $('#FiltrarEd').val(texto);
+    });
+
+    $('#FiltrarEntrada').change(function () {
+        var texto;
+        texto = ZeroIzqCaracter($('#FiltrarEntrada').val(), 2);
+        $('#FiltrarEntrada').val(texto);
+    });
+
+    $('#FiltrarPiso').change(function () {
+        var texto;
+        texto = ZeroIzqCaracter($('#FiltrarPiso').val(), 2);
+        $('#FiltrarPiso').val(texto);
+    });
+
+    $('#FiltrarUnidad').change(function () {
+        var texto;
+        texto = ZeroIzqCaracter($('#FiltrarUnidad').val(), 3);
+        $('#FiltrarUnidad').val(texto);
+    });
+
+
+
+
+    </script>
+}

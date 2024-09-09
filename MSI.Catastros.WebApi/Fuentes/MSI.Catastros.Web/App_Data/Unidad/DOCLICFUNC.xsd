@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DOCLICFUNC" targetNamespace="http://tempuri.org/DOCLICFUNC.xsd" xmlns:mstns="http://tempuri.org/DOCLICFUNC.xsd" xmlns="http://tempuri.org/DOCLICFUNC.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DOCLICFUNC" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DOCLICFUNC" msprop:Generator_UserDSName="DOCLICFUNC">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="LICENCIA" msprop:Generator_TableClassName="LICENCIADataTable" msprop:Generator_TableVarName="tableLICENCIA" msprop:Generator_TablePropName="LICENCIA" msprop:Generator_RowDeletingName="LICENCIARowDeleting" msprop:Generator_RowChangingName="LICENCIARowChanging" msprop:Generator_RowEvHandlerName="LICENCIARowChangeEventHandler" msprop:Generator_RowDeletedName="LICENCIARowDeleted" msprop:Generator_UserTableName="LICENCIA" msprop:Generator_RowChangedName="LICENCIARowChanged" msprop:Generator_RowEvArgName="LICENCIARowChangeEvent" msprop:Generator_RowClassName="LICENCIARow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ITEM" msprop:Generator_ColumnVarNameInTable="columnITEM" msprop:Generator_ColumnPropNameInRow="ITEM" msprop:Generator_ColumnPropNameInTable="ITEMColumn" msprop:Generator_UserColumnName="ITEM" type="xs:string" minOccurs="0" />
+              <xs:element name="SOLICITANTE" msprop:Generator_ColumnVarNameInTable="columnSOLICITANTE" msprop:Generator_ColumnPropNameInRow="SOLICITANTE" msprop:Generator_ColumnPropNameInTable="SOLICITANTEColumn" msprop:Generator_UserColumnName="SOLICITANTE" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTTIPODOCU" msprop:Generator_ColumnVarNameInTable="columnTXTTIPODOCU" msprop:Generator_ColumnPropNameInRow="TXTTIPODOCU" msprop:Generator_ColumnPropNameInTable="TXTTIPODOCUColumn" msprop:Generator_UserColumnName="TXTTIPODOCU" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTNUMERO" msprop:Generator_ColumnVarNameInTable="columnTXTNUMERO" msprop:Generator_ColumnPropNameInRow="TXTNUMERO" msprop:Generator_ColumnPropNameInTable="TXTNUMEROColumn" msprop:Generator_UserColumnName="TXTNUMERO" type="xs:string" minOccurs="0" />
+              <xs:element name="GIRO" msprop:Generator_ColumnVarNameInTable="columnGIRO" msprop:Generator_ColumnPropNameInRow="GIRO" msprop:Generator_ColumnPropNameInTable="GIROColumn" msprop:Generator_UserColumnName="GIRO" type="xs:string" minOccurs="0" />
+              <xs:element name="FECDOC" msprop:Generator_ColumnVarNameInTable="columnFECDOC" msprop:Generator_ColumnPropNameInRow="FECDOC" msprop:Generator_ColumnPropNameInTable="FECDOCColumn" msprop:Generator_UserColumnName="FECDOC" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

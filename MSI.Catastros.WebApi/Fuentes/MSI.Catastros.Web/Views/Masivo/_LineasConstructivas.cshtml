@@ -1,0 +1,536 @@
+﻿<style>
+    .form-2 {
+        padding: 0.25rem 0.5rem;
+        font-size: 1.115rem;
+        line-height: 1.5;
+        border-radius: 0.3rem;
+    }
+</style>
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-hidden="true">
+                &times;
+            </button>
+            <h4 id="TituloGeneral">Lineas Constructivas</h4>
+        </div>
+        <div class="modal-body">
+            <div id='tab-3'>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="table-responsive">
+                            <table id="TablaUnidadPaso5" class="display table table-bordered" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Dist</th>
+                                        <th>Sec</th>
+                                        <th>Mz</th>
+                                        <th>Lote</th>
+                                        <th>Ed</th>
+                                        <th>Entr</th>
+                                        <th>Piso</th>
+                                        <th>Unidad</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <fieldset class="formulario">
+                        @*<legend>Líneas Constructivas (m2)</legend>*@
+                        <div class="relative">
+                            @*<button data-toggle="collapse" href="#panelLineasContructivas" class="btn btn-xs btn-success fa fa-caret-down absolute"></button>*@
+                            <div class="row collapse in" id="panelLineasContructivas">
+                                <div class="col-md-12">
+                                    <table id="LineasContructivas">
+                                        <tr>
+                                            <td width="5%"><label class="control-label">Nro.</label></td>
+                                            <td width="5%"><label class="control-label">Nivel</label></td>
+                                            <td width="5%"><label class="control-label">Mes</label></td>
+                                            <td width="5%"><label class="control-label">Año</label></td>
+                                            <td width="8%"><label class="control-label">Material <br />Estructural</label></td>
+                                            <td width="8%"><label class="control-label">Estado de <br />Conservación</label></td>
+                                            <td width="5%"><label class="control-label">Muro</label></td>
+                                            <td width="5%"><label class="control-label">Techo</label></td>
+                                            <td width="5%"><label class="control-label">Piso</label></td>
+                                            <td width="5%"><label class="control-label">Puertas <br />Ventanas</label></td>
+                                            <td width="5%"><label class="control-label">Revestimiento</label></td>
+                                            <td width="5%"><label class="control-label">Baño</label></td>
+                                            <td width="5%"><label class="control-label">Instalaciones <br /> Electricas <br /> y Sanitarias</label></td>
+                                            <td width="8%"><label class="control-label">Area <br /> Verificada</label></td>
+                                            <td width="8%"><label class="control-label">Area <br /> Declarada</label></td>
+                                            <td width="8%"></td>
+                                        </tr>
+                                        <tr >
+                                            <td class="pr-1"><input value="00001" disabled type="text" class="text-center form-control form-2 item_lineas_constructivas" /></td>
+                                            <td class="pr-1"><input id="lineas_constructivas_txtpiso_00001" type="text" class="text-center form-control form-2 txtpiso_lineas_constructivas" disabled/></td>
+                                            <td class="pr-1"><select id="lineas_constructivas_mes_00001" class="text-center form-control form-2 mes_lineas_constructivas"></select></td>
+                                            <td class="pr-1"><input id="lineas_constructivas_ano_00001" type="text" maxlength="4" onkeypress="return isNumeric(event)" class="text-center form-control ano_lineas_constructivas" /></td>
+                                            <td class="pr-1"><select id="lineas_constructivas_material_00001" class="text-center form-control form-2 material_lineas_constructivas"></select></td>
+                                            <td class="pr-1"><select id="lineas_constructivas_estado_00001" class="text-center form-control form-2 estado_lineas_constructivas"> </select></td>
+                                            <td class="pr-1"><input id="lineas_constructivas_muro_00001" type="text" maxlength="1" onkeypress="if (!(event.keyCode >= 65 && event.keyCode <= 73) && !(event.keyCode >= 97 && event.keyCode <= 105)) event.returnValue = false;" class="text-center form-control muro_lineas_constructivas" /></td>
+                                            <td class="pr-1"><input id="lineas_constructivas_techo_00001" type="text" maxlength="1" onkeypress="if (!(event.keyCode >= 65 && event.keyCode <= 73) && !(event.keyCode >= 97 && event.keyCode <= 105)) event.returnValue = false;" class="text-center form-control techo_lineas_constructivas" /></td>
+                                            <td class="pr-1"><input id="lineas_constructivas_piso_00001" type="text" maxlength="1" onkeypress="if (!(event.keyCode >= 65 && event.keyCode <= 73) && !(event.keyCode >= 97 && event.keyCode <= 105)) event.returnValue = false;"  class="text-center form-control piso_lineas_constructivas" /></td>
+                                            <td class="pr-1"><input id="lineas_constructivas_puerta_00001" type="text" maxlength="1" onkeypress="if (!(event.keyCode >= 65 && event.keyCode <= 73) && !(event.keyCode >= 97 && event.keyCode <= 105)) event.returnValue = false;" class="text-center form-control puerta_lineas_constructivas" /></td>
+                                            <td class="pr-1"><input id="lineas_constructivas_revest_00001" type="text" maxlength="1" onkeypress="if (!(event.keyCode >= 65 && event.keyCode <= 73) && !(event.keyCode >= 97 && event.keyCode <= 105)) event.returnValue = false;" class="text-center form-control revest_lineas_constructivas" /></td>
+                                            <td class="pr-1"><input id="lineas_constructivas_bano_00001" type="text" maxlength="1" onkeypress="if (!(event.keyCode >= 65 && event.keyCode <= 73) && !(event.keyCode >= 97 && event.keyCode <= 105)) event.returnValue = false;" class="text-center form-control bano_lineas_constructivas" /></td>
+                                            <td class="pr-1"><input id="lineas_constructivas_electricas_00001" type="text" maxlength="1" onkeypress="if (!(event.keyCode >= 65 && event.keyCode <= 73) && !(event.keyCode >= 97 && event.keyCode <= 105)) event.returnValue = false;" class="text-center form-control electricas_lineas_constructivas" /></td>
+                                            <td class="pr-1"><input id="lineas_constructivas_verificada_00001" style="text-align: right;" type="text" class="text-center form-control form-2 verificada_lineas_constructivas numero" onkeyup="SumarAreasConstructivas()" /></td>
+                                            <td class="pr-1"><input id="lineas_constructivas_declarada_00001" style="text-align: right;" type="text" class="text-center form-control form-2 declarada_lineas_constructivas numero" onkeyup="SumarAreasConstructivas()" /></td>
+                                            <td style="display:none;"><input id="lineas_constructivas_id_00001" type="hidden" class="form-control form-2 id_lineas_constructivas" /></td>
+                                            <td>
+                                                <button onclick="CrearCamposUnidadCatastral(1, 'LineasContructivas', '00001', 'lineas_constructivas')" class="btn btn-sm btn-success fa fa-plus"></button>
+                                                @*<button onclick="EditarCamposUnidadCatastral(1, 'LineasContructivas', '00001', 'lineas_constructivas')" class="btn btn-sm btn-success fa fa-edit"></button>*@
+                                                <button onclick="EliminarCamposUnidadCatastral(1, this, '00001', 'item_lote_obser')" class="btn btn-sm btn-success fa fa-trash"></button>
+                                            </td>
+                                        </tr>
+                                        <tr name="validacion">
+                                            <td></td>
+                                            <td><span class="" data-valmsg-for="val_lineas_constructivas_txtpiso_00001" data-valmsg-replace="true"></span></td>
+                                            <td><span class="" data-valmsg-for="val_lineas_constructivas_mes_00001" data-valmsg-replace="true"></span></td>
+                                            <td><span class="" data-valmsg-for="val_lineas_constructivas_ano_00001" data-valmsg-replace="true"></span></td>
+                                            <td><span class="" data-valmsg-for="val_lineas_constructivas_material_00001" data-valmsg-replace="true"></span></td>
+                                            <td><span class="" data-valmsg-for="val_lineas_constructivas_estado_00001" data-valmsg-replace="true"></span></td>
+                                            <td><span class="" data-valmsg-for="val_lineas_constructivas_muro_00001" data-valmsg-replace="true"></span></td>
+                                            <td><span class="" data-valmsg-for="val_lineas_constructivas_techo_00001" data-valmsg-replace="true"></span></td>
+                                            <td><span class="" data-valmsg-for="val_lineas_constructivas_piso_00001" data-valmsg-replace="true"></span></td>
+                                            <td><span class="" data-valmsg-for="val_lineas_constructivas_puerta_00001" data-valmsg-replace="true"></span></td>
+                                            <td><span class="" data-valmsg-for="val_lineas_constructivas_revest_00001" data-valmsg-replace="true"></span></td>
+                                            <td><span class="" data-valmsg-for="val_lineas_constructivas_bano_00001" data-valmsg-replace="true"></span></td>
+                                            <td><span class="" data-valmsg-for="val_lineas_constructivas_electricas_00001" data-valmsg-replace="true"></span></td>
+                                            <td><span class="" data-valmsg-for="val_lineas_constructivas_verificada_00001" data-valmsg-replace="true"></span></td>
+                                            <td><span class="" data-valmsg-for="val_lineas_constructivas_declarada_00001" data-valmsg-replace="true"></span></td>
+                                            <td style="display:none;"></td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="col-md-offset-2 col-md-10">
+                <input id="btnLineasConstructivasModal" type="submit" value="Grabar" class="btn btn-success" />
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        tablaUnidadPaso5 = $("#TablaUnidadPaso5").DataTable({
+            "processing": false,
+            "serverSide": false,
+            "paging": false,
+            "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+            "columns": [
+                { "data": "Distrito", "className": "text-center" },
+                { "data": "Sec", "className": "text-center" },
+                { "data": "Manzana", "className": "text-center" },
+                { "data": "Lote", "className": "text-center" },
+                { "data": "Ed", "className": "text-center" },
+                { "data": "Entr", "className": "text-center" },
+                { "data": "Piso", "className": "text-center" },
+                { "data": "Unidad", "className": "text-center" }
+            ]
+        });
+        debugger;
+        tablaUnidadPaso5.clear().draw();
+        pisoTemp = ""; contPiso = 0;
+        $.each(ListunidadCatastralDireccion, function (index, entry) {
+            if (pisoTemp != entry.Piso) {
+                pisoTemp = entry.Piso;
+                $('#lineas_constructivas_txtpiso_00001').val(pisoTemp);
+                contPiso++;
+            }
+            if (contPiso > 1) {
+                $('#lineas_constructivas_txtpiso_00001').val('');
+            }
+            tablaUnidadPaso5.row.add(entry).draw();
+        });
+        $('.numero').number(true, 4, '.', '');
+        $('#btnLineasConstructivasModal').click(function () {
+            cont = true;// ValidarUnidadCatastral();
+            debugger;
+            if (cont == true) {
+
+                var UnidadCatastral = {
+                    CodigoUnidadCatastral: 0,
+                    Estado: 2,
+                };
+                var ListaLineasContruc = LineasConstructivas();
+                if (ListaLineasContruc.length === 1) {
+                    $.each(ListaLineasContruc, function (i, item) {
+                        if (item.Verificada === "" && item.Declarada === "") {
+                            ListaLineasContruc = null;
+                        }
+                    });
+                }
+                console.log('valor de lineas contructivas antes de guardar');
+                console.log(ListaLineasContruc);
+
+                if (ListaLineasContruc !== false) {
+
+                    $.ajax({
+                        url: "@Url.Content("~/UnidadCatastral/RegistrarUnidadCatastral")",
+                        type: "POST",
+                        data:
+                        {
+                            UnidadCatastral: UnidadCatastral, ListaLineasContruc: ListaLineasContruc
+                        },
+                        dataType: "json",
+                        success: function (response) {
+                            if (response.success) {
+                                ///console.log('Ya se Grabo todo');
+                                CagarListadoMasivo();
+                                $('#modalLineasConstructivas').modal('hide');
+                                var mensaje = "Registro grabado correctamente";
+                                toastr.success(mensaje, "Mensaje del Sistema", { "progressBar": true });
+                            } else {
+                                toastr.error(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                            }
+                        },
+                        complete: function () {
+                            $('#btnSubmit').removeAttr('disabled');
+                        }
+                    });
+
+                } else {
+                    toastr.error("Revisar la información", "Mensaje del Sistema", { "progressBar": true });
+                }
+            }
+        });
+
+    });
+    ListVBEstadoConservacion = @Html.Raw(Json.Encode(ViewBag.ListVBEstadoConservacion))
+    ListVBMaterialEstructural = @Html.Raw(Json.Encode(ViewBag.ListVBMaterialEstructural))
+    ListVBMes = @Html.Raw(Json.Encode(ViewBag.ListVBMes))
+    CrearCombobox('lineas_constructivas_estado_00001', ListVBEstadoConservacion);
+    CrearCombobox('lineas_constructivas_material_00001', ListVBMaterialEstructural);
+    CrearCombobox('lineas_constructivas_mes_00001', ListVBMes);
+    function CrearCombobox(Combobox, data) {
+
+        $('#' + Combobox).find('option:not(:first)').remove();
+        var items = '<option value="">Seleccione...</option>';
+        $.each(data, function (i, item) {
+            items += "<option value='" + item.Value + "'>" + item.Text + "</option>";
+        });
+        $('#' + Combobox).val('');
+        $('#' + Combobox).html(items);
+        $('.chosen-seleccionar').trigger("chosen:updated");
+
+    }
+    var contLineasConstructivas, contIdLineasConstructivas, contOtrasInstalaciones, contIdOtrasInstalaciones, contActividadEconomica, contIdActividadEconomica, contLoteDocumRRPP, contIdLoteDocumRRPP,
+            contLoteExpediente, contLoteIdExpediente, contLoteAuto, contIdLoteAuto, contObservacionGeneral, contIdObservacionGeneral,
+            contObservacionSunarp, contIdObservacionSunarp, contObservacionCarga, contIdObservacionCarga, columnas, fieldset;
+    contLineasConstructivas = contIdLineasConstructivas = contOtrasInstalaciones = contIdOtrasInstalaciones = contActividadEconomica = contIdActividadEconomica = contLoteDocumRRPP =
+        contIdLoteDocumRRPP = contLoteExpediente = contLoteIdExpediente = contLoteAuto = contIdLoteAuto = contObservacionGeneral = contIdObservacionGeneral =
+        contObservacionSunarp = contIdObservacionSunarp = contObservacionCarga = contIdObservacionCarga = 1;
+    var lblTd = '<td class="pr-1">';
+    var lblTdSpan = '<td>';
+    function CrearCamposUnidadCatastral(tipo, tabla, posactual, focus, opcion) {
+        if (tipo === 1) {
+
+            cont = ValidarLineasConstructivas(posactual, 0);
+            if (cont == true || posactual == '00000') {
+                contLineasConstructivas++; contIdLineasConstructivas++; var numeroItem = LeftZero(contLineasConstructivas, 5); var idItem = LeftZero(contIdLineasConstructivas, 5);
+                fieldset = "lineas_constructivas";
+                var ValCat = 'onKeypress="if (!(event.keyCode >= 65 && event.keyCode <= 73) && !(event.keyCode >= 97 && event.keyCode <= 105)) event.returnValue = false;"'
+                columnas = lblTd + '<input type="text" disabled value="' + idItem + '"  class="text-center form-control form-2 item_lineas_constructivas"></td>' +
+                           lblTd + '<input id="lineas_constructivas_txtpiso_' + idItem + '" type="text" maxlength="2"  class="text-center form-control form-2 txtpiso_lineas_constructivas" disabled></td>' +
+                           lblTd + '<select id="lineas_constructivas_mes_' + idItem + '" class="text-center form-control form-2 mes_lineas_constructivas"></select></td>' +
+                           lblTd + '<input id="lineas_constructivas_ano_' + idItem + '" type="text" maxlength="4" onkeypress="return isNumeric(event)" class="text-center form-control form-2 ano_lineas_constructivas"></td>' +
+                           lblTd + '<select id="lineas_constructivas_material_' + idItem + '" class="text-center form-control form-2 material_lineas_constructivas"></select></td>' +
+                           lblTd + '<select id="lineas_constructivas_estado_' + idItem + '" class="text-center form-control form-2 estado_lineas_constructivas"> </select></td>' +
+                           lblTd + '<input id="lineas_constructivas_muro_' + idItem + '" type="text" maxlength="1" ' + ValCat + ' class="text-center form-control form-2 muro_lineas_constructivas" /></td>' +
+                           lblTd + '<input id="lineas_constructivas_techo_' + idItem + '" type="text" maxlength="1" ' + ValCat + ' class="text-center form-control form-2 techo_lineas_constructivas" /></td>' +
+                           lblTd + '<input id="lineas_constructivas_piso_' + idItem + '" type="text" maxlength="1" ' + ValCat + ' class="text-center form-control form-2 piso_lineas_constructivas" /></td>' +
+                           lblTd + '<input id="lineas_constructivas_puerta_' + idItem + '" type="text" maxlength="1" ' + ValCat + ' class="text-center form-control form-2 puerta_lineas_constructivas" /></td>' +
+                           lblTd + '<input id="lineas_constructivas_revest_' + idItem + '" type="text" maxlength="1" ' + ValCat + ' class="text-center form-control form-2 revest_lineas_constructivas" /></td>' +
+                           lblTd + '<input id="lineas_constructivas_bano_' + idItem + '" type="text" maxlength="1" ' + ValCat + ' class="text-center form-control form-2 bano_lineas_constructivas" /></td>' +
+                           lblTd + '<input id="lineas_constructivas_electricas_' + idItem + '" type="text" maxlength="1" ' + ValCat + ' class="text-center form-control form-2 electricas_lineas_constructivas" /></td>' +
+                           lblTd + '<input id="lineas_constructivas_verificada_' + idItem + '" type="text" class="text-center form-control form-2 verificada_lineas_constructivas" onkeyup="SumarAreasConstructivas()" style="text-align: right;" /></td>' +
+                           lblTd + '<input id="lineas_constructivas_declarada_' + idItem + '" type="text" class="text-center form-control form-2 declarada_lineas_constructivas" onkeyup="SumarAreasConstructivas()" style="text-align: right;" /></td>' +
+                           '<td style="display:none;">' + '<input id="lineas_constructivas_id_' + idItem + '" type="hidden" class="form-control form-2 id_lineas_constructivas" /></td>';
+
+                columnasValidacion = lblTdSpan + '</td>' +
+                           lblTdSpan + '<span class="" data-valmsg-for="val_lineas_constructivas_txtpiso_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                           lblTdSpan + '<span class="" data-valmsg-for="val_lineas_constructivas_mes_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                           lblTdSpan + '<span class="" data-valmsg-for="val_lineas_constructivas_ano_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                           lblTdSpan + '<span class="" data-valmsg-for="val_lineas_constructivas_material_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                           lblTdSpan + '<span class="" data-valmsg-for="val_lineas_constructivas_estado_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                           lblTdSpan + '<span class="" data-valmsg-for="val_lineas_constructivas_muro_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                           lblTdSpan + '<span class="" data-valmsg-for="val_lineas_constructivas_techo_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                           lblTdSpan + '<span class="" data-valmsg-for="val_lineas_constructivas_piso_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                           lblTdSpan + '<span class="" data-valmsg-for="val_lineas_constructivas_puerta_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                           lblTdSpan + '<span class="" data-valmsg-for="val_lineas_constructivas_revest_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                           lblTdSpan + '<span class="" data-valmsg-for="val_lineas_constructivas_bano_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                           lblTdSpan + '<span class="" data-valmsg-for="val_lineas_constructivas_electricas_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                           lblTdSpan + '<span class="" data-valmsg-for="val_lineas_constructivas_verificada_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                           lblTdSpan + '<span class="" data-valmsg-for="val_lineas_constructivas_declarada_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                           '<td style="display:none;"></td>';
+
+                BotonesTablas(tabla, columnas, tipo, focus, idItem, fieldset, columnasValidacion, opcion);
+                CrearCombobox('lineas_constructivas_estado_' + idItem, ListVBEstadoConservacion);
+                CrearCombobox('lineas_constructivas_material_' + idItem, ListVBMaterialEstructural);
+                CrearCombobox('lineas_constructivas_mes_' + idItem, ListVBMes);
+                
+                if (contPiso > 1) {
+                    $('#lineas_constructivas_txtpiso_' + idItem).val('');
+                } else {
+                    $('#lineas_constructivas_txtpiso_' + idItem).val(pisoTemp);
+                }
+
+                //CrearMascaraDecimal(fieldset + '_verificada_' + idItem);
+                //CrearMascaraDecimal(fieldset + '_declarada_' + idItem);
+
+                $('#lineas_constructivas_verificada_' + idItem).number(true, 4, '.', '');
+                $('#lineas_constructivas_declarada_' + idItem).number(true, 4, '.', '');
+
+            }
+        }
+        $(".chosen-seleccionar").chosen({ width: "100%", placeholder_text_single: "Seleccione una opción" });
+    }
+    function ValidarLineasConstructivas(IdItem, ValInicial) {
+        RemoveValidacionLineasConstructivas(IdItem);
+        var cont = true;
+        var contError = 0;
+        //if (!$('#lineas_constructivas_txtpiso_' + IdItem).val()) {
+        //    $('[data-valmsg-for="val_lineas_constructivas_txtpiso_' + IdItem + '"]').html('Ingrese <br> Piso').addClass('field-validation-valid has-error');
+        //    cont = false;
+        //    contError++;
+        //}
+
+        if (!$('#lineas_constructivas_mes_' + IdItem).val()) {
+            $('[data-valmsg-for="val_lineas_constructivas_mes_' + IdItem + '"]').html('Ingrese <br> Mes').addClass('field-validation-valid has-error');
+            cont = false;
+            contError++;
+        }
+
+        if (!$('#lineas_constructivas_ano_' + IdItem).val()) {
+            $('[data-valmsg-for="val_lineas_constructivas_ano_' + IdItem + '"]').html('Ingrese <br> Año').addClass('field-validation-valid has-error');
+            cont = false;
+            contError++;
+        }
+
+        if (!$('#lineas_constructivas_material_' + IdItem).val()) {
+            $('[data-valmsg-for="val_lineas_constructivas_material_' + IdItem + '"]').html('Ingrese <br> Material').addClass('field-validation-valid has-error');
+            cont = false;
+            contError++;
+        }
+
+        if (!$('#lineas_constructivas_estado_' + IdItem).val()) {
+            $('[data-valmsg-for="val_lineas_constructivas_estado_' + IdItem + '"]').html('Ingrese <br> Estado').addClass('field-validation-valid has-error');
+            cont = false;
+            contError++;
+        }
+
+        if (!$('#lineas_constructivas_muro_' + IdItem).val()) {
+            $('[data-valmsg-for="val_lineas_constructivas_muro_' + IdItem + '"]').html('Ingrese <br> Muro').addClass('field-validation-valid has-error');
+            cont = false;
+            contError++;
+        }
+
+        if (!$('#lineas_constructivas_techo_' + IdItem).val()) {
+            $('[data-valmsg-for="val_lineas_constructivas_techo_' + IdItem + '"]').html('Ingrese <br> Techo').addClass('field-validation-valid has-error');
+            cont = false;
+            contError++;
+        }
+
+        if (!$('#lineas_constructivas_piso_' + IdItem).val()) {
+            $('[data-valmsg-for="val_lineas_constructivas_piso_' + IdItem + '"]').html('Ingrese <br> Piso').addClass('field-validation-valid has-error');
+            cont = false;
+            contError++;
+        }
+
+        if (!$('#lineas_constructivas_puerta_' + IdItem).val()) {
+            $('[data-valmsg-for="val_lineas_constructivas_puerta_' + IdItem + '"]').html('Ingrese <br> Puerta').addClass('field-validation-valid has-error');
+            cont = false;
+            contError++;
+        }
+
+        if (!$('#lineas_constructivas_revest_' + IdItem).val()) {
+            $('[data-valmsg-for="val_lineas_constructivas_revest_' + IdItem + '"]').html('Ingrese <br> Revest.').addClass('field-validation-valid has-error');
+            cont = false;
+            contError++;
+        }
+
+        if (!$('#lineas_constructivas_bano_' + IdItem).val()) {
+            $('[data-valmsg-for="val_lineas_constructivas_bano_' + IdItem + '"]').html('Ingrese <br> Baño').addClass('field-validation-valid has-error');
+            cont = false;
+            contError++;
+        }
+
+        if (!$('#lineas_constructivas_electricas_' + IdItem).val()) {
+            $('[data-valmsg-for="val_lineas_constructivas_electricas_' + IdItem + '"]').html('Ingrese <br> Instalaciones <br> Electicas').addClass('field-validation-valid has-error');
+            cont = false;
+            contError++;
+        }
+
+        if (!$('#lineas_constructivas_verificada_' + IdItem).val()) {
+            $('[data-valmsg-for="val_lineas_constructivas_verificada_' + IdItem + '"]').html('Ingrese <br> Área  <br> Verificada').addClass('field-validation-valid has-error');
+            cont = false;
+            contError++;
+        }
+
+        if (!$('#lineas_constructivas_declarada_' + IdItem).val()) {
+            $('[data-valmsg-for="val_lineas_constructivas_declarada_' + IdItem + '"]').html('Ingrese <br> Área <br> Declarada').addClass('field-validation-valid has-error');
+            cont = false;
+            contError++;
+        }
+
+        if (contError === 14 && ValInicial === 1) {
+            cont = true;
+            RemoveValidacionLineasConstructivas(IdItem);
+        }
+
+        return cont
+    }
+    function RemoveValidacionLineasConstructivas(IdItem) {
+        //$('[data-valmsg-for="val_lineas_constructivas_txtpiso_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+        $('[data-valmsg-for="val_lineas_constructivas_mes_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+        $('[data-valmsg-for="val_lineas_constructivas_ano_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+        $('[data-valmsg-for="val_lineas_constructivas_material_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+        $('[data-valmsg-for="val_lineas_constructivas_estado_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+        $('[data-valmsg-for="val_lineas_constructivas_muro_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+        $('[data-valmsg-for="val_lineas_constructivas_techo_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+        $('[data-valmsg-for="val_lineas_constructivas_piso_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+        $('[data-valmsg-for="val_lineas_constructivas_puerta_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+        $('[data-valmsg-for="val_lineas_constructivas_revest_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+        $('[data-valmsg-for="val_lineas_constructivas_bano_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+        $('[data-valmsg-for="val_lineas_constructivas_electricas_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+        $('[data-valmsg-for="val_lineas_constructivas_verificada_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+        $('[data-valmsg-for="val_lineas_constructivas_declarada_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+    }
+    function SumarAreasConstructivas() {
+        var SumaConstruidaVerificada = 0;
+        var SumaConstruidaDeclarada = 0;
+        var SumaAreaTotal = 0
+        $('#LineasContructivas tr').each(function (index, item) {
+            if (index !== 0) {
+                if ($(item).closest("tr").attr('name') !== 'delete' && $(item).closest("tr").attr('name') !== 'validacion') {
+                    $(item).children("td").each(function () {
+                        var input = $(this).children("input");
+                        var select = $(this).children("select");
+                        if (input.hasClass("verificada_lineas_constructivas")) { SumaConstruidaVerificada = parseFloat(SumaConstruidaVerificada) + parseFloat(input.val()); }
+                        else if (input.hasClass("declarada_lineas_constructivas")) { SumaConstruidaDeclarada = parseFloat(SumaConstruidaDeclarada) + parseFloat(input.val()); }
+                    });
+                }
+            }
+        });
+
+        $('#AreaConstruidaTotalVerificada').val(SumaConstruidaVerificada);
+        $('#AreaConstruidaTotalDeclarada').val(SumaConstruidaDeclarada);
+
+        if (SumaConstruidaVerificada > SumaConstruidaDeclarada) {
+            TotalSubvaluada = parseFloat(SumaConstruidaVerificada) - parseFloat(SumaConstruidaDeclarada);
+            $('#AreaConstruidaSubValuada').val(TotalSubvaluada);
+        } else {
+            $('#AreaConstruidaSubValuada').val('');
+        }
+
+        if (SumaConstruidaVerificada < SumaConstruidaDeclarada) {
+            TotalSubvaluada = parseFloat(SumaConstruidaDeclarada) - parseFloat(SumaConstruidaVerificada);
+            $('#AreaConstruidaSobreValuada').val(TotalSubvaluada);
+        } else {
+            $('#AreaConstruidaSobreValuada').val('');
+        }
+
+        //Calculo del Area Terreno Total
+        $('#AreaTerrenoTotal').val(parseFloat($('#AreaTerrenoVerificada').val()) + parseFloat($('#AreaTerrenoComun').val()));
+
+        //Calculo del AreaTerreno Subvaluada
+        if (parseFloat($('#AreaTerrenoVerificada').val()) > parseFloat($('#AreaTerrenoDeclarada').val())) {
+            $('#AreaTerrenoSubValuada').val(parseFloat($('#AreaTerrenoVerificada').val()) - parseFloat($('#AreaTerrenoDeclarada').val()));
+            $('#AreaTerrenoSubValuada').addClass('numeroAreaTerrenoSubValuada');
+            $('.numeroAreaTerrenoSubValuada').number(true, 4, '.', '');
+        } else {
+            $('#AreaTerrenoSubValuada').removeClass('numeroAreaTerrenoSubValuada');
+            $('#AreaTerrenoSubValuada').val('');
+        }
+
+        //Calculo del Area Terreno SobreValuada
+        if (parseFloat($('#AreaTerrenoVerificada').val()) < parseFloat($('#AreaTerrenoDeclarada').val())) {
+            $('#AreaTerrenoSobreValuada').val(parseFloat($('#AreaTerrenoDeclarada').val()) - parseFloat($('#AreaTerrenoVerificada').val()));
+            $('#AreaTerrenoSobreValuada').addClass('numeroAreaTerrenoSobreValuada');
+            $('.numeroAreaTerrenoSobreValuada').number(true, 4, '.', '');
+        } else {
+            $('#AreaTerrenoSobreValuada').removeClass('numeroAreaTerrenoSobreValuada');
+            $('#AreaTerrenoSobreValuada').val('');
+        }
+
+
+    }
+    function LineasConstructivas() {
+        var datosParseados = [];
+        var ValBool = [];
+        debugger;
+        $.each(ListunidadCatastralDireccion, function (index, entry) {
+
+            $('#LineasContructivas tr').each(function (index, item) {
+                if (index !== 0 && $(item).closest("tr").attr('name') !== 'validacion' && $(item).closest("tr").attr('name') !== 'delete') {
+
+                    //$(item).children("td").each(function () {
+                    //    //console.log('1');
+                    //    var input = $(this).children("input");
+                    //    if (input.hasClass("txtpiso_lineas_constructivas")) {
+                    //        //console.log('2');
+                    //        //console.log(input);
+                    //        var IdInput = $(input).attr("id");
+                    //        var indicetext = IdInput.substr(IdInput.length - 5, 5);
+                    //        //console.log(indicetext);
+                    //    }
+                    //    cont = ValidarLineasConstructivas(indicetext, 1);
+                    //    ValBool.push(cont);
+                    //});
+                }
+                if (cont == true) {
+                    var del = '0';
+                    if (index === 0) return true;
+                    if ($(item).closest("tr").attr('name') === 'delete') del = '1';
+
+                    if ($(item).closest("tr").attr('name') !== 'validacion') {
+                        var ind, txtpiso, mes, ano, material, estado, muro, techo, piso, puerta, revest, bano, electricas, verificada, declarada;
+                        $(item).children("td").each(function () {
+                            var input = $(this).children("input");
+                            var select = $(this).children("select");
+                            if (input.hasClass("txtpiso_lineas_constructivas")) { txtpiso = input.val(); } else if (select.hasClass("mes_lineas_constructivas")) { mes = select.val(); }
+                            else if (input.hasClass("ano_lineas_constructivas")) { ano = input.val(); } else if (select.hasClass("material_lineas_constructivas")) { material = select.val(); }
+                            else if (select.hasClass("estado_lineas_constructivas")) { estado = select.val(); } else if (input.hasClass("muro_lineas_constructivas")) { muro = input.val(); }
+                            else if (input.hasClass("techo_lineas_constructivas")) { techo = input.val(); } else if (input.hasClass("piso_lineas_constructivas")) { piso = /*entry.Piso*/ input.val(); }
+                            else if (input.hasClass("puerta_lineas_constructivas")) { puerta = input.val(); } else if (input.hasClass("revest_lineas_constructivas")) { revest = input.val(); }
+                            else if (input.hasClass("bano_lineas_constructivas")) { bano = input.val(); } else if (input.hasClass("electricas_lineas_constructivas")) { electricas = input.val(); }
+                            else if (input.hasClass("verificada_lineas_constructivas")) { verificada = input.val(); } else if (input.hasClass("declarada_lineas_constructivas")) { declarada = input.val(); }
+                            else if (input.hasClass("id_lineas_constructivas")) { ind = input.val(); }
+                        });
+                        if (!(!piso && !mes && !ano && !material && !estado && !muro && !techo && !piso && !puerta && !revest && !bano && !electricas && !verificada && !declarada)) {
+                            console.log('FIELDS', txtpiso, mes, ano, material, estado, muro, techo, piso, puerta, revest, bano, electricas, verificada, declarada);
+                            datosParseados.push({
+                                "CodigoCorrelativo": ind, "Eliminado": del, "txtPiso": entry.Piso, "Mes": mes, "Ano": ano, "Material": material, "EstadoConst": estado,
+                                "Muro": muro, "Techo": techo, "Piso": piso, "Puerta": puerta, "Revest": revest, "Bano": bano, "Electricas": electricas, "Verificada": verificada, "Declarada": declarada,
+                                "CodigoUnidadCatastral": entry.CODUNI
+                            });
+                        }
+                    }
+                }
+
+            });
+
+            for (i = 0; i < ValBool.length; i++) {
+                if (ValBool[i] === false) {
+                    return false;
+                }
+            }
+        });
+        console.log(datosParseados);
+        return datosParseados;
+
+    }
+</script>

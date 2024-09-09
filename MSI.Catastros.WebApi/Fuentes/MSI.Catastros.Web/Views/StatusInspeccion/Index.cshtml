@@ -1,0 +1,265 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.StatusInspeccion.FilterStatusInspecionViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="overflow: hidden">
+                <div class="row">
+                    <div class="col-lg-9 pt-2">
+                        <label class="control-label">Status Inspección</label>
+                    </div>
+                    <div class="col-lg-3 hidden-print">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button id="btncalendario" class="btn btn-white btn-block px-4"><span class="glyphicon glyphicon-print mr-2"></span>Calendario</button>
+                            </div>
+                            <div class="col-md-6">
+                                <button class="btn btn-white btn-block px-4 Imprimir"><span class="glyphicon glyphicon-print mr-2"></span> Imprimir</button>
+                            </div>
+                            @*<div class="col-md-6">
+                                <button class="btn btn-white btn-block px-4"><span class="glyphicon glyphicon-remove mr-2"></span> Salir</button>
+                            </div>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                    <input type="hidden" name="Estado" value="" />
+                    <fieldset class="formulario hidden-print" style="display: block;">
+                        <legend>Seleccionar Filtro</legend>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.TipoBusqueda, new { @class = "control-label col-md-12" })
+                                    <div class="col-md-12">
+                                        @*@Html.EditorFor(model => model.codTipoBusqueda)*@
+                                        @Html.DropDownListFor(m => m.codTipoBusqueda, Model.TipoBusqueda, "- Tipo de Busqueda  -", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.codTipoBusqueda, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="panelSolicitud" class="col-sm-3">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.NroSolicitud, new { @class = "control-label col-md-12" })
+                                    <div class="col-md-12">
+                                        @Html.TextBoxFor(model => model.NroSolicitud, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.NroSolicitud, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="panelCodigoCatastral" class="col-sm-3">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.CodigoCatastral, new { @class = "control-label col-md-12" })
+                                    <div class="col-md-12">
+                                        @Html.TextBoxFor(model => model.CodigoCatastral, new { @class = "form-control"})
+                                        @Html.ValidationMessageFor(model => model.CodigoCatastral, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="panelFecha">
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.FechaInicio, new { @class = "control-label col-md-12" })
+                                        <div class="col-md-12">
+                                            <div class="form-group has-default has-feedback">
+                                                @Html.TextBoxFor(model => model.FechaInicio, "{0:dd/MM/yyyy}", new { @class = "form-control fechaE" })
+                                                <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>
+                                                @*@Html.ValidationMessageFor(model => model.FechaInicio, "", new { @class = "text-danger" })*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.FechaFin, new { @class = "control-label col-md-12" })
+                                        <div class="col-md-12">
+                                            <div class="form-group has-default has-feedback">
+                                                @Html.TextBoxFor(model => model.FechaFin, "{0:dd/MM/yyyy}", new { @class = "form-control fechaE" })
+                                                <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>
+                                                @*@Html.ValidationMessageFor(model => model.FechaFin, "", new { @class = "text-danger" })*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <br />
+                                <div class="form-group">
+                                    <div class="col-md-12">
+
+                                        <button type="submit" id="btnBuscarInspeccion" class="btn btn-green btn-block">Buscar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="tablaInspeccion" style="width: 100%" class="table responsive display table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th width="30px">N° Inspección</th>
+                                    <th width="30px">N° Solicitud</th>
+                                    <th width="30px">Fecha Inspección </th>
+                                    <th width="15px">Hora Inspección</th>
+                                    <th width="270px">Inspectores </th>
+                                    <th width="270px">Responsable</th>
+                                    <th width="180px">Codigo Catastral</th>
+                                    <th>Observacion</th>
+                                    <th>Estado </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modalCalendario" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="true">
+    <div class="modal-dialog" role="document">
+
+    </div>
+</div>
+
+@section scripts {
+    <script src="@Url.Content("~/Scripts/dcalendar.picker.js")"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    <script>
+         $(function () {
+             $('#CodigoCatastral').inputmask('31-99-999-999-**-**-**-999',);
+
+             pickmeup('#FechaInicio', { format: 'd/m/Y', max: new Date() + 1 });
+             $('#FechaInicio').val('');
+
+             pickmeup('#FechaFin', { format: 'd/m/Y', max: new Date() + 1 });
+             $('#FechaFin').val('');
+
+
+            var valor = $("#codTipoBusqueda").val();
+            if (this.value == "") {
+                $("#panelSolicitud").hide();
+                $("#panelCodigoCatastral").hide();
+                $("#panelFecha").hide();
+                $("#FechaInicio").val("");
+                $("#FechaFin").val("");
+                $("#NroSolicitud").val("");
+                $("#btnBuscarInspeccion").hide();
+            } else if (valor == "0") {
+                $("#panelSolicitud").hide();
+                $("#panelFecha").hide();
+                $("#btnBuscarInspeccion").show();
+                $("#panelCodigoCatastral").hide();
+            } else if (valor == "2") {
+                $("#panelSolicitud").show();
+                $("#panelFecha").hide();
+                $("#btnBuscarInspeccion").show();
+                $("#panelCodigoCatastral").hide();
+            } else if (valor == "3") {
+                $("#panelSolicitud").hide();
+                $("#panelFecha").show();
+                $("#btnBuscarInspeccion").show();
+                $("#panelCodigoCatastral").hide();
+            } else if (valor == "4") {
+                $("#panelSolicitud").hide();
+                $("#panelFecha").hide();
+                $("#btnBuscarInspeccion").show();
+                $("#panelCodigoCatastral").show();
+            }
+
+            $("#codTipoBusqueda").change(function () {
+                if (this.value == "") {
+                    $("#panelSolicitud").hide();
+                    $("#panelFecha").hide();
+                    $("#FechaInicio").val("");
+                    $("#FechaFin").val("");
+                    $("#CodigoCatastral").val("");
+                    $("#NroSolicitud").val("");
+                    $("#btnBuscarInspeccion").hide();
+                    $("#panelCodigoCatastral").hide();
+                } else if (this.value.trim() == "0") {
+                    $("#panelSolicitud").hide();
+                    $("#panelCodigoCatastral").hide();
+                    $("#panelFecha").hide();
+                    $("#FechaInicio").val("");
+                    $("#CodigoCatastral").val("");
+                    $("#FechaFin").val("");
+                    $("#NroSolicitud").val("");
+                    $("#btnBuscarInspeccion").show();
+                } else if (this.value.trim() == "2") {
+                    $("#panelSolicitud").show();
+                    $("#panelCodigoCatastral").hide();
+                    $("#panelFecha").hide();
+                    $("#FechaInicio").val("");
+                    $("#FechaFin").val("");
+                    $("#CodigoCatastral").val("");
+                    $("#NroSolicitud").val("");
+                    $("#btnBuscarInspeccion").show();
+                } else if (this.value.trim() == "3") {
+                    $("#panelSolicitud").hide();
+                    $("#panelCodigoCatastral").hide();
+                    $("#panelFecha").show();
+                    $("#FechaInicio").val("");
+                    $("#CodigoCatastral").val("");
+                    $("#FechaFin").val("");
+                    $("#NroSolicitud").val("");
+                    $("#btnBuscarInspeccion").show();
+                }else if (this.value.trim() == "4") {
+                    $("#panelSolicitud").hide();
+                    $("#panelCodigoCatastral").show();
+                    $("#panelFecha").hide();
+                    $("#FechaInicio").val("");
+                    $("#FechaFin").val("");
+                    $("#CodigoCatastral").val("");
+                    $("#NroSolicitud").val("");
+                    $("#btnBuscarInspeccion").show();
+                }
+            });
+            $(".Imprimir").click(function () {
+                window.print();
+            });
+            $("#btncalendario").click(function () {
+                $.get("@Url.Content("~/StatusInspeccion/RegistarClase")",
+                   null,
+                   function (response) {
+                       $("#modalCalendario").html(response);
+                       $("#modalCalendario").modal();
+                   });
+            }); 
+            
+            $('#btnBuscarInspeccion').click(function () {
+                table.rows().remove().draw();
+                table.ajax.reload();
+            });
+            var table = $("#tablaInspeccion").DataTable({
+                "ajax": {
+                    "url": "@Url.Content("~/StatusInspeccion/consultaInspeccion")", "type": "POST", "datatype": "json",
+                    "data": function (d) {
+                        d.FiltrarcodTipoBusqueda = "3";
+                        d.FiltrarNroSolicitud = $('#NroSolicitud').val();
+                        d.FiltrarFechaInicio = $('#FechaInicio').val();
+                        d.FiltrarFechaFin = $('#FechaFin').val();
+                        d.FiltrarCodigoCatastral  = $('#CodigoCatastral').val(); 
+                    }
+                },
+                "columns": [
+                { "data": "NroInspeccion", "name": "NroInspeccion", "className": "text-center" },
+                { "data": "NroSolicitud", "name": "NroSolicitud", "className": "text-center" },
+                { "data": "FechaInspeccion", "name": "FechaInspeccion", "className": "text-center" },
+                { "data": "HoraInspeccion", "className": "text-center" },
+                { "data": "Inspectores", "name": "Inspectores", "className": "text-center" },
+                { "data": "Responsable", "name": "Responsable", "className": "text-center" },
+                { "data": "CodCatastral", "name": "CodCatastral", "className": "text-center" },
+                { "data": "Observacion", "name": "Observacion", "className": "text-center" },
+                { "data": "EstadoInspeccion", "className":"text-center" },        
+                ]
+            }
+            );
+        });
+
+    </script>
+}

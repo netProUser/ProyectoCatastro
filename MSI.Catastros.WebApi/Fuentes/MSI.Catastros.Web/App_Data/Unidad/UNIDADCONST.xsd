@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="UNIDADCONST" targetNamespace="http://tempuri.org/UNIDADCONST.xsd" xmlns:mstns="http://tempuri.org/UNIDADCONST.xsd" xmlns="http://tempuri.org/UNIDADCONST.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="UNIDADCONST" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="UNIDADCONST" msprop:Generator_UserDSName="UNIDADCONST">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="CONSTRUCCION" msprop:Generator_TableClassName="CONSTRUCCIONDataTable" msprop:Generator_TableVarName="tableCONSTRUCCION" msprop:Generator_RowChangedName="CONSTRUCCIONRowChanged" msprop:Generator_TablePropName="CONSTRUCCION" msprop:Generator_RowDeletingName="CONSTRUCCIONRowDeleting" msprop:Generator_RowChangingName="CONSTRUCCIONRowChanging" msprop:Generator_RowEvHandlerName="CONSTRUCCIONRowChangeEventHandler" msprop:Generator_RowDeletedName="CONSTRUCCIONRowDeleted" msprop:Generator_RowClassName="CONSTRUCCIONRow" msprop:Generator_UserTableName="CONSTRUCCION" msprop:Generator_RowEvArgName="CONSTRUCCIONRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="TXTPISO" msprop:Generator_ColumnVarNameInTable="columnTXTPISO" msprop:Generator_ColumnPropNameInRow="TXTPISO" msprop:Generator_ColumnPropNameInTable="TXTPISOColumn" msprop:Generator_UserColumnName="TXTPISO" type="xs:string" minOccurs="0" />
+              <xs:element name="NUMMES" msprop:Generator_ColumnVarNameInTable="columnNUMMES" msprop:Generator_ColumnPropNameInRow="NUMMES" msprop:Generator_ColumnPropNameInTable="NUMMESColumn" msprop:Generator_UserColumnName="NUMMES" type="xs:string" minOccurs="0" />
+              <xs:element name="NUMANO" msprop:Generator_ColumnVarNameInTable="columnNUMANO" msprop:Generator_ColumnPropNameInRow="NUMANO" msprop:Generator_ColumnPropNameInTable="NUMANOColumn" msprop:Generator_UserColumnName="NUMANO" type="xs:string" minOccurs="0" />
+              <xs:element name="CODMATEESTR" msprop:Generator_ColumnVarNameInTable="columnCODMATEESTR" msprop:Generator_ColumnPropNameInRow="CODMATEESTR" msprop:Generator_ColumnPropNameInTable="CODMATEESTRColumn" msprop:Generator_UserColumnName="CODMATEESTR" type="xs:string" minOccurs="0" />
+              <xs:element name="CODESTACONSE" msprop:Generator_ColumnVarNameInTable="columnCODESTACONSE" msprop:Generator_ColumnPropNameInRow="CODESTACONSE" msprop:Generator_ColumnPropNameInTable="CODESTACONSEColumn" msprop:Generator_UserColumnName="CODESTACONSE" type="xs:string" minOccurs="0" />
+              <xs:element name="CODCATEMURO" msprop:Generator_ColumnVarNameInTable="columnCODCATEMURO" msprop:Generator_ColumnPropNameInRow="CODCATEMURO" msprop:Generator_ColumnPropNameInTable="CODCATEMUROColumn" msprop:Generator_UserColumnName="CODCATEMURO" type="xs:string" minOccurs="0" />
+              <xs:element name="CODCATETECH" msprop:Generator_ColumnVarNameInTable="columnCODCATETECH" msprop:Generator_ColumnPropNameInRow="CODCATETECH" msprop:Generator_ColumnPropNameInTable="CODCATETECHColumn" msprop:Generator_UserColumnName="CODCATETECH" type="xs:string" minOccurs="0" />
+              <xs:element name="CODCATEPISO" msprop:Generator_ColumnVarNameInTable="columnCODCATEPISO" msprop:Generator_ColumnPropNameInRow="CODCATEPISO" msprop:Generator_ColumnPropNameInTable="CODCATEPISOColumn" msprop:Generator_UserColumnName="CODCATEPISO" type="xs:string" minOccurs="0" />
+              <xs:element name="CODCATEPUERVENT" msprop:Generator_ColumnVarNameInTable="columnCODCATEPUERVENT" msprop:Generator_ColumnPropNameInRow="CODCATEPUERVENT" msprop:Generator_ColumnPropNameInTable="CODCATEPUERVENTColumn" msprop:Generator_UserColumnName="CODCATEPUERVENT" type="xs:string" minOccurs="0" />
+              <xs:element name="CODCATEREVE" msprop:Generator_ColumnVarNameInTable="columnCODCATEREVE" msprop:Generator_ColumnPropNameInRow="CODCATEREVE" msprop:Generator_ColumnPropNameInTable="CODCATEREVEColumn" msprop:Generator_UserColumnName="CODCATEREVE" type="xs:string" minOccurs="0" />
+              <xs:element name="CODCATEBANO" msprop:Generator_ColumnVarNameInTable="columnCODCATEBANO" msprop:Generator_ColumnPropNameInRow="CODCATEBANO" msprop:Generator_ColumnPropNameInTable="CODCATEBANOColumn" msprop:Generator_UserColumnName="CODCATEBANO" type="xs:string" minOccurs="0" />
+              <xs:element name="CODCATEINSTELEC" msprop:Generator_ColumnVarNameInTable="columnCODCATEINSTELEC" msprop:Generator_ColumnPropNameInRow="CODCATEINSTELEC" msprop:Generator_ColumnPropNameInTable="CODCATEINSTELECColumn" msprop:Generator_UserColumnName="CODCATEINSTELEC" type="xs:string" minOccurs="0" />
+              <xs:element name="NUMAREAVERI" msprop:Generator_ColumnVarNameInTable="columnNUMAREAVERI" msprop:Generator_ColumnPropNameInRow="NUMAREAVERI" msprop:Generator_ColumnPropNameInTable="NUMAREAVERIColumn" msprop:Generator_UserColumnName="NUMAREAVERI" type="xs:double" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

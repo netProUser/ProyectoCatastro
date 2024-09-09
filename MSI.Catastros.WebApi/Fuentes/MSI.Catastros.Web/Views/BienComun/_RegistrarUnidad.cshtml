@@ -1,0 +1,260 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.BienComun.FiltrarUnidadCatastralViewModel
+
+<div id="RegistrarUnidadContainer">
+    @using (Html.BeginForm("Registrar", "Unidad", FormMethod.Post, new { id = "frmUnidad", name = "frmUnidad" }))
+    {
+        @Html.AntiForgeryToken()
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>*@
+                <button class="btn btn-default px-5 mr-2" style="margin-top:-2px;float: right;" data-dismiss="modal" aria-label="Close">Salir</button>
+                <button id="btnModalAsignar" type="button" class="btn btnModalAsignar px-5 btn-green mr-2" style="margin-top:-2px;float: right;">Asignar</button>
+                <h4 class="modal-title" id="exampleModalLabel" style="font-weight:bold">Unidades BC</h4>
+
+            </div>
+            <div class="modal-body">
+                @Html.HiddenFor(model => model.hidTipoBusqueda)
+                <div class="row DivUnidadCastastral">
+                    <div class="col-md-12">
+                        <fieldset class="formulariomodal">
+                            <legend>Busqueda</legend>
+                            <table>
+                                <tr>
+                                    <td width="7%"><label class="form-label">Dist.</label></td>
+                                    <td width="7%"><label class="form-label">Sec</label></td>
+                                    <td width="7%"><label class="form-label">Mz</label></td>
+                                    <td width="7%"><label class="form-label">Lote</label></td>
+                                    <td width="7%"><label class="form-label">Ed</label></td>
+                                    <td width="7%"><label class="form-label">Entr</label></td>
+                                    <td width="7%"><label class="form-label">Piso</label></td>
+                                    <td width="7%"><label class="form-label">Unidad</label></td>
+                                    <td width=""></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoDistritoReg, new { @class = "form-control text-center px-3", @readonly = "true" })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoSectorReg, new { @class = "form-control text-center px-3", maxlength = 2, @onkeypress = "if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoManzanaReg, new { @class = "form-control text-center px-3", maxlength = 3, @onkeypress = "if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoLoteReg, new { @class = "form-control text-center px-3", maxlength = 3, @onkeypress = "if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarEdReg, new { @class = "form-control text-center px-3", maxlength = 2 })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarEntradaReg, new { @class = "form-control text-center px-3", maxlength = 2 })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarPisoReg, new { @class = "form-control text-center px-3", maxlength = 2 })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarUnidadReg, new { @class = "form-control text-center px-3", maxlength = 3 })</td>
+                                    <td>
+                                        <div class="">
+                                            <label class="checkbox-inline control-label" style="line-height:20px"><input type="checkbox" id="FiltroCheck" class="FiltroCheck" name="FiltroCheck" value="1">Unidades de Masivo</label>
+                                            <button id="btnModalBuscar" type="button" class="btn btnModalBuscar btn-warning glyphicon glyphicon-search"></button>
+                                            @*<button class="btn btn-green glyphicon glyphicon-plus"></button>*@
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="9">
+                                        <div class="has-error">
+                                            <ul id="msgErrores"></ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 pb-2">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="tablaUnidadCatastralBC" style="width:100%;" class="table responsive display  table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th width="6%" style="width:65px">Dist</th>
+                                    <th width="6%">Sec</th>
+                                    <th width="6%">Mz</th>
+                                    <th width="6%">Lote</th>
+                                    <th width="6%">Ed</th>
+                                    <th width="6%">Entr</th>
+                                    <th width="2%">Piso</th>
+                                    <th width="6%">Unidad</th>
+                                    <th width="">Titular</th>
+                                    <th width="">Ubicacion</th>
+                                    <th></th>
+                                    <th style="display:none;"></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+</div>
+
+
+<script src="~/assets/vendor/datatables-checkboxes/js/dataTables.checkboxes.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('input').keyup(function () { this.value = this.value.toLocaleUpperCase() });
+        $(".chosen-seleccionar").chosen({ width: "100%", placeholder_text_single: "Seleccione una opción" });
+        var nombreEntidad = "UnidadCatastral";
+        localStorage.setItem('UnidadesSelec', "");
+        $('#FiltrarCodigoDistritoReg').val("31");
+        $(".DivUnidadCastastral").show();
+        $("#hidTipoBusqueda").val('2');
+
+        if (CodCatastralGlobal)  {
+            var sectMod = CodCatastralGlobal.substring(3, 5);
+            var manzMod = CodCatastralGlobal.substring(6, 9);
+            var loteMod = CodCatastralGlobal.substring(10, 13);
+            var edifMod = CodCatastralGlobal.substring(14, 16);
+            var entrMod = CodCatastralGlobal.substring(17, 19);
+            var pisoMod = CodCatastralGlobal.substring(20, 22);
+            $('#FiltrarCodigoSectorReg').val(sectMod).attr('disabled','disabled');
+            $('#FiltrarCodigoManzanaReg').val(manzMod).attr('disabled', 'disabled');
+            if (loteMod != 'XXX') $('#FiltrarCodigoLoteReg').val(loteMod).attr('disabled', 'disabled');
+            if (edifMod != 'XX') $('#FiltrarEdReg').val(edifMod).attr('disabled', 'disabled');
+            if (entrMod != 'XX') $('#FiltrarEntradaReg').val(loteMod).attr('disabled', 'disabled');
+            if (pisoMod != 'XX') $('#FiltrarPisoReg').val(loteMod).attr('disabled', 'disabled');
+        }
+
+
+        // DATOS A ELIMINAR
+        //$('#FiltrarCodigoSector').val("09");
+        //$('#FiltrarCodigoManzana').val("019");
+        //$('#FiltrarCodigoLote').val("006");
+        // DATOS A ELIMINAR
+        var checkbox = "0";
+        $('#FiltroCheck').change(function () {
+            var x = $("#FiltroCheck").is(":checked");
+            checkbox = (x) ? "1" : "0";
+            $('#btnModalBuscar').trigger("click");
+        });
+
+        $('#FiltrarCodigoSectorReg').change(function () {
+            var texto;
+            texto = ZeroIzqCaracter($('#FiltrarCodigoSectorReg').val(), 2);
+            $('#FiltrarCodigoSectorReg').val(texto);
+        });
+        $('#FiltrarCodigoManzanaReg').change(function () {
+            var texto;
+            texto = ZeroIzqCaracter($('#FiltrarCodigoManzanaReg').val(), 3);
+            $('#FiltrarCodigoManzanaReg').val(texto);
+        });
+        $('#FiltrarCodigoLoteReg').change(function () {
+            var texto;
+            texto = ZeroIzqCaracter($('#FiltrarCodigoLoteReg').val(), 3);
+            $('#FiltrarCodigoLoteReg').val(texto);
+        });
+        $('#FiltrarEdReg').change(function () {
+            var texto;
+            texto = ZeroIzqCaracter($('#FiltrarEdReg').val(), 2);
+            $('#FiltrarEdReg').val(texto);
+        });
+        $('#FiltrarEntradaReg').change(function () {
+            var texto;
+            texto = ZeroIzqCaracter($('#FiltrarEntradaReg').val(), 2);
+            $('#FiltrarEntradaReg').val(texto);
+        });
+        $('#FiltrarPisoReg').change(function () {
+            var texto;
+            texto = ZeroIzqCaracter($('#FiltrarPisoReg').val(), 2);
+            $('#FiltrarPisoReg').val(texto);
+        });
+        $('#FiltrarUnidadReg').change(function () {
+            var texto;
+            texto = ZeroIzqCaracter($('#FiltrarUnidadReg').val(), 3);
+            $('#FiltrarUnidadReg').val(texto);
+        });
+
+        tablaUnidadCatastralBC = $("#tablaUnidadCatastralBC").DataTable({
+            "ajax": {
+                "url": "@Url.Content("~/ProcedimientoInicial/CargarUnidadBC")", "type": "POST", "datatype": "json",
+                "data": function (d) {
+                    d.FiltrarCodigoDistrito = $('#FiltrarCodigoDistritoReg').val();d.FiltrarCodigoSector = $('#FiltrarCodigoSectorReg').val();
+                    d.FiltrarCodigoManzana = $('#FiltrarCodigoManzanaReg').val();d.FiltrarCodigoLote = $('#FiltrarCodigoLoteReg').val();
+                    d.FiltrarEd = $('#FiltrarEdReg').val();d.FiltrarEntrada = $('#FiltrarEntradaReg').val();
+                    d.FiltrarPiso = $('#FiltrarPisoReg').val(); d.FiltrarUnidad = $('#FiltrarUnidadReg').val();
+                    d.CodigoUnico = $('#CodigoUnidadCatastral').val();
+                    d.TipoBusqueda = checkbox;
+                }
+            },
+            "scrollY": "600px",
+            "scrollCollapse": true,
+            "language": { "lengthMenu": "", "info": "", "emptyTable": "" }, "processing": true, "serverSide": false, "paging": false,
+            'columnDefs': [
+                 { "width": "7%", "targets": 0 }, { "width": "7%", "targets": 1 }, { "width": "7%", "targets": 2 },
+                 { "width": "7%", "targets": 3 }, { "width": "7%", "targets": 4 }, { "width": "7%", "targets": 5 },
+                 { "width": "7%", "targets": 6 }, { "width": "7%", "targets": 7 }, { "width": "20%", "targets": 8 },
+                 { "width": "20%", "targets": 9 }, { 'targets': 10, 'checkboxes': { 'selectRow': true } }
+            ],
+            "initComplete": function (setting, json) {
+                if (json.data.length < 15) {
+                    $('#tablaUnidadCatastralBC_wrapper .dataTables_scrollHead').removeClass('pr-4');
+                } else {
+                    $('#tablaUnidadCatastralBC_wrapper .dataTables_scrollHead').addClass('pr-4');
+                }
+                tablaUnidadCatastralBC.columns.adjust().draw();
+            },
+            "columns": [
+                { "data": "CodigoDistrito", "name": "CodigoDistrito", "className": "text-center" },
+                { "data": "CodigoSector", "name": "CodigoSector", "className": "text-center" },
+                { "data": "CodigoManzana", "name": "CodigoManzana", "autoWidth": true, "className": "text-center" },
+                { "data": "CodigoLote", "name": "CodigoLote", "autoWidth": true, "className": "text-center" },
+                { "data": "Ed", "name": "Edificacion", "autoWidth": true, "className": "text-center" },
+                { "data": "Entrada", "name": "Entrada", "autoWidth": true, "className": "text-center" },
+                { "data": "Piso", "name": "Piso", "autoWidth": true, "className": "text-center" },
+                { "data": "Unidad", "name": "Unidad", "className": "text-center" },
+                { "data": "Titular", "name": "Titular", "autoWidth": true, "className": "text-center" },
+                { "data": "Ubicacion", "name": "Ubicacion", "autoWidth": true, "className": "text-center" },
+                { "data": "Indice", "name": "Indice", "autoWidth": true, "className": "text-center" },
+                { "data": "CodigoUni", "name": "CodigoUni", "autoWidth": true, "className": "hide_column" },
+            ]
+        });
+        $("#btnModalAsignar").on("click", function (event) {
+            var rows_selected = tablaUnidadCatastralBC.column(10).checkboxes.selected();
+            var ListaRows = [];
+            $.each(rows_selected, function (index, Indice) {
+                var rows = tablaUnidadCatastralBC.rows(Indice).data()[0];
+                ListaRows.push(rows);
+            });
+            console.log('Lista', ListaRows);
+            localStorage.setItem('UnidadesSelec', JSON.stringify(ListaRows));
+            $('#modalNuevoUnidadBC').modal('hide');
+        });
+        $("#btnModalBuscar").on("click", function (event) {
+            var cont;
+            $('#msgErrores').html("");
+            if (!$('#FiltrarCodigoSectorReg').val()) {
+                $('#msgErrores').append("<li>Ingrese el sector</li>");
+                cont = true;
+            }
+            if (!$('#FiltrarCodigoManzanaReg').val()) {
+                $('#msgErrores').append("<li>Ingrese la Manzana</li>");
+                cont = true;
+            }
+            if (!$('#FiltrarCodigoLoteReg').val()) {
+                $('#msgErrores').append("<li>Ingrese el Lote</li>");
+                cont = true;
+            }
+            if (!cont) {
+                $('#msgErrores').html("");
+                $("#hidTipoBusqueda").val('2');
+                tablaUnidadCatastralBC.ajax.reload(function (json) {
+                    tablaUnidadCatastralBC.columns.adjust().draw();
+                    var alto = $('#tablaUnidadCatastralBC_wrapper .dataTables_scrollBody').height();
+                    if (alto < 599) {
+                        $('#tablaUnidadCatastralBC_wrapper .dataTables_scrollHead').removeClass('pr-4');
+                    } else {
+                        $(' #tablaUnidadCatastralBC_wrapper .dataTables_scrollHead').addClass('pr-4');
+                    }
+
+                });
+
+            }
+        });
+    });
+</script>

@@ -1,0 +1,64 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Sectores.FiltrarSectoresViewModel
+
+@if (Model.listSectores != null || Model.listSectores.Count() > 0)
+{
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Acciones</th>
+                    <th>Código</th>
+                    <th>Nombre del Sector</th>
+                    <th>Distrito</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.listSectores)
+                {
+                    <tr>
+                        <td align="center" width="120px">
+                            @Ajax.ActionLink(" ", "Editar", "Sectores"
+                                , new { id = item.CodigoSector }
+                                , new AjaxOptions
+                                        {
+                                            HttpMethod = "Get",
+                                            InsertionMode = InsertionMode.Replace,
+                                            UpdateTargetId = "modalSectores"
+                                        }
+                                ,
+                                new
+                                {
+                                    @class = "btn btn-default glyphicon glyphicon-edit",
+                                    @type = "button",
+                                    data_toggle = "modal",
+                                    data_target = "#modalSectores"
+
+                                }
+                           )
+                           @Ajax.ActionLink(" ", "Eliminar", "Sectores"
+                                , new { id = item.CodigoSector }
+                                , new AjaxOptions
+                                        {
+                                            HttpMethod = "Get",
+                                            UpdateTargetId = "modalEliminarSectores"
+                                        }
+                                ,
+                                new
+                                {
+                                    @class = "btn btn-danger glyphicon glyphicon-remove",
+                                    @type = "button",
+                                    data_toggle = "modal",
+                                    data_target = "#modalEliminarSectores"
+
+                                }
+                           )
+                        </td>
+                        <td align="center">@Html.DisplayFor(modelItem => item.CodigoSector)</td>
+                        <td>@item.NombreSector</td>
+                        <td align="center">@item.CodigoDistritos</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

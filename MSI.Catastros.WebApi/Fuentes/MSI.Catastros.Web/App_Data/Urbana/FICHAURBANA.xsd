@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="FICHAURBANA" targetNamespace="http://tempuri.org/FICHAURBANA.xsd" xmlns:mstns="http://tempuri.org/FICHAURBANA.xsd" xmlns="http://tempuri.org/FICHAURBANA.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="FICHAURBANA" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="FICHAURBANA" msprop:Generator_UserDSName="FICHAURBANA">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="FICHAURBANA" msprop:Generator_TableClassName="FICHAURBANADataTable" msprop:Generator_TableVarName="tableFICHAURBANA" msprop:Generator_TablePropName="_FICHAURBANA" msprop:Generator_RowDeletingName="FICHAURBANARowDeleting" msprop:Generator_RowChangingName="FICHAURBANARowChanging" msprop:Generator_RowEvHandlerName="FICHAURBANARowChangeEventHandler" msprop:Generator_RowDeletedName="FICHAURBANARowDeleted" msprop:Generator_UserTableName="FICHAURBANA" msprop:Generator_RowChangedName="FICHAURBANARowChanged" msprop:Generator_RowEvArgName="FICHAURBANARowChangeEvent" msprop:Generator_RowClassName="FICHAURBANARow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CODURBA" msprop:Generator_ColumnVarNameInTable="columnCODURBA" msprop:Generator_ColumnPropNameInRow="CODURBA" msprop:Generator_ColumnPropNameInTable="CODURBAColumn" msprop:Generator_UserColumnName="CODURBA" type="xs:string" minOccurs="0" />
+              <xs:element name="NOMBREURBA" msprop:Generator_ColumnVarNameInTable="columnNOMBREURBA" msprop:Generator_ColumnPropNameInRow="NOMBREURBA" msprop:Generator_ColumnPropNameInTable="NOMBREURBAColumn" msprop:Generator_UserColumnName="NOMBREURBA" type="xs:string" minOccurs="0" />
+              <xs:element name="FECHAAPROBA" msprop:Generator_ColumnVarNameInTable="columnFECHAAPROBA" msprop:Generator_ColumnPropNameInRow="FECHAAPROBA" msprop:Generator_ColumnPropNameInTable="FECHAAPROBAColumn" msprop:Generator_UserColumnName="FECHAAPROBA" type="xs:string" minOccurs="0" />
+              <xs:element name="DOCAPROBA" msprop:Generator_ColumnVarNameInTable="columnDOCAPROBA" msprop:Generator_ColumnPropNameInRow="DOCAPROBA" msprop:Generator_ColumnPropNameInTable="DOCAPROBAColumn" msprop:Generator_UserColumnName="DOCAPROBA" type="xs:string" minOccurs="0" />
+              <xs:element name="NUMMANZA" msprop:Generator_ColumnVarNameInTable="columnNUMMANZA" msprop:Generator_ColumnPropNameInRow="NUMMANZA" msprop:Generator_ColumnPropNameInTable="NUMMANZAColumn" msprop:Generator_UserColumnName="NUMMANZA" type="xs:string" minOccurs="0" />
+              <xs:element name="MODELO" msprop:Generator_ColumnVarNameInTable="columnMODELO" msprop:Generator_ColumnPropNameInRow="MODELO" msprop:Generator_ColumnPropNameInTable="MODELOColumn" msprop:Generator_UserColumnName="MODELO" type="xs:string" minOccurs="0" />
+              <xs:element name="VERSION" msprop:Generator_ColumnVarNameInTable="columnVERSION" msprop:Generator_ColumnPropNameInRow="VERSION" msprop:Generator_ColumnPropNameInTable="VERSIONColumn" msprop:Generator_UserColumnName="VERSION" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTRUTAIMAGEN" msprop:Generator_ColumnVarNameInTable="columnTXTRUTAIMAGEN" msprop:Generator_ColumnPropNameInRow="TXTRUTAIMAGEN" msprop:Generator_ColumnPropNameInTable="TXTRUTAIMAGENColumn" msprop:Generator_UserColumnName="TXTRUTAIMAGEN" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

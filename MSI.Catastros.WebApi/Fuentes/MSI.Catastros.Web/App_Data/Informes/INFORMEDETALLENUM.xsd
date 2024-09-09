@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="INFORMEDETALLENUM" targetNamespace="http://tempuri.org/INFORMEDETALLENUM.xsd" xmlns:mstns="http://tempuri.org/INFORMEDETALLENUM.xsd" xmlns="http://tempuri.org/INFORMEDETALLENUM.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="INFORMEDETALLENUM" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="INFORMEDETALLENUM" msprop:Generator_UserDSName="INFORMEDETALLENUM">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="DatosDetalleInformeNum" msprop:Generator_TableClassName="DatosDetalleInformeNumDataTable" msprop:Generator_TableVarName="tableDatosDetalleInformeNum" msprop:Generator_TablePropName="DatosDetalleInformeNum" msprop:Generator_RowDeletingName="DatosDetalleInformeNumRowDeleting" msprop:Generator_RowChangingName="DatosDetalleInformeNumRowChanging" msprop:Generator_RowEvHandlerName="DatosDetalleInformeNumRowChangeEventHandler" msprop:Generator_RowDeletedName="DatosDetalleInformeNumRowDeleted" msprop:Generator_UserTableName="DatosDetalleInformeNum" msprop:Generator_RowChangedName="DatosDetalleInformeNumRowChanged" msprop:Generator_RowEvArgName="DatosDetalleInformeNumRowChangeEvent" msprop:Generator_RowClassName="DatosDetalleInformeNumRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CODINFORME" msprop:Generator_ColumnVarNameInTable="columnCODINFORME" msprop:Generator_ColumnPropNameInRow="CODINFORME" msprop:Generator_ColumnPropNameInTable="CODINFORMEColumn" msprop:Generator_UserColumnName="CODINFORME" type="xs:string" minOccurs="0" />
+              <xs:element name="CODANOINFO" msprop:Generator_ColumnVarNameInTable="columnCODANOINFO" msprop:Generator_ColumnPropNameInRow="CODANOINFO" msprop:Generator_ColumnPropNameInTable="CODANOINFOColumn" msprop:Generator_UserColumnName="CODANOINFO" type="xs:string" minOccurs="0" />
+              <xs:element name="CODTIPOINFOR" msprop:Generator_ColumnVarNameInTable="columnCODTIPOINFOR" msprop:Generator_ColumnPropNameInRow="CODTIPOINFOR" msprop:Generator_ColumnPropNameInTable="CODTIPOINFORColumn" msprop:Generator_UserColumnName="CODTIPOINFOR" type="xs:string" minOccurs="0" />
+              <xs:element name="CODCORRELDETA" msprop:Generator_ColumnVarNameInTable="columnCODCORRELDETA" msprop:Generator_ColumnPropNameInRow="CODCORRELDETA" msprop:Generator_ColumnPropNameInTable="CODCORRELDETAColumn" msprop:Generator_UserColumnName="CODCORRELDETA" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTTITULO" msprop:Generator_ColumnVarNameInTable="columnTXTTITULO" msprop:Generator_ColumnPropNameInRow="TXTTITULO" msprop:Generator_ColumnPropNameInTable="TXTTITULOColumn" msprop:Generator_UserColumnName="TXTTITULO" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTDETALLE" msprop:Generator_ColumnVarNameInTable="columnTXTDETALLE" msprop:Generator_ColumnPropNameInRow="TXTDETALLE" msprop:Generator_ColumnPropNameInTable="TXTDETALLEColumn" msprop:Generator_UserColumnName="TXTDETALLE" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTRUTA" msprop:Generator_ColumnVarNameInTable="columnTXTRUTA" msprop:Generator_ColumnPropNameInRow="TXTRUTA" msprop:Generator_ColumnPropNameInTable="TXTRUTAColumn" msprop:Generator_UserColumnName="TXTRUTA" type="xs:string" minOccurs="0" />
+              <xs:element name="INDICE" msprop:Generator_ColumnVarNameInTable="columnINDICE" msprop:Generator_ColumnPropNameInRow="INDICE" msprop:Generator_ColumnPropNameInTable="INDICEColumn" msprop:Generator_UserColumnName="INDICE" type="xs:string" minOccurs="0" />
+              <xs:element name="CODSUBDETA" msprop:Generator_ColumnVarNameInTable="columnCODSUBDETA" msprop:Generator_ColumnPropNameInRow="CODSUBDETA" msprop:Generator_ColumnPropNameInTable="CODSUBDETAColumn" msprop:Generator_UserColumnName="CODSUBDETA" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTSUBTITULO" msprop:Generator_ColumnVarNameInTable="columnTXTSUBTITULO" msprop:Generator_ColumnPropNameInRow="TXTSUBTITULO" msprop:Generator_ColumnPropNameInTable="TXTSUBTITULOColumn" msprop:Generator_UserColumnName="TXTSUBTITULO" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTSUBDETALLE" msprop:Generator_ColumnVarNameInTable="columnTXTSUBDETALLE" msprop:Generator_ColumnPropNameInRow="TXTSUBDETALLE" msprop:Generator_ColumnPropNameInTable="TXTSUBDETALLEColumn" msprop:Generator_UserColumnName="TXTSUBDETALLE" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

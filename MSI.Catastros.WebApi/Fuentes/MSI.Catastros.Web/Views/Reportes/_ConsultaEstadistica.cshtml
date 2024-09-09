@@ -1,0 +1,116 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Reporte.ReporteViewModel
+
+@{
+    ViewBag.Title = "Estadistica de Usos de Unidades";
+}
+
+<!DOCTYPE html>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="overflow: hidden">
+                <div class="row">
+                    <div class="col-md-6 col-xs-12"><strong>Reporte Estadisticos de las Unidades por Usos</strong></div>
+                    <div class="col-md-6 col-xs-12">
+
+                        <div class="col-md-3 col-md-offset-6 col-sm-3">
+                            <button class="btn btn-green btn-block mr-3" id="" onclick="Limpiar()"><span class="glyphicon glyphicon-ok mr-2"></span> Nueva Busqueda </button>
+                        </div>
+                        <div class="col-md-3 col-sm-3">
+                            <button type="button" id="GenFicha" class="btn btn-create py-2 glyphicon glyphicon-plus-sign" style="float:right" onclick="GenerarReporte()"><span style="font-family:'Open Sans'"> Generar Reporte</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-10">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label class="control-label">Tipo de Busqueda</label>
+                                    <select id="cboTipoBusqueda" class="form-control" >
+                                        <option value="">Seleccione ...</option>
+                                        <option value="01">Fecha</option>
+                                        <option value="02">Año</option>
+                                    </select>
+                                    <span class="field-validation-valid" data-valmsg-for="CodigoTipoSolicitud" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-2" id="divFecha" style="display:none">
+                                <div class="form-group">
+                                    <label class="control-label">Fecha de Busqueda</label>
+                                    <input type="text" autocomplete="off" class="form-control" id="DiaReporte" maxlength="10">
+                                </div>
+                            </div>
+                            <div class="col-md-2" id="divMes" style="display:none">
+                                <div class="form-group">
+                                    <label class="control-label">Año de Busqueda</label>
+                                    <input type="text" id="AnioReporte" maxlength="4"  class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section datatables {
+    <script src="@Url.Content("~/Scripts/dcalendar.picker.js")"></script>
+    <script>
+        pickmeup('#DiaReporte', { format: 'd/m/Y', max: new Date() + 1 });
+        $('#DiaReporte').val('');
+
+
+     function Limpiar() {
+         $('#AnioReporte').val('');
+         $('#DiaReporte').val('');
+         $('#MesReporte').val('');
+     }
+
+     $('#cboTipoBusqueda').change(function () {
+         if (this.value === "01") {
+             $('#divFecha').show();
+             $('#divMes').hide();
+         } else if (this.value === "02") {
+             $('#divFecha').hide();
+             $('#divMes').show();
+         } else {
+             $('#divFecha').hide();
+             $('#divMes').hide();
+         }
+     });
+
+     function GenerarReporte() {
+         var valorDiaReporte = $('#DiaReporte').val();
+         var valorAnioReporte = $('#AnioReporte').val();
+
+         var valorComboBox = $('#cboTipoBusqueda').val();
+
+
+         var FechaActual = new Date();
+         var YYYY = FechaActual.getFullYear();
+
+
+             if (valorComboBox == "01") {
+                 urlFICHA = "@Url.Content("~/Reportes/Reports.aspx")" + "?CodigoReporte=ESTADISTICO&codigoAnio=" + valorDiaReporte + '&codigoTipoInforme=' + valorComboBox;
+                 window.open(urlFICHA);
+             } else {
+                 if (valorAnioReporte > YYYY || valorAnioReporte == "") {
+                     alert('Tiene que ingresar un Año Valida');
+
+                 } else {
+                     urlFICHA = "@Url.Content("~/Reportes/Reports.aspx")" + "?CodigoReporte=ESTADISTICO&codigoAnio=" + valorAnioReporte + '&codigoTipoInforme=' + valorComboBox;
+                     window.open(urlFICHA);
+                 }
+             }
+
+
+     }
+
+    </script>
+    
+    }
+

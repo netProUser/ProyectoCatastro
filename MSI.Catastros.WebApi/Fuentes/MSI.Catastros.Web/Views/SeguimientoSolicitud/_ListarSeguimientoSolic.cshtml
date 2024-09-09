@@ -1,0 +1,127 @@
+﻿@model IEnumerable<MSI.Catastros.Web.Funcionalidad.SeguimientoSolicitud.ReporteSeguimiento>
+
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
+<table class="table table-condensed">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NroSolicitud)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Asunto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TipoLlenado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CodCatastral)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Titular)
+        </th>
+        <th style="width: 70px;">
+            @Html.DisplayNameFor(model => model.FechaRecepOriginal)
+        </th>
+        <th style="width: 70px;">
+            @Html.DisplayNameFor(model => model.FechaLimite)
+        </th>
+        <th style="width: 150px;">
+            @Html.DisplayNameFor(model => model.EstadoAtencion)
+        </th>
+        <th>
+            Datos Solicitud
+        </th>
+        <th style="width: 150px;">
+            @Html.DisplayNameFor(model => model.Seguimiento)
+        </th>
+        @*<th></th>*@
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NroSolicitud)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Asunto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TipoLlenado)
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.CodCatastral)*@
+                @Html.Raw(item.CodCatastral)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Titular)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaRecepOriginal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaLimite)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstadoAtencion)
+            </td>
+            <td>
+                <button class="btn btn-xs btn-default glyphicon glyphicon-search ModalDatosSolicitud" type="button"></button>
+
+            </td>
+            <td>
+                <center>
+                    @*<a tabindex="0" class="btn btn-lg btn-danger example" role="button" data-toggle="popover" data-trigger="focus" title="Dismissible popover" data-content="And here's some amazing content. It's very engaging. Right?">
+                            Dismissible popover
+                        </a>
+                        <button type="button" class="btn btn-default example" data-container="body" data-toggle="popover" data-placement="left" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+                            Popover on left
+                        </button>*@
+
+                    @if (item.Seguimiento != null && item.Seguimiento.Count() > 0)
+                    {
+                        foreach (var itemd in item.Seguimiento)
+                        {
+                            string inactivo = "btn btn-circle-sm btn-default";
+                            string activo = "btn btn-circle-sm btn-success";
+
+                            <a class="@Html.Raw(itemd == "ANL" ? activo : inactivo) + ModalAnalisa">ANL</a>
+                            <a class="@Html.Raw(itemd == "INS" ? activo : inactivo) + ModalInspeccion">INS</a>
+                            <a class="@Html.Raw(itemd == "ACT" ? activo : inactivo) + ModalActualizacion">ACT</a>
+                            <a class="@Html.Raw(itemd == "FIN" ? activo : inactivo)">FIN</a>
+
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        string inactivo = "btn btn-circle-sm btn-default";
+                        string activo = "btn btn-circle-sm btn-success";
+
+                        <a class="@Html.Raw("" == "ANL" ? activo : inactivo)">ANL</a>
+                        <a class="@Html.Raw("" == "INS" ? activo : inactivo)">INS</a>
+                        <a class="@Html.Raw("" == "ACT" ? activo : inactivo)">ACT</a>
+                        <a class="@Html.Raw("" == "FIN" ? activo : inactivo)">FIN</a>
+                    }
+                </center>
+                @*@Html.DisplayFor(modelItem => item.Seguimiento)*@
+            </td>
+            @*<td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>*@
+        </tr>
+    }
+
+</table>
+@*@section scripts {
+        <script>
+            $(function () {
+                $('.example').popover('toggle')
+            });
+
+        </script>
+    }*@
+

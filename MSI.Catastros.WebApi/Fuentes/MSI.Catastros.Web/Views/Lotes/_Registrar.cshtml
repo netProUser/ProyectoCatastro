@@ -1,0 +1,51 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.ManzanaVia.RegistroManzanaViaViewModel
+
+<div id="RegistrarLotesContainer">
+    @using (Html.BeginForm("Registrar", "Lotes", FormMethod.Post, new { id = "frmLotes", name = "frmLotes" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4><strong>Registrar</strong></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                        @*@Html.ValidationSummary(true)
+                        @Html.TextBoxFor(model => model.CodigoManzanaVia, new { type = "hidden" })
+                        @Html.HiddenFor(model => model.Estado, new { type = "hidden" })
+                        <div class="form-group">
+                            <div></div>
+                            @Html.LabelFor(model => model.CodigoSector, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.ValidationMessageFor(model => model.CodigoSector)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CodigoManzana, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.ValidationMessageFor(model => model.CodigoManzana)
+                            </div>
+                        </div*@>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input id="btnSubmit" type="submit" value="Grabar" class="btn btn-green" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script type="text/javascript">
+    
+</script>

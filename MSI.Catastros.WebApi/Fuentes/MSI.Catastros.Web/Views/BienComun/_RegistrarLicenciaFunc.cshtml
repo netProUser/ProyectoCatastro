@@ -1,0 +1,118 @@
+﻿<div id="LicenciaFuncContainer">
+
+    @Html.AntiForgeryToken()
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-hidden="true">
+                    &times;
+                </button>
+                <h4 id="TituloLicencia">Registrando Licencia de Funcionamiento</h4>
+            </div>
+            <div class="modal-body">
+                @*@Html.HiddenFor(m => m.CodigoCorrDirecUnidad)*@
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <table id="tablaLicenciaFuncLote" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th width="5%">Nro.</th>
+                                    <th width="30%">Nro Licencia</th>
+                                    <th width="15%">Solicitante</th>
+                                    <th width="10%">Beneficiario</th>
+                                    <th width="10%">Giro</th>
+                                    <th width="10%">Fehca Licencia</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-offset-2 col-md-10">
+                    <input id="btnGrabarLicenciaFunc" type="submit" value="Grabar" class="btn btn-success" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="@Url.Content("~/assets/vendor/datatables-checkboxes/js/dataTables.checkboxes.min.js")"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#TituloLicencia').text('Registrando Licencia de Funcionamiento - UC: ' + $("#CodigoDistrito").val() + '-' +
+        $("#CodigoSector").val() + '-' +
+        $("#CodigoManzana").val() + '-' +
+        $("#CodigoLote").val() + '-' +
+        $("#CodigoEdificacion").val() + '-' +
+        $("#CodigoEntrada").val() + '-' +
+        $("#CodigoPiso").val() + '-' +
+        $("#CodigoUnidad").val());
+
+        localStorage.setItem('LicenciaFuncPSelec', "");
+        var tablaLicenciaFuncLote = $("#tablaLicenciaFuncLote").DataTable({
+            "ajax": {
+               // "url": "/BienComun/CargarLicenciaFuncLote",
+                "url": "@Url.Content("~/BienComun/CargarLicenciaFuncLote")",
+                "type": "POST",
+                "datatype": "json",
+                "data": function (d) {
+                    // -- Agregar campos de busqueda
+                    d.CodigoDistrito = $('#CodigoDistrito').val();
+                    d.CodigoSector = $('#CodigoSector').val();
+                    d.CodigoManzana = $('#CodigoManzana').val();
+                    d.CodigoLote = $('#CodigoLote').val();
+                    d.Estatico = Estatico;
+                }
+            },
+            'columnDefs': [
+                 { "width": "7%", "targets": 0 },
+                 { "width": "7%", "targets": 1 },
+                 { "width": "7%", "targets": 2 },
+                 { "width": "7%", "targets": 3 },
+                 { "width": "7%", "targets": 4 },
+                 { "width": "7%", "targets": 5 },
+                 { 'targets': 6, 'checkboxes': { 'selectRow': true } },
+
+            ],
+            "columns": [
+                { "data": "Item", "name": "Item", "className": "text-center" },
+                { "data": "NumeroLicencia", "name": "TipoDocumento", "className": "text-center" },
+                { "data": "Solicitante", "name": "PartidaElectronica", "autoWidth": true, "className": "text-center" },
+                { "data": "Beneficiario", "name": "TomoFicha", "autoWidth": true, "className": "text-center" },
+                { "data": "Giros", "name": "Folio", "autoWidth": true, "className": "text-center" },
+                { "data": "FechaLicencia", "name": "Asiento", "autoWidth": true, "className": "text-center" },
+                { "data": "Item", "name": "Item", "autoWidth": true, "className": "text-center" },
+                { "data": "CodigoCorrelativoLote", "name": "CodigoCorrelativoLote", "autoWidth": true, "className": "hide_column" },
+                { "data": "Codigo", "name": "CodigoDocumento", "autoWidth": true, "className": "hide_column" },
+
+            ]
+        });
+        //tablaUnidadCatastral.columns.adjust().draw();
+        //tablaUnidadCatastral.ajax.reload();
+
+        $("#btnGrabarLicenciaFunc").on("click", function (event) {
+            var rows_selected = tablaLicenciaFuncLote.column(6).checkboxes.selected();
+            console.log('rows_selected');
+            console.log(rows_selected);
+            var ListaRows = [];
+            $.each(rows_selected, function (index, Indice) {
+                console.log(Indice);
+                var rows = tablaLicenciaFuncLote.rows(Indice - 1).data()[0];
+                console.log(rows);
+                ListaRows.push(rows);
+            });
+            localStorage.setItem('LicenciaFuncPSelec', JSON.stringify(ListaRows));
+            $('#modalNuevoLicenciaFunc').modal('hide');
+        });
+
+    });
+</script>

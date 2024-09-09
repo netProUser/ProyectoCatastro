@@ -1,0 +1,1035 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.ProgramarInspeccion.FiltrarProgramarInspeccionViewModel
+@{
+    ViewBag.Title = "Programar Inspección";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="overflow: hidden">
+                <div class="row">
+                    <div class="col-xl-9 col-lg-8 col-xs-6 pt-2">
+                        <label class="control-label">Programar Inspección</label>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-xs-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button type="button" id="btnRegistrarInspeccion" class="btn btn-green btn-block mr-3"><span class="glyphicon glyphicon-ok mr-2"></span> Registrar</button>
+                            </div>
+                            <div class="col-md-6">
+                                @*<button class="btn btn-white btn-block px-4"><span class="glyphicon glyphicon-remove mr-2"></span> Salir</button>*@
+                                <button id="btncalendario" class="btn btn-white btn-block px-4"><span class="glyphicon glyphicon-calendar mr-2"></span>Calendario</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="">
+                        @Html.ValidationSummary(true)
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.TipoSolicitud, htmlAttributes: new { @class = "control-label" })
+                                    @Html.DropDownListFor(m => m.codTipoSolicitud, Model.TipoSolicitud, "- Seleccione el tipo de solicitud -", new { @class = "form-control" })
+                                    @*@Html.ValidationMessageFor(model => model.codTipoSolicitud)*@
+                                    <span class="field-validation-valid inputUtil" data-valmsg-for="codTipoSolicitud" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4" id="divTipoDocumento" style="display:none;">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ListTipoDocumento, htmlAttributes: new { @class = "control-label" })
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            @Html.DropDownListFor(m => m.CodigoTipoDocumentoReg, Model.ListTipoDocumento, "- Seleccione el tipo de documento -", new { @class = "chosen-seleccionar form-control" })
+                                        </div>
+                                    </div>
+
+                                    <span class="field-validation-valid" data-valmsg-for="CodigoTipoDocumento" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.nroSolicitud)
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(model => model.nroSolicitud, new { @class = "form-control" })
+                                        <span class="input-group-btn">
+                                            <button id="btnBuscar" type="button" value="" class="btn btn-default">
+                                                <i class="fa fa-search" aria-hidden="true"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <!-- /input-group -->
+                                    @*@Html.ValidationMessageFor(model => model.nroSolicitud)*@
+                                    <span class="field-validation-valid inputUtil" data-valmsg-for="nroSolicitud" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.FechaLimite, htmlAttributes: new { @class = "control-label" })
+                                    @Html.TextBoxFor(model => model.FechaLimite, new { @class = "form-control fechaE" })
+                                    @Html.ValidationMessageFor(model => model.FechaLimite)
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.FechaLimiProgInspec, htmlAttributes: new { @class = "control-label" })
+                                    @Html.TextBoxFor(model => model.FechaLimiProgInspec, new { @class = "form-control fechaE" })
+                                    @Html.ValidationMessageFor(model => model.FechaLimiProgInspec)
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.FechaLimiteInspeccion, htmlAttributes: new { @class = "control-label" })
+                                    @Html.TextBoxFor(model => model.FechaLimiteInspeccion, new { @class = "form-control fechaE" })
+                                    @Html.ValidationMessageFor(model => model.FechaLimiteInspeccion)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Asunto, htmlAttributes: new { @class = "control-label" })
+                                    @Html.TextAreaFor(model => model.Asunto, new { @class = "form-control", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.Asunto)
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.TipoLlenado, htmlAttributes: new { @class = "control-label" })
+                                    @Html.TextAreaFor(model => model.TipoLlenado, new { @class = "form-control", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.TipoLlenado)
+                                </div>
+                            </div>
+                        </div>
+
+                        <fieldset class="formulario">
+                            <legend>Código Catastral Asignado</legend>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="TablaCodigoCatastral" class="table table-bordered" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Dist</th>
+                                                <th>Sec</th>
+                                                <th>Mz</th>
+                                                <th>Lote</th>
+                                                <th>Ed</th>
+                                                <th>Entr</th>
+                                                <th>Piso</th>
+                                                <th>Unidad</th>
+                                                <th>Ubicación de Predio</th>
+                                                <th>Titular</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="formulario hide">
+                            <legend>Titular</legend>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.DocumentoIdentidad, htmlAttributes: new { @class = "control-label" })
+                                        @Html.TextBoxFor(model => model.DocumentoIdentidad, new { @class = "form-control", @readonly = "readonly" })
+                                        @Html.ValidationMessageFor(model => model.DocumentoIdentidad)
+                                    </div>
+                                </div>
+                                <div class="col-sm-7">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.NombreRazonSocial, htmlAttributes: new { @class = "control-label" })
+                                        @Html.TextBoxFor(model => model.NombreRazonSocial, new { @class = "form-control", @readonly = "readonly" })
+                                        @Html.ValidationMessageFor(model => model.NombreRazonSocial)
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Telefono, htmlAttributes: new { @class = "control-label", @readonly = "readonly" })
+                                        @Html.TextBoxFor(model => model.Telefono, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Telefono)
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                       
+                        <fieldset class="formulario">
+                            <legend class="h4">Destinatario</legend>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Representante, htmlAttributes: new { @class = "control-label h4" })
+                                        <br /><label>Nombre Completo/ Razón Social</label>
+                                        @Html.TextBoxFor(model => model.Representante, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Representante)
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Solicitante, htmlAttributes: new { @class = "control-label h4" })
+                                        <br /><label>Nombre Completo/ Razón Social</label>
+                                        @Html.TextBoxFor(model => model.Solicitante, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Solicitante)
+                                    </div>
+                                </div>
+                            </div>
+                           
+                            <div class="row">
+                                <div class="col-sm-9">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Ubicacion, htmlAttributes: new { @class = "control-label h4" })
+                                        @Html.TextBoxFor(model => model.Ubicacion, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Ubicacion)
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Telefono, htmlAttributes: new { @class = "control-label h4" })
+                                        @Html.TextBoxFor(model => model.TelefonoInspeccion, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.TelefonoInspeccion)
+                                    </div>
+                                </div>
+                            </div>
+                           
+                            @*<div class="col-sm-2">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.TipoDocumentoRepresentante, htmlAttributes: new { @class = "control-label" })
+                                        @Html.TextBoxFor(model => model.TipoDocumentoRepresentante, new { @class = "form-control", @readonly = "readonly" })
+                                        @Html.ValidationMessageFor(model => model.TipoDocumentoRepresentante)
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.NumeroroDocumentoRepresentante, htmlAttributes: new { @class = "control-label" })
+                                        @Html.TextBoxFor(model => model.NumeroroDocumentoRepresentante,  new { @class = "form-control", @readonly = "readonly" })
+                                        @Html.ValidationMessageFor(model => model.NumeroroDocumentoRepresentante)
+                                    </div>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.NombreApellidoRepresentante, htmlAttributes: new { @class = "control-label" })
+                                        @Html.TextBoxFor(model => model.NombreApellidoRepresentante, new { @class = "form-control", @readonly = "readonly" })
+                                        @Html.ValidationMessageFor(model => model.NombreApellidoRepresentante)
+                                    </div>
+                                </div>*@
+                            @*<div class="col-sm-2">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.NombreRepresentante, htmlAttributes: new { @class = "control-label" })
+                                        @Html.TextBoxFor(model => model.NombreRepresentante, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.NombreRepresentante)
+                                    </div>
+                                </div>*@
+                            @*<div class="col-sm-2">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.TelefonoRepresentante, htmlAttributes: new { @class = "control-label" })
+                                                    @Html.TextBoxFor(model => model.TelefonoRepresentante, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.TelefonoRepresentante)
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.CorreoRepresentante, htmlAttributes: new { @class = "control-label" })
+                                                    @Html.TextBoxFor(model => model.CorreoRepresentante, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.CorreoRepresentante)
+                                                </div>
+                                            </div>
+                                </div>*@
+                        </fieldset>
+                       
+
+                        <fieldset class="formulario">
+                            <legend>Inspección</legend>
+                            <div class="row">
+                                <div class="col-sm-12 text-right">
+                                    <button id="btnRegistrarInspeccionModal" type="button" class="btn btn-sm btn-success">Agregar Inspeccion</button>
+                                    @*@Html.ActionLink(" Registrar", "RegistrarInspeccion", "ProgramarInspeccion"
+                                        , new AjaxOptions
+                                        {
+                                            HttpMethod = "Get",
+                                            InsertionMode = InsertionMode.Replace,
+                                            UpdateTargetId = "modalTipo"
+                                        }
+                                        , new
+                                        {
+                                            @class = "btn btn-xs btn-default",
+                                            @type = "button",
+                                            data_toggle = "modal",
+                                            data_target = "#modalTipo",
+                                            id = "btnRegistrarInspeccionModal"
+                                        })*@
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="tablaProgramacionInspeccion" class="table table-bordered" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Acciones</th>
+                                                <th style="display:none;">Nro. Ins</th>
+                                                <th style="display:none;">Nro. Ins.</th>
+                                                <th>Nro. Ins</th>
+                                                <th>Fecha Ins.</th>
+                                                <th>Hora Ins.</th>
+                                                <th>Inspector</th>
+                                                <th> Inspector Responsable</th>
+                                                <th>Estado Inspección</th>
+                                                <th>Código Catastral</th>
+                                                <th>Observacón</th>
+                                                <th></th>
+                                                @*<th>
+
+                                                    </th>*@
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                }
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
+<!--MODAL-->
+<div id="modalTipo" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="true">
+    <div class="modal-dialog" role="document">
+
+    </div>
+</div>
+<!--MODAL-->
+<div id="modalCalendario" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="true">
+    <div class="modal-dialog" role="document">
+
+    </div>
+</div>
+<div id="modalReasignarInspector" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Reasignacion de Inspectores</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Inspectores, htmlAttributes: new { @class = "control-label col-md-12" })
+                                <div class="col-md-12">
+                                    @*@Html.DropDownListFor(m => m.codInspectores, Model.ListadoInspectores, null, new { @class = "form-control", @multiple = "multiple" })*@
+                                    <select style="min-width: 450px;" id="codInspectores" name="codInspectores" class="form-control">
+                                        <option value="0"> Seleccione</option>
+                                    </select>
+                                    @Html.ValidationMessageFor(model => model.codInspectores, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Responsable, htmlAttributes: new { @class = "control-label col-md-12" })
+                                <div class="col-md-12">
+                                    @*@Html.DropDownListFor(m => m.codInspectores, Model.ListadoInspectores, null, new { @class = "form-control", @multiple = "multiple" })*@
+                                    <select id="codResponsable" name="codResponsable" class="form-control">
+                                        <option value="0"> Seleccione</option>
+                                    </select>
+                                    @Html.ValidationMessageFor(model => model.codResponsable, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <br />
+
+                   <div class="row">
+                       <div class="col-md-4">
+                       </div>
+                       <div class="col-md-4">
+                           <button id="btnProcesarCambioInspectores" onclick="CambioInspectores()" class="btn btn-green mr-2 btn-block"> Reasignar Inspectores</button>
+                       </div>
+                       
+                   </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    <script src="~/assets/vendor/datatables-checkboxes/js/dataTables.checkboxes.min.js"></script>
+    <link href="http://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/css/bootstrap-multiselect.css"
+          rel="stylesheet" type="text/css" />
+    <script src="http://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/js/bootstrap-multiselect.js"></script>
+    <script>
+        function CambioInspectores() {
+          
+           
+        }
+        //$('#page-wrapper').removeClass('pt-5').addClass('pt-1'); $('#periodoGlobal').show();
+        $(function () {
+            /*
+            CONFIG
+            */
+            //$('.btnUtil').attr('disabled', 'disabled');
+            //$('.tablaUtil button').attr('disabled', 'disabled');
+            $('.formulario').hide();
+            $('.Ubicacion').hide();
+            /*
+             TABLES
+             */
+          
+
+            tablaCodCatastral = $("#TablaCodigoCatastral").DataTable({
+                "processing": false,
+                "serverSide": false,
+                "paging": false,
+                //"language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+                'columnDefs': [
+                    { "width": "5%", "targets": 0 },
+                    { "width": "7%", "targets": 1 },
+                    { "width": "7%", "targets": 2 },
+                    { "width": "7%", "targets": 3 },
+                    { "width": "7%", "targets": 4 },
+                    { "width": "7%", "targets": 5 },
+                    { "width": "7%", "targets": 6 },
+                    { "width": "7%", "targets": 7 },
+                    { "width": "20%", "targets": 8 },
+                    {
+                        "targets": [9],
+                        "visible": false
+                    }
+                    //{ 'targets': 9, 'checkboxes': { 'selectRow': true } }
+                ],
+                "columns": [
+                    { "data": "Distrito", "className": "text-center" },
+                    { "data": "Sec", "className": "text-center" },
+                    { "data": "Manzana", "className": "text-center" },
+                    { "data": "Lote", "className": "text-center" },
+                    { "data": "Ed", "className": "text-center" },
+                    { "data": "Entr", "className": "text-center" },
+                    { "data": "Piso", "className": "text-center" },
+                    { "data": "Unidad", "className": "text-center" },
+                    { "data": "UbicacionPredio", "className": "text-center" },
+                    { "data": "Titular", "className": "text-center" }
+                ]
+            });
+
+            tablaProgInspeccion = $("#tablaProgramacionInspeccion").DataTable({
+                "ajax": {
+                    "url": "@Url.Content("~/ProgramarInspeccion/ListarInspecciones")",
+                    "type": "POST",
+                    "datatype": "json",
+                    "data": {}
+                },
+                "processing": false,
+                "serverSide": false,
+                "paging": false,
+                "language": { "lengthMenu": "", "info": "", "emptyTable": " " },
+                'columnDefs': [
+                    { "width": "10%", "targets": 0 },
+                    { "width": "1%", "targets": 1 },
+                    { "width": "1%", "targets": 2 },
+                    { "width": "5%", "targets": 3 },
+                    { "width": "5%", "targets": 4 },
+                    { "width": "5%", "targets": 5 },
+                    { "width": "15%", "targets": 6 },
+                    { "width": "15%", "targets": 7 },
+                    { "width": "20%", "targets": 8 },
+                    { "width": "10%", "targets": 9 },
+                    { "width": "2%", "targets": 10 },
+                    { "width": "2%", "targets": 11 }
+                ],
+                "columns": [
+                    {
+                        'render': function (data, type, full, meta) {
+                            //console.log(JSON.stringify(full));
+                            var acceso = "";
+                            if (full.EstadoInspeccion == "ATENDIDA" || full.EstadoInspeccion == "DECLINADA" || full.EstadoInspeccion == "REPROGRAMADA") {
+
+                                acceso += '<button type="button" disabled="disabled" class="btn  btn-xs  btn-default glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="top" title="Eliminar" name="Eliminar_' + full.NroInspeccion + '" value="' + full.NroInspeccion + '"></button>';
+
+                                acceso +=
+                                    //'<button class="btn  btn-xs  btn-default glyphicon glyphicon-edit" type="button" name="Editar_' + full.NroInspeccion + '" value="' + full.NroInspeccion + '"></button>' +
+                                    '<button type="button" disabled="disabled" class="btn  btn-xs  btn-default glyphicon glyphicon-user" data-toggle="tooltip" data-placement="top" title="ReasignarInspectores" name="ReasignarInspectores_' + full.NroInspeccion + '" value="' + full.NroInspeccion + '"></button>' +
+                                    '<button type="button" disabled="disabled" class="btn  btn-xs  btn-default glyphicon glyphicon-repeat" data-toggle="tooltip" data-placement="top" title="Reprogramar" name="Reprogramar_' + full.NroInspeccion + '" value="' + full.NroInspeccion + '"></button>' +
+                                    '<button type="button" disabled="disabled" class="btn  btn-xs  btn-default glyphicon glyphicon-ok-sign" data-toggle="tooltip" data-placement="top" title="Atender" name="Aprobar_' + full.NroInspeccion + '" value="' + full.NroInspeccion + '"></button>' +
+                                    '<button type="button" disabled="disabled" class="btn  btn-xs  btn-default glyphicon glyphicon-remove-sign" data-toggle="tooltip" data-placement="top" title="Declinar" name="Declinar_' + full.NroInspeccion + '" value="' + full.NroInspeccion + '"></button>';
+
+                            } else {
+
+                                if (full.NroInspeccion.length > 10) {
+                                    acceso += '<button type="button" class="btn  btn-xs  btn-default glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="top" title="Eliminar" name="Eliminar_' + full.NroInspeccion + '" value="' + full.NroInspeccion + '"></button>';
+                                }
+                                if (full.NroInspeccion.length <= 10) {
+                                    acceso +=
+                                        '<button type="button" class="btn  btn-xs  btn-default glyphicon glyphicon-user" data-toggle="tooltip" data-placement="top" title="ReasignarInspectores" name="ReasignarInspectores_' + full.NroInspeccion + '" value="' + full.NroInspeccion + '"></button>' +
+                                        //'<button class="btn  btn-xs  btn-default glyphicon glyphicon-edit" type="button" name="Editar_' + full.NroInspeccion + '" value="' + full.NroInspeccion + '"></button>' +
+                                        '<button type="button" class="btn  btn-xs  btn-default glyphicon glyphicon-repeat" data-toggle="tooltip" data-placement="top" title="Reprogramar" name="Reprogramar_' + full.NroInspeccion + '" value="' + full.NroInspeccion + '"></button>' +
+                                        '<button type="button" class="btn  btn-xs  btn-default glyphicon glyphicon-ok-sign" data-toggle="tooltip" data-placement="top" title="Atender" name="Aprobar_' + full.NroInspeccion + '" value="' + full.NroInspeccion + '"></button>' +
+                                        '<button type="button" class="btn  btn-xs  btn-default glyphicon glyphicon-remove-sign" data-toggle="tooltip" data-placement="top" title="Declinar" name="Declinar_' + full.NroInspeccion + '" value="' + full.NroInspeccion + '"></button>';
+                                }
+                            }
+                            return acceso;
+
+                        }, "className": "text-center"
+                    },
+                    { "data": "Index", "className": "hide_column" },
+                    { "data": "NroInspeccion", "className": "hide_column" },
+                    { "data": "NumInspeccion", "className": "text-center" },
+                    
+
+
+                    { "data": "FechaInspeccion", "className": "text-center" },
+                    { "data": "HoraInspeccion", "className": "text-center" },
+                    { "data": "Inspectores", "className": "text-center" },
+                    { "data": "Responsable", "className": "text-center" },
+                    //{ "data": "EstadoInspeccion", "className": "text-center" },
+                    {
+                        'render': function (data, type, full, meta) {
+                            var acceso = "";
+                            if (full.EstadoInspeccion == "PROGRAMADA") {
+                                acceso = '<span class="label label-primary">' + full.EstadoInspeccion + '</span>';
+                            } else if (full.EstadoInspeccion == "DECLINADA") {
+                                acceso = '<span class="label label-danger">' + full.EstadoInspeccion + '</span>';
+                            } else if (full.EstadoInspeccion == "ATENDIDA") {
+                                acceso = '<span class="label label-success">' + full.EstadoInspeccion + '</span>';
+                            } else {
+                                acceso = '<span class="label label-default">' + full.EstadoInspeccion + '</span>';
+                            }
+                            return acceso;
+                        }, "className": "text-center"
+                    },
+                    {
+                        'render': function (data, type, full, meta) {
+                            //console.log(data);
+                            //console.log(full.ListunidadCatastral);
+                            //console.log(meta);
+                            var data = "";
+                            try {
+                                $.each(full.ListunidadCatastral, function (i, item) {
+                                    //alert(item.PageName);
+                                    data += item.Distrito + "-" + item.Sec + "-" + item.Manzana + "-" + item.Lote + "-" + item.Entr + "-" + item.Piso + "-" + item.Unidad + "<br/>";
+                                });
+                            } catch (e) {
+
+                            }
+                            return '<span>' + data + '</span>';
+                        }
+                    },
+                    { "data": "Observacion", "className": "text-center" },
+                     {
+                         'render': function (data, type, full, meta) {
+                             var disable = full.NumInspeccion == null || full.EstadoInspeccion == "DECLINADA" ? "disabled" : "";
+                             return '<button data-toggle="tooltip" ' + disable + '  data-placement="left" title="Imprimir" class="btn mr-1 text-center btnPrint btn-default btn-xs glyphicon glyphicon-print" type="button" ></button>';
+                         }, "className": "text-center"
+                     },
+
+
+
+                    //{   "responsivePriority": -2,
+                    //    "render": function (data, type, full, meta) {
+                    //        var disable = full.EstadoInspeccion == "DECLINADA"  ? "disabled" : "";
+                            
+                    //        return '<button data-toggle="tooltip" ' + disable + ' title="Imprimir Inspección" class="btn btn-default  btnRecepcionarDocumentos glyphicon glyphicon-check" type="button" ></button>'+
+                    //    }, "className": "text-center", "responsivePriority": -2,
+                    //},
+
+                ]
+            });
+
+            /*
+            ACCION BUTTON
+            */
+            $("#tablaProgramacionInspeccion tbody").on('click', 'button.btnPrint', function (event) {
+                event.stopPropagation();
+                var data = tablaProgInspeccion.row($(this).parents('tr')).data();
+                urlFICHA = "@Url.Content("~/Reportes/Reports.aspx")" + "?NumeroInforme=" + data.NroInspeccion + '&CodigoReporte=INS';
+                window.open(urlFICHA);
+            });
+
+            $('#btnBuscar').click(function () {
+                debugger;
+                codSol = $('#codTipoSolicitud').val();
+                numVal = $('#nroSolicitud').val();
+                CodigoTipoDocumentoReg = $('#CodigoTipoDocumentoReg').val();
+                if (validarCamposBusqueda(codSol, numVal)) {
+                    $('.inputUtil').html('').removeClass('field-validation-valid has-error');
+                    $.ajax({
+                        url: "@Url.Content("~/ProgramarInspeccion/BuscarSolicitud")", type: "POST", dataType: "json",
+                        data: { codTipoSolicitud: codSol, nroSolicitud: numVal, CodigoTipoDocumentoReg: CodigoTipoDocumentoReg },
+                        success: function (response) {
+                            if (response.success) {
+                                tablaCodCatastral.clear().draw();
+                                DatosEncontrados = response.ProcedimientoNuevo.DatosEncontrados;
+                                $('#Asunto').val(response.ProcedimientoNuevo.Asunto);
+                                $('#FechaLimite').val(response.ProcedimientoNuevo.FechaLimite);
+                                $('#FechaLimiteInspeccion').val(response.ProcedimientoNuevo.FechaLimiteInspeccion);
+                                $('#TipoLlenado').val(response.ProcedimientoNuevo.TipoLlenado);
+                                $('#FechaLimiProgInspec').val(response.ProcedimientoNuevo.FechaLimiProgInspec);
+                                $('#Ubicacion').val(response.ProcedimientoNuevo.Ubicacion);
+                                $('#TelefonoInspeccion').val(response.ProcedimientoNuevo.TelefonoInspeccion);
+                                //$('#TipoDocumentoRepresentante').val(response.ProcedimientoNuevo.TipoDocumentoRepresentante);
+                                //$('#NumeroroDocumentoRepresentante').val(response.ProcedimientoNuevo.NumeroroDocumentoRepresentante);
+                                //$('#NombreApellidoRepresentante').val(response.ProcedimientoNuevo.NombreApellidoRepresentante);
+
+                                $('#Solicitante').val(response.ProcedimientoNuevo.Solicitante);
+                                $('#Representante').val(response.ProcedimientoNuevo.Representante);
+                                for (var i = 0; i < response.ProcedimientoNuevo.ListCatastral.length; i++) {
+                                    tablaCodCatastral.row.add({
+                                        "Distrito": response.ProcedimientoNuevo.ListCatastral[i].Distrito,
+                                        "Sec": response.ProcedimientoNuevo.ListCatastral[i].Sec,
+                                        "Manzana": response.ProcedimientoNuevo.ListCatastral[i].Manzana,
+                                        "Lote": response.ProcedimientoNuevo.ListCatastral[i].Lote,
+                                        "Ed": response.ProcedimientoNuevo.ListCatastral[i].Ed,
+                                        "Entr": response.ProcedimientoNuevo.ListCatastral[i].Entr,
+                                        "Piso": response.ProcedimientoNuevo.ListCatastral[i].Piso,
+                                        "Unidad": response.ProcedimientoNuevo.ListCatastral[i].Unidad,
+                                        "UbicacionPredio": response.ProcedimientoNuevo.ListCatastral[i].UbicacionPredio,
+                                        "Indice": response.ProcedimientoNuevo.ListCatastral[i].Indice,
+                                        "Titular": response.ProcedimientoNuevo.ListCatastral[i].Titular
+                                    }).draw();
+                                    //rows++;
+                                }
+
+                            } else {
+                                toastr.error(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                            }
+                        },
+                        complete: function (response) {
+                            if (DatosEncontrados) {
+                                $('.formulario').show();
+                                $('.Ubicacion').show();
+                                tablaProgInspeccion.ajax.reload();
+                            }
+                            else {
+                                toastr.info("Informacón no encontrada", "Mensaje del Sistema", { "progressBar": true });
+                                $('.formulario').hide();
+                                $('.Ubicacion').hide();
+                                $('.btnUtil').attr('disabled', 'disabled');
+                                $('.tablaUtil button').attr('disabled', 'disabled');
+                            }
+                        }
+                    });
+
+                }
+            });
+
+            $('#btnRegistrarInspeccion').click(function () {
+                //$(this).attr('disabled', 'disabled');
+                var modelo = new Object();
+                modelo.Representante = $("#Representante").val();
+                modelo.Solicitante = $("#Solicitante").val();
+                modelo.FechaLimite = $('#FechaLimite').val();
+                modelo.FechaLimiProgInspec = $('#FechaLimiProgInspec').val();
+                modelo.FechaLimiteInspeccion = $('#FechaLimiteInspeccion').val();
+                modelo.TelefonoInspeccion = $('#TelefonoInspeccion').val();
+                modelo.Ubicacion = $('#Ubicacion').val();
+
+                //modelo.CodigoTipoDocumentoReg = $("#CodigoTipoDocumentoReg").val();
+                $.ajax({
+                    url: "@Url.Content("~/ProgramarInspeccion/RegistrarInspeccion")",
+                    type: "POST",
+                    data: modelo,
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.success) {
+                            //$('#codTipoSolicitud').val("");
+                            //$('#nroSolicitud').val("");
+                            //$('#FechaLimite').val("");
+                            //$('#FechaLimiteInspctores').val("");
+                            //$('#Asunto').val("");
+                            //$('#TipoLlenado').val("");
+                            //$('#FechaLimiProgInspec').val("");
+                            //$('#FechaLimiteInspeccion').val("");
+                            $('#btnBuscar').click();
+                            toastr.success(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                        } else { toastr.error(response.responseText, "Mensaje del Sistema", { "progressBar": true }); }
+                    },
+                    error: function (response) {
+                        //$('#btnRegistrarInspeccion').removeAttr('disabled');
+                        var modelStateErrors = response.responseJSON;
+                        if (modelStateErrors) {
+                            for (var i = 0; i < modelStateErrors.length; i++) { $('span[data-valmsg-for="' + modelStateErrors[i].key + '"]').text(modelStateErrors[i].errors[0]).addClass('has-error'); }
+                        }
+                    },
+                    complete: function () {
+                        $('#btnBuscar').click();
+                        $('.btnUtil').attr('disabled', 'disabled');
+                        $('.tablaUtil button').attr('disabled', 'disabled');
+                        //$('.formulario').hide();
+                    }
+                });
+            });
+            $("#btnRegistrarInspeccionModal").click(function () {
+                $.get("@Url.Content("~/ProgramarInspeccion/RegistrarInspeccion")",
+                    null,
+                    function (response) {
+                        $("#modalTipo").html(response);
+                        $('#FechaLimiteM').val($('#FechaLimite').val());
+                        $('#FechaLimiteInspeccionM').val($('#FechaLimiteInspeccion').val());
+                        $('#FechaLimiProgInspecM').val($('#FechaLimiProgInspec').val());
+
+                        localStorage.tempInspeccion = "";
+                        $("#lblFechaInspeccion").html("Fecha de Inspeción");
+                        console.log(localStorage.tempInspeccion);
+                        $("#modalTipo").modal();
+
+                        $.ajax({
+                            url: "@Url.Content("~/ProgramarInspeccion/BuscarSolicitud")",
+                            type: "POST",
+                            dataType: "json",
+                            data: { codTipoSolicitud: codSol, nroSolicitud: numVal, Estado: "A" },
+                            success: function (response) {
+                                if (response.success) {
+                                    debugger;
+                                    tablaCodCatastralRegistro.clear().draw();
+                                    for (var i = 0; i < response.ProcedimientoNuevo.ListCatastral.length; i++) {
+                                        tablaCodCatastralRegistro.row.add({
+                                            "CODUNI": response.ProcedimientoNuevo.ListCatastral[i].CODUNI,
+                                            "Distrito": response.ProcedimientoNuevo.ListCatastral[i].Distrito,
+                                            "Sec": response.ProcedimientoNuevo.ListCatastral[i].Sec,
+                                            "Manzana": response.ProcedimientoNuevo.ListCatastral[i].Manzana,
+                                            "Lote": response.ProcedimientoNuevo.ListCatastral[i].Lote,
+                                            "Ed": response.ProcedimientoNuevo.ListCatastral[i].Ed,
+                                            "Entr": response.ProcedimientoNuevo.ListCatastral[i].Entr,
+                                            "Piso": response.ProcedimientoNuevo.ListCatastral[i].Piso,
+                                            "Unidad": response.ProcedimientoNuevo.ListCatastral[i].Unidad,
+                                            "UbicacionPredio": response.ProcedimientoNuevo.ListCatastral[i].UbicacionPredio,
+                                            "Indice": response.ProcedimientoNuevo.ListCatastral[i].Indice
+                                        }).draw();
+                                        //rows++;
+                                    }
+                                }
+                            },
+                            complete: function (response) {
+                            }
+                        });
+
+                    });
+            });
+            $("#tablaProgramacionInspeccion tbody").on('click', 'button', function (event) {
+                var Action = $(this)[0].name.split('_')[0];
+                var Values = $(this)[0].value;
+                var data = tablaProgInspeccion.row($(this).parents('tr')).data();
+                if (Action == "Editar") {
+                    alert("Editar " + data.NroInspeccion);
+                }
+                else if (Action == "Eliminar") {
+                    //var cell = this;
+                    //var data = tablaProgInspeccion.row($(this).parents('tr')).data();
+                    //alert("Eliminar " + data.NroInspeccion);
+                    bootbox.confirm({
+                        title: "Mensaje del Sistema",
+                        message: "¿Esta seguro de borrar el registro?",
+                        buttons: {
+                            cancel: { label: '<i class="fa fa-times"></i> Cancelar' },
+                            confirm: { label: '<i class="fa fa-trash"></i> Eliminar ', className: "btn btn-danger" }
+                        },
+                        callback: function (result) {
+                            if (result) {
+                                $.post("@Url.Content("~/ProgramarInspeccion/EliminarInspeccion")",
+                                    {
+                                        id: data.NroInspeccion
+                                    }
+                                    , function (response) {
+                                        toastr.success(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                                        tablaProgInspeccion.ajax.reload();
+                                    });
+
+                            }
+                        }
+                    });
+                } else if (Action == "Reprogramar") {
+
+                    //alert("Reprogramar " + data.NroInspeccion);
+                    //$("#modalTipo").modal();
+                    bootbox.confirm({
+                        title: "Mensaje del Sistema",
+                        message: "¿Esta seguro de generar una reprogramacion de la inspección " + data.NumInspeccion + "?",
+                        buttons: {
+                            cancel: { label: '<i class="fa fa-times"></i> Cancelar' },
+                            confirm: { label: '<i class="fa fa-calendar"></i> Reprogramar ', className: "btn btn-danger" }
+                        },
+                        callback: function (result) {
+                            if (result) {
+                                $.get("@Url.Content("~/ProgramarInspeccion/RegistrarInspeccion")",
+                                    {
+                                    }
+                                    , function (response) {
+                                        //console.log(response);
+                                        $("#modalTipo").html(response);
+                                        localStorage.tempInspeccion = data.NroInspeccion;
+                                        $("#lblFechaInspeccion").html("Fecha de Reprogramación");
+                                        //console.log(localStorage.tempInspeccion);
+
+                                        $('#FechaLimiteM').val($('#FechaLimite').val());
+                                        $('#FechaLimiteInspeccionM').val($('#FechaLimiteInspeccion').val());
+                                        $('#FechaLimiProgInspecM').val($('#FechaLimiProgInspec').val());
+
+                                        $("#modalTipo").modal();
+                                        $.ajax({
+                                            url: "@Url.Content("~/ProgramarInspeccion/BuscarSolicitud")",
+                                            type: "POST",
+                                            dataType: "json",
+                                            data: { codTipoSolicitud: codSol, nroSolicitud: numVal, Estado: "A" },
+                                            success: function (response) {
+                                                if (response.success) {
+                                                    tablaCodCatastralRegistro.clear().draw();
+                                                    for (var i = 0; i < response.ProcedimientoNuevo.ListCatastral.length; i++) {
+                                                        tablaCodCatastralRegistro.row.add({
+                                                            "CODUNI": response.ProcedimientoNuevo.ListCatastral[i].CODUNI,
+                                                            "Distrito": response.ProcedimientoNuevo.ListCatastral[i].Distrito,
+                                                            "Sec": response.ProcedimientoNuevo.ListCatastral[i].Sec,
+                                                            "Manzana": response.ProcedimientoNuevo.ListCatastral[i].Manzana,
+                                                            "Lote": response.ProcedimientoNuevo.ListCatastral[i].Lote,
+                                                            "Ed": response.ProcedimientoNuevo.ListCatastral[i].Ed,
+                                                            "Entr": response.ProcedimientoNuevo.ListCatastral[i].Entr,
+                                                            "Piso": response.ProcedimientoNuevo.ListCatastral[i].Piso,
+                                                            "Unidad": response.ProcedimientoNuevo.ListCatastral[i].Unidad,
+                                                            "UbicacionPredio": response.ProcedimientoNuevo.ListCatastral[i].UbicacionPredio,
+                                                            "Indice": response.ProcedimientoNuevo.ListCatastral[i].Indice
+                                                        }).draw();
+                                                        //rows++;
+                                                    }
+                                                }
+                                            },
+                                            complete: function (response) {
+                                            }
+                                        });
+                                    });
+                            }
+                        }
+                    });
+                } else if (Action == "Aprobar") {
+                    //alert("Aprobar " + data.NroInspeccion);
+                    bootbox.confirm({
+                        title: "Mensaje del Sistema",
+                        message: "¿Esta seguro de registrar como ATENDIDA la Inspección?",
+                        buttons: {
+                            cancel: { label: '<i class="fa fa-times"></i> Cancelar' },
+                            confirm: { label: '<i class="fa fa-check-circle"></i> Atender ', className: "btn btn-success" }
+                        },
+                        callback: function (result) {
+                            if (result) {
+                                $.post("@Url.Content("~/ProgramarInspeccion/ProcesarAtencion")",
+                                    {
+                                        id: data.NroInspeccion, idProceso: "010003"
+                                    }
+                                    , function (response) {
+                                        toastr.success(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                                        tablaProgInspeccion.ajax.reload();
+                                    });
+
+                            }
+                        }
+                    });
+                } else if (Action == "Declinar") {
+                    //alert("Declinar " + data.NroInspeccion);
+                    bootbox.confirm({
+                        title: "Mensaje del Sistema",
+                        message: "¿Esta seguro de Declinar la Inspección?",
+                        buttons: {
+                            cancel: { label: '<i class="fa fa-times"></i> Cancelar' },
+                            confirm: { label: '<i class="fa fa-check-circle"></i> Declinar ', className: "btn btn-success" }
+                        },
+                        callback: function (result) {
+                            if (result) {
+                                $.post("@Url.Content("~/ProgramarInspeccion/ProcesarAtencion")",
+                                    {
+                                        id: data.NroInspeccion, idProceso: "010004"
+                                    }
+                                    , function (response) {
+                                        toastr.success(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                                        tablaProgInspeccion.ajax.reload();
+                                    });
+
+                            }
+                        }
+                    });
+                } else if (Action == "ReasignarInspectores") {
+                    $('#modalReasignarInspector').modal('show');
+                    $.ajax({
+                        url: "@Url.Content("~/ProgramarInspeccion/ListarInspectores")", type: "POST", dataType: "json",
+                        data: { fecha: data.FechaInspeccion },
+                    success: function (response) {
+                        if (response.success) {
+                            var sitePersonel = {};
+                            var employees = []
+                            sitePersonel.employees = employees;
+                            //debugger;
+                            for (var i = 0; i < response.data.length; i++) {
+                                var employee = {
+                                    label: response.data[i].Text,
+                                    value: response.data[i].Value,
+                                    selected: false,
+                                    disabled: false
+                                    //"attributes": {
+                                    //    "some-attribute": 1,
+                                    //    "another-attribute": false
+                                    //}
+                                }
+                                sitePersonel.employees.push(employee);
+                            }
+                            $('#codInspectores').attr("multiple", "multiple");
+
+                            $('#codInspectores').multiselect({
+                                includeSelectAllOption: false,
+                                enableClickableOptGroups: false,
+                                delimiterText: '; ',
+                                nonSelectedText: 'Selecciones los Inspectores para la programación',
+                                allSelectedText: 'Se seleccionó todo los Inspectores  para la programación',
+                                selectAllText: ' Seleccionar todo los Inspectores para la programación',
+                                selectAllValue: '0',
+                                onChange: function (option, checked) {
+                                    $('#codResponsable').multiselect({
+                                        includeSelectAllOption: false,
+                                        enableClickableOptGroups: false,
+                                        delimiterText: '; ',
+                                        nonSelectedText: 'Seleccione Inspector Responsable  para la programación',
+                                        selectAllText: ' Seleccione Inspector Responsable  para la programación'
+                                    });
+                                    $.ajax({
+                                        url: "@Url.Content("~/ProgramarInspeccion/ListarInspectores")", type: "POST", dataType: "json",
+                                    data: { fecha: $("#FechaInspeccion").val() },
+                                    success: function (response) {
+                                        if (response.success) {
+
+                                            if (response.data.length > 0) {
+                                                var sitePersonelResponsable = {};
+                                                var employeesResponsable = []
+                                                sitePersonelResponsable.employees = employeesResponsable;
+                                                for (var i = 0; i < response.data.length; i++) {
+                                                    //debugger;
+                                                    $('#codInspectores option:selected').each(function () {
+                                                        if ($(this).val() == response.data[i].Value) {
+                                                            var employeeResponsable = {
+                                                                "label": response.data[i].Text,
+                                                                "value": response.data[i].Value,
+                                                                "selected": false
+                                                            }
+                                                            sitePersonelResponsable.employees.push(employeeResponsable);
+                                                        }
+                                                    });
+                                                    //console.log(option);
+                                                }
+                                                $("#codResponsable").multiselect('dataprovider', sitePersonelResponsable.employees);
+                                            } else {
+                                                toastr.error(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                                            }
+                                        } else $("#codResponsable").multiselect('dataprovider', null);
+                                    },
+                                    complete: function (response) {
+                                    }
+                                });
+                        }
+                    });
+                    $("#codInspectores").multiselect('dataprovider', sitePersonel.employees);
+                    //$('#codResponsable').multiselect('dataprovider', null);
+                } else {
+                    toastr.error(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                }
+            },
+    complete: function (response) {
+
+    }
+                    });
+
+                }
+            });
+            /*
+            seleceted
+            */
+            $(".chosen-seleccionar").chosen({ width: "100%", placeholder_text_single: "Seleccione una opción" });
+            $('#codTipoSolicitud').change(function () {
+                if (this.value === "010001") {
+                    $('#divTipoDocumento').show();
+                    var URL = "@Url.Content("~/RecepcionDocumentos/DocExterno")";
+                    $.post(URL, function (data) {
+                        $('#CodigoTipoDocumentoReg').find('option:not(:first)').remove();
+                        var items = '<option value="">Seleccione el tipo de documento</option>';
+                        $.each(data, function (i, item) { items += "<option value='" + item.Value + "'>" + item.Text + "</option>"; });
+                        $('#CodigoTipoDocumentoReg').html(items);
+                        $('#CodigoTipoDocumentoReg').trigger("chosen:updated");
+                    });
+                } else if (this.value === "010002") {
+                    $('#divTipoDocumento').show();
+                    var URL = "@Url.Content("~/RecepcionDocumentos/DocInterno")";
+                    $.post(URL, function (data) {
+                        $('#CodigoTipoDocumentoReg').find('option:not(:first)').remove();
+                        var items = '<option value="">Seleccione el tipo de documento</option>';
+                        $.each(data, function (i, item) { items += "<option value='" + item.Value + "'>" + item.Text + "</option>"; });
+                        $('#CodigoTipoDocumentoReg').html(items);
+                        $('#CodigoTipoDocumentoReg').trigger("chosen:updated");
+                    });
+                } else {
+                    $('#divTipoDocumento').hide();
+                    $('#CodigoTipoDocumentoReg').find('option:not(:first)').remove();
+                }
+            });
+        });
+        /*
+        MODAL CLOSE
+        */
+        $('#modalTipo').on('hidden.bs.modal', function () {
+            $('#FechaInspeccion').val("");
+            $('#HoraInspeccion').val("");
+            $('#FechaCitacion').val("");
+            $('#Observacion').val("");
+            $('#FechaAvisoInspeccion').val("");
+
+            $('option', $('#codInspectores')).each(function (element) {
+                $(this).removeAttr('selected').prop('selected', false);
+                $(this).remove();//.prop('selected', false);
+            });
+            $('#codInspectores').multiselect('refresh');
+            $('option', $('#codResponsable')).each(function (element) {
+                $(this).removeAttr('selected').prop('selected', false);
+                $(this).remove();//.prop('selected', false);
+            });
+            $('#codResponsable').multiselect('refresh');
+
+            //$("#codInspectores").multiselect('deselectAll', false);
+            //$("#codInspectores").multiselect('updateButtonText');
+            //$("#codResponsable").multiselect('deselectAll', false);
+            //$("#codResponsable").multiselect('updateButtonText');
+        });
+        $("#btncalendario").click(function () {
+            debugger;
+            $.get("@Url.Content("~/StatusInspeccion/RegistarClase")",
+               null,
+               function (response) {
+                   $("#modalCalendario").html(response);
+                   $("#modalCalendario").modal();
+               });
+        });
+        /*
+        FUNCIONES
+        */
+        function validarCamposBusqueda(codSol, numVal) {
+            var validado = false;
+            valiCodTip = $('[data-valmsg-for="codTipoSolicitud"]'); valiNumSol = $('[data-valmsg-for="nroSolicitud"]');
+            if (!codSol) {
+                valiCodTip.html('Seleccione el tipo de solicitud').addClass('field-validation-valid has-error');
+                valiNumSol.html('').removeClass('field-validation-valid has-error');
+                $('#codTipoSolicitud').focus(); $('#btnRegistrarInspeccion').attr('disabled', 'disabled');
+            } else if (numVal === '-' || !numVal) {
+                valiCodTip.html('').removeClass('field-validation-valid has-error');
+                valiNumSol.html('Ingrese un número de solicitud').addClass('field-validation-valid has-error');
+                $('#nroSolicitud').focus(); $('#btnRegistrarInspeccion').attr('disabled', 'disabled');
+            } else {
+                validado = true;
+            }
+            return validado;
+        }
+    </script>
+}

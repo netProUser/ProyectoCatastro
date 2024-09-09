@@ -1,0 +1,177 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Vias.FiltrarViasViewModel
+
+@{
+    ViewBag.Title = "Mantenimiento Vias";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="overflow: hidden">
+                <label class="fonts14 mt-2">Mantenimiento de Vías</label>
+                <span class="icon-add">
+                    @Ajax.ActionLink(" Registrar", "Registrar", "Vias"
+                        , new { }
+                        , new AjaxOptions
+                                {
+                                    HttpMethod = "Get",
+                                    InsertionMode = InsertionMode.Replace,
+                                    UpdateTargetId = "modalVias"
+                                }
+                        ,
+                        new
+                        {
+                            @class = "btn btn-create glyphicon glyphicon-plus-sign",
+                            @type = "button",
+                            data_toggle = "modal",
+                            data_target = "#modalVias"
+
+                        }
+                    )
+                </span>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        @using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "SeccionListaVias" }))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            @Html.ValidationSummary(true)
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.DistritoVia, htmlAttributes: new { @class = "control-label" })
+                                        @Html.TextBoxFor(model => model.DistritoVia, new { @class = "form-control", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.FiltrarCodTipoVia, htmlAttributes: new { @class = "control-label" })
+                                        @Html.DropDownListFor(model => model.FiltrarCodTipoVia, new SelectList(Model.listTipoVias, "CodigoParametro", "Descripcion"), "Seleccione...",
+                                        new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.FiltrarNombreVia, htmlAttributes: new { @class = "control-label" })
+                                        @Html.TextBoxFor(model => model.FiltrarNombreVia, new { @class = "form-control" })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2" >
+                                    <div class="form-group">
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-md-8 pr-0"><input id="btnBuscar" type="button" value="Buscar" class="btn btn-block btn-primary" style="margin-top:5px" /></div>
+                                            <div class="col-md-4 pl-0"><button id="btnLimpiar" type="button" class="btn btn-default py-3 fa fa-refresh mx-3" style="margin-top:5px"></button></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            if (Model.listVias != null || Model.listVias.Count() > 0)
+                            {
+                                <div class="table-responsive">
+                                    <table id="tablaVias" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th width="110px">Acciones</th>
+                                                <th width="120px">Código de Vía</th>
+                                                <th>Tipo de Vía</th>
+                                                <th>Vía</th>
+                                                <th>Clase de Vía</th>
+                                                <th>Administración de Vía</th>
+                                                <th>Código Vía Equivalente</th>
+                                            </tr>
+                                        </thead>
+                                        
+                                    </table>
+                                </div>
+                            }
+
+                        }
+                    </div>
+
+                </div>
+                <!-- /.row (nested) -->
+            </div>
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
+<!-- Modal -->
+<div id="modalVias"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="modalViaslabel"
+     aria-hidden="true">
+</div>
+<!-- Modal -->
+<div id="modalEliminarVias"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="modalEliminarViaslabel"
+     aria-hidden="true">
+</div>
+
+@section datatables {
+<script>
+    $(document).ready(function () {
+        // -- Modificar el nombre la entidad
+        var nombreEntidad = "Vias";
+        var table = $("#tabla" + nombreEntidad).DataTable({
+            "ajax": {
+                "url": "@Url.Content("~/Vias/CargarGrid")",
+                "type": "POST",
+                "datatype": "json",
+                "data": function (d) {
+                    // -- Agregar campos de busqueda
+                    d.FiltrarCodTipoVia = $('#FiltrarCodTipoVia').val();
+                    d.FiltrarNombreVia = $('#FiltrarNombreVia').val();
+                }
+            },
+            "columns": [
+                {
+                    "render": function (data, type, full, meta) {
+                        // -- Reemplazar los codigos de los hrefs
+                        return '<a data-toggle="tooltip" title="Editar" class="btn btn-default glyphicon glyphicon-edit" href="' + nombreEntidad + '/Editar/' + full.CodigoVia + '"></a>' +
+                        ' <a data-toggle="tooltip" title="Eliminar" class="btn btn-danger glyphicon glyphicon-remove" href="' + nombreEntidad + '/Eliminar/' + full.CodigoVia + '"></a>'
+                        ;
+                    }, "className": "text-center",
+                },
+                { "data": "CodigoVia", "name": "Código", "autoWidth": true, "className": "text-center" },
+                { "data": "DesTipoVia", "name": "Tipo de Vía", "autoWidth": true },
+                { "data": "NombreVia", "name": "Nombre de Vía", "autoWidth": true },
+                { "data": "DesClaseVia", "name": "Tipo de Vía", "autoWidth": true },
+                { "data": "DesAdmVia", "name": "Administración de Vía", "autoWidth": true, "className": "text-center" },
+                { "data": "CodViaEquivalente", "name": "Cod. Vía", "autoWidth": true, "className": "text-center" },
+            ]
+        });
+        $("#tabla" + nombreEntidad + " tbody").on('click', 'a', function (event) {
+            event.preventDefault();
+            var enlace = $(this).attr('href');
+            $.get(enlace, function (response) {
+                var id = "#modal".concat((enlace.indexOf("Editar") !== -1) ? nombreEntidad : "Eliminar" + nombreEntidad);
+                $(id).modal().html(response);
+
+            });
+        });
+        $('#btnBuscar').click(function () {
+            console.log($(this).val());
+            table.ajax.reload();
+        });
+
+
+        $('#btnLimpiar').click(function () {
+            $('#FiltrarNombreVia').val('');
+            $('#FiltrarCodTipoVia').val('');
+            table.ajax.reload();
+        });
+    });
+</script>
+}

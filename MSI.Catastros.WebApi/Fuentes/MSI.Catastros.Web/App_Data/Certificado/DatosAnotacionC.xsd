@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DataSet1" targetNamespace="http://tempuri.org/DataSet1.xsd" xmlns:mstns="http://tempuri.org/DataSet1.xsd" xmlns="http://tempuri.org/DataSet1.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DataSet1" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DataSet1" msprop:Generator_UserDSName="DataSet1">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="DatosAnotacionCEJU" msprop:Generator_TableClassName="DatosAnotacionCEJUDataTable" msprop:Generator_TableVarName="tableDatosAnotacionCEJU" msprop:Generator_TablePropName="DatosAnotacionCEJU" msprop:Generator_RowDeletingName="DatosAnotacionCEJURowDeleting" msprop:Generator_RowChangingName="DatosAnotacionCEJURowChanging" msprop:Generator_RowEvHandlerName="DatosAnotacionCEJURowChangeEventHandler" msprop:Generator_RowDeletedName="DatosAnotacionCEJURowDeleted" msprop:Generator_UserTableName="DatosAnotacionCEJU" msprop:Generator_RowChangedName="DatosAnotacionCEJURowChanged" msprop:Generator_RowEvArgName="DatosAnotacionCEJURowChangeEvent" msprop:Generator_RowClassName="DatosAnotacionCEJURow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="TXTOBSERV" msprop:Generator_ColumnVarNameInTable="columnTXTOBSERV" msprop:Generator_ColumnPropNameInRow="TXTOBSERV" msprop:Generator_ColumnPropNameInTable="TXTOBSERVColumn" msprop:Generator_UserColumnName="TXTOBSERV" type="xs:string" minOccurs="0" />
+              <xs:element name="INDICE" msprop:Generator_ColumnVarNameInTable="columnINDICE" msprop:Generator_ColumnPropNameInRow="INDICE" msprop:Generator_ColumnPropNameInTable="INDICEColumn" msprop:Generator_UserColumnName="INDICE" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,105 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.MobiliarioUrbanoFormulario.ObjetoViewModel
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                Registrar Objeto
+                @*@Html.HiddenFor(model => model.estado, new { type = "hidden" })*@
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true)
+                    <div class="form-group">
+                        <div class="control-label  col-md-2">
+                            <label>Codigo Clase</label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" autocomplete="off" disabled class="form-control" id="codigoClaseFormulario" maxlength="10">
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" autocomplete="off" disabled class="form-control" id="nombreClaseFormulario" maxlength="10">
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="control-label  col-md-2">
+                            <label>Codigo SubClase</label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" autocomplete="off" disabled class="form-control" id="codigoSubClaseFormulario" maxlength="10">
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" autocomplete="off" disabled class="form-control" id="nombreSubClaseFormulario" maxlength="10">
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NombreObjeto, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.NombreObjeto, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.NombreObjeto)
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                @*<button type="button" id="btnGrabar" value="Grabar" class="btn btn-sm btn-green">Grabar</button>*@
+                <div class="row">
+                    <div class="col-sm-offset-9 col-sm-2 text-right">
+                        <button id="btnRegistrarObjeto" type="button" value="Registrar" class="btn btn-sm btn-green">
+                            Registrar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    $(function () {
+        $("#CodObjeto").val("")
+        $("#NombreObjeto").val("");
+        $("#btnRegistrarObjeto").click(function () {
+            var _modelo = new Object();
+            _modelo.CodClase = $("#codigoClaseFormulario").val();
+            _modelo.CodSubClase = $("#codigoSubClaseFormulario").val()
+            _modelo.CodObjeto = $("#CodObjeto").val()
+            _modelo.NombreObjeto = $("#NombreObjeto").val();
+            _modelo.Estado = 1;
+            $.ajax({
+                url: "@Url.Content("~/MobiliarioUrbanoFormulario/RegistrarObjeto")",
+                type: 'POST',
+                dataType: 'json',
+                data: _modelo,
+                success: function (response) {
+                    if (response.success) {
+                        toastr.success(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                        $("#modalObjeto").modal('hide');
+                    } else {
+                        toastr.error(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                    }
+                },
+                error: function (response) {
+                    var modelStateErrors = response.responseJSON;
+                    for (var i = 0; i < modelStateErrors.length; i++) {
+                        $('span[data-valmsg-for="' + modelStateErrors[i].key + '"]').text(modelStateErrors[i].errors[0]).addClass('has-error');
+                    }
+                },
+                complete: function (response) {
+                    if (response.success) {
+                        LoadObjeto();
+                    }
+                }
+            });
+        });
+    });
+</script>

@@ -1,0 +1,106 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Lotes.PorcentajeBienComunViewModel
+
+<div id="RegistrarLotesContainer">
+    @using (Html.BeginForm("Registrar", "Lotes", FormMethod.Post, new { id = "frmPorcentajeBienComun", name = "frmPorcentajeBienComun" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4><strong>Registro de Habilitación Urbana</strong></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <table>
+                                <tr>
+                                    <td width="7%"><label class="form-label">Dist.</label></td>
+                                    <td width="7%"><label class="form-label">Sec</label></td>
+                                    <td width="7%"><label class="form-label">Mz</label></td>
+                                    <td width="7%"><label class="form-label">Lote</label></td>
+                                    <td width=""></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.CodigoDistrito, new { @class = "form-control text-center px-3", @readonly = "true" })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.CodigoSector, new { @class = "form-control text-center px-3" })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.CodigoManzana, new { @class = "form-control text-center px-3" })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.CodigoLote, new { @class = "form-control text-center px-3" })</td>
+                                    <td>
+                                        <div class="">
+                                            <button id="btnModalBuscar" type="button" class="btn btnModalBuscar btn-warning glyphicon glyphicon-search"></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5">
+                                        <div class="has-error">
+                                            <ul id="msgErrores"></ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-default btn-block">% Bien Comun</button> 
+                            <button class="btn btn-default btn-block">% Bien Comun Lote</button>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table id="tablaBienComun1" style="width:100%;" class="table responsive display  table-striped table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th width="6%" style="width:65px">Dist</th>
+                                        <th width="6%">Sec</th>
+                                        <th width="6%">Mz</th>
+                                        <th width="6%">Lote</th>
+                                        <th width="6%">Ed</th>
+                                        <th width="6%">Entr</th>
+                                        <th width="2%">Piso</th>
+                                        <th width="6%">Unidad</th>
+                                        <th width="">%Bien Comun</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table id="tablaBienComun2" style="width:100%;" class="table responsive display  table-striped table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th width="6%" style="width:65px">Dist</th>
+                                        <th width="6%">Sec</th>
+                                        <th width="6%">Mz</th>
+                                        <th width="6%">Lote</th>
+                                        <th width="6%">Ed</th>
+                                        <th width="6%">Entr</th>
+                                        <th width="2%">Piso</th>
+                                        <th width="6%">Unidad</th>
+                                        <th width="">%Bien Comun</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input id="btnSubmit" type="submit" value="Grabar" class="btn btn-green" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script type="text/javascript">
+    
+</script>

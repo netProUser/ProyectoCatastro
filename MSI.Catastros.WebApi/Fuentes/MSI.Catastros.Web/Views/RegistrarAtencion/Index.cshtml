@@ -1,0 +1,238 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.RegistrarAtencion.AtencionViewModel
+
+@{
+    ViewBag.Title = "Registrar Atenciones";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="overflow: hidden">
+                <strong>Registrar Atencion</strong>
+                <span>
+                    @Ajax.ActionLink(" Salir", "Registrar", "ManzanaUrbana"
+                        , new { }
+                        , new AjaxOptions { HttpMethod = "Get", InsertionMode = InsertionMode.Replace, UpdateTargetId = "modalManzanaUrbana" }
+                        , new { @class = "btn btn-green ml-2 px-5", style = "float:right", @type = "button", data_toggle = "modal", data_target = "#modalManzanaUrbana"})
+                </span>
+                <span>
+                    @Ajax.ActionLink(" Derivar", "Registrar", "ManzanaUrbana"
+                        , new { }
+                        , new AjaxOptions { HttpMethod = "Get", InsertionMode = InsertionMode.Replace, UpdateTargetId = "modalManzanaUrbana"}
+                        , new { @class = "btn btn-green mr-2 px-4", style = "float:right", @type = "button", data_toggle = "modal", data_target = "#modalManzanaUrbana" })
+                </span>
+                
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        @using (Html.BeginForm("DistritoList", "Distritos"))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true)
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.NumeroTramite, htmlAttributes: new { @class = "control-label" })
+                                        @Html.TextBoxFor(model => model.NumeroTramite, new { @class = "form-control" })
+
+                                        @Html.ValidationMessageFor(model => model.NumeroTramite, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.NumeroSolicitud, htmlAttributes: new { @class = "control-label" })
+                                        @Html.TextBoxFor(model => model.NumeroSolicitud, new { @class = "form-control" })
+
+                                        @Html.ValidationMessageFor(model => model.NumeroSolicitud, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    <div class="form-group">
+                                        <br />
+                                        <button type="submit" value="" class="btn btn-search " >
+                                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                         </button>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Folios, htmlAttributes: new { @class = "control-label" })
+                                        @Html.TextBoxFor(model => model.Folios, new { type = "number", min = "0", step = "1", @value = "50", @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Folios, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.TipoRequerimiento, htmlAttributes: new { @class = "control-label" })
+                                        @Html.TextBoxFor(model => model.TipoRequerimiento, new { @class = "form-control" })
+
+                                        @Html.ValidationMessageFor(model => model.TipoRequerimiento, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.ResponsableActual, htmlAttributes: new { @class = "control-label" })
+                                        @Html.TextBoxFor(model => model.ResponsableActual, new { @class = "form-control" })
+
+                                        @Html.ValidationMessageFor(model => model.ResponsableActual, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-7">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.TipoProcedimientoActual, htmlAttributes: new { @class = "control-label" })
+                                        @Html.TextBoxFor(model => model.TipoProcedimientoActual, new { @class = "form-control" })
+
+                                        @Html.ValidationMessageFor(model => model.TipoProcedimientoActual, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.FechaInicio, htmlAttributes: new { @class = "control-label" })
+                                        @Html.TextBoxFor(model => model.FechaInicio, new { type = "date", @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.FechaInicio, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.FechaRecepcion, htmlAttributes: new { @class = "control-label" })
+                                        @Html.TextBoxFor(model => model.FechaRecepcion, new { type = "date", @class = "form-control" })
+
+                                        @Html.ValidationMessageFor(model => model.FechaRecepcion, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.FechaAtencion, htmlAttributes: new { @class = "control-label" })
+                                        @Html.TextBoxFor(model => model.FechaAtencion, new { type = "date", @class = "form-control" })
+
+                                        @Html.ValidationMessageFor(model => model.FechaAtencion, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <fieldset class="formulario">
+                                        <legend>Nueva Atencion</legend>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.EstadoAtencion, htmlAttributes: new { @class = "control-label" })
+                                                    @Html.TextBoxFor(model => model.EstadoAtencion, new { @class = "form-control" })
+
+                                                    @Html.ValidationMessageFor(model => model.EstadoAtencion, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.NuevoProcedimiento, htmlAttributes: new { @class = "control-label" })
+                                                    @Html.TextBoxFor(model => model.NuevoProcedimiento, new { @class = "form-control" })
+
+                                                    @Html.ValidationMessageFor(model => model.NuevoProcedimiento, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 text-right">
+                                                @Html.ActionLink(" Control de Calidad Detallado", "ControlCalidad", "RegistrarAtencion"
+                                                    , new AjaxOptions { HttpMethod = "Get", InsertionMode = InsertionMode.Replace, UpdateTargetId = "ControlCalidadDetalladoForm" }
+                                                    , new { @class = "btn btn-search", @type = "button", data_toggle = "modal", data_target = "#ControlCalidadDetalladoForm" })
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.ObservacionRemitente, htmlAttributes: new { @class = "control-label" })
+                                        @Html.TextAreaFor(model => model.ObservacionRemitente, new { @class = "form-control", @row = "4" })
+
+                                        @Html.ValidationMessageFor(model => model.ObservacionRemitente, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.ObservacionRecepcion, htmlAttributes: new { @class = "control-label" })
+                                        @Html.TextAreaFor(model => model.ObservacionRecepcion, new { @class = "form-control", @row = "4" })
+
+                                        @Html.ValidationMessageFor(model => model.ObservacionRecepcion, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            @*<button type="submit" class="btn btn-default">Submit Button</button>
+                                <button type="reset" class="btn btn-default">Reset Button</button>*@
+
+                                <div class="table-responsive">
+                                    
+                                </div>
+                        }
+                    </div>
+                    <div class="col-md-6">
+                        <label class="control-label">Predios Afectados</label>
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Dist</th>
+                                    <th>Sec</th>
+                                    <th>Mz</th>
+                                    <th>Lote</th>
+                                    <th>Ed</th>
+                                    <th>Entr</th>
+                                    <th>Piso</th>
+                                    <th>Unidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                            </tbody>
+                        </table>
+                        <br />
+                        <label class="control-label">Predios Generados</label>
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Dist</th>
+                                    <th>Sec</th>
+                                    <th>Mz</th>
+                                    <th>Lote</th>
+                                    <th>Ed</th>
+                                    <th>Entr</th>
+                                    <th>Piso</th>
+                                    <th>Unidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <!-- /.row (nested) -->
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
+<!-- Modal -->
+<div id="ControlCalidadDetalladoForm"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="ControlCalidadlabel"
+     aria-hidden="true">
+</div>

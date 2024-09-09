@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsOTROSDOCUMENTOS" targetNamespace="http://tempuri.org/dsOTROSDOCUMENTOS.xsd" xmlns:mstns="http://tempuri.org/dsOTROSDOCUMENTOS.xsd" xmlns="http://tempuri.org/dsOTROSDOCUMENTOS.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsOTROSDOCUMENTOS" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsOTROSDOCUMENTOS" msprop:Generator_UserDSName="dsOTROSDOCUMENTOS">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="SIC_LOTEOTRODOC" msprop:Generator_TableClassName="SIC_LOTEOTRODOCDataTable" msprop:Generator_TableVarName="tableSIC_LOTEOTRODOC" msprop:Generator_TablePropName="SIC_LOTEOTRODOC" msprop:Generator_RowDeletingName="SIC_LOTEOTRODOCRowDeleting" msprop:Generator_RowChangingName="SIC_LOTEOTRODOCRowChanging" msprop:Generator_RowEvHandlerName="SIC_LOTEOTRODOCRowChangeEventHandler" msprop:Generator_RowDeletedName="SIC_LOTEOTRODOCRowDeleted" msprop:Generator_UserTableName="SIC_LOTEOTRODOC" msprop:Generator_RowChangedName="SIC_LOTEOTRODOCRowChanged" msprop:Generator_RowEvArgName="SIC_LOTEOTRODOCRowChangeEvent" msprop:Generator_RowClassName="SIC_LOTEOTRODOCRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="TXTTIPODOCU" msprop:Generator_ColumnVarNameInTable="columnTXTTIPODOCU" msprop:Generator_ColumnPropNameInRow="TXTTIPODOCU" msprop:Generator_ColumnPropNameInTable="TXTTIPODOCUColumn" msprop:Generator_UserColumnName="TXTTIPODOCU" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTNRODOCUMENTO" msprop:Generator_ColumnVarNameInTable="columnTXTNRODOCUMENTO" msprop:Generator_ColumnPropNameInRow="TXTNRODOCUMENTO" msprop:Generator_ColumnPropNameInTable="TXTNRODOCUMENTOColumn" msprop:Generator_UserColumnName="TXTNRODOCUMENTO" type="xs:string" minOccurs="0" />
+              <xs:element name="FECDOCUMENTO" msprop:Generator_ColumnVarNameInTable="columnFECDOCUMENTO" msprop:Generator_ColumnPropNameInRow="FECDOCUMENTO" msprop:Generator_ColumnPropNameInTable="FECDOCUMENTOColumn" msprop:Generator_UserColumnName="FECDOCUMENTO" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="CORRELATIVO" msprop:Generator_ColumnVarNameInTable="columnCORRELATIVO" msprop:Generator_ColumnPropNameInRow="CORRELATIVO" msprop:Generator_ColumnPropNameInTable="CORRELATIVOColumn" msprop:Generator_UserColumnName="CORRELATIVO" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTOBSERVACION" msprop:Generator_ColumnVarNameInTable="columnTXTOBSERVACION" msprop:Generator_ColumnPropNameInRow="TXTOBSERVACION" msprop:Generator_ColumnPropNameInTable="TXTOBSERVACIONColumn" msprop:Generator_UserColumnName="TXTOBSERVACION" type="xs:string" minOccurs="0" />
+              <xs:element name="ITEM" msprop:Generator_ColumnVarNameInTable="columnITEM" msprop:Generator_ColumnPropNameInRow="ITEM" msprop:Generator_ColumnPropNameInTable="ITEMColumn" msprop:Generator_UserColumnName="ITEM" type="xs:int" minOccurs="0" />
+              <xs:element name="FECREG" msprop:Generator_ColumnVarNameInTable="columnFECREG" msprop:Generator_ColumnPropNameInRow="FECREG" msprop:Generator_ColumnPropNameInTable="FECREGColumn" msprop:Generator_UserColumnName="FECREG" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

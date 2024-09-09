@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="RESOLNUMERACIONDETALLE" targetNamespace="http://tempuri.org/RESOLNUMERACIONDETALLE.xsd" xmlns:mstns="http://tempuri.org/RESOLNUMERACIONDETALLE.xsd" xmlns="http://tempuri.org/RESOLNUMERACIONDETALLE.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="RESOLNUMERACIONDETALLE" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="RESOLNUMERACIONDETALLE" msprop:Generator_UserDSName="RESOLNUMERACIONDETALLE">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="DatosResolNumeracionDetalle" msprop:Generator_TableClassName="DatosResolNumeracionDetalleDataTable" msprop:Generator_TableVarName="tableDatosResolNumeracionDetalle" msprop:Generator_TablePropName="DatosResolNumeracionDetalle" msprop:Generator_RowDeletingName="DatosResolNumeracionDetalleRowDeleting" msprop:Generator_RowChangingName="DatosResolNumeracionDetalleRowChanging" msprop:Generator_RowEvHandlerName="DatosResolNumeracionDetalleRowChangeEventHandler" msprop:Generator_RowDeletedName="DatosResolNumeracionDetalleRowDeleted" msprop:Generator_UserTableName="DatosResolNumeracionDetalle" msprop:Generator_RowChangedName="DatosResolNumeracionDetalleRowChanged" msprop:Generator_RowEvArgName="DatosResolNumeracionDetalleRowChangeEvent" msprop:Generator_RowClassName="DatosResolNumeracionDetalleRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CODCERTIFICADO" msprop:Generator_ColumnVarNameInTable="columnCODCERTIFICADO" msprop:Generator_ColumnPropNameInRow="CODCERTIFICADO" msprop:Generator_ColumnPropNameInTable="CODCERTIFICADOColumn" msprop:Generator_UserColumnName="CODCERTIFICADO" type="xs:string" minOccurs="0" />
+              <xs:element name="CODANOCERTI" msprop:Generator_ColumnVarNameInTable="columnCODANOCERTI" msprop:Generator_ColumnPropNameInRow="CODANOCERTI" msprop:Generator_ColumnPropNameInTable="CODANOCERTIColumn" msprop:Generator_UserColumnName="CODANOCERTI" type="xs:string" minOccurs="0" />
+              <xs:element name="CODTIPOCERTI" msprop:Generator_ColumnVarNameInTable="columnCODTIPOCERTI" msprop:Generator_ColumnPropNameInRow="CODTIPOCERTI" msprop:Generator_ColumnPropNameInTable="CODTIPOCERTIColumn" msprop:Generator_UserColumnName="CODTIPOCERTI" type="xs:string" minOccurs="0" />
+              <xs:element name="CODCORRELCERT" msprop:Generator_ColumnVarNameInTable="columnCODCORRELCERT" msprop:Generator_ColumnPropNameInRow="CODCORRELCERT" msprop:Generator_ColumnPropNameInTable="CODCORRELCERTColumn" msprop:Generator_UserColumnName="CODCORRELCERT" type="xs:string" minOccurs="0" />
+              <xs:element name="CODVIA" msprop:Generator_ColumnVarNameInTable="columnCODVIA" msprop:Generator_ColumnPropNameInRow="CODVIA" msprop:Generator_ColumnPropNameInTable="CODVIAColumn" msprop:Generator_UserColumnName="CODVIA" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTNOMVIA" msprop:Generator_ColumnVarNameInTable="columnTXTNOMVIA" msprop:Generator_ColumnPropNameInRow="TXTNOMVIA" msprop:Generator_ColumnPropNameInTable="TXTNOMVIAColumn" msprop:Generator_UserColumnName="TXTNOMVIA" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTTIPOPUERTA" msprop:Generator_ColumnVarNameInTable="columnTXTTIPOPUERTA" msprop:Generator_ColumnPropNameInRow="TXTTIPOPUERTA" msprop:Generator_ColumnPropNameInTable="TXTTIPOPUERTAColumn" msprop:Generator_UserColumnName="TXTTIPOPUERTA" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTNUMERO" msprop:Generator_ColumnVarNameInTable="columnTXTNUMERO" msprop:Generator_ColumnPropNameInRow="TXTNUMERO" msprop:Generator_ColumnPropNameInTable="TXTNUMEROColumn" msprop:Generator_UserColumnName="TXTNUMERO" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTBLOQTE" msprop:Generator_ColumnVarNameInTable="columnTXTBLOQTE" msprop:Generator_ColumnPropNameInRow="TXTBLOQTE" msprop:Generator_ColumnPropNameInTable="TXTBLOQTEColumn" msprop:Generator_UserColumnName="TXTBLOQTE" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTNOMVIAANT" msprop:Generator_ColumnVarNameInTable="columnTXTNOMVIAANT" msprop:Generator_ColumnPropNameInRow="TXTNOMVIAANT" msprop:Generator_ColumnPropNameInTable="TXTNOMVIAANTColumn" msprop:Generator_UserColumnName="TXTNOMVIAANT" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTTIPOVIA" msprop:Generator_ColumnVarNameInTable="columnTXTTIPOVIA" msprop:Generator_ColumnPropNameInRow="TXTTIPOVIA" msprop:Generator_ColumnPropNameInTable="TXTTIPOVIAColumn" msprop:Generator_UserColumnName="TXTTIPOVIA" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTNIVEL" msprop:Generator_ColumnVarNameInTable="columnTXTNIVEL" msprop:Generator_ColumnPropNameInRow="TXTNIVEL" msprop:Generator_ColumnPropNameInTable="TXTNIVELColumn" msprop:Generator_UserColumnName="TXTNIVEL" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

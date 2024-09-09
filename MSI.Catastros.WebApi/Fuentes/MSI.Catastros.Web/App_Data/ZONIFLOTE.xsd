@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="ZONIFLOTE" targetNamespace="http://tempuri.org/ZONIFLOTE.xsd" xmlns:mstns="http://tempuri.org/ZONIFLOTE.xsd" xmlns="http://tempuri.org/ZONIFLOTE.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="ZONIFLOTE" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="ZONIFLOTE" msprop:Generator_UserDSName="ZONIFLOTE">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ZONIFICACION" msprop:Generator_TableClassName="ZONIFICACIONDataTable" msprop:Generator_TableVarName="tableZONIFICACION" msprop:Generator_TablePropName="ZONIFICACION" msprop:Generator_RowDeletingName="ZONIFICACIONRowDeleting" msprop:Generator_RowChangingName="ZONIFICACIONRowChanging" msprop:Generator_RowEvHandlerName="ZONIFICACIONRowChangeEventHandler" msprop:Generator_RowDeletedName="ZONIFICACIONRowDeleted" msprop:Generator_UserTableName="ZONIFICACION" msprop:Generator_RowChangedName="ZONIFICACIONRowChanged" msprop:Generator_RowEvArgName="ZONIFICACIONRowChangeEvent" msprop:Generator_RowClassName="ZONIFICACIONRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CODZONL" msprop:Generator_ColumnVarNameInTable="columnCODZONL" msprop:Generator_ColumnPropNameInRow="CODZONL" msprop:Generator_ColumnPropNameInTable="CODZONLColumn" msprop:Generator_UserColumnName="CODZONL" type="xs:string" minOccurs="0" />
+              <xs:element name="CODZON" msprop:Generator_ColumnVarNameInTable="columnCODZON" msprop:Generator_ColumnPropNameInRow="CODZON" msprop:Generator_ColumnPropNameInTable="CODZONColumn" msprop:Generator_UserColumnName="CODZON" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTZONIFICACION" msprop:Generator_ColumnVarNameInTable="columnTXTZONIFICACION" msprop:Generator_ColumnPropNameInRow="TXTZONIFICACION" msprop:Generator_ColumnPropNameInTable="TXTZONIFICACIONColumn" msprop:Generator_UserColumnName="TXTZONIFICACION" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

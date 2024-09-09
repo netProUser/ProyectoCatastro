@@ -1,0 +1,1718 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.ProcedimientoInicial.FiltrarProcedimientoInicialViewModel
+
+@{
+    ViewBag.Title = "Procedimiento Inicial";
+}
+<style>
+    .btnOrange {
+            border: 2px solid orange;
+    }
+    .btnGreen {
+            border: 2px solid #00784b;
+    }
+</style>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="overflow: hidden">
+                <div class="row">
+                    <div class="col-xl-10 col-lg-8 col-xs-6 pt-2">
+                        <label class="control-label">Requerimiento Analista</label>
+                    </div>
+                    <div class="col-xl-2 col-lg-3 col-xs-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button class="btn btn-green btn-block mr-3" type="button" id="DerivarProcesoInicial" disabled><span class="glyphicon glyphicon-ok mr-2"></span> Derivar</button>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="col-xl-2 col-lg-4 col-xs-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button class="btn btn-green btn-block mr-3" id="DerivarProcesoInicial"><span class="glyphicon glyphicon-ok mr-2"></span> Derivar</button>
+                            </div>
+                            <div class="col-md-6">
+                                <button class="btn btn-white btn-block px-4"><span class="glyphicon glyphicon-remove mr-2"></span> Salir</button>
+                            </div>
+                        </div>
+                    </div>*@
+                </div>
+
+            </div>
+            <input type="hidden" id="CodigoEstadoActual" />
+            <input type="hidden" id="NombreEstadoActual" />
+            <div class="panel-body">
+                <div class="">
+                    <div class="row">
+                        <div class="col-md-8 col-xs-8">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.FiltrarListTipoSolicitud, htmlAttributes: new { @class = "control-label" })
+                                        @Html.DropDownListFor(m => m.FiltrarCodigoTipoSolicitud, Model.FiltrarListTipoSolicitud, "- Seleccione el tipo de solicitud -", new { @class = "form-control" })
+                                        <span class="field-validation-valid" data-valmsg-for="FiltrarCodigoTipoSolicitud" data-valmsg-replace="true"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3" id="divTipoDocumento" style="display:none;">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.FiltrarListTipoDocumento, htmlAttributes: new { @class = "control-label" })
+                                        @Html.DropDownListFor(m => m.FiltrarCodigoTipoDocumentoReg, Model.FiltrarListTipoDocumento, "- Seleccione el tipo de documento -", new { @class = "form-control chosen-seleccionar", autofocus = "true" })
+                                        <span class="field-validation-valid" data-valmsg-for="FiltrarCodigoTipoDocumentoReg" data-valmsg-replace="true"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.FiltrarNumeroSolicitud, htmlAttributes: new { @class = "control-label" })
+                                        @Html.TextBoxFor(model => model.FiltrarNumeroSolicitud, new { @class = "form-control" })
+                                        <span class="field-validation-valid" data-valmsg-for="FiltrarNumeroSolicitud" data-valmsg-replace="true"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2 col-lg-2 text-center">
+                                    <div class="form-group">
+                                        <br />
+                                        <button id="btnBuscar" type="button" value="" class="btn btn-default btn-block glyphicon glyphicon-search" style="margin-top: 5px"></button>
+                                    </div>
+                                </div>
+
+                                @*<div class="col-sm-5">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Asunto, htmlAttributes: new { @class = "control-label" })
+                                        @Html.TextBoxFor(model => model.Asunto, new { @class = "form-control", @readonly = "readonly" })
+                                    </div>
+                                </div>*@
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Asunto, htmlAttributes: new { @class = "control-label" })
+                                @Html.TextBoxFor(model => model.Asunto, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <fieldset class="formulario">
+                                <legend>Asignar código catastral</legend>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        @*<button class="btn btn-default" data-toggle="modal" data-target="#ModalBuscarAsignar">Buscar Codigo Catastral</button>*@
+                                        <div class="col-sm-12">
+                                            @*<button class="btn btn-default" data-toggle="modal" data-target="#ModalBuscarAsignar">Buscar Codigo Catastral</button>*@
+                                            @Ajax.ActionLink(" Buscar Codigo Catastral", "RegistrarUnidad", "ProcedimientoInicial"
+                                        , new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "modalUnidadCatastral", OnComplete = "mostrarModal('UnidadCatastral')" }
+                                        , new { @class = "btn btn-default btnUtil", id = "btnBuscarCodigoCatastral", disabled = "disabled" })
+
+                                            @*<button class="btn btn-default btnUtil" disabled id="btnGenerarNuevoPredio">Generar Nuevo Predio</button>*@
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-12">
+                                        <table id="tablaSolicitudUnidadAcumulada" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th >Dist</th>
+                                                    <th >Sec</th>
+                                                    <th >Mz</th>
+                                                    <th >Lote</th>
+                                                    <th >Ed</th>
+                                                    <th >Entr</th>
+                                                    <th >Piso</th>
+                                                    <th >Unidad</th>
+                                                    <th >Referencia</th>
+                                                    <th >Ubicacion</th>
+                                                    <th >Estado</th>
+                                                    <th style="display:none;"></th>
+                                                    <th style="display:none;"></th>
+                                                    <th ></th>
+                                                    <th style="display:none;"></th>
+                                                    <th style="display:none;"></th>
+                                                    <th style="display:none;"></th>
+                                                    <th style="display:none;"></th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <fieldset class="formulario">
+                                <legend>Requerimiento Analista</legend>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-bordered table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th width="30px"><button class="btn btn-xs btn-success mr-2 glyphicon glyphicon-plus-sign" data-toggle="modal" id="btnSolicitarProcedimiento" data-target="#"></button>  Acciones</th>
+                                                        <th width="7.1%">Nro</th>
+                                                        <th width="7.1%">Tipo Procedimiento</th>
+                                                        <th width="7.1%">Tipo Requerimiento</th>
+                                                        <th width="7.1%">Tipo Llenado</th>
+                                                        <th width="7.1%">Responsable</th>
+                                                        <th width="7.1%">Fecha Límite Atención</th>
+                                                        <th width="7.1%">Límite - Programación Inspeccion</th>
+                                                        <th width="7.1%">Límite - Inspeccion</th>
+                                                        <th width="7.1%">Límite - Actualización</th>
+                                                        <th width="7.1%">Límite - Informe Analista</th>
+                                                        <th width="7.1%">Formulario Procedimiento</th>
+                                                        <th width="7.1%">Fecha Recepcion</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr id="FilaProcedimientoInicial">
+                                                        <td align="center">
+                                                            <button data-toggle="tooltip" title="Editar" class="btn  btn-xs  btn-default glyphicon glyphicon-edit" data-toggle="modal" id="btnSolicitarProcedimientoEdit" data-target="#"></button>
+                                                            <button data-toggle="tooltip" title="Eliminar" class="btn  btn-xs  btn-default glyphicon glyphicon-trash" id="btnEliminarProcedimiento"></button>
+                                                            <button data-toggle="tooltip" title="Observaciones de Inspección" class="btn  btn-xs  btn-default glyphicon glyphicon-align-justify" data-toggle="modal" id="btnSolicitarInspeccion" data-target="#"></button>
+                                                            <button data-toggle="tooltip" title="Observaciones de Actualización"  class="btn  btn-xs  btn-default fa fa-desktop" style="margin-top: 1px;padding-top: 4.15px;padding-bottom: 4px;" data-toggle="modal" id="btnSolicitarActualizacion" data-target="#"></button>
+                                                        </td>
+                                                        <td id="TabNroSolicitud"></td>
+                                                        <td id="TabTipoProcedimiento"></td>
+                                                        <td id="TabTipoRequerimiento"></td>
+                                                        <td id="TabTipoLlenado"></td>
+                                                        <td id="TabResponsable"></td>
+                                                        <td id="TabFechaLimite"></td>
+                                                        <td id="TabFechaProgIns"></td>
+                                                        <td id="TabFechaProcIns"></td>
+                                                        <td id="TabFechaProcAct"></td>
+                                                        <td id="TabFechaAnalista"></td>
+                                                        <td></td>
+                                                        <td id="TabFechaRecepcion"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+                @* } *@
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
+<!-- Modal -->
+<div id="DetalleProcedimientoModal"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="DetalleProcedimientolabel"
+     aria-hidden="true">
+</div>
+
+<!-- Large modal -->
+<div id="modalUnidadCatastral"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="RegistrarUnidadCatastral"
+     aria-hidden="true">
+</div>
+
+
+<!-- Large modal -->
+<!-- Modal -->
+<div class="modal fade" id="ModalSolicitarProcedimiento" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>*@
+                @*<button type="button" class="btn btn-secondary" style="margin-top:-2px;float: right;" data-dismiss="modal">Salir</button>
+                <button type="button" id="btnGrabarProcedimientoInicial" class="btn btn-success" style="margin-top:-2px;float: right;">Grabar</button>*@
+
+                <button class="btn btn-default mr-2 px-5" style="margin-top:-2px;float: right;" data-dismiss="modal" aria-label="Close">Salir</button>
+                <button type="button" id="btnGrabarProcedimientoInicial" class="btn btn-green mr-2 px-5" style="margin-top:-2px;float: right;">Grabar</button>
+                <h5 class="modal-title" id="exampleModalLongTitle" style="font-weight:bold">Requerimiento Analista</h5>
+                @*<div class="modal-footer">
+
+                    </div>*@
+            </div>
+            <input type="hidden" id="cadfechasolicitud" class="form-control" />
+            <input type="hidden" id="CodigoEstadoPrevio" class="form-control" />
+            <input type="hidden" id="CodigoCargoResponsable" class="form-control" />
+            <input type="hidden" id="CodigoTipoSolicitud" class="form-control" />
+            <input type="hidden" id="Folio" class="form-control" />
+            <input type="hidden" id="anosolicitud" class="form-control" />
+            <input type="hidden" id="CodigoCargoAnterior" class="form-control" />
+            <input type="hidden" id="CodigoTipoDocumento" class="form-control" />
+            <input type="hidden" id="CodigoActividad" class="form-control" />
+            @*<input type=" hidden" id="EstadoSolicitudPrevio" class="form-control" />*@
+            <div class=" modal-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>Nro Solicitud</label>
+                        <input type="text" id="NumeroSolicitud" class="form-control" readonly="readonly" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label>Asunto</label>
+                        <input type="text" class="form-control" id="AsuntoSolProd" readonly="readonly" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>Responsable Previo</label>
+                        <input type="text" class="form-control" id="ResponsablePrevio" readonly="readonly" />
+                    </div>
+                    <div class="col-sm-6">
+                        <label>Estado de Atencion Previo</label>
+                        <input type="text" class="form-control" id="EstadoSolicitudPrevio" readonly="readonly" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label>Tipo de Procedimiento</label>
+                        @Html.DropDownList("CodigoTipoProcedimiento", Model.ListTipoProcedimiento, "- Seleccione el tipo de procedimiento-", new { @class = "form-control" })
+                        <span class="" data-valmsg-for="CodigoTipoProcedimiento" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label>Tipo de Requerimiento</label>
+                        @Html.DropDownList("CodigoTipoRequerimiento", new SelectList(Model.ListTipoRequerimiento, "Value", "Text"), "- Seleccione el tipo de requerimiento -", new { @class = "form-control" })
+                        <span class="" data-valmsg-for="CodigoTipoRequerimiento" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>Asignar Responsable</label>
+                        @Html.DropDownList("CodigoAsignarReponsable", Model.ListAsignarReponsable, "- Seleccione al responsable -", new { @class = "form-control" })
+                        <span class="" data-valmsg-for="CodigoAsignarReponsable" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <label>Puesto de Responsable</label>
+                        <input type="text" class="form-control" id="PuestoResponsable" readonly="readonly" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label>Tipo de llenado</label>
+                        @Html.DropDownList("CodigoTipoLlenado", new SelectList(Model.ListTipoLlenado, "Value", "Text"), "- Seleccione el tipo de llenado -", new { @class = "form-control" })
+                        <span class="" data-valmsg-for="CodigoTipoLlenado" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>Numero calidad de Verificación</label>
+                        <div class="col-sm-6" style="padding-left:0px">
+                            <input type="text" class="form-control" id="NumeroVerificacion" />
+                            <span class="" data-valmsg-for="NumeroVerificacion" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="col-sm-6" style="padding-right:0px">
+                            <input type="text" class="form-control" id="AnoVerificacion" />
+                            <span class="" data-valmsg-for="AnoVerificacion" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <label>Fecha Vencimiento de Plazo</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="fechaLimite" disabled="disabled" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-success" type="button" id="btnfechaLimite" disabled="disabled">
+                                    <i class="fa fa-edit" aria-hidden="true"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+
+                        <label>Entrega a Análisis</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="fechaProgIns" disabled="disabled" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-success" type="button" id="btnfechaProgIns" disabled="disabled">
+                                    <i class="fa fa-edit" aria-hidden="true"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <label>Entrega de Inspector</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="fechaProcIns" disabled="disabled" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-success" type="button" id="btnfechaProcIns" disabled="disabled">
+                                    <i class="fa fa-edit" aria-hidden="true"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>Limite - Actualización</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="fechaProcAct" disabled="disabled" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-success" type="button" id="btnfechaProcAct" disabled="disabled">
+                                    <i class="fa fa-edit" aria-hidden="true"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <label>Limite - Informe Analista</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="fechaAnalista" disabled="disabled" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-success" type="button" id="btnfechaAnalista" disabled="disabled">
+                                    <i class="fa fa-edit" aria-hidden="true"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>Fecha derivacion previa  </label>
+                        <input type="text" class="form-control" id="cadfechaenvio" readonly="readonly" />
+                        <span class="" data-valmsg-for="cadfechaenvio" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <label>Fecha recepcion</label>
+                        <input type="text" class="form-control" id="cadfecharecepcion" readonly="readonly" />
+                        <span class="" data-valmsg-for="cadfecharecepcion" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label>Accion</label>
+                        @Html.DropDownList("CodigoTipoAccion", new SelectList(Model.ListTipoAccion, "Value", "Text"), "- Seleccione Acción -", new { @class = "form-control chosen-seleccionar" })
+                        <span class="" data-valmsg-for="CodigoTipoAccion" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label>Observacion remitente</label>
+                        <textarea class="form-control" id="ObservacionRemitente" readonly="readonly"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label>Observacion recepcion</label>
+                        <textarea class="form-control" maxlength="200" id="ObservacionRecepcion"></textarea>
+                        <span class="" data-valmsg-for="ObservacionRecepcion" data-valmsg-replace="true"></span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="ModalSolicitudInspeccion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn btn-default px-5" id="btnCerrarSolicitudInspeccion" style="margin-top:-2px;float: right;" data-dismiss="modal"><i class="fa fa-close"></i> Salir</button>
+                <button type="button" class="btn btn-green px-5 mr-2" id="btnGrabarSolicitudInspeccion" style="margin-top:-2px;float: right;"><i class="fa fa-save"></i> Grabar</button>
+                <h5 class="modal-title " id="exampleModalLongTitle" style="font-weight:bold;">Detalle Solicitud de Inspección</h5>
+
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>Tipo Procedimiento</label>
+                        <input type="text" class="form-control TipoProcedimientoDetalle" readonly="readonly" />
+                    </div>
+                </div>
+                <br /><br />
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="tablaSolicitudUnidadInspeccion" class="table table-striped table-bordered table-hover" style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th width="10%">Dist</th>
+                                    <th width="10%">Sec</th>
+                                    <th width="10%">Mz</th>
+                                    <th width="10%">Lote</th>
+                                    <th width="10%">Ed</th>
+                                    <th width="10%">Entr</th>
+                                    <th width="10%">Piso</th>
+                                    <th width="10%">Unidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <fieldset class="formulario">
+                            <legend>Tipo de Inspeccion: Exterior</legend>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>Sub-Tipo de inspeccion</label>
+                                </div>
+                            </div>
+                            <div id="chktargetInsExp"></div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label>Detalle</label>
+                                    <textarea class="form-control" id="textchktargetInsExp" readonly="readonly"></textarea>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <fieldset class="formulario">
+                            <legend>Tipo de Inspeccion: Interior</legend>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>Sub-Tipo de inspeccion</label>
+                                </div>
+                            </div>
+
+                            <div id="chktargetInsInt"></div>
+
+
+                            <div class="row mb-2">
+                                <div class="col-sm-12">
+                                    <label>Detalle Otros</label>
+                                    <input type="text" name="name" value="" class="form-control" id="txtOtrosInspeccion" readonly="readonly" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label>Detalle</label>
+                                    <textarea class="form-control" id="textchktargetInsInt" readonly="readonly"></textarea>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="ModalSolicitudActualizacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn btn-default px-5" id="btnCerrarSolicitudActualizacion" style="margin-top:-2px;float: right;" data-dismiss="modal"><i class="fa fa-close"></i> Salir</button>
+                <button type="button" class="btn btn-green mr-2 px-5" id="btnGrabarSolicitudActualizacion" style="margin-top:-2px;float: right;"><i class="fa fa-save"></i> Grabar</button>
+                <h5 class="modal-title" id="exampleModalLongTitle" style="font-weight:bold;">Detalle Solicitud de Actualización</h5>
+
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>Tipo Procedimiento</label>
+                        <input type="text" class="form-control TipoProcedimientoDetalle" readonly="readonly" />
+                    </div>
+                </div>
+                <br /><br />
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="tablaSolicitudUnidadActualizacion" style="width:100%;" class="table responsive display  table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th width="10%">Dist</th>
+                                    <th width="10%">Sec</th>
+                                    <th width="10%">Mz</th>
+                                    <th width="10%">Lote</th>
+                                    <th width="10%">Ed</th>
+                                    <th width="10%">Entr</th>
+                                    <th width="10%">Piso</th>
+                                    <th width="10%">Unidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <fieldset class="formulario">
+                            <legend>Actualizacion de Informacion literal</legend>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>Sub-Tipo de inspeccion</label>
+                                </div>
+                            </div>
+                            <div id="chktargetActInfLit" class="classchktargetActInfLit">
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label>Detalle</label>
+                                    <textarea class="form-control" id="textchktargetActInfLit" readonly="readonly"></textarea>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <fieldset class="formulario">
+                            <legend>Actualizaci&oacute;n de informac&oacute;n gr&aacute;fica</legend>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>Sub-Tipo de inspeccion</label>
+                                </div>
+                            </div>
+                            <div id="chktargetActInfGra"></div>
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label>Detalle Otros</label>
+                                    <input type="text" name="name" value="" class="form-control" id="txtOtrosActGra" readonly="readonly" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label>Detalle</label>
+                                    <textarea class="form-control" id="textchktargetActInfGra" readonly="readonly"></textarea>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <fieldset class="formulario">
+                            <legend>Escaneo y/o Publicacion de Documentos</legend>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>Sub-Tipo de inspeccion</label>
+                                </div>
+                            </div>
+                            <div id="chktargetActEscan"></div>
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label>Detalle Otros</label>
+                                    <input type="text" name="name" value="" class="form-control" id="txtOtrosActEscan" readonly="readonly" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label>Detalle</label>
+                                    <textarea class="form-control" id="textchktargetActEscan" readonly="readonly"></textarea>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section datatables {
+    <script>
+    //$('#page-wrapper').removeClass('pt-5').addClass('pt-1'); $('#periodoGlobal').show();
+    $(".chosen-seleccionar").chosen({ width: "100%", placeholder_text_single: "Seleccione una opción" });
+    $('.btnUtil').attr('disabled', 'disabled');
+    $('#btnSolicitarProcedimientoEdit').attr('disabled', 'disabled');
+    $('#btnSolicitarInspeccion').attr('disabled', 'disabled');
+    $('#btnSolicitarActualizacion').attr('disabled', 'disabled');
+    $('#btnEliminarProcedimiento').attr('disabled', 'disabled');
+
+    $('#DerivarProcesoInicial').attr('disabled', 'disabled');
+    $('#btnSolicitarProcedimiento').attr('disabled', 'disabled');
+    $('#FilaProcedimientoInicial').hide();
+
+    $('#FiltrarCodigoTipoSolicitud').change(function () {
+        if (this.value === "010001") {
+            $('#divTipoDocumento').show();
+            $.post("@Url.Content("~/RecepcionDocumentos/DocExterno")", function (data) {
+                $('#FiltrarCodigoTipoDocumentoReg').find('option:not(:first)').remove();
+                var items = '<option value="">Seleccione el tipo de documento</option>';
+                $.each(data, function (i, item) { items += "<option value='" + item.Value + "'>" + item.Text + "</option>"; });
+                $('#FiltrarCodigoTipoDocumentoReg').html(items);
+                $('#FiltrarCodigoTipoDocumentoReg').trigger("chosen:updated");
+            });
+        } else if (this.value === "010002") {
+            $('#divTipoDocumento').show();
+            $.post("@Url.Content("~/RecepcionDocumentos/DocInterno")", function (data) {
+                $('#FiltrarCodigoTipoDocumentoReg').find('option:not(:first)').remove();
+                var items = '<option value="">Seleccione el tipo de documento</option>';
+                $.each(data, function (i, item) { items += "<option value='" + item.Value + "'>" + item.Text + "</option>"; });
+                $('#FiltrarCodigoTipoDocumentoReg').html(items);
+                $('#FiltrarCodigoTipoDocumentoReg').trigger("chosen:updated");
+            });
+        } else {
+            $('#divTipoDocumento').hide();
+            $('#FiltrarCodigoTipoDocumentoReg').find('option:not(:first)').remove();
+        }
+    });
+
+    $("#fechaLimite").datepicker({
+        format: "dd/mm/yyyy",
+        language: "es",
+        calendarWeeks: true
+    });
+
+    $("#fechaProgIns").datepicker({
+        format: "dd/mm/yyyy",
+        language: "es",
+        calendarWeeks: true
+    });
+
+    $("#fechaProcIns").datepicker({
+        format: "dd/mm/yyyy",
+        language: "es",
+        calendarWeeks: true
+    });
+
+    $("#fechaProcAct").datepicker({
+        format: "dd/mm/yyyy",
+        language: "es",
+        calendarWeeks: true
+    });
+
+    $("#fechaAnalista").datepicker({
+        format: "dd/mm/yyyy",
+        language: "es",
+        calendarWeeks: true
+    });
+
+    $('#btnfechaLimite').click(function () {
+        $("#fechaLimite").removeAttr("disabled");
+    });
+
+    $('#btnfechaProgIns').click(function () {
+        $("#fechaProgIns").removeAttr("disabled");
+    });
+
+    $('#btnfechaProcIns').click(function () {
+        $("#fechaProcIns").removeAttr("disabled");
+    });
+
+    $('#btnfechaProcAct').click(function () {
+        $("#fechaProcAct").removeAttr("disabled");
+    });
+
+    $('#btnfechaAnalista').click(function () {
+        $("#fechaAnalista").removeAttr("disabled");
+    });
+
+
+    var indiceCheck = 0;
+    var checkSelect = [];
+
+
+
+    $('#btnSolicitarProcedimiento').click(function () {
+        $('#ModalSolicitarProcedimiento').modal('show');
+    });
+
+    $('#btnSolicitarProcedimientoEdit').click(function () {
+        $('#ModalSolicitarProcedimiento').modal('show');
+    });
+
+
+
+
+
+    $('#btnSolicitarInspeccion').click(function () {
+        $('#ModalSolicitudInspeccion').modal('show');
+        tablaUnidadInspeccion.ajax.reload();
+
+
+    });
+
+    $('#btnSolicitarActualizacion').click(function () {
+        $('#ModalSolicitudActualizacion').modal('show');
+        tablaUnidadActualizacion.ajax.reload();
+    });
+    
+    $('#btnCerrarSolicitudInspeccion').click(function () {
+        checkSelect = [];
+        $("input:checkbox:checked").each(function () {
+            if ($(this).attr('id') !== undefined) { checkSelect.push($(this).attr('id')); }
+        });
+        if (checkSelect.length === 0) {
+            $('#btnSolicitarInspeccion').addClass('btnOrange').removeClass('btnGreen');
+        } else {
+            $('#btnSolicitarInspeccion').addClass('btnGreen').removeClass('btnOrange');
+        }
+    });
+    $('#btnGrabarSolicitudInspeccion').click(function () {
+        checkSelect = [];
+        $("input:checkbox:checked").each(function () {
+            if ($(this).attr('id') !== undefined) { checkSelect.push($(this).attr('id')); }
+        });
+        if (checkSelect.length === 0) {
+            toastr.error("Seleccione al menos una opción", "Mensaje del Sistema", { "progressBar": true });
+        } else {
+            $('#ModalSolicitudInspeccion').modal('hide');
+            $('#btnSolicitarInspeccion').addClass('btnGreen');
+        }
+    });
+
+    $('#btnCerrarSolicitudActualizacion').click(function () {
+        checkSelect = [];
+        $("input:checkbox:checked").each(function () {
+            if ($(this).attr('id') !== undefined) { checkSelect.push($(this).attr('id')); }
+        });
+        if (checkSelect.length === 0) {
+            $('#btnSolicitarActualizacion').addClass('btnOrange').removeClass('btnGreen');
+        } else {
+            $('#btnSolicitarActualizacion').addClass('btnGreen').removeClass('btnOrange');
+        }
+    });
+    $('#btnGrabarSolicitudActualizacion').click(function () {
+        checkSelect = [];
+        $("input:checkbox:checked").each(function () {
+            if ($(this).attr('id') !== undefined) { checkSelect.push($(this).attr('id')); }
+        });
+        if (checkSelect.length === 0) {
+            toastr.error("Seleccione al menos una opción", "Mensaje del Sistema", { "progressBar": true });
+        } else {
+            $('#ModalSolicitudActualizacion').modal('hide');
+            $('#btnSolicitarActualizacion').addClass('btnGreen');
+            console.log(checkSelect);
+        }
+    });
+
+    $('#DerivarProcesoInicial').click(function () {
+
+        var ProcedimientoInicial = {
+            NumeroSolicitud: $("#NumeroSolicitud").val(),
+            ObservacionRecepcion: $("#ObservacionRecepcion").val(),
+            CodigoAsignarReponsable: $("#CodigoAsignarReponsable").val(),
+            CodigoTipoProcedimiento: $("#CodigoTipoProcedimiento").val(),
+            CodigoEstadoPrevio: $("#CodigoEstadoPrevio").val(),
+            CodigoCargoResponsable: $("#CodigoCargoResponsable").val(),
+            CodigoTipoAccion: $("#CodigoTipoAccion").val(),
+            CodigoTipoSolicitud: $("#CodigoTipoSolicitud").val(),
+            CodigoTipoRequerimiento: $("#CodigoTipoRequerimiento").val(),
+            CodigoTipoLlenado: $("#CodigoTipoLlenado").val(),
+            Folio: $("#Folio").val(),
+            anosolicitud: $("#anosolicitud").val(),
+            fechaLimite: $('#fechaLimite').val(),
+            fechaProgIns: $('#fechaProgIns').val(),
+            fechaProcIns: $('#fechaProcIns').val(),
+            fechaProcAct: $('#fechaProcAct').val(),
+            fechaAnalista: $('#fechaAnalista').val(),
+            NumeroVerificacion: $('#NumeroVerificacion').val(),
+            AnoVerificacion: $('#AnoVerificacion').val(),
+            CodigoCargoAnterior: $('#CodigoCargoAnterior').val(),
+            EstadoSolicitudPrevio: $('#EstadoSolicitudPrevio').val(),
+            CodigoTipoDocumento: $('#CodigoTipoDocumento').val(),
+            CodigoActividad: $('#CodigoActividad').val(),
+            CodigoEstadoActual: $('#CodigoEstadoActual').val()
+        };
+
+        var arrayCodigoUc = [];
+
+        tablaSolicitudAcumulada.rows().every(function (rowIdx, tableLoop, rowLoop) {
+            var d = this.data();
+            arrayCodigoUc.push({
+                "CodigoUni": d.CodigoUni
+            });
+        });
+        console.log('arrayCodigoUc');
+        console.log(arrayCodigoUc);
+
+        var Detalle1;
+        var Detalle2;
+        var Detalle3;
+        var Otros1;
+        var Otros2;
+
+
+        $('#textchktargetInsInt').val();
+
+
+        if ($('#CodigoTipoProcedimiento').val() == '03') {
+            Detalle1 = $('#textchktargetInsExp').val();
+            Detalle2 = $('#textchktargetInsInt').val();
+            Detalle3 = '';
+            Otros1 = $('#txtOtrosInspeccion').val();
+            Otros2 = '';
+
+        } else {
+            Detalle1 = $('#textchktargetActInfLit').val();
+            Detalle2 = $('#textchktargetActInfGra').val();
+            Detalle3 = $('#textchktargetActEscan').val();
+            Otros1 = $('#txtOtrosActGra').val();
+            Otros2 = $('#txtOtrosActEscan').val();
+        }
+
+        if (arrayCodigoUc.length > 0) {
+            if (checkSelect.length === 0 && ($('#CodigoTipoProcedimiento').val() == '03' || $('#CodigoTipoProcedimiento').val() == '04')) {
+                toastr.error("Seleccione al menos una opción en el detalle de " + $('#CodigoTipoProcedimiento option:selected').text().toLowerCase(), "COMPLETAR INFORMACION PARA DERIVAR", { "progressBar": true });
+            } else {
+
+                $.ajax({
+                    url: "@Url.Content("~/ProcedimientoInicial/DerivarProcedimiento")",
+                    type: "POST",
+                    data:
+                        {
+                            ProcedimientoInicial: ProcedimientoInicial,
+                            checkSelect: checkSelect,
+                            tipoInsAct: $('#CodigoTipoProcedimiento option:selected').text(),
+                            Detalle1: Detalle1,
+                            Detalle2: Detalle2,
+                            Detalle3: Detalle3,
+                            Otros1: Otros1,
+                            Otros2: Otros2,
+                            arrayCodigoUc: arrayCodigoUc
+                        },
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.success) {
+
+                            LimpiarDatos();
+
+                            var mensaje = "Registro grabado correctamente";
+                            toastr.success(mensaje, "Mensaje del Sistema", { "progressBar": true });
+                            $('#DerivarProcesoInicial').attr('disabled', 'disabled');
+                            /*if ($("#CodigoTipoLlenado").val() === 'A1') {
+                                bootbox.alert("El Número calidad de Verificación registrado es: " + response.CodigoValidaion);
+                            }*/
+
+                        } else {
+                            toastr.error(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                        }
+                    },
+                    complete: function () {
+                        $('#btnSubmit').removeAttr('disabled');
+                    }
+                });
+            }
+
+        } else {
+            bootbox.confirm({
+                title: "Derivar Requerimiento Analista",
+                message: "¿Desea continuar sin asignar un código catastral?",
+                buttons: {
+                    cancel: {
+                        label: '<i class="fa fa-times"></i> No'
+                    },
+                    confirm: {
+                        label: '<i class="fa fa-check"></i> Si'
+                    }
+                },
+                callback: function (result) {
+                    if (result === true) {
+
+                        // Segunda Pregunta.
+
+                        bootbox.confirm({
+                            title: "Derivar Requerimiento Analista",
+                            message: "¿Generará un nuevo código catastral?",
+                            buttons: {
+                                cancel: {
+                                    label: '<i class="fa fa-times"></i> No'
+                                },
+                                confirm: {
+                                    label: '<i class="fa fa-check"></i> Si'
+                                }
+                            },
+                            callback: function (result) {
+                                if (result === true) {
+
+                                    //Procedimiento cuando se generara un nuevo codigo catastral
+
+                                    if (checkSelect.length === 0 && ($('#CodigoTipoProcedimiento').val() == '03' || $('#CodigoTipoProcedimiento').val() == '04')) {
+                                        toastr.error("Seleccione al menos una opción en el detalle de " + $('#CodigoTipoProcedimiento option:selected').text().toLowerCase(), "COMPLETAR INFORMACION PARA DERIVAR", { "progressBar": true });
+                                    } else {
+
+                                        $.ajax({
+                                            url: "@Url.Content("~/ProcedimientoInicial/DerivarProcedimiento")",
+                                            type: "POST",
+                                            data:
+                                            {
+                                                ProcedimientoInicial: ProcedimientoInicial,
+                                                checkSelect: checkSelect,
+                                                tipoInsAct: $('#CodigoTipoProcedimiento option:selected').text(),
+                                                Detalle1: Detalle1,
+                                                Detalle2: Detalle2,
+                                                Detalle3: Detalle3,
+                                                Otros1: Otros1,
+                                                Otros2: Otros2,
+                                                arrayCodigoUc: arrayCodigoUc
+                                            },
+                                            dataType: "json",
+                                            success: function (response) {
+                                                if (response.success) {
+
+                                                    LimpiarDatos();
+
+                                                    var mensaje = "Registro grabado correctamente";
+                                                    toastr.success(mensaje, "Mensaje del Sistema", { "progressBar": true });
+
+                                                    /*if ($("#CodigoTipoLlenado").val() === 'A1') {
+                                                        bootbox.alert("El Número calidad de Verificación registrado es: " + response.CodigoValidaion);
+                                                    }*/
+
+                                                } else {
+                                                    toastr.error(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                                                }
+                                            },
+                                            complete: function () {
+                                                $('#btnSubmit').removeAttr('disabled');
+                                            }
+                                        });
+                                    }
+
+
+                                } else {
+                                    toastr.error("Debe Asignar al menos una Unidad catastral", "Mensaje del Sistema", { "progressBar": true });
+                                }
+                            }
+                        });
+
+
+
+                    } else {
+                        toastr.error("Debe Asignar al menos una Unidad catastral", "Mensaje del Sistema", { "progressBar": true });
+                    }
+                }
+            });
+
+        }
+
+    });
+
+    $("#CodigoTipoProcedimiento").change(function () {
+        var URL = "@Url.Content("~")" + "ProcedimientoInicial/AsignarResponsable?idProc=" + $('#CodigoTipoProcedimiento').val() + "&idEstAteAnte=" + $('#CodigoEstadoPrevio').val();
+        $.post(URL, function (data) {
+            $('#CodigoAsignarReponsable').find('option:not(:first)').remove();
+            var items = '<option value="">Seleccione un responsable</option>';
+            $.each(data, function (i, item) {
+                items += "<option value='" + item.Value + "'>" + item.Text + "</option>";
+            });
+            $('#CodigoAsignarReponsable').val('');
+            $('#PuestoResponsable').val('');
+
+            $('#CodigoAsignarReponsable').html(items);
+        });
+    });
+
+    $("#CodigoAsignarReponsable").change(function () {
+
+        var URLRes = "@Url.Content("~")" + "ProcedimientoInicial/CargoResponsable?usuario=" + $('#CodigoAsignarReponsable').val();
+        $.post(URLRes, function (data) {
+            console.log(data);
+            $('#PuestoResponsable').val(data.cargo);
+            $('#CodigoCargoResponsable').val(data.cod_cargo);
+        });
+
+
+        var URL = "@Url.Content("~")" + "ProcedimientoNuevo/EstadoActual?Estado=" + $('#CodigoEstadoPrevio').val() + "&usuario=" + $('#CodigoAsignarResponsable').val() + "&tipproced=" + $('#CodigoTipoProcedimiento').val();
+        $.post(URL, function (data) {
+            //$('#PuestoResponsable').val(data.NombreCargo);
+            $('#CodigoCargoResponsable').val(data.CodigoCargo);
+            $('#CodigoEstadoActual').val(data.CodigoEstado);
+            $('#NombreEstadoActual').val(data.NombreEstado);
+        });
+    });
+
+    $("#CodigoTipoLlenado").change(function () {
+        var URL = "@Url.Content("~")" + "ProcedimientoInicial/TipoLlenadoDias?IdTipLlen=" + $('#CodigoTipoLlenado').val() + "&fechasoli=" + $('#cadfechasolicitud').val();
+        $.post(URL, function (data) {
+            console.log(data);
+
+            //$('#fechaLimite').attr('value', data.fechaLimite);
+            //$('#fechaProgIns').attr('value', data.fechaProgIns);
+            //$('#fechaProcIns').attr('value', data.fechaProcIns);
+            //$('#fechaProcAct').attr('value', data.fechaProcAct);
+            //$('#fechaAnalista').attr('value', data.fechaAnalista);
+
+            $('#fechaLimite').datepicker('update', data.fechaLimite);
+            $('#fechaProgIns').datepicker('update', data.fechaProgIns);
+            $('#fechaProcIns').datepicker('update', data.fechaProcIns);
+            $('#fechaProcAct').datepicker('update', data.fechaProcAct);
+            $('#fechaAnalista').datepicker('update', data.fechaAnalista);
+
+            $('#btnfechaLimite').removeAttr("disabled");
+            $('#btnfechaProgIns').removeAttr("disabled");
+            $('#btnfechaProcIns').removeAttr("disabled");
+            $('#btnfechaProcAct').removeAttr("disabled");
+            $('#btnfechaAnalista').removeAttr("disabled");
+
+            //$("#fechaAnalista").removeAttr("disabled");
+            //alert(data);
+            //$('#PuestoResponsable').val(data);
+        });
+    });
+
+    $('#btnEliminarProcedimiento').click(function () {
+        $('#TabNroSolicitud').text('');
+        $('#TabTipoProcedimiento').text('');
+        $('#TabTipoRequerimiento').text('');
+        $('#TabTipoLlenado').text('');
+        $('#TabResponsable').text('');
+        $('#TabFechaLimite').text('');
+        $('#TabFechaProgIns').text('');
+        $('#TabFechaProcIns').text('');
+        $('#TabFechaProcAct').text('');
+        $('#TabFechaAnalista').text('');
+        $('#TabFechaRecepcion').text('');
+        LimpiarBotones(true);
+        checkSelect = [];
+        //////---FORMULARIO PROCEDIMIENTO INICIAL---///////
+        $('#CodigoTipoProcedimiento').val('');
+        $('#CodigoTipoRequerimiento').val('');
+        $('#CodigoAsignarReponsable').val('');
+        $('#PuestoResponsable').val('');
+        $('#CodigoTipoLlenado').val('');
+        $('#fechaLimite').val('');
+        $('#fechaProgIns').val('');
+        $('#fechaProcIns').val('');
+        $('#fechaProcAct').val('');
+        $('#fechaAnalista').val('');
+        $('#CodigoTipoAccion').val('').trigger("chosen:updated");
+        $('#ObservacionRecepcion').val('');
+        $('#DerivarProcesoInicial').attr('disabled', 'disabled');
+        $('#CodigoCargoResponsable').val('');
+        $('#FilaProcedimientoInicial').hide();
+
+        /*cadfechasolicitud
+        CodigoEstadoPrevio
+        CodigoCargoResponsable
+        CodigoTipoSolicitud
+        Folio*/
+    });
+
+    $('#btnGrabarProcedimientoInicial').click(function () {
+
+        cont = ValidarProcedimientoInicial();
+
+        if (cont == true) {
+            $('#TabNroSolicitud').text($('#NumeroSolicitud').val());
+            $('#TabTipoProcedimiento').text($('#CodigoTipoProcedimiento option:selected').text());
+            $('#TabTipoRequerimiento').text($('#CodigoTipoRequerimiento option:selected').text());
+            $('#TabTipoLlenado').text($('#CodigoTipoLlenado option:selected').text());
+            $('#TabResponsable').text($('#CodigoAsignarReponsable option:selected').val());
+            $('#TabFechaLimite').text($('#fechaLimite').val());
+            $('#TabFechaProgIns').text($('#fechaProgIns').val());
+            $('#TabFechaProcIns').text($('#fechaProcIns').val());
+            $('#TabFechaProcAct').text($('#fechaProcAct').val());
+            $('#TabFechaAnalista').text($('#fechaAnalista').val());
+            $('#TabFechaRecepcion').text($('#cadfecharecepcion').val());
+            $('#ModalSolicitarProcedimiento').modal('hide');
+            $('#btnSolicitarProcedimiento').attr('disabled', 'disabled');
+            $('#btnSolicitarProcedimientoEdit').removeAttr("disabled");
+            $('#btnSolicitarInspeccion').removeAttr("disabled");
+            $('#DerivarProcesoInicial').removeAttr("disabled");
+            $('#btnEliminarProcedimiento').removeAttr("disabled");
+            $('.TipoProcedimientoDetalle').val($('#CodigoTipoProcedimiento option:selected').text());
+            $('#FilaProcedimientoInicial').show();
+
+
+            if ($('#CodigoTipoProcedimiento').val() == '03') {
+                $('#btnSolicitarInspeccion').removeAttr("disabled").addClass('btnOrange').removeClass('btnGreen');;
+                $('#btnSolicitarActualizacion').attr('disabled', 'disabled').removeClass('btnOrange').removeClass('btnGreen');
+            } else if ($('#CodigoTipoProcedimiento').val() == '04') {
+                $('#btnSolicitarActualizacion').removeAttr("disabled").addClass('btnOrange').removeClass('btnGreen');;
+                $('#btnSolicitarInspeccion').attr('disabled', 'disabled').removeClass('btnOrange').removeClass('btnGreen');
+            } else {
+                $('#btnSolicitarActualizacion').attr('disabled', 'disabled').removeClass('btnOrange').removeClass('btnGreen');
+                $('#btnSolicitarInspeccion').attr('disabled', 'disabled').removeClass('btnOrange').removeClass('btnGreen');
+            }
+        }
+
+        indiceCheck = 0;
+        CargarCheckBox();
+
+    });
+
+    $('#modalUnidadCatastral').on('hidden.bs.modal', function () {
+        if (localStorage.getItem('UnidadesSelec')) {
+            var rows = 0; var ListCodigoUni = JSON.parse(localStorage.getItem('UnidadesSelec'));
+            var ListaUnidadesSave = [];
+            var unidadesYaRegistras = '';
+            var contadorWarn = 0;
+            $.each(ListCodigoUni, function (index, Item) {
+                if (CompararUnidad(Item) === 0) {
+                    ListaUnidadesSave.push(Item);
+                    rows++;
+                }
+                else if (index === 0) {
+                    contadorWarn++;
+                    //bootbox.alert("Uno o más registros ya se han ingresado");
+                    toastr.warning("Uno o más registros ya se han ingresado", "Mensaje del Sistema", { "progressBar": true });
+                }
+            });
+
+            if (ListaUnidadesSave.length > 0) {
+                $.post("@Url.Content("~/ProcedimientoInicial/AgregarSolUnidad")", {
+                    ListaUnidad: ListaUnidadesSave,
+                    CodigoPeriodo: $('#Periodo').val(),
+                    CodigoTipoSolicitud: $('#CodigoTipoSolicitud').val(), CodigoNumeroSolicitud: $('#FiltrarNumeroSolicitud').val(),
+                    CodigoTipoDocumento: $('#FiltrarCodigoTipoDocumentoReg').val()
+                }
+                        , function (response) {
+                            bootbox.alert(response.responseText);
+                            //toastr.success("Las Unidades Catastrales se registraron correctamente", "Mensaje del Sistema", { "progressBar": true });
+                            tablaSolicitudAcumulada.ajax.reload(function () {
+                                tablaSolicitudAcumulada.columns.adjust().draw();
+                                var alto = $('#tablaSolicitudUnidadAcumulada_wrapper .dataTables_scrollBody').height();
+                                console.log(alto);
+                                if (alto < 399) {
+                                    $('#tablaSolicitudUnidadAcumulada_wrapper .dataTables_scrollHead').removeClass('pr-4');
+
+                                } else {
+                                    $('#tablaSolicitudUnidadAcumulada_wrapper .dataTables_scrollHead').addClass('pr-4');
+                                }
+                            });
+
+                            /*if (contadorWarn > 0) {
+                                toastr.warning("Uno o más registros ya se han ingresado", "Mensaje del Sistema", { "progressBar": true });
+                            }*/
+                        });
+
+
+            }
+
+        }
+    });
+
+
+    /********************************************************************************
+                                    --TABLAS
+    ********************************************************************************/
+
+    tablaSolicitudAcumulada = $("#tablaSolicitudUnidadAcumulada").DataTable({
+        "ajax": {
+            "url": "@Url.Content("~/ProcedimientoInicial/CargarSolUnidad")", "type": "POST", "datatype": "json",
+            "data": function (d) {
+                d.FiltrarCodigoTipoSolicitud = $('#CodigoTipoSolicitud').val();
+                d.FiltrarNumeroSolicitud = $('#FiltrarNumeroSolicitud').val();
+                d.FiltrarCodigoTipoDocumentoReg = $('#FiltrarCodigoTipoDocumentoReg').val();
+            }
+        },
+        "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+        "processing": true,
+        "serverSide": false,
+        "paging": false,
+        "scrollY": "400px",
+        "autoWidth": true,
+        "scrollCollapse": true,
+        //"columnDefs" : [
+        //    { width: '6%', targets: 0 },
+        //    { width: '6%', targets: 1 },
+        //    { width: '6%', targets: 2 },
+        //    { width: '6%', targets: 3 },
+        //    { width: '6%', targets: 4 },
+        //    { width: '6%', targets: 5 },
+        //    { width: '6%', targets: 6 },
+        //    { width: '6%', targets: 7 },
+        //    { width: '6%', targets: 8 },
+        //],
+        //initComplete: function () {
+        //    this.api().columns().every(function () {
+        //    //    ...
+        //    }).draw();
+        //    //tablaSolicitudAcumulada.columns.adjust().draw();
+        //    //$('#tablaSolicitudUnidadAcumulada_wrapper .dataTables_scrollHead').addClass('pr-4');
+        //},
+        "columns": [
+            { "data": "CodigoDistrito", "className": "text-center" }, { "data": "CodigoSector", "className": "text-center" },
+            { "data": "CodigoManzana", "className": "text-center" }, { "data": "CodigoLote", "className": "text-center" },
+            { "data": "Ed", "className": "text-center" }, { "data": "Entrada", "className": "text-center" },
+            { "data": "Piso", "className": "text-center" }, { "data": "Unidad", "className": "text-center" },
+            { "data": "Referencia", "className": "text-center" }, { "data": "Ubicacion", "className": "text-center" },
+            { "data": "EstadoUnidad", "className": "text-center" },
+            { "data": "CodigoUni", "className": "hide_column" }, { "data": "CodigoTitular", "className": "hide_column" },
+            {
+                'render': function (data, type, full, meta) {
+                    return '<button class="btn text-center btn-xs glyphicon glyphicon-trash" type="button" name="id[]" value=""></button>';
+                }, "className": "text-center"
+            },
+            { "data": "CodigoCorrelativo", "className": "hide_column" },
+            { "data": "CodigoPeriodo", "className": "hide_column" },
+            { "data": "CodigoTipoSolicitud", "className": "hide_column" },
+            { "data": "CodigoNumeroSolicitud", "className": "hide_column" }
+        ]
+    });
+    
+
+    tablaUnidadInspeccion = $("#tablaSolicitudUnidadInspeccion").DataTable({
+        "ajax": {
+            "url": "@Url.Content("~/ProcedimientoInicial/CargarSolUnidad")", "type": "POST", "datatype": "json",
+            "data": function (d) {
+                d.FiltrarCodigoTipoSolicitud = $('#CodigoTipoSolicitud').val();
+                d.FiltrarNumeroSolicitud = $('#FiltrarNumeroSolicitud').val();
+                d.FiltrarCodigoTipoDocumentoReg = $('#FiltrarCodigoTipoDocumentoReg').val();
+            }
+        },
+        "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+        "processing": true,
+        "serverSide": false,
+        "paging": false,
+        "columns": [
+            { "data": "CodigoDistrito", "className": "text-center" }, { "data": "CodigoSector", "className": "text-center" },
+            { "data": "CodigoManzana", "className": "text-center" }, { "data": "CodigoLote", "className": "text-center" },
+            { "data": "Ed", "className": "text-center" }, { "data": "Entrada", "className": "text-center" },
+            { "data": "Piso", "className": "text-center" }, { "data": "Unidad", "className": "text-center" }
+        ]
+    });
+
+    tablaUnidadActualizacion = $("#tablaSolicitudUnidadActualizacion").DataTable({
+        "ajax": {
+            "url": "@Url.Content("~/ProcedimientoInicial/CargarSolUnidad")", "type": "POST", "datatype": "json",
+            "data": function (d) {
+                d.FiltrarCodigoTipoSolicitud = $('#CodigoTipoSolicitud').val();
+                d.FiltrarNumeroSolicitud = $('#FiltrarNumeroSolicitud').val();
+                d.FiltrarCodigoTipoDocumentoReg = $('#FiltrarCodigoTipoDocumentoReg').val();
+            }
+        },
+        "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+        "processing": true,
+        "serverSide": false,
+        "paging": false,
+        "columns": [
+            { "data": "CodigoDistrito", "className": "text-center" }, { "data": "CodigoSector", "className": "text-center" },
+            { "data": "CodigoManzana", "className": "text-center" }, { "data": "CodigoLote", "className": "text-center" },
+            { "data": "Ed", "className": "text-center" }, { "data": "Entrada", "className": "text-center" },
+            { "data": "Piso", "className": "text-center" }, { "data": "Unidad", "className": "text-center" }
+        ]
+    });
+
+
+    /********************************************************************************
+                                    --FIN TABLAS
+    ********************************************************************************/
+
+    $("#tablaSolicitudUnidad tbody").on('click', 'button', function (event) {
+        var cell = this;
+        bootbox.confirm({
+            title: "Mensaje del Sistema", message: "¿Esta seguro de borrar el registro?",
+            buttons: { confirm: { label: '<i class="fa fa-trash"></i> Eliminar ', className: "btn btn-danger" }, cancel: { label: '<i class="fa fa-times"></i> Cancelar' } },
+            callback: function (result) {
+                if (result) {
+                    tablaSolicitud.row($(cell).parents('tr')).remove().draw();
+                }
+            }
+        });
+    });
+
+    $("#tablaSolicitudUnidadAcumulada tbody").on('click', 'button', function (event) {
+        var cell = this;
+        var data = tablaSolicitudAcumulada.row($(this).parents('tr')).data();
+        bootbox.confirm({
+            title: "Mensaje del Sistema", message: "¿Esta seguro de borrar el registro?",
+            buttons: { cancel: { label: '<i class="fa fa-times"></i> Cancelar' }, confirm: { label: '<i class="fa fa-trash"></i> Eliminar ', className: "btn btn-danger" } },
+            callback: function (result) {
+                if (result) {
+                    $.post("@Url.Content("~/ProcedimientoInicial/EliminarSolUnidad")",
+                            {
+                                CodigoCorrelativo: data.CodigoCorrelativo, CodigoPeriodo: data.CodigoPeriodo,
+                                CodigoTipoSolicitud: data.CodigoTipoSolicitud, CodigoNumeroSolicitud: data.CodigoNumeroSolicitud
+                            }
+                            , function (response) {
+                                toastr.success("Registro eliminado correctamente", "Mensaje del Sistema", { "progressBar": true });
+                                tablaSolicitudAcumulada.ajax.reload(function () {
+                                    tablaSolicitudAcumulada.columns.adjust().draw();
+                                    var alto = $('#tablaSolicitudUnidadAcumulada_wrapper .dataTables_scrollBody').height();
+                                    console.log(alto);
+                                    if (alto < 399) {
+                                        $('#tablaSolicitudUnidadAcumulada_wrapper .dataTables_scrollHead').removeClass('pr-4');
+
+                                    } else {
+                                        $('#tablaSolicitudUnidadAcumulada_wrapper .dataTables_scrollHead').addClass('pr-4');
+                                    }
+                                });
+                            });
+
+                }
+            }
+        });
+    });
+
+
+    $('#btnBuscar').click(function () {
+        numVal = $('#FiltrarNumeroSolicitud').val();
+        tipDoc = $('#FiltrarCodigoTipoDocumentoReg').val();
+        codSol = $('#FiltrarCodigoTipoSolicitud').val();
+        validacion = 1;
+        $.LoadingOverlay("show");
+        $('.field-validation-valid').html('').removeClass('has error'); $('#btnDerivar').attr('disabled', 'disabled');
+        if (!codSol) {
+            $('[data-valmsg-for="FiltrarCodigoTipoSolicitud"]').html('Seleccione el tipo de solicitud').addClass('field-validation-valid has-error');
+            $('#FiltrarCodigoTipoSolicitud').focus(); $.LoadingOverlay("hide");
+        } else if (!tipDoc && codSol != '010003') {
+            $('[data-valmsg-for="FiltrarCodigoTipoDocumentoReg"]').html('Seleccione el tipo de documento').addClass('field-validation-valid has-error');
+            $('#FiltrarCodigoTipoDocumentoReg').focus(); $.LoadingOverlay("hide");
+        } else if (numVal === '-' || !numVal) {
+            $('[data-valmsg-for="FiltrarNumeroSolicitud"]').html('Ingrese un número de solicitud').addClass('field-validation-valid has-error');
+            $('#FiltrarNumeroSolicitud').focus(); $.LoadingOverlay("hide");
+        } else {
+            $.ajax({
+                url: "@Url.Content("~/ProcedimientoInicial/BuscarSolicitud")",
+                type: "POST",
+                data: {
+                    FiltrarCodigoTipoSolicitud: $('#FiltrarCodigoTipoSolicitud').val(), FiltrarNumeroSolicitud: $('#FiltrarNumeroSolicitud').val(),
+                    FiltrarCodigoTipoDocumentoReg: $('#FiltrarCodigoTipoDocumentoReg').val()
+                },
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                    $.LoadingOverlay("hide");
+                    if (response.ProcedimientoInicial.SolicitudSinRecepcionar == true) {
+                        toastr.warning("La solicitud aún no ha sido recepcionada", "Mensaje del Sistema", { "progressBar": true, "showDuration": "600" });
+                        LimpiarProcedimientoInicial();
+                        LimpiarTabla();
+                        LimpiarBotones();
+                    }
+                    else if (response.success) {
+                        ProcedimientoInicial = response.ProcedimientoInicial;
+                        listaProcedimiento = response.listaProcedimiento;
+                        $('#Asunto').val(ProcedimientoInicial.Asunto);
+                        $('#NumeroSolicitud').val(ProcedimientoInicial.NumeroSolicitud);
+                        $('#AsuntoSolProd').val(ProcedimientoInicial.Asunto);
+                        $('#ResponsablePrevio').val(ProcedimientoInicial.ResponsablePrevio);
+                        $('#EstadoSolicitudPrevio').val(ProcedimientoInicial.EstadoSolicitudPrevio);
+                        $('#cadfechasolicitud').val(ProcedimientoInicial.cadfechasolicitud);
+                        $('#cadfecharecepcion').val(ProcedimientoInicial.cadfecharecepcion);
+                        $('#cadfechaenvio').val(ProcedimientoInicial.cadfechaenvio);
+                        $('#ObservacionRemitente').val(ProcedimientoInicial.ObservacionRemitente);
+                        $('#CodigoEstadoPrevio').val(ProcedimientoInicial.CodigoEstadoPrevio);
+                        $('#CodigoTipoSolicitud').val(ProcedimientoInicial.CodigoTipoSolicitud);
+                        $('#Folio').val(ProcedimientoInicial.Folio);
+                        $('#anosolicitud').val(ProcedimientoInicial.anosolicitud);
+                        $('#CodigoCargoAnterior').val(ProcedimientoInicial.CodigoCargoAnterior);
+
+                        $('#Folio').val(ProcedimientoInicial.Folio);
+                        $('#CodigoTipoDocumento').val(ProcedimientoInicial.CodigoTipoDocumento);
+                        $('#CodigoActividad').val(ProcedimientoInicial.CodigoActividad);
+
+                        tablaSolicitudAcumulada.ajax.reload(function (json) {
+                            tablaSolicitudAcumulada.columns.adjust().draw();
+                            var alto = $('#tablaSolicitudUnidadAcumulada_wrapper .dataTables_scrollBody').height();
+                            console.log('a',alto);
+                            $('#tablaSolicitudUnidadAcumulada_wrapper .dataTables_scrollHead').addClass('pr-4');
+                            if (alto < 399) {
+                                $('#tablaSolicitudUnidadAcumulada_wrapper .dataTables_scrollHead').removeClass('pr-4');
+
+                            } else {
+                                $('#tablaSolicitudUnidadAcumulada_wrapper .dataTables_scrollHead').addClass('pr-4');
+                            }
+                        });
+                        $('.btnUtil').removeAttr('disabled');
+                        $('#btnSolicitarProcedimiento').removeAttr('disabled');
+                        $('#CodigoTipoProcedimiento').find('option:not(:first)').remove();
+                        var items = '<option value="">Seleccione un procedimiento</option>';
+                        $.each(listaProcedimiento, function (i, item) {
+                            items += "<option value='" + item.Value + "'>" + item.Text + "</option>";
+                        });
+                        $('#CodigoTipoProcedimiento').html(items);
+                        console.log('a');
+                    } else {
+                        toastr.error(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                        LimpiarProcedimientoInicial();
+                        LimpiarTabla();
+                        LimpiarBotones();
+                        console.log('b');
+                    }
+                },
+                complete: function () {
+                    $('#btnSubmit').removeAttr('disabled');
+                }
+            });
+        }
+    });
+
+    function CargarCheckBox() {
+        $.ajax({
+            url: "@Url.Content("~/ProcedimientoInicial/CargarCheck")",
+            type: "POST",
+            data: {},
+            dataType: "json",
+            success: function (response) {
+                if (response.success) {
+                    console.log("ListTipoInspeccionExt");
+                    console.log(response.ListTipoInspeccionExt);
+                    ListTipoInspeccionExt = response.ListTipoInspeccionExt;
+                    ListTipoInspeccionInt = response.ListTipoInspeccionInt;
+                    ListTipoActualizacionInfLit = response.ListTipoActualizacionInfLit;
+                    ListTipoActualizacionInfGra = response.ListTipoActualizacionInfGra;
+                    ListTipoActualizacionEscan = response.ListTipoActualizacionEscan;
+
+
+                    if ($('#CodigoTipoProcedimiento').val() == '03') {
+                        $("#chktargetInsExp").empty();
+                        $("#chktargetInsInt").empty();
+                        CrearCheck(ListTipoInspeccionExt, 'chktargetInsExp');
+                        CrearCheck(ListTipoInspeccionInt, 'chktargetInsInt');
+                    } else {
+                        $("#chktargetActInfLit").empty();
+                        $("#chktargetActInfGra").empty();
+                        $("#chktargetActEscan").empty();
+
+                        CrearCheck(ListTipoActualizacionInfLit, 'chktargetActInfLit');
+                        CrearCheck(ListTipoActualizacionInfGra, 'chktargetActInfGra');
+                        CrearCheck(ListTipoActualizacionEscan, 'chktargetActEscan');
+                    }
+
+                } else {
+                    toastr.error(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                }
+            },
+            complete: function () {
+                $('#btnSubmit').removeAttr('disabled');
+            }
+        });
+    }
+
+    //  -- Funcion que recorre las dos tablas de unidad catastral para verificar que no existan registros repetidos
+    function CompararUnidad(Unidad) {
+        var tablaSolUnidad = tablaSolicitudAcumulada.rows().data();
+        var totalFilas = tablaSolUnidad.length;
+        //var tablaTempSolUnidad = tablaSolicitud.rows().data();
+        var duplicado = 0;
+        for (var i = 0; i < totalFilas; i++) {
+            ItemTabla = tablaSolUnidad[i];
+            console.log('a.', JSON.stringify(ItemTabla));
+            console.log('b.', JSON.stringify(Unidad));
+            if (ItemTabla.CodigoDistrito == Unidad.CodigoDistrito &&
+                ItemTabla.CodigoSector == Unidad.CodigoSector &&
+                ItemTabla.CodigoManzana == Unidad.CodigoManzana &&
+                ItemTabla.CodigoLote == Unidad.CodigoLote &&
+                ItemTabla.Ed == Unidad.Ed &&
+                ItemTabla.Entrada == Unidad.Entrada &&
+                ItemTabla.Piso == Unidad.Piso &&
+                ItemTabla.Unidad == Unidad.Unidad &&
+                ItemTabla.CodigoUni == Unidad.CodigoUni) {
+                duplicado++;
+            }
+        }
+        return duplicado;
+    }
+
+    function CrearCheck(ListCheck, divCheck) {
+        var DivCreado = divCheck;
+        var numaccion = 1;
+        var totalcheck = ListCheck.length;
+        var checkboxtext = '<div class="row">';
+
+        $.each(ListCheck, function (index, item) {
+            indiceCheck++;
+            //console.log(item.CODTIPOINSP + item.CODTIPINSP);
+
+            if (numaccion % 2 !== 0) {
+                //checkboxtext = checkboxtext + '<div class="row">';
+                checkboxtext = checkboxtext + '<div class="col-sm-4 "><div class="checkbox checkbox-success py-0 my-2">'
+                checkboxtext = checkboxtext + '<input onclick= "bloquearDetalle(\'' + DivCreado + '\')"  class= "' + divCheck + ' "type="checkbox" id="chk' + item.CODTIPOINSP + item.CODTIPINSP + '" value="' + item.TXTDETALINSP + '" />'
+                checkboxtext = checkboxtext + '<label class="form-check-label" for="chk' + item.CODTIPOINSP + item.CODTIPINSP + '">' + LeftZero(indiceCheck, 2) + '. ' + item.TXTDETALINSP + '</label>'
+                checkboxtext = checkboxtext + '</div></div>';
+                
+            }
+
+            if (numaccion % 2 === 0) {
+                checkboxtext = checkboxtext + '<div class="col-sm-4"><div class="checkbox checkbox-success py-0 my-2">';
+                checkboxtext = checkboxtext + '<input onclick= "bloquearDetalle(\'' + DivCreado + '\')" class= "' + divCheck + ' "type="checkbox" id="chk' + item.CODTIPOINSP + item.CODTIPINSP + '" value="' + item.TXTDETALINSP + '" />'
+                checkboxtext = checkboxtext + '<label class="form-check-label" for="chk' + item.CODTIPOINSP + item.CODTIPINSP + '">' + LeftZero(indiceCheck, 2) + '. ' + item.TXTDETALINSP + '</label>'
+                checkboxtext = checkboxtext + '</div></div>';
+                //checkboxtext = checkboxtext + '</div>';
+            }
+            if (numaccion === totalcheck) {
+                checkboxtext = checkboxtext + '</div>';
+            }
+
+
+            numaccion++;
+            //console.log(checkboxtext);
+
+
+        });
+
+        var radioBtn = $(checkboxtext);
+
+        radioBtn.appendTo('#' + divCheck);
+    }
+
+    function LimpiarBusqueda() {
+        //busqueda
+        $('#CodigoTipoSolicitud').val('');
+        $('#FiltrarNumeroSolicitud').val('');
+    }
+
+    function LimpiarProcedimientoInicial() {
+        //Modal Prodecimiento Inicial
+        $('#Asunto').val('');
+        $('#NumeroSolicitud').val('');
+        $('#AsuntoSolProd').val('');
+        $('#ResponsablePrevio').val('');
+        $('#EstadoSolicitudPrevio').val('');
+        $('#cadfechasolicitud').val('');
+        $('#cadfecharecepcion').val('');
+        $('#cadfechaenvio').val('');
+        $('#ObservacionRemitente').val('');
+        $('#CodigoEstadoPrevio').val('');
+        $('#CodigoTipoSolicitud').val('');
+        $('#Folio').val('');
+        $('#anosolicitud').val('');
+        $('#CodigoTipoProcedimiento').val('');
+        tablaSolicitudAcumulada.ajax.reload();
+
+        //CodigoTipoProcedimiento
+    }
+
+    function LimpiarTabla() {
+        //tabla
+        $('#TabNroSolicitud').text('');
+        $('#TabTipoProcedimiento').text('');
+        $('#TabTipoRequerimiento').text('');
+        $('#TabTipoLlenado').text('');
+        $('#TabResponsable').text('');
+        $('#TabFechaLimite').text('');
+        $('#TabFechaProgIns').text('');
+        $('#TabFechaProcIns').text('');
+        $('#TabFechaProcAct').text('');
+        $('#TabFechaAnalista').text('');
+        $('#TabFechaRecepcion').text('');
+        $('.TipoProcedimientoDetalle').val();
+    }
+
+    function LimpiarBotones(tab) {
+        /// botones Inicial
+        $('.btnUtil').attr('disabled', 'disabled');
+        $('#btnSolicitarProcedimientoEdit').attr('disabled', 'disabled');
+        $('#btnSolicitarInspeccion').attr('disabled', 'disabled');
+        $('#btnSolicitarActualizacion').attr('disabled', 'disabled');
+        if (tab) {
+            $('#btnSolicitarProcedimiento').removeAttr('disabled');
+        } else {
+            $('#btnSolicitarProcedimiento').attr('disabled', 'disabled');
+        }
+        
+    }
+
+    function LimpiarDatos() {
+        //Metodos que se ejecutan
+        LimpiarBusqueda();
+        LimpiarProcedimientoInicial();
+        LimpiarTabla();
+        LimpiarBotones();
+    }
+
+    function ValidarProcedimientoInicial() {
+
+        var cont = true;
+
+        $('[data-valmsg-for="CodigoTipoProcedimiento"]').html('').addClass('field-validation-valid has-error');
+        $('[data-valmsg-for="CodigoTipoRequerimiento"]').html('').addClass('field-validation-valid has-error');
+        $('[data-valmsg-for="CodigoAsignarReponsable"]').html('').addClass('field-validation-valid has-error');
+        $('[data-valmsg-for="CodigoTipoAccion"]').html('').addClass('field-validation-valid has-error');
+
+        if (!$('#CodigoTipoProcedimiento').val()) {
+            $('[data-valmsg-for="CodigoTipoProcedimiento"]').html('Seleccione el tipo de procedimiento').addClass('field-validation-valid has-error');
+            cont = false;
+        }
+
+        if (!$('#CodigoTipoRequerimiento').val()) {
+            $('[data-valmsg-for="CodigoTipoRequerimiento"]').html('Seleccione el tipo de requerimiento').addClass('field-validation-valid has-error');
+            cont = false;
+        }
+
+        if (!$('#CodigoAsignarReponsable').val()) {
+            $('[data-valmsg-for="CodigoAsignarReponsable"]').html('Seleccione la asignacion de un responsable').addClass('field-validation-valid has-error');
+            cont = false;
+        }
+        
+        if (!$('#CodigoTipoAccion').val()) {
+            $('[data-valmsg-for="CodigoTipoAccion"]').html('Seleccione el Tipo de Acción').addClass('field-validation-valid has-error');
+            cont = false;
+        }
+
+        
+        return cont
+
+    }
+
+    function bloquearDetalle(divCheck) {
+        $('#text' + divCheck).attr('readonly', 'readonly');
+        var detalle = $('#text' + divCheck).val();
+        $('#text' + divCheck).val('');
+        var cont = 0;
+        $("input:checkbox:checked").each(function () {
+            if ($(this).hasClass(divCheck)) {
+                $('#text' + divCheck).removeAttr("readonly");
+                $('#text' + divCheck).val(detalle);
+                cont++;
+            }
+        });
+
+
+
+
+
+        // OTROS ACTUALIZACION
+
+        if ($("#chk13010005").is(':checked')) {
+            $('#txtOtrosActEscan').removeAttr("readonly");
+        } else {
+            $('#txtOtrosActEscan').attr('readonly', 'readonly');
+            $('#txtOtrosActEscan').val('');
+        }
+
+        if ($("#chk07010004").is(':checked')) {
+            $('#txtOtrosActGra').removeAttr("readonly");
+        } else {
+            $('#txtOtrosActGra').attr('readonly', 'readonly');
+            $('#txtOtrosActGra').val('');
+        }
+
+
+        //OTROS INSPECCION
+
+        if ($("#chk12010002").is(':checked')) {
+            $('#txtOtrosInspeccion').removeAttr("readonly");
+        } else {
+            $('#txtOtrosInspeccion').attr('readonly', 'readonly');
+            $('#txtOtrosInspeccion').val('');
+        }
+
+    }
+
+
+    </script>
+}

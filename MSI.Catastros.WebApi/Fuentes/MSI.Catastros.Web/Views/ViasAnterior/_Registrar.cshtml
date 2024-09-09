@@ -1,0 +1,209 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.ViasAnterior.RegistroViaAnteriorViewModel
+
+<div id="RegistrarViasContainer">
+    @using (Html.BeginForm("Registrar", "ViasAnterior", FormMethod.Post, new { id = "frmViasAnterior", name = "frmViasAnterior" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4>Registrando Vía Anterior</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-horizontal">
+                        @Html.HiddenFor(model => model.CodigoViaAnterior)
+                        @Html.HiddenFor(model => model.CodigoCorrViaAnte)
+                        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Distrito, new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.Distrito, new { @class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.Distrito)
+                            </div>
+                        </div>
+                        @Html.TextBoxFor(model => model.Estado, new { type = "hidden", @class = "form-control" })
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CodigoVia, new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.DropDownListFor(model => model.CodigoVia, new SelectList(ViewBag.listVias, "Value", "Text"), "Seleccione...",
+                            new { @class = "chosen-seleccionar form-control", style = "width:100%;" })
+                                @Html.ValidationMessageFor(model => model.CodigoVia)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.DesTipoViaAnterior, new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.DesTipoViaAnterior, new { @class = "form-control Mayus", @autocomplete = "off" })
+                                @Html.ValidationMessageFor(model => model.DesTipoViaAnterior)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.DesViaAnterior, new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.DesViaAnterior, new { @class = "form-control", @autocomplete = "off", style = "text-transform:none" })
+                                @Html.ValidationMessageFor(model => model.DesViaAnterior)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Normativa, new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.Normativa, new { @class = "form-control Mayus", @autocomplete = "off" })
+                                @Html.ValidationMessageFor(model => model.Normativa)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FechaInicio, new { @class = "control-label col-md-3" })
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(model => model.FechaInicio, new { @class = "form-control",  @autocomplete="off",  Value = String.Format("{0:dd/MM/yyyy}", Model.FechaInicio) })
+                                @Html.ValidationMessageFor(model => model.FechaInicio)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FechaFinal, new { @class = "control-label col-md-3" })
+                            <div class="col-md-6 ">
+                                @Html.TextBoxFor(model => model.FechaFinal, new { @class = "form-control", @autocomplete = "off", Value = String.Format("{0:dd/MM/yyyy}", Model.FechaFinal) })
+                                @Html.ValidationMessageFor(model => model.FechaFinal)
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input id="btnSubmit" type="submit" value="Grabar" class="btn btn-success" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        
+        $('.Mayus').keyup(function () { this.value = this.value.toLocaleUpperCase() });
+        $(".chosen-seleccionar").chosen({ width: "100%", placeholder_text_single: "Seleccione una opción" });
+
+        $("#FechaInicio").datepicker({
+            format: "dd/mm/yyyy",
+            language: "es",
+            calendarWeeks: true
+        });
+
+        $("#FechaFinal").datepicker({
+            format: "dd/mm/yyyy",
+            language: "es",
+            calendarWeeks: true
+        });
+
+        if ($("#CodAnchoVia").val() === "010001") {
+            $("#MedidaVia").removeAttr("readonly");
+        } else {
+            $("#MedidaVia").removeAttr("readonly").attr("readonly", "readonly");
+            $("#MedidaVia").val('');
+        }
+
+        $("#frmViasAnterior").on("submit", function (event) {
+            //validarFormulario(event, $('#btnSubmit'), "ViasAnterior");
+            event.preventDefault();
+            RemoveValidacion();
+            $('#btnSubmit').attr('disabled', 'disabled');
+            var url = $('#frmViasAnterior').attr("action");
+            var formData = $('#frmViasAnterior').serialize();
+            $.ajax({
+                url: url, type: "POST", data: formData, dataType: "json",
+                success: function (response) {
+                    console.log(formData);
+                    if (response.success) {
+                        RemoveValidacion();
+                        bootbox.confirm({
+                            title: "Registro grabado correctamente",
+                            message: "¿Desea efectuar un nuevo registro?",
+                            buttons: {
+                                cancel: {
+                                    label: '<i class="fa fa-times"></i> No'
+                                },
+                                confirm: {
+                                    label: '<i class="fa fa-check"></i> Si'
+                                }
+                            },
+                            callback: function (result) {
+                                if (result === true) {
+                                    $('#DesViaAnterior').val('');
+                                    $('#Normativa').val('');
+                                    $('#FechaInicio').val('');
+                                    $('#FechaFinal').val('');
+                                    $('#DesTipoViaAnterior').val('');
+                                    $('#CodigoVia').val('').trigger("chosen:updated");
+                                } else {
+                                    $('#login').modal('hide');
+                                    $('#modalViasAnterior').modal('toggle');
+                                    $('#tablaViasAnterior').DataTable().ajax.reload();
+                                }
+                            }
+                        });
+
+                        var mensaje = ($('#frmViasAnterior').find("#Estado").val() == 1) ? "Registro grabador correctamente" : "Registro modificado correctamente";
+                        $('#tablaViasAnterior').DataTable().ajax.reload();
+                        toastr.success(mensaje, "Mensaje del Sistema", { "progressBar": true });
+                    } else {
+                        toastr.error(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                    }
+                },
+                error: function (response) {
+                    console.log(response);
+                    var modelStateErrors = response.responseJSON;
+                    for (var i = 0; i < modelStateErrors.length; i++) {
+                        $('span[data-valmsg-for="' + modelStateErrors[i].key + '"]').text(modelStateErrors[i].errors[0]).addClass('has-error');
+                    }
+                    //toastr.error("Se encontro un problema al momento de registrar", "Mensaje del Sistema", { "progressBar": true });
+                },
+                complete: function () {
+                    $('#btnSubmit').removeAttr('disabled');
+                }
+            });
+        });
+
+        $("#CodAnchoVia").change(function () {
+            var t = $(this).val();
+            if (t === "010001") {
+                $("#MedidaVia").removeAttr("readonly");
+            } else {
+                $("#MedidaVia").removeAttr("readonly").attr("readonly", "readonly");
+                $("#MedidaVia").val('');
+            }
+        });
+
+        if ($("#CodigoViaAnterior").val() === "") {
+            /*$('#FechaInicio').val('').datepicker("update");
+            console.log('hol un');*/
+        }
+
+
+        function RemoveValidacion() {
+            
+            $('[data-valmsg-for="CodigoVia"]').html('').removeClass('field-validation-valid has-error');
+            $('[data-valmsg-for="DesTipoViaAnterior"]').html('').removeClass('field-validation-valid has-error');
+            $('[data-valmsg-for="DesViaAnterior"]').html('').removeClass('field-validation-valid has-error');
+            $('[data-valmsg-for="Normativa"]').html('').removeClass('field-validation-valid has-error');
+            $('[data-valmsg-for="FechaInicio"]').html('').removeClass('field-validation-valid has-error');
+            $('[data-valmsg-for="FechaFinal"]').html('').removeClass('field-validation-valid has-error');
+        }
+    });
+
+</script>

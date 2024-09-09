@@ -1,0 +1,65 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Distritos.FiltrarDistritosViewModel
+
+
+@if (Model.listDistritos != null || Model.listDistritos.Count() > 0)
+{
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Acciones</th>
+                    <th>Codigo</th>
+                    <th>Nombres Distrito</th>
+                    <th>Abreviatura</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.listDistritos)
+                {
+                    <tr>
+                        <td>
+                            <center class="d-print-none">
+                                @Ajax.ActionLink(" ", "Editar", "Distritos"
+                                              , new { id = item.CodigoDistrito }
+                                              , new AjaxOptions
+                                              {
+                                                  HttpMethod = "Get",
+                                                  InsertionMode = InsertionMode.Replace,
+                                                  UpdateTargetId = "modalDistritos"
+                                              }
+                                              ,
+                                              new
+                                              {
+                                                  @class = "btn btn-default glyphicon glyphicon-edit",
+                                                  data_toggle = "modal",
+                                                  data_target = "#modalDistritos"
+                                              }
+                                              )
+                                @Ajax.ActionLink(" ", "Eliminar", "Distritos"
+                                              , new { id = item.CodigoDistrito }
+                                              , new AjaxOptions
+                                              {
+                                                  HttpMethod = "Get",
+                                                  InsertionMode = InsertionMode.Replace,
+                                                  UpdateTargetId = "modalEliminarDistritos"
+                                              }
+                                              ,
+                                              new
+                                              {
+                                                  @class = "btn btn-danger glyphicon glyphicon-remove",
+                                                  data_toggle = "modal",
+                                                  data_target = "#modalEliminarDistritos"
+                                              }
+                                              )
+                            </center>
+                        </td>
+                        <td>@item.CodigoDistrito</td>
+                        <td>@item.NombreDistrio</td>
+                        <td>@item.Abreviatura</td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

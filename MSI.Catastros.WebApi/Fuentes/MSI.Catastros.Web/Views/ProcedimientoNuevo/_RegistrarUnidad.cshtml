@@ -1,0 +1,506 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.ProcedimientoNuevo.FiltrarUnidadCatastralViewModel
+
+<div id="RegistrarUnidadContainer">
+    @using (Html.BeginForm("Registrar", "Unidad", FormMethod.Post, new { id = "frmUnidad", name = "frmUnidad" }))
+    {
+        @Html.AntiForgeryToken()
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>*@
+                <button class="btn btn-default px-5 mr-2" style="margin-top:-2px;float: right;" data-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i> Salir</button>
+                <button id="btnModalAsignar" type="button" class="btn btnModalAsignar px-5 btn-green mr-2" style="margin-top:-2px;float: right;"><i class="fa fa-save"></i> Asignar</button>
+                <h4 class="modal-title" id="exampleModalLabel" style="font-weight:bold">Buscar y Asignar</h4>
+
+            </div>
+            <div class="modal-body">
+                @Html.HiddenFor(model => model.hidTipoBusqueda)
+                <div class="row">
+                    <div class="col-md-12">
+                        <fieldset class="formulariomodal">
+                            <legend>Tipo de Busqueda</legend>
+                            <div class="form-group">
+                                <label class="radio-inline control-label col-md-1"><input type="radio" name="BusquedaRadio" value="1" checked>Ubicación</label>
+                                <label class="radio-inline control-label col-md-1"><input type="radio" name="BusquedaRadio" value="2">Código Catastral</label>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                </div>
+                <div class="row DivUnidadCastastral">
+                    <div class="col-md-8">
+                        <fieldset class="formulariomodal">
+                            <legend>Busqueda</legend>
+                            <table>
+                                <tr>
+                                    <td width="12%"><label class="form-label">Dist.</label></td>
+                                    <td width="12%"><label class="form-label">Sec</label></td>
+                                    <td width="12%"><label class="form-label">Mz</label></td>
+                                    <td width="12%"><label class="form-label">Lote</label></td>
+                                    <td width="12%"><label class="form-label">Ed</label></td>
+                                    <td width="12%"><label class="form-label">Entr</label></td>
+                                    <td width="12%"><label class="form-label">Piso</label></td>
+                                    <td width="12%"><label class="form-label">Unidad</label></td>
+                                    <td width=""></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoDistrito, new { @class = "form-control text-center px-3", @readonly = "true" })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoSector, new { @class = "form-control clSect text-center px-3", maxlength = 2, @onkeypress = "if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoManzana, new { @class = "form-control clManza text-center px-3", maxlength = 3, @onkeypress = "if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoLote, new { @class = "form-control clLote text-center px-3", maxlength = 3, @onkeypress = "if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarEd, new { @class = "form-control text-center clEdif px-3", maxlength = 2 })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarEntrada, new { @class = "form-control text-center clEntr px-3", maxlength = 2 })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarPiso, new { @class = "form-control text-center clPiso px-3", maxlength = 2 })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarUnidad, new { @class = "form-control text-center clUnid px-3", maxlength = 3 })</td>
+                                    <td>
+                                        <div class="">
+                                            <button id="btnModalBuscar" type="button" class="btn btnModalBuscar btnBuscar btn-default glyphicon glyphicon-search" style="padding: 6px 35px"></button>
+                                            @*<button class="btn btn-green glyphicon glyphicon-plus"></button>*@
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="9">
+                                        <div class="has-error">
+                                            <ul id="msgErrores"></ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="row DivDireccion">
+                    <div class="col-md-12">
+                        <fieldset class="formulariomodal">
+                            <legend>Busqueda</legend>
+                            @*<div class="col-md-12">*@
+                            <div class="col-md-5 pl-0">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.CodigoVia, new { @class = "control-label" })
+                                    @Html.DropDownListFor(model => model.CodigoVia, new SelectList(ViewBag.listVias, "Value", "Text"), "Seleccione una vía",
+                                new { @class = "chosen-seleccionar form-control", style = "width:100%;" })
+                                    @Html.ValidationMessageFor(model => model.CodigoVia)
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.NumcuadraReg, htmlAttributes: new { @class = "control-label" })
+                                    @Html.DropDownList("NumcuadraReg", new SelectList(Model.ParametroCuadra, "Value", "Text"), "Seleccione una cuadra", new { @class = "chosen-seleccionar form-control", style = "width:100%;", placeholder = "Seleccione una Cuadra" })
+                                    @Html.ValidationMessageFor(model => model.NumcuadraReg)
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.NumeroPuerta, htmlAttributes: new { @class = "control-label" })
+                                    @Html.TextBoxFor(model => model.NumeroPuerta, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.NumeroPuerta)
+                                </div>
+                            </div>
+                            <div class="col-md-1  pt-2">
+                                <br />
+                                <div class="row">
+                                    <div class="form-group">
+                                        <button id="btnModalBuscarDireccion" type="button" class="btn btnModalBuscar btn-warning glyphicon glyphicon-search"></button>
+                                        @*<button class="btn btn-green glyphicon glyphicon-plus"></button>*@
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                            </div>
+                            <div class="col-md-12 has-error">
+                                <ul id="msgErroresUbicacion"></ul>
+                            </div>
+                            @*</div>*@
+                        </fieldset>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-12 pb-2">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="tablaUnidadCatastral" style="width:100%;" class="table responsive display  table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th width="6%" style="width:65px">Dist</th>
+                                    <th width="6%">Sec</th>
+                                    <th width="6%">Mz</th>
+                                    <th width="6%">Lote</th>
+                                    <th width="6%">Ed</th>
+                                    <th width="6%">Entr</th>
+                                    <th width="2%">Piso</th>
+                                    <th width="6%">Unidad</th>
+                                    <th width="">Titular</th>
+                                    <th width="">Ubicacion</th>
+                                    <th></th>
+                                    <th style="display:none;"></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Send message</button>
+                <button class="btn btn-default px-5 mr-2" style="margin-top:-2px;float: right;" data-dismiss="modal" aria-label="Close">Salir</button>
+                <button id="btnModalAsignar" type="button" class="btn btnModalAsignar px-5 btn-green mr-2" style="margin-top:-2px;float: right;">Asignar</button>
+             </div>*@
+        </div>
+    </div>
+    }
+</div>
+<script src="~/assets/vendor/datatables-checkboxes/js/dataTables.checkboxes.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('input').keyup(function () { this.value = this.value.toLocaleUpperCase() });
+        $(".chosen-seleccionar").chosen({ width: "100%", placeholder_text_single: "Seleccione una opción" });
+        var nombreEntidad = "UnidadCatastral";
+        localStorage.setItem('UnidadesSelec', "");
+        $('#FiltrarCodigoDistrito').val("31");
+        $(".DivDireccion").show();
+        $("#hidTipoBusqueda").val('1');
+        $(".DivUnidadCastastral").hide();
+
+        // DATOS A ELIMINAR
+        //$('#FiltrarCodigoSector').val("09");
+        //$('#FiltrarCodigoManzana').val("019");
+        //$('#FiltrarCodigoLote').val("006");
+        // DATOS A ELIMINAR
+
+        $("#CodigoVia").change(function () {
+            CambiarCodigoVia(this.value);
+        });
+
+        //$('#FiltrarCodigoSector').change(function () {
+        //    var texto;
+        //    texto = ZeroIzqCaracter($('#FiltrarCodigoSector').val(), 2);
+        //    $('#FiltrarCodigoSector').val(texto);
+        //});
+
+        //$('#FiltrarCodigoManzana').change(function () {
+        //    var texto;
+        //    texto = ZeroIzqCaracter($('#FiltrarCodigoManzana').val(), 3);
+        //    $('#FiltrarCodigoManzana').val(texto);
+        //});
+
+        //$('#FiltrarCodigoLote').change(function () {
+        //    var texto;
+        //    texto = ZeroIzqCaracter($('#FiltrarCodigoLote').val(), 3);
+        //    $('#FiltrarCodigoLote').val(texto);
+        //});
+
+        //$('#FiltrarEd').change(function () {
+        //    var texto;
+        //    texto = ZeroIzqCaracter($('#FiltrarEd').val(), 2);
+        //    $('#FiltrarEd').val(texto);
+        //});
+
+        //$('#FiltrarEntrada').change(function () {
+        //    var texto;
+        //    texto = ZeroIzqCaracter($('#FiltrarEntrada').val(), 2);
+        //    $('#FiltrarEntrada').val(texto);
+        //});
+
+        //$('#FiltrarPiso').change(function () {
+        //    var texto;
+        //    texto = ZeroIzqCaracter($('#FiltrarPiso').val(), 2);
+        //    $('#FiltrarPiso').val(texto);
+        //});
+
+        //$('#FiltrarUnidad').change(function () {
+        //    var texto;
+        //    texto = ZeroIzqCaracter($('#FiltrarUnidad').val(), 3);
+        //    $('#FiltrarUnidad').val(texto);
+        //});
+        $(document).keypress(function (e) {
+            if (e.charCode == 10) {
+                $('.btnBuscar').trigger('click');
+            }
+        });
+        $(".clSect").change(function (e) {
+            e.preventDefault();
+            var texto;
+            texto = ZeroIzqCaracter($('.clSect').val(), 2);
+            $('.clSect').val(texto);
+        }).bind({
+            paste: function (e) {
+                var cod = e.originalEvent.clipboardData.getData('text');
+                var isnum = /^\d+$/.test(cod.substring(0, 4));
+                var a = 0, b = 0;
+                if (isnum) {
+                    if (cod.substring(0, 2) == '31') {
+                        a = 2; b = 4;
+                        if (cod.length >= 4) { $('.clSect').val(cod.substring(a, b)); a += 2; b += 3; }
+                        if (cod.length >= 7) { $('.clManza').val(cod.substring(a, b)); a += 3; b += 3; } else { $('.clManza').val("") }
+                        if (cod.length >= 10) { $('.clLote').val(cod.substring(a, b)); a += 3; b += 2; } else { $('.clLote').val("") }
+                        if (cod.length >= 12) { $('.clEdif').val(cod.substring(a, b)); a += 2; b += 2; } else { $('.clEdif').val("") }
+                        if (cod.length >= 14) { $('.clEntr').val(cod.substring(a, b)); a += 2; b += 2; } else { $('.clEntr').val("") }
+                        if (cod.length >= 16) { $('.clPiso').val(cod.substring(a, b)); a += 2; b += 3; } else { $('.clPiso').val("") }
+                        if (cod.length >= 19) { $('.clUnid').val(cod.substring(a, b)); } else { $('.clUnid').val("") }
+                    }
+                    else if (cod.length == 19) {
+                        a = 2; b = 4;
+                        $('.clSect').val(cod.substring(a, b)); a += 2; b += 3;
+                        $('.clManza').val(cod.substring(a, b)); a += 3; b += 3;
+                        $('.clLote').val(cod.substring(a, b)); a += 3; b += 2;
+                        $('.clEdif').val(cod.substring(a, b)); a += 2; b += 2;
+                        $('.clEntr').val(cod.substring(a, b)); a += 2; b += 2;
+                        $('.clPiso').val(cod.substring(a, b)); a += 2; b += 3;
+                        $('.clUnid').val(cod.substring(a, b));
+                    } else if (cod.length == 17) {
+                        a = 0; b = 2;
+                        $('.clSect').val(cod.substring(a, b)); a += 2; b += 3;
+                        $('.clManza').val(cod.substring(a, b)); a += 3; b += 3;
+                        $('.clLote').val(cod.substring(a, b)); a += 3; b += 2;
+                        $('.clEdif').val(cod.substring(a, b)); a += 2; b += 2;
+                        $('.clEntr').val(cod.substring(a, b)); a += 2; b += 2;
+                        $('.clPiso').val(cod.substring(a, b)); a += 2; b += 3;
+                        $('.clUnid').val(cod.substring(a, b));
+                    } else if (cod.length < 17) {
+                        a = 0; b = 2;
+                        if (cod.length >= 2) { $('.clSect').val(cod.substring(a, b)); a += 2; b += 3; }
+                        if (cod.length >= 5) { $('.clManza').val(cod.substring(a, b)); a += 3; b += 3; } else { $('.clManza').val("") }
+                        if (cod.length >= 8) { $('.clLote').val(cod.substring(a, b)); a += 3; b += 2; } else { $('.clLote').val("") }
+                        if (cod.length >= 10) { $('.clEdif').val(cod.substring(a, b)); a += 2; b += 2; } else { $('.clEdif').val("") }
+                        if (cod.length >= 12) { $('.clEntr').val(cod.substring(a, b)); a += 2; b += 2; } else { $('.clEntr').val("") }
+                        if (cod.length >= 14) { $('.clPiso').val(cod.substring(a, b)); a += 2; b += 3; } else { $('.clPiso').val("") }
+                        if (cod.length >= 17) { $('.clUnid').val(cod.substring(a, b)); } else { $('.clUnid').val("") }
+                    }
+                } else {
+                    console.log('Ingrese un formato correcto')
+                }
+
+            },
+        });
+        $('.clManza').change(function (e) {
+            e.preventDefault();
+            var texto;
+            texto = ZeroIzqCaracter($('.clManza').val(), 3);
+            $('.clManza').val(texto);
+        });
+
+        $('.clLote').change(function (e) {
+            e.preventDefault();
+            var texto;
+            texto = ZeroIzqCaracter($('.clLote').val(), 3);
+            $('.clLote').val(texto);
+        });
+
+        $('.clEdif').change(function () {
+            var texto;
+            texto = ZeroIzqCaracter($('.clEdif').val(), 2);
+            $('.clEdif').val(texto.toUpperCase());
+        });
+
+        $('.clEntr').change(function () {
+            var texto;
+            texto = ZeroIzqCaracter($('.clEntr').val(), 2);
+            $('.clEntr').val(texto.toUpperCase());
+        });
+
+        $('.clPiso').change(function () {
+            var texto;
+            texto = ZeroIzqCaracter($('.clPiso').val(), 2);
+            $('.clPiso').val(texto.toUpperCase());
+        });
+
+        $('.clUnid').change(function () {
+            var texto;
+            texto = ZeroIzqCaracter($('.clUnid').val(), 3);
+            $('.clUnid').val(texto.toUpperCase());
+        });
+
+        $('.clSect').keyup(function (e) {
+            if ((e.keyCode > 36 && e.keyCode <= 40) || e.keyCode == 9 || e.keyCode == 16 || e.keyCode == 17) return;
+            if ($(this).val().length > 1) {
+                $('.clManza').focus().select();
+            }
+        });
+        $('.clManza').on('keyup', function (e) {
+            if ((e.keyCode > 36 && e.keyCode <= 40) || e.keyCode == 9 || e.keyCode == 16 || e.keyCode == 17) return;
+            if ($(this).val().length > 2) {
+                $('.clLote').focus().select();
+            }
+        });
+        $('.clLote').on('keyup', function (e) {
+            if ((e.keyCode > 36 && e.keyCode <= 40) || e.keyCode == 9 || e.keyCode == 16 || e.keyCode == 17) return;
+            if ($(this).val().length > 2) {
+                $('.clEdif').focus().select();
+            }
+        });
+        $('.clEdif').keyup(function (e) {
+            if ((e.keyCode > 36 && e.keyCode <= 40) || e.keyCode == 9 || e.keyCode == 16 || e.keyCode == 17) return;
+            if (this.value.length > 1) {
+                $('.clEntr').focus().select();
+            }
+        });
+        $('.clEntr').keyup(function (e) {
+            if ((e.keyCode > 36 && e.keyCode <= 40) || e.keyCode == 9 || e.keyCode == 16 || e.keyCode == 17) return;
+            if (this.value.length > 1) {
+                $('.clPiso').focus().select();
+            }
+        });
+        $('.clPiso').keyup(function (e) {
+            if ((e.keyCode > 36 && e.keyCode <= 40) || e.keyCode == 9 || e.keyCode == 16 || e.keyCode == 17) return;
+            if (this.value.length > 1) {
+                $('.clUnid').focus().select();
+            }
+        });
+        $('.clUnid').keyup(function (e) {
+            console.log('UNID', e.keyCode);
+            if ((e.keyCode > 36 && e.keyCode <= 40) || e.keyCode == 9 || e.keyCode == 16 || e.keyCode == 17) return;
+            if (this.value.length > 2) {
+                $('.btnBuscar').focus();
+            }
+        });
+
+        $("input[name=BusquedaRadio]").click(function () {
+            if ($(this).val() === '1') {
+                $(".DivDireccion").show();
+                $("#hidTipoBusqueda").val('1');
+                $(".DivUnidadCastastral").hide();
+            } else if ($(this).val() === '2') {
+                $(".DivDireccion").hide();
+                $(".DivUnidadCastastral").show();
+                $("#hidTipoBusqueda").val('2');
+            }
+        });
+        function CambiarCodigoVia(value) {
+            var URL = "@Url.Content("~")" + "ManzanaVia/Cuadras/".concat($("#CodigoVia").val());
+            $.post(URL, function (data) {
+                $('#NumcuadraReg').find('option:not(:first)').remove();
+                var items = '<option value="">Seleccione una cuadra</option>';
+                $.each(data, function (i, item) {
+                    items += "<option value='" + item.Text + "'>" + item.Text + "</option>";
+                });
+                $('#NumcuadraReg').html(items);
+                if (value) {    $('#NumcuadraReg').val(value);  }
+                $('#NumcuadraReg').trigger("chosen:updated");
+            });
+        }
+
+        var tablaUnidadCatastral = $("#tablaUnidadCatastral").DataTable({
+            "ajax": {
+                "url": "@Url.Content("~/ProcedimientoInicial/CargarUnidad")",
+                "type": "POST",
+                "datatype": "json",
+                "data": function (d) {
+                    // -- Agregar campos de busqueda
+                    d.FiltrarCodigoDistrito = $('#FiltrarCodigoDistrito').val();
+                    d.FiltrarCodigoSector = $('#FiltrarCodigoSector').val();
+                    d.FiltrarCodigoManzana = $('#FiltrarCodigoManzana').val();
+                    d.FiltrarCodigoLote = $('#FiltrarCodigoLote').val();
+                    d.FiltrarEd = $('#FiltrarEd').val();
+                    d.FiltrarEntrada = $('#FiltrarEntrada').val();
+                    d.FiltrarPiso = $('#FiltrarPiso').val();
+                    d.FiltrarUnidad = $('#FiltrarUnidad').val();
+                    d.CodigoVia = $('#CodigoVia').val();
+                    d.NumcuadraReg = $('#NumcuadraReg').val();
+                    d.NumeroPuerta = $('#NumeroPuerta').val();
+                    d.TipoBusqueda = $("#hidTipoBusqueda").val();
+                }
+            },
+            "scrollY": "600px",
+            "scrollCollapse": true,
+            "language": { "lengthMenu": "", "info": "", "emptyTable": "" }, "processing": true, "serverSide": false, "paging": false,
+            'columnDefs': [
+                 { "width": "7%", "targets": 0 },
+                 { "width": "7%", "targets": 1 },
+                 { "width": "7%", "targets": 2 },
+                 { "width": "7%", "targets": 3 },
+                 { "width": "7%", "targets": 4 },
+                 { "width": "7%", "targets": 5 },
+                 { "width": "7%", "targets": 6 },
+                 { "width": "7%", "targets": 7 },
+                 { "width": "20%", "targets": 8 },
+                 { "width": "20%", "targets": 9 },
+                 { 'targets': 10, 'checkboxes': { 'selectRow': true } }
+            ],
+            "columns": [
+                { "data": "CodigoDistrito", "name": "CodigoDistrito", "className": "text-center" },
+                { "data": "CodigoSector", "name": "CodigoSector", "className": "text-center" },
+                { "data": "CodigoManzana", "name": "CodigoManzana", "autoWidth": true, "className": "text-center" },
+                { "data": "CodigoLote", "name": "CodigoLote", "autoWidth": true, "className": "text-center" },
+                { "data": "Ed", "name": "Edificacion", "autoWidth": true, "className": "text-center" },
+                { "data": "Entrada", "name": "Entrada", "autoWidth": true, "className": "text-center" },
+                { "data": "Piso", "name": "Piso", "autoWidth": true, "className": "text-center" },
+                { "data": "Unidad", "name": "Unidad", "className": "text-center" },
+                { "data": "Titular", "name": "Titular", "autoWidth": true, "className": "text-center" },
+                { "data": "Ubicacion", "name": "Ubicacion", "autoWidth": true, "className": "text-center" },
+                { "data": "Indice", "name": "Indice", "autoWidth": true, "className": "text-center" },
+                { "data": "CodigoUni", "name": "CodigoUni", "autoWidth": true, "className": "hide_column" },
+            ]
+        });
+        //tablaUnidadCatastral.columns.adjust().draw();
+        $("#btnModalAsignar").on("click", function (event) {
+            var rows_selected = tablaUnidadCatastral.column(10).checkboxes.selected();
+            var ListaRows = [];
+            $.each(rows_selected, function (index, Indice) {
+                var rows = tablaUnidadCatastral.rows(Indice).data()[0];
+                ListaRows.push(rows);
+            });
+            console.log('Lista', ListaRows);
+            localStorage.setItem('UnidadesSelec', JSON.stringify(ListaRows));
+            $('#modalUnidadCatastral').modal('hide');
+        });
+        $("#btnModalBuscar").on("click", function (event) {
+            var cont;
+            $('#msgErrores').html("");
+            if (!$('#FiltrarCodigoSector').val()) {
+                $('#msgErrores').append("<li>Ingrese el sector</li>");
+                cont = true;
+            }
+            if (!$('#FiltrarCodigoManzana').val()) {
+                $('#msgErrores').append("<li>Ingrese la Manzana</li>");
+                cont = true;
+            }
+            if (!$('#FiltrarCodigoLote').val()) {
+                $('#msgErrores').append("<li>Ingrese el Lote</li>");
+                cont = true;
+            }
+            if (!cont) {
+                $('#msgErrores').html("");
+                tablaUnidadCatastral.ajax.reload();
+                tablaUnidadCatastral.ajax.reload(function (json) {
+                    tablaUnidadCatastral.columns.adjust().draw();
+                    var alto = $('#tablaUnidadCatastral_wrapper .dataTables_scrollBody').height();
+                    console.log(alto);
+                    if (alto < 599) {
+                        $('#tablaUnidadCatastral_wrapper .dataTables_scrollHead').removeClass('pr-4');
+
+                    } else {
+                        $(' #tablaUnidadCatastral_wrapper.dataTables_scrollHead').addClass('pr-4');
+                    }
+
+                });
+
+            }
+        });
+
+        $("#btnModalBuscarDireccion").on("click", function (event) {
+            var cont;
+            $('#msgErroresUbicacion').html("");
+            if (!$('#CodigoVia').val()) {
+                $('#msgErroresUbicacion').append("<li>Seleccione una via</li>");
+                cont = true;
+            }
+            if (!$('#NumcuadraReg').val()) {
+                $('#msgErroresUbicacion').append("<li>Seleccione una Cuadra</li>");
+                cont = true;
+            }
+            if (!cont) {
+                $('#msgErroresUbicacion').html("");
+                tablaUnidadCatastral.ajax.reload();
+                //tablaUnidadCatastral.columns.adjust().draw();
+            }
+        });
+    });
+</script>

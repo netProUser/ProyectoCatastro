@@ -1,0 +1,711 @@
+﻿@using MSI.Catastros.Web
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="imagen/png" href="~/assets/Images/favicon.jpg">
+    <title>.::@ViewBag.Title - MSI::.</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <!-- Bootstrap Core CSS -->
+    @*<link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">*@
+    <!-- MetisMenu CSS -->
+    <link href="@Url.Content("~/assets/vendor/metisMenu/metisMenu.min.css")" rel="stylesheet">
+
+    <link href="@Url.Content("~/assets/vendor/chosen/chosen.css")" rel="stylesheet">
+    <link href="@Url.Content("~/assets/vendor/chosen/chosen-bootstrap.css")" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="@Url.Content("~/assets/dist/css/sb-admin-2.css")" rel="stylesheet">
+    <!-- Morris Charts CSS -->
+    <link href="@Url.Content("~/assets/vendor/morrisjs/morris.css")" rel="stylesheet">
+
+    <!-- Main CSS -->
+    @*<link href="~/assets/vendor/jquery-loading/loading.css" rel="stylesheet" />*@
+    <link href="@Url.Content("~/assets/vendor/datatables/css/jquery.dataTables.min.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/assets/vendor/datatables-responsive/dataTables.responsive.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/assets/vendor/datatables-checkboxes/css/dataTables.checkboxes.css")" rel="stylesheet" />
+
+
+    <!-- / STYLESHEETS -->
+    <!-- Custom Fonts -->
+    <link href="@Url.Content("~/assets/vendor/font-awesome/css/font-awesome.min.css")" rel="stylesheet" type="text/css">
+    <link href="@Url.Content("~/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css")" rel="stylesheet" type="text/css">
+    <link href="@Url.Content("~/assets/vendor/bootstrap-select/css/bootstrap-select.css")" rel="stylesheet" type="text/css">
+    <link href="@Url.Content("~/assets/vendor/inputmask/css/inputmask.css")" rel="stylesheet" type="text/css">
+    <link href="@Url.Content("~/assets/vendor/fileinput/css/fileinput.min.css")" media="all" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/dcalendar.picker.css")" media="all" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/assets/css/msi.css")" rel="stylesheet" type="text/css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        body {
+            font-size: 12px !important;
+        }
+    </style>
+</head>
+<body id="bodyGroup">
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0;min-height:0px !important">
+            @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+            @*<div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/Home"></a>
+            </div>*@
+            @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+
+            <!-- /.navbar-header -->
+
+            @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+            @*<ul class="nav navbar-top-links navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li>
+                            <a data-toggle="modal" href="#CambiarContraseña"><i class="fa fa-edit fa-fw"></i> Cambiar Contraseña</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Content("~/Login")"><i class="fa fa-sign-out fa-fw"></i> Salir del Sistema</a>
+                        </li>
+                        
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>*@
+            @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+           
+            <!-- /.navbar-top-links -->
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <nav>
+                        <ul class="nav">
+                            <li class="sidebar-nav">
+                                <a class="p-0" href="/home"><img class="logo" src="@Url.Content("~/assets/Images/brand-text-msi.png")" alt="Brand" style="width:100%"></a>
+                            </li>
+                            <li class="sidebar-nav">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <img class="media-object img-circle" src="@Url.Content("~/assets/Images/userdefault.png")" alt="photo profile">
+                                    </div>
+                                    <div class="media-body">
+                                        <h5 id="nombreUsuario" class="media-heading">
+                                            @if (VariablesWeb.Usuario == null)
+                                            {
+                                                Response.Redirect("~/Login?redireccionar=" + Request.RawUrl);
+                                            }
+                                            else
+                                            {
+                                                @VariablesWeb.Usuario.CODUSUARIO;
+                                            }
+                                        </h5>
+                                        <b>@VariablesWeb.NombrePerfil</b>
+                                    </div>
+                                </div>
+                            <li>
+                        </ul>
+                        @if (VariablesWeb.ListaOpciones != null && VariablesWeb.ListaOpciones.Count() > 0)
+                        {
+                            @Html.HelperMenu3(VariablesWeb.ListaOpciones, "MenuPrincipal")
+                        }
+                    </nav>
+
+                    @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                    <ul class="nav navbar-top-links navbar-right">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li>
+                                    <a data-toggle="modal" href="#CambiarContraseña"><i class="fa fa-edit fa-fw"></i> Cambiar Contraseña</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Content("~/Login")"><i class="fa fa-sign-out fa-fw"></i> Salir del Sistema</a>
+                                </li>
+
+                            </ul>
+                            <!-- /.dropdown-user -->
+                        </li>
+                        <!-- /.dropdown -->
+                    </ul>
+                    @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+
+                    @*<ul class="nav" id="side-menu">
+                            <li class="sidebar-nav">
+                                <a class="p-0" href="/home"><img class="logo" src="../assets/Images/brand-text-msi.png" alt="Brand" width="100%"></a>
+                            </li>
+                            <li class="sidebar-nav">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <img class="media-object img-circle" src="../assets/Images/userdefault.png" alt="photo profile">
+                                    </div>
+                                    <div class="media-body">
+                                        <h5 id="nombreUsuario" class="media-heading">ALONSO GUARDIA GONZALES</h5><b>FT :: Consulta</b>
+                                    </div>
+                                </div>
+                            <li>
+                            <li>
+                                <a href="#"><i class="fa fa-wrench fa-fw"></i> MANTENIMIENTOS<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="/Distritos">Distrito </a>
+                                    </li>
+                                    <li><a href="/Vias">Vías </a></li>
+                                    <li><a href="/DetalleVias">Vías Detalle </a></li>
+                                    <li><a href="/ViasAnterior">Vías Anteriores </a></li>
+                                    <li><a href="/Sectores">Sector </a></li>
+                                    <li><a href="/Manzana">Manzana </a></li>
+                                    <li><a href="/ManzanaVia">Manzana Vía </a></li>
+                                    <li><a href="/TipoHabilitacion">Tipo Habilitación Urbana</a></li>
+                                    <li><a href="/HabilitacionUrbana">Habilitación Urbana</a></li>
+                                    <li><a href="/ManzanaUrbana">Manzana Urbana </a></li>
+                                    @*<li><a href="/TablaParametros">Tabla Parámetros</a></li>@
+                        </ul>
+                        <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-suitcase"></i> GESTIÓN CATASTRAL<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a href="/GenerarSolicitud">Generar Solicitud</a></li>
+                                <li><a href="/RecepcionDocumentos">Recepción de Documentos</a></li>
+                                <li><a href="/PrimeraAsignacion">Primera Asignación</a></li>
+                                @*<li><a href="/AsignarSolicitudOtros">Asignar Solicitud - Otros Coordinadores </a></li>@
+                                <li><a href="/ProcedimientoInicial">Procedimiento Inicial </a></li>
+                                <li><a href="/ProcedimientoNuevo">Procedimiento Nuevo </a></li>
+                                <li><a href="/ProgramarInspeccion">Programar Inspección </a></li>
+                                <li><a href="/SeguimientoSolicitud">Seguimiento de solicitud </a></li>
+                                <li><a href="/HistoricoErrores">Histórico Errores </a></li>
+                                <li><a href="/RegistrarAtencion">Registrar Atención </a></li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-sitemap"></i> PROCESOS<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a href="/Lotes">Lote </a></li>
+                                <li><a href="#">Unidad Catastral </a></li>
+                                <li><a href="#">Mobiliario Urbano </a></li>
+                                <li><a href="#">Bien Comun </a></li>
+                                <li>
+                                    <a href="#">Rgistro Masivo <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level">
+                                        <li>
+                                            <a href="#">Ingreso</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Modificación</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+
+                        @*<li>
+                                <a href="#"><i class="fa fa-book"></i> INFORMES<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li><a href="#">Informe Inspector </a></li>
+                                    <li><a href="#">Informe Analista </a></li>
+                                </ul>
+                                <!-- /.nav-second-level -->
+                            </li>
+
+                            <li>
+                                <a href="#"><i class="fa fa-files-o fa-fw"></i> CERTIFICADOS<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li><a href="#">Cert. de Numeración </a></li>
+                                    <li><a href="#">Cert. de Nomenclatura </a></li>
+                                    <li><a href="#">Cert. de Emisión de Planos </a></li>
+                                    <li><a href="#">Hoja Catastral Urbana </a></li>
+                                </ul>
+                                <!-- /.nav-second-level -->
+                            </li>
+
+                            <li>
+                                <a href="#"><i class="fa fa-search"></i> CONSULTAS<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li><a href="#">Consulta General </a></li>
+                                    <li><a href="#">Consulta Predial </a></li>
+                                    <li><a href="#">Inspecciones </a></li>
+                                    <li><a href="#">Hoja Catastral Urbana </a></li>
+                                </ul>
+                                <!-- /.nav-second-level -->
+                            </li>
+
+                            <li>
+                                <a href="#"><i class="fa fa-file-text-o"></i> REPORTES<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li><a href="#">Estadistíco por Sector </a></li>
+                                    <li><a href="#">Estadístico por Manzana </a></li>
+                                    <li><a href="#">Fichas </a></li>
+                                </ul>
+                                <!-- /.nav-second-level -->
+                            </li>@
+
+                        </ul>*@
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+        <div id="page-wrapper" class="pt-5">
+            <div class="panel panel-default my-2" id="periodoGlobal" style="width:150px;display:none;">
+                <div class="panel-heading " style="padding: 3px;background: white;">
+                    <div class="form-inline">
+                        <div class="form-group pl-2">
+                            <label for="email" style="font-size: 10px;">Periodo</label>
+                            <input type="number" min="1920" max="2040" class="form-control periodo ml-2" id="numPeriodoGlobal" style="width: 75px;font-size: 11px;font-weight: normal;height: 25px;text-align: center;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            @RenderBody()
+        </div>
+
+        <!-- /#page-wrapper -->
+    </div>
+    <div id="CambiarContraseña" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Cambiar Contraseña</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-12 form-group">
+                                <label for="txtNombreAccion">Actual Contraseña</label>
+                                <input id="ContraseñaActual" class="form-control"  type="password">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 form-group">
+                                <label for="txtNuevaContrasena">Nueva Contraseña</label>
+                                <input id="ContraseñaNueva" class="form-control"  type="password">
+                            </div>
+                        </div>
+                        <div class="row text-right">
+                            <button id="btnProcesarCambioContrasena"  onclick="CambioContraseñaProcesar()" class="btn btn-green mr-2 btn-block"> Cambiar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="ModalImpresion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>Impresión</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>¿Desar ingresar el nombre del administrado?</label>
+                                <select id="selImpTipo" onchange="selImpTipo(this)" class="form-control">
+                                    <option selected="selected" value="2">NO</option>
+                                    <option value="1">SI</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="nomImpAdmin" style="display:none;" class="row">
+                        <div  class="col-sm-9">
+                            <label>Nombre del Administrado</label>
+                            <input id="nomTextRuta" type="hidden" />
+                            <input id="nomTextAdmin" type="text" class="form-control" />
+                        </div>
+                        <div class="col-sm-3">
+                            <label>DNI</label>
+                            <input id="nomTextDni" type="text" class="form-control " />
+                        </div>
+                    </div>
+                 </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default px-5" id="btnCerrarSolicitudInspeccion" style="margin-top:-2px;float: right;" data-dismiss="modal"><i class="fa fa-close"></i> Salir</button>
+                    <button type="button" onclick="imprimirReporte()" class="btn btn-green px-5 mr-2" id="btnGrabarSolicitudInspeccion" style="margin-top:-2px;float: right;"><i class="fa fa-print"></i> Imprimir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="preloader" style="display: none;">
+        <div id="divBlock" style="display: none;">
+            <div class="LoadingLine"></div>
+            <div class="modal-preload">
+                <div class="circles">
+                    <div class="circle"></div>
+                    <div class="mainLogo">
+                        <i class="preloadEc">
+                            MSI
+                        </i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/unobtrusiveajax")
+    @Scripts.Render("~/bundles/validate")
+    @Scripts.Render("~/bundles/toastr")
+    @Scripts.Render("~/bundles/weightMask")
+    @Scripts.Render("~/bundles/bootstrap-datepicker")
+    @Scripts.Render("~/bundles/bootbox")
+    @Scripts.Render("~/bundles/inputmask")
+    <script src="@Url.Content("~/assets/vendor/inputmask/js/accounting.min.js")"></script>
+    @*<script src="~/assets/vendor/inputmask/js/jquery.inputmask.bundle.js"></script>*@
+    <script src="@Url.Content("~/assets/vendor/chosen/chosen.jquery.min.js")"></script>
+    <script src="@Url.Content("~/assets/vendor/datatables/js/jquery.dataTables.min.js")"></script>
+    <script src="@Url.Content("~/assets/vendor/datatables-responsive/dataTables.responsive.js")"></script>
+    <script src="@Url.Content("~/assets/vendor/tableset/jquery.tabslet.min.js")"></script>
+    <script src="@Url.Content("~/assets/vendor/jquery-loading/loadingoverlay.min.js")"></script>
+    @*<script src="~/assets/vendor/jsPDF/jspdf.min.js"></script>
+        <script src="~/assets/vendor/canvas/html2canvas.min.js"></script>*@
+
+
+    @Scripts.Render("~/bundles/general")
+    @RenderSection("scripts", required: false)
+
+    <!-- /#wrapper -->
+    <!-- jQuery -->
+    @*<script src="../assets/vendor/jquery/jquery.min.js"></script>*@
+    <!-- Bootstrap Core JavaScript -->
+    @*<script src="../assets/vendor/bootstrap/js/bootstrap.min.js"></script>*@
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="@Url.Content("~/assets/vendor/metisMenu/metisMenu.min.js")"></script>
+    <!-- Morris Charts JavaScript -->
+    <script src="@Url.Content("~/assets/vendor/raphael/raphael.min.js")"></script>
+    @*<script src="assets/vendor/morrisjs/morris.min.js"></script>*@
+    @*<script src="assets/data/morris-data.js"></script>*@
+    <!-- Custom Theme JavaScript -->
+    <script src="@Url.Content("~/assets/dist/js/sb-admin-2.js")"></script>
+    <script src="@Url.Content("~/assets/vendor/fileinput/js/fileinput.min.js")"></script>
+    <script src="@Url.Content("~/assets/vendor/fileinput/js/locales/es.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.blockUI.js")"></script>
+
+    <script>
+       
+        var d = new Date();
+        var n = d.getFullYear();
+        $('#numPeriodoGlobal').val(n)
+
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            //"positionClass": "toast-top-center",
+            //"preventDuplicates": false,
+            "timeOut": "6000",
+        }
+        function selImpTipo(e) {
+            if (e.value == 1) {
+                $('#nomImpAdmin').show(); $('#nomTextAdmin').focus();
+            } else {
+                $('#nomImpAdmin').hide();
+                $('#nomTextAdmin').val('');
+                $('#nomTextDni').val('');
+            }
+        }
+
+        function CambioContraseñaProcesar() {
+            if ($('#ContraseñaActual').val() == "" || $('#ContraseñaNueva').val() == "") {
+                debugger;
+                toastr.warning("Debe de ingresar toda información", "Mensaje del Sistema", { "progressBar": true });
+                return;
+            }
+            var model = {
+                UserName : "TTT",
+                Password: $('#ContraseñaActual').val(),
+                PasswordNueva: $('#ContraseñaNueva').val()
+            };
+            $.post("@Url.Content("~/Login/CambiarContrasena")", {
+                model: model
+            }, function (response) {
+                console.log(response.success);
+                debugger;
+                if (response.success === false) {
+                    console.log(response.success);
+                    toastr.warning(response.responseText, "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+                    $('#ContraseñaActual').val("");
+                    $('#ContraseñaNueva').val("");
+                } else {
+                    debugger;
+                    toastr.info(response.responseText, "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+                    $('#CambiarContraseña').modal('hide');
+                    $('#ContraseñaActual').val("");
+                    $('#ContraseñaNueva').val("");
+                }
+
+            });
+        }
+
+        function impresionRuta(url) {
+            $('#ModalImpresion').modal('show');
+            //$('#selImpTipo').val(2);
+            //$('#nomImpAdmin').hide();
+            //$('#nomTextAdmin').val('');
+            $('#nomTextRuta').val(url);
+        }
+            function imprimirReporte()
+            {
+                $('#ModalImpresion').modal('hide');
+                var administrado = ($('#nomTextAdmin').val()) ? "&administrado=" + $('#nomTextAdmin').val() : "";
+                var ruta = $('#nomTextRuta').val() + administrado + "-" + $('#nomTextDni').val();
+                window.open(ruta);
+            }
+            $(function () {
+
+
+                $.fn.datepicker.dates['en'] = {
+                    days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                    daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+                    daysMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+                    months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                    monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                    today: "Today",
+                    clear: "Clear",
+                    format: "mm/dd/yyyy",
+                    titleFormat: "MM yyyy", /* Leverages same syntax as 'format' */
+                    weekStart: 0
+                };
+
+
+            });
+
+            //Deshabilitar caracteres '<' y '>' por ataques XSS
+            $(document).on('keypress', 'input', function () { if (event.keyCode == 60 || event.keyCode == 62) event.returnValue = false; });
+            $(document).on('keypress', 'textarea', function () { if (event.keyCode == 60 || event.keyCode == 62) event.returnValue = false; });
+
+
+            ; (function ($) {
+                $.fn.datepicker.dates['es'] = {
+                    days: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
+                    daysShort: ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"],
+                    daysMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
+                    months: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+                    monthsShort: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+                    today: "Hoy",
+                    //monthsTitle: "Meses",
+                    clear: "Borrar",
+                    format: "dd/mm/yyyy",
+                    titleFormat: "MM yyyy",
+                    weekStart: 1
+                };
+            }(jQuery));
+            $(function () {
+                $(document).keypress(function (e) {
+                    if (e.charCode == 10) {
+                        $('.btnBuscar').trigger('click');
+                    }
+                });
+                $(".clSect").change(function (e) {
+                    e.preventDefault();
+                    var texto;
+                    texto = ZeroIzqCaracter($('.clSect').val(), 2);
+                    $('.clSect').val(texto);
+                }).bind({
+                    paste : function(e){
+                        var cod = e.originalEvent.clipboardData.getData('text');
+                        var isnum = /^\d+$/.test(cod.substring(0,4));
+                        var a=0,b=0;
+                        if(isnum) {
+                            if(cod.substring(0,2) == '31') {
+                                a=2;b=4;
+                                if (cod.length >= 4) { $('.clSect').val(cod.substring(a, b)); a += 2; b += 3; }
+                                if (cod.length >= 7) { $('.clManza').val(cod.substring(a, b)); a += 3; b += 3; } else { $('.clManza').val("") }
+                                if (cod.length >= 10) { $('.clLote').val(cod.substring(a, b)); a += 3; b += 2; } else { $('.clLote').val("") }
+                                if (cod.length >= 12) { $('.clEdif').val(cod.substring(a, b)); a += 2; b += 2; } else { $('.clEdif').val("") }
+                                if (cod.length >= 14) { $('.clEntr').val(cod.substring(a, b)); a += 2; b += 2; } else { $('.clEntr').val("") }
+                                if (cod.length >= 16) { $('.clPiso').val(cod.substring(a, b)); a += 2; b += 3; } else { $('.clPiso').val("") }
+                                if (cod.length >= 19) { $('.clUnid').val(cod.substring(a, b)); } else { $('.clUnid').val("") }
+                            }
+                            else if(cod.length == 19) {
+                                a=2;b=4;
+                                $('.clSect').val(cod.substring(a,b));  a+=2;b+=3;
+                                $('.clManza').val(cod.substring(a,b)); a+=3;b+=3;
+                                $('.clLote').val(cod.substring(a,b));    a+=3;b+=2;
+                                $('.clEdif').val(cod.substring(a,b));            a+=2;b+=2;
+                                $('.clEntr').val(cod.substring(a,b));       a+=2;b+=2;
+                                $('.clPiso').val(cod.substring(a,b));          a+=2;b+=3;
+                                $('.clUnid').val(cod.substring(a,b));
+                            } else if (cod.length == 17) {
+                                a=0;b=2;
+                                $('.clSect').val(cod.substring(a,b));  a+=2;b+=3;
+                                $('.clManza').val(cod.substring(a,b)); a+=3;b+=3;
+                                $('.clLote').val(cod.substring(a,b));    a+=3;b+=2;
+                                $('.clEdif').val(cod.substring(a,b));            a+=2;b+=2;
+                                $('.clEntr').val(cod.substring(a,b));       a+=2;b+=2;
+                                $('.clPiso').val(cod.substring(a,b));          a+=2;b+=3;
+                                $('.clUnid').val(cod.substring(a,b));
+                            } else if (cod.length < 17) {
+                                a=0;b=2;
+                                if(cod.length >= 2) { $('.clSect').val(cod.substring(a,b));  a+=2;b+=3; }
+                                if(cod.length >= 5) { $('.clManza').val(cod.substring(a,b)); a+=3;b+=3; } else { $('.clManza').val("")}
+                                if(cod.length >= 8) { $('.clLote').val(cod.substring(a,b));  a+=3;b+=2; } else { $('.clLote').val("")}
+                                if(cod.length >= 10) { $('.clEdif').val(cod.substring(a,b)); a+=2;b+=2; } else { $('.clEdif').val("")}
+                                if(cod.length >= 12) { $('.clEntr').val(cod.substring(a,b)); a+=2;b+=2; } else { $('.clEntr').val("")}
+                                if(cod.length >= 14) { $('.clPiso').val(cod.substring(a,b)); a+=2;b+=3; } else { $('.clPiso').val("")}
+                                if(cod.length >= 17) { $('.clUnid').val(cod.substring(a,b)); } else { $('.clUnid').val("")}
+                            }
+                        } else {
+                            console.log('Ingrese un formato correcto')
+                        }
+
+                    },
+                });
+                $('.clManza').change(function (e) {
+                    e.preventDefault();
+                    var texto;
+                    texto = ZeroIzqCaracter($('.clManza').val(), 3);
+                    $('.clManza').val(texto);
+                });
+
+                $('.clLote').change(function (e) {
+                    e.preventDefault();
+                    var texto;
+                    texto = ZeroIzqCaracter($('.clLote').val(), 3);
+                    $('.clLote').val(texto);
+                });
+
+                $('.clEdif').change(function () {
+                    var texto;
+                    texto = ZeroIzqCaracter($('.clEdif').val(), 2);
+                    $('.clEdif').val(texto.toUpperCase());
+                });
+
+                $('.clEntr').change(function () {
+                    var texto;
+                    texto = ZeroIzqCaracter($('.clEntr').val(), 2);
+                    $('.clEntr').val(texto.toUpperCase());
+                });
+
+                $('.clPiso').change(function () {
+                    var texto;
+                    texto = ZeroIzqCaracter($('.clPiso').val(), 2);
+                    $('.clPiso').val(texto.toUpperCase());
+                });
+
+                $('.clUnid').change(function () {
+                    var texto;
+                    texto = ZeroIzqCaracter($('.clUnid').val(), 3);
+                    $('.clUnid').val(texto.toUpperCase());
+                });
+
+                $('.clSect').keyup(function (e) {
+                    if ((e.keyCode > 36 && e.keyCode <= 40) || e.keyCode == 9 || e.keyCode == 16 || e.keyCode == 17) return;
+                    if ($(this).val().length > 1) {
+                        $('.clManza').focus().select();
+                    }
+                });
+                $('.clManza').on('keyup', function (e) {
+                    if ((e.keyCode > 36 && e.keyCode <= 40) || e.keyCode == 9 || e.keyCode == 16 || e.keyCode == 17) return;
+                    if ($(this).val().length > 2) {
+                        $('.clLote').focus().select();
+                    }
+                });
+                $('.clLote').on('keyup', function (e) {
+                    if ((e.keyCode > 36 && e.keyCode <= 40) || e.keyCode == 9 || e.keyCode == 16 || e.keyCode == 17) return;
+                    if ($(this).val().length > 2) {
+                        $('.clEdif').focus().select();
+                    }
+                });
+                $('.clEdif').keyup(function (e) {
+                    if ((e.keyCode > 36 && e.keyCode <= 40) || e.keyCode == 9 || e.keyCode == 16 || e.keyCode == 17) return;
+                    if (this.value.length > 1) {
+                        $('.clEntr').focus().select();
+                    }
+                });
+                $('.clEntr').keyup(function (e) {
+                    if ((e.keyCode > 36 && e.keyCode <= 40) || e.keyCode == 9 || e.keyCode == 16 || e.keyCode == 17) return;
+                    if (this.value.length > 1) {
+                        $('.clPiso').focus().select();
+                    }
+                });
+                $('.clPiso').keyup(function (e) {
+                    if ((e.keyCode > 36 && e.keyCode <= 40) || e.keyCode == 9 || e.keyCode == 16 || e.keyCode == 17) return;
+                    if (this.value.length > 1) {
+                        $('.clUnid').focus().select();
+                    }
+                });
+                $('.clUnid').keyup(function (e) {
+                    console.log('UNID', e.keyCode);
+                    if ((e.keyCode > 36 && e.keyCode <= 40) || e.keyCode == 9 || e.keyCode == 16 || e.keyCode == 17) return;
+                    if (this.value.length > 2) {
+                        $('.btnBuscar').focus();
+                    }
+                });
+
+
+                $(".fechaE").datepicker({
+                    // format: "dd/mm/yyyy",
+                    language: "es",
+                    calendarWeeks: true
+                });
+            });
+            $(function () {
+                /* Tooltip */
+                $(function () {
+                    $('.tip', this).tooltip({
+                        'placement': 'top'
+                    });
+                    $('.tip-left', this).tooltip({
+                        'placement': 'left'
+                    });
+                    $('.tip-right', this).tooltip({
+                        'placement': 'rigth'
+                    });
+                    $('.tip-bottom', this).tooltip({
+                        'placement': 'bottom'
+                    });
+                    $('.tipover').popover({
+                        delay: {
+                            "show": 50,
+                            "hide": 200
+                        }
+                    });
+                });
+            });
+            var myBlock = $('#divBlock')[0];
+            $(document).ajaxStart(function () {
+                $.blockUI({
+                    message: myBlock,
+                    css: {
+                        border: "none",
+                        background: "transparent"
+                    }
+                })
+            }).ajaxStop(function () {
+                setTimeout(function () {
+                    $.unblockUI();
+                }, 100);
+            });
+    </script>
+    @RenderSection("datatables", required: false)
+</body>
+</html>

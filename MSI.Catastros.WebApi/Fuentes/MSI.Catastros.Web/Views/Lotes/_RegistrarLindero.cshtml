@@ -1,0 +1,325 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Lotes.LoteLinderosViewModel
+
+<div id="RegistrarRetiroContainer">
+
+    @Html.AntiForgeryToken()
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-hidden="true">
+                    &times;
+                </button>
+                <h4 id="tituloModalLindero">Registrar Lindero</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row fonts12">
+                    <div class="col-md-12">
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label>Lado</label>
+                                @Html.DropDownListFor(m => m.CodigoLado, Model.ListLado, "- Seleccione -", new { @class = "form-control", disabled = true })
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label>N° Lado</label>
+                                @Html.TextBoxFor(model => model.NumeroLado, new { @class = "form-control ", disabled = true })
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label>Medida Lado Campo</label>
+                                @Html.TextBoxFor(model => model.MedidaLadoCam, new { @class = "form-control text-right", @placeholder = "0.0000" })
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label>Medida Lado Oficial</label>
+                                @Html.TextBoxFor(model => model.MedidaLadoOfi, new { @class = "form-control text-right", @placeholder = "0.0000" })
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label>Fuente Lindero</label>
+                                @Html.DropDownListFor(m => m.CodigoFuenteCol, Model.ListFuente, "- Seleccione -", new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label>Altura</label>
+                                @Html.DropDownListFor(m => m.CodigoAlturaVia, Model.ListAlturaVia, "- Seleccione -", new { @class = "form-control"})
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="visibility:hidden;">
+                        <div class="col-sm-2">                        
+                                @Html.TextBoxFor(model => model.Codigo, new { @class = "form-control ", disabled = true })
+                        </div>
+                        <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.CodigoLado, new { @class = "form-control ", disabled = true })
+                        </div>
+
+
+                    </div>
+                    <div class="col-md-12">
+                        <table id="tablaDetalleLinderos" style="width:100%;" class="table responsive display mt-3 table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th width="10%">Acciones</th>
+                                    <th>Tipo de Colindante</th>
+                                    <th>Colindante</th>
+                                    <th style="display:none;"></th>
+                                    <th style="display:none;"></th>
+                                    <th style="display:none;"></th>
+                                    <th style="display:none;"></th>
+                                    <th style="display:none;"></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <br />
+                    <br />
+                    <div class="col-md-12">
+                        <br />
+               
+                       @Html.TextBoxFor(model => model.Codigo, new { @class = "", @type = "hidden" })
+                       @Html.TextBoxFor(model => model.Estado, new { @class = "", @type = "hidden" })
+                        <fieldset>
+                            <legend style="font-size: 16px!important">Agregar Colindante</legend>
+                            <div class="col-sm-2">
+                                    <label>Tipo Colindante</label>
+                            </div>
+                            <div class="col-sm-3">
+                                    @Html.DropDownListFor(m => m.CodigoTipoColind, Model.ListTipoColindante, "- Seleccione -", new { @class = "form-control", onchange = "CargarColindanteModal(this,$('#CodigoViaAnterior option:selected').text())" })
+                            </div>
+                            <div class="col-sm-1">
+                                    <label>Colindante</label>
+                            </div>
+                            <div class="col-sm-5">
+                                    <select id="CodigoColindante" name="CodigoColindante" class="form-control">
+                                        <option value="0"> Seleccione</option>
+                                    </select>
+                                    @Html.ValidationMessageFor(model => model.CodigoColindante, "", new { @class = "text-danger" })                                
+                            </div>
+                            <div class="col-sm-1">                         
+                                    <button id="btnAgregarColindante" type="button" onclick="AgregarDetalleColindantes()" disabled class="btn btn-green"><span class="glyphicon glyphicon-plus mr-2"></span> </button>
+                            </div>
+                           
+                        </fieldset>
+                    </div>
+                    <br />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button id="btnSubmitLind" type="button" class="btn btn-green">Grabar</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    if ($('#NumeroLado').val() != "") {
+        $('#btnAgregarColindante').removeAttr('disabled');
+    };
+
+    $(document).ready(function () {
+        $('#MedidaLadoCam').number(true, 4, '.', '');
+        $('#MedidaLadoOfi').number(true, 4, '.', '');
+    });
+    var tipoColTemp = '@Model.CodigoTipoColind';
+    @*if ('@Model.CodigoAlturaVia' || '@Model.CodigoTipoColind' === "010001") {
+        $('#CodigoAlturaVia').removeAttr('disabled');
+    }*@
+
+    tablaDetalleLinderos = $("#tablaDetalleLinderos").DataTable({
+        "ajax": {
+            "url": ROOT + "Lotes/CargarDetalleColindante",
+            "type": "POST",
+            "datatype": "json",
+            "data": function (d) {
+                d.CodigoDistrito = $('#CodDist').val();
+                d.CodigoSector = $('#CodSect').val();
+                d.CodigoManzana = $('#CodManz').val();
+                d.CodigoLote = $('#CodLote').val();
+                d.CodigoLado = $('#CodigoLado').val();
+                d.CodigoCorrelativo = $('#Codigo').val();
+                d.Estatico = Estatico;
+            }
+        },
+        "columns": [
+            {
+                'render': function (data, type, full, meta) {
+                    var disabled = (full.CodigoCorrelativo == "0001") ? "" : "";
+                    return '<button data-toggle="tooltip" title="Eliminar" ' + deshabilitar + ' class="btn mr-1 text-center btnDeleteLindero btn-default btn-xs glyphicon glyphicon-trash" type="button" ></button>'                }, "className": "text-center"
+            },
+            { "data": "NombreTipoColindante", "name": "ListaLoteColindantes", "className": "text-center" },
+            { "data": "NombreColindante", "name": "CodigoAlturaVia", "className": "text-center" },
+            { "data": "CodigoCorrelativo", "name": "CodigoCorrelativo", "autoWidth": true, "className": "hide_column" },
+            { "data": "Correlativo", "name": "Correlativo", "autoWidth": true, "className": "hide_column" },
+            { "data": "CodigoVia", "name": "CodigoVia", "autoWidth": true, "className": "hide_column" },
+            { "data": "CodigoCorManzana", "name": "CodigoCorManzana", "autoWidth": true, "className": "hide_column" },
+            { "data": "CodigoTipoColind", "name": "CodigoTipoColind", "autoWidth": true, "className": "hide_column" }
+
+        ],
+        "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+        "processing": true,
+        "serverSide": false,
+        "paging": false,
+    });
+
+    $("#tablaDetalleLinderos tbody").on('click', 'button.btnDeleteLindero ', function (event) {
+        var cell = this;
+        var data = tablaDetalleLinderos.row($(this).parents('tr')).data();
+        var enlace = ROOT + 'Lotes/EliminarDetalleLindero';
+        $.post(enlace,
+            {   CodigoDepartamento: "15" , CodigoProvincia: "01" ,
+            CodigoDistrito: $('#CodDist').val(), CodigoLote: $('#CodLote').val(), CodigoManzana: $('#CodManz').val(), CodigoSector: $('#CodSect').val(), CodigoTipoColind: data.CodigoTipoColind,
+            CodigoVia: data.CodigoVia, CodigoCorManzana: data.CodigoCorManzana, Codigo: data.CodigoCorrelativo, CodigoLado: data.CodigoLado, Correlativo: data.Correlativo, Estatico: Estatico
+            }
+            , function (response) {
+
+                $('#modalRegistrarLindero').modal('show');
+                tablaDetalleLinderos.ajax.reload();
+                tablaLinderos.ajax.reload();
+                toastr.success("Registro grabado correctamente", "Mensaje del Sistema", { "progressBar": true });
+            });
+    })
+
+    $('#tituloModalLindero').text('Registrar Lindero: ' + $('#CodDist').val() + '-' + $('#CodSect').val() + '-' + $('#CodManz').val() + '-' + $('#CodLote').val());
+
+    function CargarColindanteModal(element, combo, valor) {
+        var codigo = $(element).val();
+        var URLColindante; var ubi = null;
+        if (ValidarColindante($('#CodigoColindante').val(), 1, combo) || !$('#CodigoColindante').val()) {
+            if (codigo === '010001') {
+                URLColindante = ROOT + "Lotes/ListarColindante";
+            }
+            else if (codigo === '010003') {
+                var ubi = '010031';
+                URLColindante = ROOT + "Lotes/ListarColindante";
+            }
+            else if (codigo === '010002') {
+                URLColindante = ROOT + "Lotes/ListarColindanteLote";
+            }
+            if (URLColindante) {
+                $('#CodigoColindante').children('option:not(:first)').remove();
+                if (valor) { $('#CodigoViaAnterior').children('option:not(:first)').remove(); }
+                $.post(URLColindante, { CodigoDistrito: $('#CodDist').val(), CodigoLote: $('#CodLote').val(), CodigoManzana: $('#CodManz').val(), CodigoSector: $('#CodSect').val(), Ubicacion: ubi },
+                    function (data) {
+                        $.each(data, function (i, obj) {
+                            $('#CodigoColindante').append($('<option>').text(obj.Text).attr('value', obj.Value));
+                            if (valor) { $('#CodigoViaAnterior').append($('<option>').text(obj.Text).attr('value', obj.Value)); }
+                        });
+                        if (valor) {
+                            $('#CodigoColindante').val(valor);
+                            $('#CodigoViaAnterior').val(valor);
+                            console.log('Lindero', $('#CodigoViaAnterior').val());
+                        }
+                    });
+            }
+        } else {
+           
+        }
+    }
+    function AgregarDetalleColindantes() {
+        $('#msgErroresDet').html("");
+
+        if ($('#CodigoTipoColind').val() == "") {
+            toastr.warning("Debe de seleccionar el Tipo de Colindante", "Mensaje del Sistema", { "progressBar": true });
+            return;
+        }
+        if ($('#CodigoColindante').val() == "0") {
+            toastr.warning("Debe de seleccionar el Colindante", "Mensaje del Sistema", { "progressBar": true });
+            return;
+        }
+
+        var model = {
+            CodigoDepartamento : "15" ,
+            CodigoProvincia:     "01",
+            CodigoDistrito :     $('#CodDist').val(),
+            CodigoSector :       $('#CodSect').val(),
+            CodigoManzana :      $('#CodManz').val(),
+            CodigoLote :         $('#CodLote').val(),
+            CodigoLado :         $('#CodigoLado').val(),  
+            Codigo :             $('#Codigo').val(),    
+            CodigoTipoColind :   $('#CodigoTipoColind').val(),          
+            CodigoVia :          $('#CodigoColindante').val(),      
+            Estatico: Estatico,     
+        };
+        $.post("@Url.Content("~/Lotes/GrabarLoteLinderoDetalle")", {
+        model: model
+        }, function (response) {
+           
+            if (response.success === false) {
+                toastr.warning(response.responseText, "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+            } else {
+                debugger;
+                tablaLinderos.ajax.reload();
+                tablaDetalleLinderos.ajax.reload();
+                $('#modalRegistrarLindero').modal('show');
+                RecuperarNormaUrbana();
+                $('#CodigoTipoColind').val() == "0";
+                $('#CodigoColindante').val() == "0";
+              //  toastr.success("Registro grabado correctamente", "Mensaje del Sistema", { "progressBar": true });
+            }
+
+        });
+    }
+    
+
+    $("#btnSubmitLind").on("click", function (event) {
+        var cont = 0;
+        var CodigoLadoColindantes = [];
+        $('#msgErroresDet').html("");
+        if (!$('#MedidaLadoCam').val()) { $('#msgErroresDet').append("<li>Ingrese la Medida Lado Campo </li>"); cont++; }
+        if (!$('#MedidaLadoOfi').val()) { $('#msgErroresDet').append("<li>Ingrese la Medida Lado Oficial</li>"); cont++; }
+        if (!$('#CodigoFuenteCol').val()) { $('#msgErroresDet').append("<li>Seleccione la fuente</li>"); cont++; }
+        if (cont === 0) {
+            $('#msgErroresDet').html("");
+            console.log(tipoColTemp)
+         
+            var model = {
+                "CodigoLado": $('#CodigoLado').val(),
+                "NumeroLado": $('#NumeroLado').val(),
+                "MedidaLadoCam": $('#MedidaLadoCam').val(),
+                "MedidaLadoOfi": $('#MedidaLadoOfi').val(),
+                "Codigo": $('#Codigo').val(),
+                "CodigoFuenteCol": $('#CodigoFuenteCol').val(),
+                "CodigoAlturaVia": $('#CodigoAlturaVia').val(),
+                Estatico: Estatico,
+                CodigoDistrito: $('#CodDist').val(), CodigoLote: $('#CodLote').val(), CodigoManzana: $('#CodManz').val(), CodigoSector: $('#CodSect').val(),
+            };
+            $.post("@Url.Content("~/Lotes/GrabarLoteLindero")", {
+                model: model
+            }, function (response) {
+                console.log(response);
+                if (response.success === false) {
+                    toastr.warning(response.responseText, "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+                } else {
+                    $('#Codigo').val(response.codigo);
+                    toastr.success("Registro grabado correctamente", "Mensaje del Sistema", { "progressBar": true });
+                    tablaLinderos.ajax.reload();
+                    tablaDetalleLinderos.ajax.reload();
+                    $('#modalRegistrarLindero').modal('show');
+                    RecuperarNormaUrbana();
+                    $('#btnAgregarColindante').removeAttr('disabled');
+                    
+
+                }
+
+            });
+
+        }
+    });
+</script>
+
+

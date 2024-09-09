@@ -1,0 +1,497 @@
+﻿<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-hidden="true">
+                &times;
+            </button>
+            <h4 id="TituloGeneral">Otras Instalaciones</h4>
+        </div>
+        <div class="modal-body">
+            <div id='tab-3'>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="table-responsive">
+                            <table id="TablaUnidadPaso6" class="display table table-bordered" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Dist</th>
+                                        <th>Sec</th>
+                                        <th>Mz</th>
+                                        <th>Lote</th>
+                                        <th>Ed</th>
+                                        <th>Entr</th>
+                                        <th>Piso</th>
+                                        <th>Unidad</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <fieldset class="formulario">
+                        @*<legend>Otras Instalaciones</legend>*@
+                        <div class="relative">
+                            @*<button data-toggle="collapse" href="#panelOtasInstalaciones" class="btn btn-xs btn-success fa fa-caret-down absolute"></button>*@
+                            <div class="row collapse in" id="panelOtasInstalaciones">
+                                <div class="col-md-12">
+                                    <table id="OtasInstalaciones">
+                                        <tr>
+                                            <td width="6%"><label class="control-label">Nro.</label></td>
+                                            @*<td width="7%"><label class="control-label">Código</label></td>*@
+                                            <td width="29%"><label class="control-label">Tipo de Instalación</label></td>
+                                            <td width="10%"><label class="control-label">Unidad</label></td>
+                                            <td width="10%"><label class="control-label">Capacidad</label></td>
+                                            <td width="10%"><label class="control-label">Cantidad</label></td>
+                                            <td width="8%"><label class="control-label">Mes</label></td>
+                                            <td width="6%"><label class="control-label">Año</label></td>
+                                            <td width="11%"><label class="control-label">Estado <br />Conservación</label></td>
+                                            <td width="8%"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="pr-1"><input value="00001" disabled type="text" class=" form-control item_otras_instalaciones" /></td>
+                                            @*<td class="pr-1"><select onchange="CapturarTipoInstalacion(this)" id="otras_instalaciones_codigo_00001" class="form-control codigo_otras_instalaciones"></select></td>*@
+                                            <td class="pr-1"><select onchange="CapturarCodigoTipoInstalacion(this)" id="otras_instalaciones_tipoinstalacion_00001" class="form-control tipoinstalacion_otras_instalaciones"></select></td>
+                                            @*<td class="pr-1"><select id="otras_instalaciones_unidad_00001" style="text-align: center;" type="text" class="form-control unidad_otras_instalaciones"></select></td>*@
+                                            <td class="pr-1"><input id="otras_instalaciones_unidad_00001" class="form-control unidad_otras_instalaciones"></input></td>
+                                            <td class="pr-1"><input id="otras_instalaciones_capacidad_00001" style="text-align: right;" type="text" class="form-control capacidad_otras_instalaciones numero" /></td>
+                                            <td class="pr-1"><input id="otras_instalaciones_cantidad_00001" style="text-align: right;" type="text" class="form-control cantidad_otras_instalaciones" /></td>
+                                            <td class="pr-1"><select id="otras_instalaciones_mes_00001" class="form-control mes_otras_instalaciones"></select></td>
+                                            <td class="pr-1"><input id="otras_instalaciones_ano_00001" type="text" maxlength="4" onkeypress="return isNumeric(event)" class="form-control ano_otras_instalaciones" /></td>
+                                            <td class="pr-1"><select id="otras_instalaciones_estadoconservacion_00001" class="form-control estadoconservacion_otras_instalaciones"></select></td>
+                                            <td style="display:none;"><input id="otras_instalaciones_id_00001" type="hidden" class="form-control id_otras_instalaciones" /></td>
+                                            <td>
+                                                <button onclick="CrearCamposUnidadCatastralInst(2, 'OtasInstalaciones', '00001', 'otras_instalaciones')" class="btn btn-sm btn-success fa fa-plus"></button>
+                                                @*<button onclick="EditarCamposUnidadCatastral(2, 'OtasInstalaciones', '00001', 'otras_instalaciones')" class="btn btn-sm btn-success fa fa-edit"></button>*@
+                                                <button onclick="EliminarCamposUnidadCatastral(2, this, '00001', 'item_lote_obser')" class="btn btn-sm btn-success fa fa-trash"></button>
+                                                @*<button onclick="GrabarCamposDocumentacion()" class="btn btn-sm btn-success fa fa-save"></button>*@
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            @*<td><span class="" data-valmsg-for="val_otras_instalaciones_codigo_00001" data-valmsg-replace="true"></span></td>*@
+                                            <td><span class="" data-valmsg-for="val_otras_instalaciones_tipoinstalacion_00001" data-valmsg-replace="true"></span></td>
+                                            <td><span class="" data-valmsg-for="val_otras_instalaciones_unidad_00001" data-valmsg-replace="true"></span></td>
+                                            <td><span class="" data-valmsg-for="val_otras_instalaciones_capacidad_00001" data-valmsg-replace="true"></span></td>
+                                            <td><span class="" data-valmsg-for="val_otras_instalaciones_cantidad_00001" data-valmsg-replace="true"></span></td>
+                                            <td><span class="" data-valmsg-for="val_otras_instalaciones_mes_00001" data-valmsg-replace="true"></span></td>
+                                            <td><span class="" data-valmsg-for="val_otras_instalaciones_ano_00001" data-valmsg-replace="true"></span></td>
+                                            <td><span class="" data-valmsg-for="val_otras_instalaciones_estadoconservacion_00001" data-valmsg-replace="true"></span></td>
+                                            <td style="display:none;"></td>
+                                            <td></td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="col-md-offset-2 col-md-10">
+                <input id="btnGuardarOtrasInstalaciones" type="button" value="Grabar" class="btn btn-success" />
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    //$(function () {
+        tablaUnidadPaso6 = $("#TablaUnidadPaso6").DataTable({
+            "processing": false,
+            "serverSide": false,
+            "paging": false,
+            "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+            "columns": [
+                { "data": "Distrito", "className": "text-center" },
+                { "data": "Sec", "className": "text-center" },
+                { "data": "Manzana", "className": "text-center" },
+                { "data": "Lote", "className": "text-center" },
+                { "data": "Ed", "className": "text-center" },
+                { "data": "Entr", "className": "text-center" },
+                { "data": "Piso", "className": "text-center" },
+                { "data": "Unidad", "className": "text-center" }
+            ]
+        });
+        
+        tablaUnidadPaso6.clear().draw();
+        $.each(ListunidadCatastralDireccion, function (index, entry) {
+            tablaUnidadPaso6.row.add(entry).draw();
+        });
+        var contOtrasInstalaciones = 1;
+        var ListVBEstadoConservacion, ListVBMaterialEstructural, ListVBMes, ListVBOtrasInstalaciones, ListVBUnidadMedida;
+        ListVBEstadoConservacion = @Html.Raw(Json.Encode(ViewBag.ListVBEstadoConservacion))
+        ListVBOtrasInstalaciones = @Html.Raw(Json.Encode(ViewBag.ListVBOtrasInstalaciones))
+        ListVBCodigoOtrasInstalaciones = @Html.Raw(Json.Encode(ViewBag.ListVBCodigoOtrasInstalaciones))
+        ListVBMes = @Html.Raw(Json.Encode(ViewBag.ListVBMes))
+        ListVBUnidadMedida = @Html.Raw(Json.Encode(ViewBag.ListVBUnidadMedida))
+        var lista = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.ListInstalaciones));
+        CrearCombobox('otras_instalaciones_codigo_00001', ListVBCodigoOtrasInstalaciones)
+        CrearCombobox('otras_instalaciones_tipoinstalacion_00001', ListVBOtrasInstalaciones);
+        CrearCombobox('otras_instalaciones_estadoconservacion_00001', ListVBEstadoConservacion);
+        //CrearCombobox('otras_instalaciones_unidad_00001', ListVBUnidadMedida);
+        CrearCombobox('otras_instalaciones_mes_00001', ListVBMes);
+        if (lista) {
+            console.log('Lista', lista);
+            $.each(lista, function (index, entry) {
+                if (index == 0) {
+                    //$('#otras_instalaciones_codigo_00001').val(entry.CodigoTipoInstalacion);
+                    $('#otras_instalaciones_tipoinstalacion_00001').val(entry.CodigoTipoInstalacion+ "_" + entry.CodigoUnidad);
+                    $('#otras_instalaciones_unidad_00001').val(entry.CodigoUnidad);
+                    $('#otras_instalaciones_capacidad_00001').val(entry.Capacidad);
+                    $('#otras_instalaciones_cantidad_00001').val(entry.Cantidad);
+                    $('#otras_instalaciones_mes_00001').val(entry.Mes);
+                    $('#otras_instalaciones_ano_00001').val(entry.Ano);
+                    $('#otras_instalaciones_estadoconservacion_00001').val(entry.EstadoConserva);
+                    $('#otras_instalaciones_id_00001').val(entry.CodigoCorrelativo);
+                } else {
+                    CrearCamposUnidadCatastralInst(2, 'OtasInstalaciones', '00000', 'otras_instalaciones')
+                    CargarOtrasInstalaciones((index+1), entry);
+                    //CargarObservacion((index+1), entry, 'obs_general_individual');
+                }
+
+            });
+
+        }
+        function CargarOtrasInstalaciones(numero, resultado) {
+            console.log(numero,'|',resultado);
+
+            //CrearComboTipoInstalacion(resultado.Ano, LeftZero(numero, 5), resultado.CodigoTipoInstalacion)
+            //$("#otras_instalaciones_tipoinstalacion_" + LeftZero(numero, 5)).val(resultado.CodigoTipoInstalacion);
+            $("#otras_instalaciones_tipoinstalacion_" + LeftZero(numero, 5)).val(resultado.CodigoTipoInstalacion+ "_" + resultado.CodigoUnidad);
+
+            //$("#otras_instalaciones_codigo_" + LeftZero(numero, 5)).val(resultado.CodigoTipoInstalacion);
+            //CapturarTipoInstalacion($("#otras_instalaciones_codigo_" + LeftZero(numero, 5))[0]);
+            $("#otras_instalaciones_unidad_" + LeftZero(numero, 5)).val(resultado.CodigoUnidad);
+            $("#otras_instalaciones_capacidad_" + LeftZero(numero, 5)).val(resultado.Capacidad);
+            $("#otras_instalaciones_cantidad_" + LeftZero(numero, 5)).val(resultado.Cantidad);
+            $("#otras_instalaciones_mes_" + LeftZero(numero, 5)).val(resultado.Mes);
+            $("#otras_instalaciones_ano_" + LeftZero(numero, 5)).val(resultado.Ano);
+            $("#otras_instalaciones_estadoconservacion_" + LeftZero(numero, 5)).val(resultado.EstadoConserva);
+            $("#otras_instalaciones_id_" + LeftZero(numero, 5)).val(resultado.CodigoCorrelativo);
+            $('.chosen-seleccionar').trigger("chosen:updated");
+
+        }
+        $('.numero').number(true, 4, '.', '');
+        $('#btnGuardarOtrasInstalaciones').click(function () {
+            cont = true;// 
+            //ValidarUnidadCatastral();
+
+            if (cont == true) {
+
+                var UnidadCatastral = {
+
+                    CodigoUnidadCatastral: 0,
+                    Estado: 2
+                };
+                var ListaOtrasInstalaciones = OtrasInstalaciones();
+                if (ListaOtrasInstalaciones.length === 1) {
+                    $.each(ListaOtrasInstalaciones, function (i, item) {
+                        if (item.CodigoTipoInstalacion === "") {
+                            ListaOtrasInstalaciones = null;
+                        }
+                    });
+                }
+
+                console.log('valor de lineas contructivas antes de guardar');
+                console.log(ListaOtrasInstalaciones);
+
+                if (ListaOtrasInstalaciones !== false) {
+
+                    $.ajax({
+                        url: "@Url.Content("~/UnidadCatastral/RegistrarUnidadCatastral")",
+                        type: "POST",
+                        data:
+                        {
+                            UnidadCatastral: UnidadCatastral, ListaOtrasInstalaciones: ListaOtrasInstalaciones
+                        },
+                        dataType: "json",
+                        success: function (response) {
+                            if (response.success) {
+                                $('#modalOtrasInstalaciones').modal('hide');
+                                //console.log('Ya se Grabo todo');
+                                CagarListadoMasivo();
+                                var mensaje = "Registro grabado correctamente";
+                                toastr.success(mensaje, "Mensaje del Sistema", { "progressBar": true });
+
+                            } else {
+                                toastr.error(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                            }
+                        },
+                        complete: function () {
+                            $('#btnSubmit').removeAttr('disabled');
+                        }
+                    });
+
+                } else {
+                    toastr.error("Revisar la información", "Mensaje del Sistema", { "progressBar": true });
+                }
+            }
+        });
+
+    //});
+    
+
+    
+    //function CapturarTipoInstalacion(element) {
+    //    var res = element.id.substr(element.id.length - 5, 5);
+    //    console.log(element.id,element.id.length - 5);
+    //    $("#otras_instalaciones_tipoinstalacion_" + res).val($("#" + element.id).val());
+    //    ObtenerDescripcionInstalacion($("#" + element.id).val(), res);
+    //}
+    //function CapturarCodigoTipoInstalacion(element) {
+    //    console.log(element.id);
+    //    var res = element.id.substr(element.id.length - 5, 5);
+        
+    //    $("#otras_instalaciones_codigo_" + res).val($("#" + element.id).val());
+    //    ObtenerDescripcionInstalacion($("#" + element.id).val(), res);
+    //}
+    function CapturarCodigoTipoInstalacion(element) {
+        var res = element.id.substr(element.id.length - 5, 5);
+        var num1 = $("#otras_instalaciones_tipoinstalacion_" + res).val().indexOf("_");
+        $('#otras_instalaciones_unidad_'+ res).val($("#otras_instalaciones_tipoinstalacion_" + res).val().substring(num1+1));
+        $('.chosen-seleccionar').trigger("chosen:updated");
+    }
+
+
+    function ObtenerDescripcionInstalacion(codigo, res) {
+
+        $.post("@Url.Content("~/UnidadCatastral/ObtenerDescripcionInstalacion")", {
+        Codigo: codigo
+    }, function (response) {
+        if (response.success == true) {
+
+            $("#otras_instalaciones_unidad_" + res).val(response.Descripcion);
+
+        }
+
+    });
+
+    }
+
+    var contLineasConstructivas, contIdLineasConstructivas, contIdOtrasInstalaciones, contActividadEconomica, contIdActividadEconomica, contLoteDocumRRPP, contIdLoteDocumRRPP,
+            contLoteExpediente, contLoteIdExpediente, contLoteAuto, contIdLoteAuto, contObservacionGeneral, contIdObservacionGeneral,
+            contObservacionSunarp, contIdObservacionSunarp, contObservacionCarga, contIdObservacionCarga, columnas, fieldset;
+    contLineasConstructivas = contIdLineasConstructivas =  contIdOtrasInstalaciones = contActividadEconomica = contIdActividadEconomica = contLoteDocumRRPP =
+        contIdLoteDocumRRPP = contLoteExpediente = contLoteIdExpediente = contLoteAuto = contIdLoteAuto = contObservacionGeneral = contIdObservacionGeneral =
+        contObservacionSunarp = contIdObservacionSunarp = contObservacionCarga = contIdObservacionCarga = 1;
+    
+    var lblTd = '<td class="pr-1">';
+    var lblTdSpan = '<td>';
+    function CrearCamposUnidadCatastralInst(tipo, tabla, posactual, focus, opcion) {
+        if (tipo === 2) {
+            cont = ValidarOtrasInstalaciones(posactual, 0);
+            if (cont == true || posactual == '00000') {
+                fieldset = "otras_instalaciones";
+                contOtrasInstalaciones++; 
+                contIdOtrasInstalaciones++; 
+                var numeroItem = LeftZero(contOtrasInstalaciones, 5); var idItem = LeftZero(contOtrasInstalaciones, 5);
+
+                columnas = lblTd + '<input type="text" disabled value="' + numeroItem + '" class="form-control item_' + fieldset + '"></td>' +
+                       //lblTd + '<select onchange="CapturarTipoInstalacion(this)" id="' + fieldset + '_codigo_' + idItem + '" class="form-control codigo_' + fieldset + '"> </select></td>' +
+                       lblTd + '<select onchange="CapturarCodigoTipoInstalacion(this)" id="' + fieldset + '_tipoinstalacion_' + idItem + '" class="form-control tipoinstalacion_' + fieldset + '"> </select></td>' +
+                       //lblTd + '<select id="' + fieldset + '_unidad_' + idItem + '"  class="form-control unidad_' + fieldset + '"> </select></td>' +
+                       lblTd + '<input id="' + fieldset + '_unidad_' + idItem + '" type="text"  class="form-control unidad_' + fieldset + '"></td>' +
+                       lblTd + '<input id="' + fieldset + '_capacidad_' + idItem + '" type="text" class="form-control capacidad_' + fieldset + ' numeroTab" style="text-align: right;" ></td>' +
+                       lblTd + '<input id="' + fieldset + '_cantidad_' + idItem + '" type="text" maxlength="4" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" class="form-control cantidad_' + fieldset + '" style="text-align: right;"></td>' +
+                       lblTd + '<select id="' + fieldset + '_mes_' + idItem + '" type="text" class="form-control mes_' + fieldset + '"> </select></td>' +
+                       lblTd + '<input id="' + fieldset + '_ano_' + idItem + '" " class="form-control ano_' + fieldset + '" maxlength="4" onkeypress="return isNumeric(event)"></td>' + //onKeyUp="CargarTipoInstalacion(this)
+                       lblTd + '<select id="' + fieldset + '_estadoconservacion_' + idItem + '" type="text" class="form-control estadoconservacion_' + fieldset + '"> </select></td>' +
+                       '<td style="display:none;">' + '<input id="' + fieldset + '_id_' + idItem + '" type="hidden" class="form-control id_' + fieldset + '" /></td>';
+
+
+                columnasValidacion = lblTdSpan + '</td>' +
+                               //lblTdSpan + '<span class="" data-valmsg-for="val_otras_instalaciones_codigo_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                               lblTdSpan + '<span class="" data-valmsg-for="val_otras_instalaciones_tipoinstalacion_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                               lblTdSpan + '<span class="" data-valmsg-for="val_otras_instalaciones_unidad_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                               lblTdSpan + '<span class="" data-valmsg-for="val_otras_instalaciones_capacidad_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                               lblTdSpan + '<span class="" data-valmsg-for="val_otras_instalaciones_cantidad_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                               lblTdSpan + '<span class="" data-valmsg-for="val_otras_instalaciones_mes_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                               lblTdSpan + '<span class="" data-valmsg-for="val_otras_instalaciones_ano_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                               lblTdSpan + '<span class="" data-valmsg-for="val_otras_instalaciones_estadoconservacion_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                               '<td style="display:none;"></td>';
+
+                BotonesTablas(tabla, columnas, tipo, focus, idItem, fieldset, columnasValidacion, opcion);
+                CrearCombobox(fieldset + '_estadoconservacion_' + idItem, ListVBEstadoConservacion);
+                //CrearCombobox(fieldset + '_tipoinstalacion_' + idItem, ListVBOtrasInstalaciones);
+                //CrearCombobox(fieldset + '_codigo_' + idItem, ListVBCodigoOtrasInstalaciones)
+                CrearCombobox(fieldset + '_tipoinstalacion_' + idItem, ListVBOtrasInstalaciones);
+                CrearCombobox(fieldset + '_codigo_' + idItem, ListVBCodigoOtrasInstalaciones)
+                CrearCombobox(fieldset + '_unidad_' + idItem, ListVBUnidadMedida);
+                CrearCombobox(fieldset + '_mes_' + idItem, ListVBMes);
+                console.log('addMes',idItem,ListVBMes);
+
+                $('#' + fieldset + '_capacidad_' + idItem).number(true, 4, '.', '');
+            }
+        }
+        $(".chosen-seleccionar").chosen({ width: "100%", placeholder_text_single: "Seleccione una opción" });
+    }
+    function ValidarOtrasInstalaciones(IdItem, ValInicial) {
+        RemoveValidacionOtrasInstalaciones(IdItem);
+        var cont = true;
+        var contError = 0;
+
+        //if (!$('#otras_instalaciones_codigo_' + IdItem).val()) {
+        //    $('[data-valmsg-for="val_otras_instalaciones_codigo_' + IdItem + '"]').html('Ingrese <br> Código').addClass('field-validation-valid has-error');
+        //    cont = false;
+        //    contError++;
+        //}
+
+        if (!$('#otras_instalaciones_tipoinstalacion_' + IdItem).val()) {
+            $('[data-valmsg-for="val_otras_instalaciones_tipoinstalacion_' + IdItem + '"]').html('Ingrese Tipo <br> Instalación').addClass('field-validation-valid has-error');
+            cont = false;
+            contError++;
+        }
+
+        if (!$('#otras_instalaciones_unidad_' + IdItem).val()) {
+            $('[data-valmsg-for="val_otras_instalaciones_unidad_' + IdItem + '"]').html('Ingrese Unidad').addClass('field-validation-valid has-error');
+            cont = false;
+            contError++;
+        }
+
+        if (!$('#otras_instalaciones_capacidad_' + IdItem).val()) {
+            $('[data-valmsg-for="val_otras_instalaciones_capacidad_' + IdItem + '"]').html('Ingrese <br> Capacidad').addClass('field-validation-valid has-error');
+            cont = false;
+            contError++;
+        }
+
+        if (!$('#otras_instalaciones_cantidad_' + IdItem).val()) {
+            $('[data-valmsg-for="val_otras_instalaciones_cantidad_' + IdItem + '"]').html('Ingrese <br> Cantidad').addClass('field-validation-valid has-error');
+            cont = false;
+            contError++;
+        }
+
+        if (!$('#otras_instalaciones_mes_' + IdItem).val()) {
+            $('[data-valmsg-for="val_otras_instalaciones_mes_' + IdItem + '"]').html('Ingrese <br> Mes').addClass('field-validation-valid has-error');
+            cont = false;
+            contError++;
+        }
+
+        if (!$('#otras_instalaciones_ano_' + IdItem).val()) {
+            $('[data-valmsg-for="val_otras_instalaciones_ano_' + IdItem + '"]').html('Ingrese <br> Año').addClass('field-validation-valid has-error');
+            cont = false;
+            contError++;
+        }
+
+        if (!$('#otras_instalaciones_estadoconservacion_' + IdItem).val()) {
+            $('[data-valmsg-for="val_otras_instalaciones_estadoconservacion_' + IdItem + '"]').html('Ingrese <br> Estado').addClass('field-validation-valid has-error');
+            cont = false;
+            contError++;
+        }
+
+
+        if (contError === 7 && ValInicial === 1) {
+            cont = true;
+            RemoveValidacionOtrasInstalaciones(IdItem);
+        }
+        
+        return cont
+    }
+    function RemoveValidacionOtrasInstalaciones(IdItem) {
+        //$('[data-valmsg-for="val_otras_instalaciones_codigo_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+        $('[data-valmsg-for="val_otras_instalaciones_tipoinstalacion_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+        $('[data-valmsg-for="val_otras_instalaciones_unidad_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+        $('[data-valmsg-for="val_otras_instalaciones_capacidad_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+        $('[data-valmsg-for="val_otras_instalaciones_cantidad_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+        $('[data-valmsg-for="val_otras_instalaciones_mes_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+        $('[data-valmsg-for="val_otras_instalaciones_ano_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+        $('[data-valmsg-for="val_otras_instalaciones_estadoconservacion_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+    }
+    function CrearCombobox(Combobox, data) {
+
+        $('#' + Combobox).find('option:not(:first)').remove();
+        var items = '<option value="">Seleccione...</option>';
+        $.each(data, function (i, item) {
+            items += "<option value='" + item.Value + "'>" + item.Text + "</option>";
+        });
+        $('#' + Combobox).val('');
+        $('#' + Combobox).html(items);
+        $('.chosen-seleccionar').trigger("chosen:updated");
+
+    }
+
+    function CrearMascaraDecimal(input) {
+        $('#' + input).maskWeight({
+            integerDigits: 4,
+            decimalDigits: 2,
+            decimalMark: '.',
+            initVal: '',//'000,000',
+            //roundingZeros: true,
+            digitsCount: 4,
+            callBack: null,
+            //doFocus: true
+        });
+
+        if ($('#' + input).val() === '0.00') {
+            $('#' + input).val('');
+        }
+    }
+    function OtrasInstalaciones() {
+        var datosParseados = [];
+        var ValBool = [];
+        $.each(ListunidadCatastralDireccion, function (index, entry) {
+            $('#OtasInstalaciones tr').each(function (index, item) {
+
+                if (index !== 0 && $(item).closest("tr").attr('name') !== 'validacion' && $(item).closest("tr").attr('name') !== 'delete') {
+
+                    $(item).children("td").each(function () {
+                        console.log('1');
+                        var input = $(this).children("input");
+                        if (input.hasClass("capacidad_otras_instalaciones")) {
+                            console.log('2');
+                            console.log(input);
+                            var IdInput = $(input).attr("id");
+                            var indicetext = IdInput.substr(IdInput.length - 5, 5);
+                            console.log(indicetext);
+                        }
+                        cont = ValidarOtrasInstalaciones(indicetext, 1);
+                        ValBool.push(cont);
+                    });
+                }
+
+
+                if (cont == true) {
+                    var del = '0';
+                    if (index === 0) return true;
+                    if ($(item).closest("tr").attr('name') === 'delete') del = '1';
+                    if ($(item).closest("tr").attr('name') !== 'validacion') {
+                        var ind, CodigoTipoInstalacion, CodigoUnidad, Capacidad, Cantidad, mes, ano, EstadoConserva;
+                        $(item).children("td").each(function () {
+                            var input = $(this).children("input");
+                            var select = $(this).children("select");
+                            if (select.hasClass("tipoinstalacion_otras_instalaciones")) { num1 = select.val().indexOf("_"); CodigoTipoInstalacion = select.val().substring(0,num1); } else if (select.hasClass("unidad_otras_instalaciones")) { CodigoUnidad = select.val(); }
+                            else if (input.hasClass("capacidad_otras_instalaciones")) { Capacidad = input.val(); } else if (input.hasClass("cantidad_otras_instalaciones")) { Cantidad = input.val(); }
+                            else if (select.hasClass("mes_otras_instalaciones")) { mes = select.val(); } else if (input.hasClass("ano_otras_instalaciones")) { ano = input.val(); }
+                            else if (select.hasClass("estadoconservacion_otras_instalaciones")) { EstadoConserva = select.val(); } else if (input.hasClass("id_otras_instalaciones")) { ind = input.val(); }
+                        });
+                        //if (!piso || !mes || !ano || !material || !estado || !muro || !techo || !piso || !puerta || !revest || !bano || !electricas || !verificada || !declarada) {
+                        //    validado++;
+                        //}
+
+                        if (!(!CodigoTipoInstalacion && !CodigoUnidad && !Capacidad && !Cantidad && !mes && !ano && !EstadoConserva)) {
+                            console.log('FIELDS', CodigoTipoInstalacion, CodigoUnidad, Capacidad, Cantidad, mes, ano, EstadoConserva);
+                            datosParseados.push({
+                                "CodigoCorrelativo": ind, "Eliminado": del, "CodigoTipoInstalacion": CodigoTipoInstalacion, "CodigoUnidad": CodigoUnidad, "Capacidad": Capacidad, "Cantidad": Cantidad, "Mes": mes,
+                                "Ano": ano, "EstadoConserva": EstadoConserva,
+                                "CodigoUnidadCatastral": entry.CODUNI
+                            });
+                        }
+                    }
+                }
+            });
+
+            for (i = 0; i < ValBool.length; i++) {
+                if (ValBool[i] === false) {
+                    return false;
+                }
+            }
+        });
+        console.log(datosParseados);
+        return datosParseados;
+    }
+</script>

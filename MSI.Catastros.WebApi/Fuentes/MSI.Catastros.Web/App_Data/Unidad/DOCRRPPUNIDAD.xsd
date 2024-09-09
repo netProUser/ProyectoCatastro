@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DOCRRPP" targetNamespace="http://tempuri.org/DOCRRPP.xsd" xmlns:mstns="http://tempuri.org/DOCRRPP.xsd" xmlns="http://tempuri.org/DOCRRPP.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DOCRRPP" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DOCRRPP" msprop:Generator_UserDSName="DOCRRPP">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="INSCRIPCIONRRPP" msprop:Generator_TableClassName="INSCRIPCIONRRPPDataTable" msprop:Generator_TableVarName="tableINSCRIPCIONRRPP" msprop:Generator_TablePropName="INSCRIPCIONRRPP" msprop:Generator_RowDeletingName="INSCRIPCIONRRPPRowDeleting" msprop:Generator_RowChangingName="INSCRIPCIONRRPPRowChanging" msprop:Generator_RowEvHandlerName="INSCRIPCIONRRPPRowChangeEventHandler" msprop:Generator_RowDeletedName="INSCRIPCIONRRPPRowDeleted" msprop:Generator_UserTableName="INSCRIPCIONRRPP" msprop:Generator_RowChangedName="INSCRIPCIONRRPPRowChanged" msprop:Generator_RowEvArgName="INSCRIPCIONRRPPRowChangeEvent" msprop:Generator_RowClassName="INSCRIPCIONRRPPRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ITEM" msprop:Generator_ColumnVarNameInTable="columnITEM" msprop:Generator_ColumnPropNameInRow="ITEM" msprop:Generator_ColumnPropNameInTable="ITEMColumn" msprop:Generator_UserColumnName="ITEM" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTTIPODOCU" msprop:Generator_ColumnVarNameInTable="columnTXTTIPODOCU" msprop:Generator_ColumnPropNameInRow="TXTTIPODOCU" msprop:Generator_ColumnPropNameInTable="TXTTIPODOCUColumn" msprop:Generator_UserColumnName="TXTTIPODOCU" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTPARTELEC" msprop:Generator_ColumnVarNameInTable="columnTXTPARTELEC" msprop:Generator_ColumnPropNameInRow="TXTPARTELEC" msprop:Generator_ColumnPropNameInTable="TXTPARTELECColumn" msprop:Generator_UserColumnName="TXTPARTELEC" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTTOMOFICH" msprop:Generator_ColumnVarNameInTable="columnTXTTOMOFICH" msprop:Generator_ColumnPropNameInRow="TXTTOMOFICH" msprop:Generator_ColumnPropNameInTable="TXTTOMOFICHColumn" msprop:Generator_UserColumnName="TXTTOMOFICH" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTFOLIO" msprop:Generator_ColumnVarNameInTable="columnTXTFOLIO" msprop:Generator_ColumnPropNameInRow="TXTFOLIO" msprop:Generator_ColumnPropNameInTable="TXTFOLIOColumn" msprop:Generator_UserColumnName="TXTFOLIO" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTASIENTO" msprop:Generator_ColumnVarNameInTable="columnTXTASIENTO" msprop:Generator_ColumnPropNameInRow="TXTASIENTO" msprop:Generator_ColumnPropNameInTable="TXTASIENTOColumn" msprop:Generator_UserColumnName="TXTASIENTO" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

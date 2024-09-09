@@ -1,0 +1,504 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.ActualizacionEstado.FiltrarUnidadCatastralViewModel
+@{  ViewBag.Title = "Actualizacion Estado";  }
+<style>
+    ::-webkit-inner-spin-button { display: none; }
+    ::-webkit-calendar-picker-indicator { background: radial-gradient(233,233,233);color:white }
+
+</style>
+<style>
+    table.dataTable tbody tr {
+        background-color: #ffffff;
+    }
+
+    table.dataTable.display tbody tr:hover {
+        background-color: #ffffff;
+    }
+
+    table.dataTable.display tbody tr.odd {
+        background-color: #ffffff;
+    }
+</style>
+<div class="row" id="ActualizacionEstado">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="overflow: hidden">
+                <div class="row">
+                    <div class="col-md-6 col-xs-12"><strong>Actualización de Estados</strong></div><div class="col-md-4"></div>
+                    <div class="col-md-2 col-xs-12">
+                        @*<span><button id="GrabarGeneral" type="button" disabled class="btn btn-green mr-2 btn-block" style="float:right" onclick="GrabarLote()"><span class="glyphicon glyphicon-ok mr-2"></span> Grabar</button></span>*@
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="">
+                    <input type="hidden" id="Periodo" />    <input type="hidden" id="CodigoTipSol" />   <input type="hidden" id="CodigoNumSol" />   <input type="hidden" id="CodDist" />
+                    <input type="hidden" id="CodSect" />    <input type="hidden" id="CodManz" />        <input type="hidden" id="CodLote" />        <input type="hidden" id="CodigoTipDoc" />
+                    @Html.ValidationSummary(true)
+                    
+                    <div class="row DivUnidadCastastral">
+                        <div class="col-md-6">
+                            <fieldset class="formulario">
+                                <legend>Busqueda</legend>
+
+                                <table>
+                                    <tr>
+                                        <td width="12%"><label class="form-label">Dist.</label></td>
+                                        <td width="12%"><label class="form-label">Sec</label></td>
+                                        <td width="12%"><label class="form-label">Mz</label></td>
+                                        <td width="12%"><label class="form-label">Lote</label></td>
+                                        <td width="12%"><label class="form-label">Ed</label></td>
+                                        <td width="12%"><label class="form-label">Entr</label></td>
+                                        <td width="12%"><label class="form-label">Piso</label></td>
+                                        <td width="12%"><label class="form-label">Unidad</label></td>
+                                        <td width=""></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoDistrito, new { @class = "form-control text-center px-3", @readonly = "true" })</td>
+                                        <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoSector, new { @class = "form-control clSect text-center px-3", maxlength = 2, @onkeypress = "if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" })</td>
+                                        <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoManzana, new { @class = "form-control clManza text-center px-3", maxlength = 3, @onkeypress = "if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" })</td>
+                                        <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoLote, new { @class = "form-control clLote text-center px-3", maxlength = 3, @onkeypress = "if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" })</td>
+                                        <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarEd, new { @class = "form-control clEdif text-center px-3", @maxlength = "2" })</td>
+                                        <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarEntrada, new { @class = "form-control clEntr text-center px-3", @maxlength = "2" })</td>
+                                        <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarPiso, new { @class = "form-control clPiso text-center px-3", @maxlength = "2" })</td>
+                                        <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarUnidad, new { @class = "form-control clUnid text-center px-3", @maxlength = "3" })</td>
+                                        <td>
+                                            <div class="">
+                                                <button id="btnModalBuscar" type="button" class="btn btnModalBuscar btnBuscar btn-default glyphicon glyphicon-search" style="padding: 6px 35px"></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="9">
+                                            <div class="has-error">
+                                                <ul id="msgErrores"></ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </fieldset>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-12 actualizacion" >
+                            <fieldset class="formulario">
+                                <legend>Resultados de Búsqueda</legend>
+                                <table id="tablaUnidadCatastral" style="width:100%" class="table responsive display table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th width="200px">Código Catastral</th>
+                                            <th width="60px">Código Único</th>
+                                            <th>Ubicación</th>
+                                            <th width="50px">Estado</th>
+                                            <th>Referencia</th>
+                                            <th width="50px">Versión</th>
+                                            <th width="80px">Fecha de Generación</th>
+                                            <th width="70px">Usuario</th>
+                                            <th width="80px">Acciones</th>
+                                            <th style="display:none;"></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </fieldset>
+                            
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Large modal -->
+<div id="modalRegistrarLoteNuevo" class="modal fade" tabindex="-1" role="dialog"></div>
+
+@section datatables {
+    <script>
+        var ROOT = '@Url.Content("~")';
+    </script>
+    @*<script src="~/msisicdes/Scripts/dcalendar.picker.js"></script>*@
+    <script src="@Url.Content("~/Scripts/dcalendar.picker.js")"></script>
+
+    <script>
+        $('#FiltrarCodigoDistrito').val("31");
+        $('input').keyup(function () {this.value = this.value.toLocaleUpperCase()});
+
+        var tablaUnidadCatastral = $("#tablaUnidadCatastral").DataTable({
+            "ajax": {
+                "url": ROOT + "ActualizacionEstado/CargarUnidadSinPag", "type": "POST", "datatype": "json",
+                "data": function (d) {
+                    d.FiltrarCodigoDistrito = $('#FiltrarCodigoDistrito').val();    d.FiltrarCodigoSector = $('#FiltrarCodigoSector').val();
+                    d.FiltrarCodigoManzana = $('#FiltrarCodigoManzana').val();      d.FiltrarCodigoLote = $('#FiltrarCodigoLote').val();
+                    d.FiltrarEd = $('#FiltrarEd').val();                            d.FiltrarEntrada = $('#FiltrarEntrada').val();
+                    d.FiltrarPiso = $('#FiltrarPiso').val();                        d.FiltrarUnidad = $('#FiltrarUnidad').val();
+                }
+            },
+            'rowCallback': function (row, data, index) {
+                if (data.EstadoUnidad == "L") {
+                    $(row).find('td:eq(0)').css({
+                        'border-right': '1px solid #eaeaea',
+                        'font-weight': 'bold',
+                        'font-size': '12px',
+                        'text-align': 'center'
+                        //'padding-left': '25px'
+                    });
+                    $(row).find('td:eq(1)').css({ 'border-right': '1px solid white' });
+                    $(row).find('td:eq(2)').css({ 'border-right': '1px solid white' });
+                    $(row).find('td:eq(3)').css({ 'border-right': '1px solid white', 'color': '#eaeaea' });
+                    $(row).css({ 'background-color': '#eaeaea' });
+                    console.log('LOTE', data);
+                    if (data.Estado == "0") {
+                        $(row).find('td').css('color', 'grey');
+                    }
+                } else {
+                    if (data.Estado == "0") {
+                        $(row).find('td').css('color', 'grey');
+                    }
+                }
+            },
+            //"pageLength": 15,
+            "paging": false,
+            "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+            "processing": true,
+            "serverSide": false,
+            "columns": [
+                { "data": "CodigoCatastral", "className": "text-center" }, { "data": "CodigoUnico", "className": "text-center" },
+                { "data": "Ubicacion", "className": "text-center" }, { "data": "EstadoUnidad", "className": "text-center" },
+                { "data": "Referencia", "className": "text-center" }, { "data": "Version", "className": "text-center" }, { "data": "FechaGeneracion", "className": "text-center" },
+                { "data": "Usuario", "className": "text-center" },
+                {
+                    "render": function (data, type, full, meta) {
+                        
+                        if (full.EstadoUnidad == "L") {
+                            if (full.Estado == '0') {
+                                return '<button data-toggle="tooltip" title="Activar Lote" class="btn mr-1 btn-xs text-center btnActivarLote btn-success px-3  glyphicon glyphicon-off" type="button" ></button>'
+                            } else {
+                                return '<button data-toggle="tooltip" title="Eliminar Lote" class="btn mr-1 btn-xs px-3 text-center btnBorrarLote btn-danger  glyphicon glyphicon-remove" type="button" ></button>';
+                            }
+                        } else {
+                            if (full.Estado == '0') {
+                                return '<button data-toggle="tooltip" title="Activar" class="btn mr-1 btn-xs text-center btnActivarUnidad btn-default mr-2  glyphicon glyphicon-record" type="button" ></button>';
+                            } else if (full.EstadoUnidad == 'T') {
+                                return '<button data-toggle="tooltip" title="Habilitar" class="btn mr-1 btn-xs text-center btnHabilitarUnidad btn-default mr-2  glyphicon glyphicon-check" type="button" ></button>' +
+                                    '<button data-toggle="tooltip" title="Eliminar" class="btn mr-1 btn-xs text-center btnBorrarUnidad btn-default  glyphicon glyphicon-remove" type="button" ></button>';
+                            } else {
+                                return '<button data-toggle="tooltip" title="Pasar a Temporal" class="btn mr-1 btn-xs text-center btnTemporalUnidad btn-default mr-2  glyphicon glyphicon-wrench" type="button" ></button>' +
+                                '<button data-toggle="tooltip" title="Eliminar" class="btn mr-1 btn-xs text-center btnBorrarUnidad btn-default  glyphicon glyphicon-remove" type="button" ></button>' +
+                                '<button data-toggle="tooltip" title="Copiar a Temporal" class="btn mr-1 btn-xs text-center btnCopiarUnidad btn-default  glyphicon glyphicon-copy" type="button" ></button>';
+                            }
+                        }
+                    }, "className": "text-center"
+                },
+                { "data": "Estado", "className": "hide_column" },
+            ]
+        });
+
+
+        $("#tablaUnidadCatastral tbody").on('click', 'button.btnActivarLote', function (event) {
+            var data = tablaUnidadCatastral.row($(this).parents('tr')).data();
+            var enlace = ROOT + 'ActualizacionEstado/ActivacionLote';
+            bootbox.confirm({
+                title: "Mensaje del Sistema", message: "¿Esta seguro de activar este Lote?, se cargara la información de la última versión en el histórico.",
+                buttons: { confirm: { label: '<i class="fa fa-check"></i> Activar Lote', className: "btn btn-success" }, cancel: { label: '<i class="fa fa-times"></i> Cancelar' } },
+                callback: function (result) {
+                    if (result) {
+                        $.post(enlace, { CodigoCatastral: data.CodigoCatastral.replace("LOTE: ", ""), CodigoUnico: data.CodigoUnico }, function (response) {
+                            if (response.success === true) {
+                                tablaUnidadCatastral.ajax.reload();
+                                toastr.success("Lote activado correctamente", "Mensaje del Sistema", { "progressBar": true });
+                            } else {
+                                toastr.warning(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                            }
+
+                        });
+                    }
+                }
+            });
+            
+        });
+        $("#tablaUnidadCatastral tbody").on('click', 'button.btnBorrarLote', function (event) {
+            var contLote = 0;
+            var data = tablaUnidadCatastral.row($(this).parents('tr')).data();
+            var dataSect = data.CodigoSector; var dataManz = data.CodigoManzana; var dataLote = data.CodigoLote;
+            tablaUnidadCatastral.rows().every(function (rowIdx, tableLoop, rowLoop) {
+                var dataFila = this.data();
+                if (dataFila.EstadoUnidad != "L") {
+                    if (dataFila.Estado != '0') {
+                        if (dataSect == dataFila.CodigoSector && dataManz == dataFila.CodigoManzana && dataLote == dataFila.CodigoLote) {
+                            contLote++;
+                        }
+                    }
+                }
+            });
+            if (contLote > 0) {
+                toastr.warning("No se puede eliminar un lote que tenga unidades activas", "Mensaje del Sistema", { "progressBar": true });
+            } else {
+                var enlaceLote = ROOT + 'ActualizacionEstado/AnulacionLote';
+                bootbox.dialog({
+                    title: "Mensaje del Sistema", message: "¿Esta seguro de eliminar este lote?",
+                    buttons: {
+                        cancel: { label: '<i class="fa fa-times"></i> Cancelar' },
+                        confirm: {
+                            label: '<i class="fa fa-trash"></i> Eliminar Lote ', className: "btn btn-danger",
+                            callback: function (result) {
+                                $.post(enlaceLote, { CodigoCatastral: data.CodigoCatastral.replace("LOTE: ", ""), CodigoUnico: data.CodigoUnico }, function (response) {
+                                    if (response.success === true) {
+                                        tablaUnidadCatastral.ajax.reload();
+                                        toastr.success("Lote eliminado correctamente", "Mensaje del Sistema", { "progressBar": true });
+                                    } else { toastr.warning(response.responseText, "Mensaje del Sistema", { "progressBar": true }); }
+                                });
+                            }
+                        },
+                    },
+                });
+            }
+        });
+
+        $("#tablaUnidadCatastral tbody").on('click', 'button.btnActivarUnidad', function (event) {
+            var contLote = 0; var data = tablaUnidadCatastral.row($(this).parents('tr')).data();
+            var dataSect = data.CodigoSector; var dataManz = data.CodigoManzana; var dataLote = data.CodigoLote;
+            tablaUnidadCatastral.rows().every(function (rowIdx, tableLoop, rowLoop) {
+                var dataFila = this.data();
+                if (dataFila.EstadoUnidad == "L") {
+                    if (dataFila.Estado == '0') {
+                        if (dataSect == dataFila.CodigoSector && dataManz == dataFila.CodigoManzana && dataLote == dataFila.CodigoLote) {
+                            contLote++;
+                        }
+                    }
+                }
+            });
+            var mensaje = ""; var anularLote;
+            if (contLote > 0) {
+                mensaje = "¿Esta seguro de activar esta Unidad y su respectivo Lote?,  se cargara la información de la última versión en el histórico";
+                anularLote = true;
+            } else {
+                mensaje = "¿Esta seguro de activar esta Unidad?, se cargara la información de la última versión en el histórico"
+                anularLote = false;
+            }
+                var enlace = ROOT + 'ActualizacionEstado/ActivacionUnidad';
+                bootbox.confirm({
+                    title: "Mensaje del Sistema", message: mensaje,
+                    buttons: { confirm: { label: '<i class="fa fa-check"></i> Activar ', className: "btn btn-success" }, cancel: { label: '<i class="fa fa-times"></i> Cancelar' } },
+                    callback: function (result) {
+                        if (result) {
+                            $.post(enlace, { CodigoCatastral: data.CodigoCatastral, CodigoUnico: data.CodigoUnico, AnularLote: anularLote }, function (response) {
+                                if (response.success === true) {
+                                    tablaUnidadCatastral.ajax.reload();
+                                    toastr.success("Unidad activada correctamente", "Mensaje del Sistema", { "progressBar": true });
+                                } else {
+                                    toastr.warning(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                                }
+
+                            });
+                        }
+                    }
+                });
+            
+        });
+        $("#tablaUnidadCatastral tbody").on('click', 'button.btnTemporalUnidad', function (event) {
+            var contLote = 0; var data = tablaUnidadCatastral.row($(this).parents('tr')).data();
+            var mensaje = ""; var anularLote;
+            var enlace = ROOT + 'ActualizacionEstado/DeshabilitarUnidad';
+            bootbox.confirm({
+                title: "Mensaje del Sistema", message: "¿Esta seguro de cambiar el estado a temporal de esta unidad?",
+                buttons: { confirm: { label: '<i class="fa fa-check"></i> Pasar a temporal ', className: "btn btn-warning" }, cancel: { label: '<i class="fa fa-times"></i> Cancelar' } },
+                callback: function (result) {
+                    if (result) {
+                        $.post(enlace, { CodigoCatastral: data.CodigoCatastral, CodigoUnico: data.CodigoUnico, AnularLote: anularLote }, function (response) {
+                            if (response.success === true) {
+                                tablaUnidadCatastral.ajax.reload();
+                                toastr.success("Lote activado correctamente", "Mensaje del Sistema", { "progressBar": true });
+                            } else {
+                                toastr.warning(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                            }
+
+                        });
+                    }
+                }
+            });
+
+        });
+        $("#tablaUnidadCatastral tbody").on('click', 'button.btnHabilitarUnidad', function (event) {
+            var contLote = 0; var contUni = 0; var data = tablaUnidadCatastral.row($(this).parents('tr')).data();
+            var dataSect = data.CodigoSector; var dataManz = data.CodigoManzana; var dataLote = data.CodigoLote;
+            tablaUnidadCatastral.rows().every(function (rowIdx, tableLoop, rowLoop) {
+                var dataFila = this.data();
+                if (dataFila.EstadoUnidad != "L") {
+                    if (dataFila.Estado != '0') {
+                        contUni++;
+                        if (dataFila.EstadoUnidad == 'T') { 
+                        if (dataSect == dataFila.CodigoSector && dataManz == dataFila.CodigoManzana && dataLote == dataFila.CodigoLote ) {
+                            contLote++;
+                        }
+                        }
+                    }
+                }
+            });
+            var textLote = (contLote == contUni) ? ', también se habilitara el lote' : '';
+            var data = tablaUnidadCatastral.row($(this).parents('tr')).data();
+            var enlace = ROOT + 'ActualizacionEstado/Habilitacion';
+            bootbox.confirm({
+                title: "Mensaje del Sistema", message: "¿Esta seguro de habilitar esta unidad " + textLote + "?",
+                buttons: { confirm: { label: '<i class="fa fa-check"></i> Habilitar ', className: "btn btn-success" }, cancel: { label: '<i class="fa fa-times"></i> Cancelar' } },
+                callback: function (result) {
+                    if (result) {
+                        $.post(enlace, { CodigoCatastral: data.CodigoCatastral, CodigoUnico: data.CodigoUnico }, function (response) {
+                            if (response.success === true) {
+                                tablaUnidadCatastral.ajax.reload();
+                                toastr.success((contLote == contUni) ? 'Unidad y Lote correctamente habilitados' : 'Unidad correctamente habilitada', "Mensaje del Sistema", { "progressBar": true });
+                            } else {
+                                toastr.warning(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                            }
+
+                        });
+                    }
+                }
+            });
+        });
+        $("#tablaUnidadCatastral tbody").on('click', 'button.btnBorrarUnidad', function (event) {
+            var contLote = 0; var data = tablaUnidadCatastral.row($(this).parents('tr')).data();
+            var dataSect = data.CodigoSector; var dataManz = data.CodigoManzana; var dataLote = data.CodigoLote;
+            tablaUnidadCatastral.rows().every(function (rowIdx, tableLoop, rowLoop) {
+                var dataFila = this.data();
+                if (dataFila.EstadoUnidad != "L") {
+                    if (dataFila.Estado != '0') {
+                        if (dataSect == dataFila.CodigoSector && dataManz == dataFila.CodigoManzana && dataLote == dataFila.CodigoLote) {
+                            contLote++;
+                        }
+                    }
+                }
+            });
+            
+            var data = tablaUnidadCatastral.row($(this).parents('tr')).data();
+            var enlace = ROOT + 'ActualizacionEstado/Anulacion';
+            var enlaceLote = ROOT + 'ActualizacionEstado/AnulacionUnidadLote';
+            if (contLote === 1) {
+                bootbox.dialog({
+                    title: "Mensaje del Sistema", message: "¿Esta seguro de eliminar esta unidad?",
+                    buttons: {
+                        cancel: { label: '<i class="fa fa-times"></i> Cancelar'},
+                        noclose: {
+                            label: '<i class="fa fa-trash"></i> Eliminar Unidad y Lote', className: "btn-warning",
+                            callback: function () {
+                                $.post(enlaceLote, { CodigoCatastral: data.CodigoCatastral, CodigoUnico: data.CodigoUnico }, function (response) {
+                                    if (response.success === true) {
+                                        tablaUnidadCatastral.ajax.reload();
+                                        toastr.success("Unidad y Lote correctamente eliminados", "Mensaje del Sistema", { "progressBar": true });
+                                    } else { toastr.warning(response.responseText, "Mensaje del Sistema", { "progressBar": true }); }
+                                });
+                            }
+                        },
+                        confirm: {
+                            label: '<i class="fa fa-trash"></i> Eliminar Unidad ',
+                            className: "btn btn-danger",
+                            callback: function (result) {
+                                $.post(enlace, { CodigoCatastral: data.CodigoCatastral, CodigoUnico: data.CodigoUnico }, function (response) {
+                                    if (response.success === true) {
+                                        tablaUnidadCatastral.ajax.reload();
+                                        toastr.success("Unidad correctamente eliminada", "Mensaje del Sistema", { "progressBar": true });
+                                    } else { toastr.warning(response.responseText, "Mensaje del Sistema", { "progressBar": true }); }
+                                });
+                            }
+                        },
+                    },
+                });
+            } else {
+                bootbox.dialog({
+                    title: "Mensaje del Sistema", message: "¿Esta seguro de eliminar esta unidad?",
+                    buttons: {
+                        cancel: { label: '<i class="fa fa-times"></i> Cancelar' },
+                        confirm: {
+                            label: '<i class="fa fa-trash"></i> Eliminar Unidad ', className: "btn btn-danger",
+                            callback: function (result) {
+                                $.post(enlace, { CodigoCatastral: data.CodigoCatastral, CodigoUnico: data.CodigoUnico }, function (response) {
+                                    if (response.success === true) {
+                                        tablaUnidadCatastral.ajax.reload();
+                                        toastr.success("Unidad correctamente eliminada", "Mensaje del Sistema", { "progressBar": true });
+                                    } else { toastr.warning(response.responseText, "Mensaje del Sistema", { "progressBar": true }); }
+                                });
+                            }
+                        },
+                    },
+                });
+
+            }
+        });
+
+        $("#tablaUnidadCatastral tbody").on('click', 'button.btnCopiarUnidad', function (event) {
+            var contLote = 0; var data = tablaUnidadCatastral.row($(this).parents('tr')).data();
+            var mensaje = ""; 
+            var enlace = ROOT + 'ActualizacionEstado/Copiar';
+            bootbox.confirm({
+                title: "Mensaje del Sistema", message: "¿Esta seguro de copiar a temporal de esta unidad?",
+                buttons: { confirm: { label: '<i class="fa fa-check"></i> Copiar a temporal ', className: "btn btn-warning" }, cancel: { label: '<i class="fa fa-times"></i> Cancelar' } },
+                callback: function (result) {
+                    $.post(enlace, { CodigoCatastral: data.CodigoCatastral, CodigoUnico: data.CodigoUnico }, function (response) {
+                        if (response.success === true) {
+                            tablaUnidadCatastral.ajax.reload();
+                            toastr.success("Unidad correctamente copiada", "Mensaje del Sistema", { "progressBar": true });
+                        } else { toastr.warning(response.responseText, "Mensaje del Sistema", { "progressBar": true }); }
+                    });
+                }
+            });
+
+        });
+
+
+        //$('#FiltrarCodigoSector').change(function () {
+        //    var texto;
+        //    texto = ZeroIzqCaracter($('#FiltrarCodigoSector').val(), 2);
+        //    $('#FiltrarCodigoSector').val(texto);
+        //});
+
+        //$('#FiltrarCodigoManzana').change(function () {
+        //    var texto;
+        //    texto = ZeroIzqCaracter($('#FiltrarCodigoManzana').val(), 3);
+        //    $('#FiltrarCodigoManzana').val(texto);
+        //});
+
+        //$('#FiltrarCodigoLote').change(function () {
+        //    var texto;
+        //    texto = ZeroIzqCaracter($('#FiltrarCodigoLote').val(), 3);
+        //    $('#FiltrarCodigoLote').val(texto);
+        //});
+
+        //$('#FiltrarEd').change(function () {
+        //    var texto;
+        //    texto = ZeroIzqCaracter($('#FiltrarEd').val(), 2);
+        //    $('#FiltrarEd').val(texto);
+        //});
+
+        //$('#FiltrarEntrada').change(function () {
+        //    var texto;
+        //    texto = ZeroIzqCaracter($('#FiltrarEntrada').val(), 2);
+        //    $('#FiltrarEntrada').val(texto);
+        //});
+
+        //$('#FiltrarPiso').change(function () {
+        //    var texto;
+        //    texto = ZeroIzqCaracter($('#FiltrarPiso').val(), 2);
+        //    $('#FiltrarPiso').val(texto);
+        //});
+
+        //$('#FiltrarUnidad').change(function () {
+        //    var texto;
+        //    texto = ZeroIzqCaracter($('#FiltrarUnidad').val(), 3);
+        //    $('#FiltrarUnidad').val(texto);
+        //});
+        $("#btnModalBuscar").on("click", function (event) {
+            var cont;
+            if (!cont) {
+                $('#msgErrores').html("");
+                tablaUnidadCatastral.ajax.reload();
+            }
+        });
+    </script>
+}
+
+
+
+
+
+
+
+

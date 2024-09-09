@@ -1,0 +1,1177 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.ConsultaHistoricaUnidades.FiltrarHistoricoUnidadCatastralViewModel
+@{
+    ViewBag.Title = "Historico Unidad Catastral";
+}
+@*quinta*@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="overflow:hidden">
+                <div class="row">
+                    <div class="col-md-6 col-xs-12"><strong>Historico Unidad Catastral</strong></div><div class="col-md-4"></div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="">
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <table border="0">
+                                <tr>
+                                    <td width="12%"><label class="form-label">Dist.</label></td>
+                                    <td width="12%"><label class="form-label">Sec</label></td>
+                                    <td width="12%"><label class="form-label">Mz</label></td>
+                                    <td width="12%"><label class="form-label">Lote</label></td>
+                                    <td width="12%"><label class="form-label">Ed</label></td>
+                                    <td width="12%"><label class="form-label">Entr</label></td>
+                                    <td width="12%"><label class="form-label">Piso</label></td>
+                                    <td width="12%"><label class="form-label">Unidad</label></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoDistrito, new { @class = "form-control text-center px-3", @readonly = "true" })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoSector, new { @class = "form-control text-center px-3", maxlength = 2, @onkeypress = "if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoManzana, new { @class = "form-control text-center px-3", maxlength = 3, @onkeypress = "if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoLote, new { @class = "form-control text-center px-3", maxlength = 3, @onkeypress = "if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarEd, new { @class = "form-control text-center block px-3", maxlength = 2 })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarEntrada, new { @class = "form-control text-center block px-3", maxlength = 2 })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarPiso, new { @class = "form-control text-center block px-3", maxlength = 2 })</td>
+                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarUnidad, new { @class = "form-control text-center block px-3", maxlength = 3 })</td>
+                                    <td>
+                                        <div class="">
+                                            <button id="btnBuscarEstatico" type="button" value="" class="btn btn-default glyphicon glyphicon-search" style="padding: 6px 35px"></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5">
+                                        <div class="has-error ml-3 mt-2">
+                                            <ul id="msgErrores"></ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <table id="tablaHistoricaUnidadCatastralEstatico" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                               <thead>
+                                   <tr>
+                                       <th width="2%">Dist</th>
+                                       <th width="2%">Sec</th>
+                                       <th width="1%">Mz</th>
+                                       <th width="1%">Lote</th>
+                                       <th width="1%">Ed</th>
+                                       <th width="1%">Entr</th>
+                                       <th width="1%">Piso</th>
+                                       <th width="1%">Unidad</th>
+                                       <th width="1%">Versión</th>
+                                       <th width="3%">Llenado</th>
+                                       <th width="10%">Tipo Interior</th>
+                                       <th width="3%">N° Interior</th>
+                                       <th width="3%">% Bien Comun</th>
+                                       
+                                       <th width="3%">A. T. Verificada</th>
+                                       <th width="3%">A. T. Comùn</th>
+                                       <th width="3%">A. T. Total</th>
+                                    
+                                       <th width="10%">Inscripción</th>
+                                   </tr>
+                               </thead>
+
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tabs" id="TabUC">
+                        <ul>
+                            <li><a href="#tab-1">Información <br> General</a></li>
+                            <li><a href="#tab-2">Numeración <br> &nbsp </a></li>
+                            <li><a href="#tab-11">Interiores <br> Especiales</a></li>
+                            <li><a href="#tab-3">Construcciones <br> Instalaciones</a></li>
+                            @*<li><a href="#tab-10">Linderos de <br> Edificación</a></li>
+    <li><a href="#tab-4">Areas de Terreno <br> Areas Construidas</a></li>
+    <li><a href="#tab-5">Actividad <br> Económica</a></li>
+    <li><a href="#tab-6">Titularidad  <br> Cotitularidad</a></li>
+    <li><a href="#tab-7">Documentación <br>  &nbsp</a></li>
+    <li><a href="#tab-8">Observaciones <br> &nbsp </a></li>*@
+
+
+                        </ul>
+                        <div id="tab-1">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label">CUC</label>
+                                                    <input type="text" class="form-control" disabled id="Cuc" />
+                                                    <span class="" data-valmsg-for="Cuc" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label">Código Predial</label>
+                                                    <input type="text" class="form-control" id="CodigoPredial" disabled="disabled"  />
+                                                    <span class="" data-valmsg-for="CodigoPredial"  data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label">Código Único</label>
+                                                    <input type="text" class="form-control" id="CodigoUnidadCatastral" disabled="disabled" />
+                                                    <span class="" data-valmsg-for="CodigoUnico" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label">Tipo de Llenado</label>
+                                                    <input type="text" class="form-control" id="CodigoTipoLlenado" disabled="disabled" />
+                                                    <span class="" data-valmsg-for="CodigoTipoLlenado" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label">Código Inscripción Catastral</label>
+                                                    @Html.DropDownList("CodigoCodInscripcionCatastral", Model.ListCodigoInscripcionCatastral, "- Seleccione...", new { @class = "form-control chosen-seleccionar" })
+                                                    <span class="" data-valmsg-for="CodigoCodInscripcionCatastral" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label">Inscripción Catastral</label>
+                                                    @Html.DropDownList("CodigoInscripcionCatastral", Model.ListInscripcionCatastral, "- Seleccione...", new { @class = "form-control chosen-seleccionar" })
+                                                    <span class="" data-valmsg-for="CodigoInscripcionCatastral" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label">Fuente Inscripción Catastral</label>
+                                                    @Html.DropDownList("CodigoFuenteInscripcionCatastral", Model.ListFuenteInscripcionCatastral, "- Seleccione...", new { @class = "form-control" })
+                                                    <span class="" data-valmsg-for="CodigoFuenteInscripcionCatastral" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label">Carga Registral</label>
+                                                    @Html.DropDownList("CodigoCargaRegistral", new SelectList(ViewBag.ListVBTipoSiNo, "value", "text"), "- Seleccione...", new { @class = "form-control" })
+                                                    <span class="" data-valmsg-for="CodigoCargaRegistral" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label">Versión Unidad</label>
+                                                    <input type="text" class="form-control" id="NumVersionUnidad" disabled="disabled" />
+                                                    <span class="" data-valmsg-for="NumVersionUnidad" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row"> 
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label">Denominación</label>
+                                                    <input type="text" class="form-control" id="Denominacion" disabled="disabled"/>
+                                                    <span class="" data-valmsg-for="Denominacion"  data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label">Uso Predio CIIU</label>
+                                                    @Html.DropDownList("CodgiUsoPredio", Model.ListUsoPredio, "- Seleccione...", new { @class = "form-control chosen-seleccionar" })
+                                                    <span class="" data-valmsg-for="CodigoEstadoUsoPredio" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label">Clasificación</label>
+                                                    @Html.DropDownList("CodigoClasificacionPredio", Model.ListClasificacionPredio, "- Seleccione...", new { @class = "form-control" })
+                                                    <span class="" data-valmsg-for="CodigoClasificacionPredio" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <div class="form-group" id="DivTipoDepartamento">
+                                                    <label class="control-label" id="LabelTipoDepartamento">Tipo de...</label>
+                                                    @Html.DropDownList("CodigoDepartamentoPredio", Model.ListDepartamentoPredio, "- Seleccione...", new { @class = "form-control" })
+                                                    <span class="" data-valmsg-for="CodigoDepartamentoPredio" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label">Estado de Construcción</label>
+                                                    @Html.DropDownList("CodigoEstadoConstruccion", Model.ListEstadoContruccion, "- Seleccione...", new { @class = "form-control" })
+                                                    <span class="" data-valmsg-for="CodigoEstadoConstruccion" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label">% Avance</label>
+                                                    <input type="text" class="form-control numero" id="AvanceConstruccion" disabled="disabled" style="text-align: right;" />
+                                                    <span class="" data-valmsg-for="AvanceConstruccion" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label">Fecha Última Inspección</label>
+                                                    <input type="text" autocomplete="off" class="form-control" id="FechaUltimaInspeccion" maxlength="10" disabled="disabled" />
+                                                    <span class="" data-valmsg-for="FechaUltimaInspeccion" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label">Fecha Actualización</label>
+                                                    <input type="text" autocomplete="off" class="form-control" id="FechaActualizacion" maxlength="10" disabled="disabled"/>
+                                                    <span class="" data-valmsg-for="FechaActualizacion" data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <img id="imglote" class="img-rounded img-responsive" src="" alt="Responsive image" />
+                                </div>
+                            </div>
+                        </div>
+                        <div id='tab-2'>
+                            <div class="row">
+                                <fieldset class="formulario">
+                                    <legend>Interiores del Predio</legend>
+                                    <br />
+                                    <table id="tablaMunicipalAsignado" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Nro.</th>
+                                                <th>Asignación</th>
+                                                <th>Vía</th>
+                                                <th>Cda.</th>
+                                                <th>Edificación</th>
+                                                <th>Puerta</th>
+                                                <th>Estado Interior</th>
+                                                <th>Tipo Interior</th>
+                                                <th>Numero Interior</th>
+                                                <th>Letra Interior</th>
+                                                <th>Inscripcion</th>
+                                                <th>Área</th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div id='tab-11'>
+                            <div class="row">
+                                <fieldset class="formulario">
+                                    <legend>Interiores del Predio</legend>
+
+
+                                    <br />
+                                    <table id="tablaMunicipalAsignado2" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Nro.</th>
+                                                <th>Asignación</th>
+                                                <th>Vía</th>
+                                                <th>Cda.</th>
+                                                <th>Edificación</th>
+                                                <th>Puerta</th>
+                                                <th>Estado Interior</th>
+                                                <th>Tipo Interior</th>
+                                                <th>Numero Interior</th>
+                                                <th>Letra Interior</th>
+                                                <th>Inscripcion</th>
+                                                <th>Área</th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div id='tab-3'>
+                            <div class="row">
+                                <fieldset class="formulario">
+                                    <legend>Líneas Constructivas (m2)</legend>
+                                    <div class="relative">
+                                        <button data-toggle="collapse" href="#panelLineasContructivas" class="btn btn-xs btn-success fa fa-caret-down absolute"></button>
+                                        <div class="row collapse in" id="panelLineasContructivas">
+                                            <div class="col-md-12">
+                                                <table id="LineasContructivas">
+                                                    <tr>
+                                                        <td width="5%"><label class="control-label">Nro.</label></td>
+                                                        <td width="5%"><label class="control-label">Nivel</label></td>
+                                                        <td width="5%"><label class="control-label">Mes</label></td>
+                                                        <td width="5%"><label class="control-label">Año</label></td>
+                                                        <td width="8%"><label class="control-label">Material <br />Estructural</label></td>
+                                                        <td width="8%"><label class="control-label">Estado de <br />Conservación</label></td>
+                                                        <td width="5%"><label class="control-label">Muro</label></td>
+                                                        <td width="5%"><label class="control-label">Techo</label></td>
+                                                        <td width="5%"><label class="control-label">Piso</label></td>
+                                                        <td width="5%"><label class="control-label">Puertas <br />Ventanas</label></td>
+                                                        <td width="5%"><label class="control-label">Revestimiento</label></td>
+                                                        <td width="5%"><label class="control-label">Baño</label></td>
+                                                        <td width="5%"><label class="control-label">Instalaciones <br /> Electricas <br /> y Sanitarias</label></td>
+                                                        <td width="8%"><label class="control-label">Área<br /> Verificada</label></td>
+                                                        <td width="8%"><label class="control-label">Área<br /> Declarada</label></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="pr-4"><input value="00001" disabled type="text" class=" form-control item_lineas_constructivas" /></td>
+                                                        <td class="pr-4"><input id="lineas_constructivas_txtpiso_00001" type="text" class="form-control txtpiso_lineas_constructivas" /></td>
+                                                        <td class="pr-4"><select id="lineas_constructivas_mes_00001" class="form-control mes_lineas_constructivas"></select></td>
+                                                        <td class="pr-4"><input id="lineas_constructivas_ano_00001" type="text" class="form-control ano_lineas_constructivas" /></td>
+                                                        <td class="pr-4"><select id="lineas_constructivas_material_00001" class="form-control material_lineas_constructivas"></select></td>
+                                                        <td class="pr-4"><select id="lineas_constructivas_estado_00001" class="form-control estado_lineas_constructivas"> </select></td>
+                                                        <td class="pr-4"><input id="lineas_constructivas_muro_00001" type="text" class="form-control muro_lineas_constructivas" /></td>
+                                                        <td class="pr-4"><input id="lineas_constructivas_techo_00001" type="text" class="form-control techo_lineas_constructivas" /></td>
+                                                        <td class="pr-4"><input id="lineas_constructivas_piso_00001" type="text" class="form-control piso_lineas_constructivas" /></td>
+                                                        <td class="pr-4"><input id="lineas_constructivas_puerta_00001" type="text" class="form-control puerta_lineas_constructivas" /></td>
+                                                        <td class="pr-4"><input id="lineas_constructivas_revest_00001" type="text" class="form-control revest_lineas_constructivas" /></td>
+                                                        <td class="pr-4"><input id="lineas_constructivas_bano_00001" type="text" class="form-control bano_lineas_constructivas" /></td>
+                                                        <td class="pr-4"><input id="lineas_constructivas_electricas_00001" type="text" class="form-control electricas_lineas_constructivas" /></td>
+                                                        <td class="pr-4"><input id="lineas_constructivas_verificada_00001" type="text" class="form-control verificada_lineas_constructivas numero" onkeyup="SumarAreasConstructivas()" /></td>
+                                                        <td class="pr-4"><input id="lineas_constructivas_declarada_00001" type="text" class="form-control declarada_lineas_constructivas numero" onkeyup="SumarAreasConstructivas()" /></td>
+                                                        <td style="display:none;"><input id="lineas_constructivas_id_00001" type="hidden" class="form-control id_lineas_constructivas" /></td>
+                                                        <td>
+                                                            <button onclick="CrearCamposUnidadCatastral(1, 'LineasContructivas', '00001', 'lineas_constructivas')" class="btn btn-sm btn-success fa fa-plus"></button>
+                                                            <button onclick="EditarCamposUnidadCatastral(1, 'LineasContructivas', '00001', 'lineas_constructivas')" class="btn btn-sm btn-success fa fa-edit"></button>
+                                                            <button onclick="EliminarCamposUnidadCatastral(1, this, '00001', 'item_lote_obser')" class="btn btn-sm btn-success fa fa-trash"></button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr name="validacion">
+                                                        <td></td>
+                                                        <td><span class="" data-valmsg-for="val_lineas_constructivas_txtpiso_00001" data-valmsg-replace="true"></span></td>
+                                                        <td><span class="" data-valmsg-for="val_lineas_constructivas_mes_00001" data-valmsg-replace="true"></span></td>
+                                                        <td><span class="" data-valmsg-for="val_lineas_constructivas_ano_00001" data-valmsg-replace="true"></span></td>
+                                                        <td><span class="" data-valmsg-for="val_lineas_constructivas_material_00001" data-valmsg-replace="true"></span></td>
+                                                        <td><span class="" data-valmsg-for="val_lineas_constructivas_estado_00001" data-valmsg-replace="true"></span></td>
+                                                        <td><span class="" data-valmsg-for="val_lineas_constructivas_muro_00001" data-valmsg-replace="true"></span></td>
+                                                        <td><span class="" data-valmsg-for="val_lineas_constructivas_techo_00001" data-valmsg-replace="true"></span></td>
+                                                        <td><span class="" data-valmsg-for="val_lineas_constructivas_piso_00001" data-valmsg-replace="true"></span></td>
+                                                        <td><span class="" data-valmsg-for="val_lineas_constructivas_puerta_00001" data-valmsg-replace="true"></span></td>
+                                                        <td><span class="" data-valmsg-for="val_lineas_constructivas_revest_00001" data-valmsg-replace="true"></span></td>
+                                                        <td><span class="" data-valmsg-for="val_lineas_constructivas_bano_00001" data-valmsg-replace="true"></span></td>
+                                                        <td><span class="" data-valmsg-for="val_lineas_constructivas_electricas_00001" data-valmsg-replace="true"></span></td>
+                                                        <td><span class="" data-valmsg-for="val_lineas_constructivas_verificada_00001" data-valmsg-replace="true"></span></td>
+                                                        <td><span class="" data-valmsg-for="val_lineas_constructivas_declarada_00001" data-valmsg-replace="true"></span></td>
+                                                        <td style="display:none;"></td>
+                                                        <td></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section datatables {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    <script src="@Url.Content("~/Scripts/dcalendar.picker.js")"></script>
+    
+    <script>
+        var ROOT = '@Url.Content("~")';
+        $('#TabUC').hide();
+        $('.tabs').tabslet();
+        $('#FiltrarCodigoDistrito').val('31');
+        var Consultas = 'true';
+        var deshabilitar = 'disabled';
+
+        contLineasConstructivas = contIdLineasConstructivas = contOtrasInstalaciones = contIdOtrasInstalaciones = contActividadEconomica = contIdActividadEconomica = contLoteDocumRRPP =
+                contIdLoteDocumRRPP = contLoteExpediente = contLoteIdExpediente = contLoteAuto = contIdLoteAuto = contObservacionGeneral = contIdObservacionGeneral =
+                contObservacionSunarp = contIdObservacionSunarp = contObservacionCarga = contIdObservacionCarga = 1;
+
+        var lblTd = '<td class="pr-4">';
+        var lblTdSpan = '<td>';
+
+
+        ListVBEstadoConservacion = @Html.Raw(Json.Encode(ViewBag.ListVBEstadoConservacion))
+        ListVBMaterialEstructural = @Html.Raw(Json.Encode(ViewBag.ListVBMaterialEstructural))
+        ListVBOtrasInstalaciones = @Html.Raw(Json.Encode(ViewBag.ListVBOtrasInstalaciones))
+        ListVBCodigoOtrasInstalaciones = @Html.Raw(Json.Encode(ViewBag.ListVBCodigoOtrasInstalaciones))
+        ListVBMes = @Html.Raw(Json.Encode(ViewBag.ListVBMes))
+
+
+
+        $('#CodigoCodInscripcionCatastral').attr('disabled', 'disabled');
+        $('#CodigoInscripcionCatastral').attr('disabled', 'disabled');
+        $('#CodigoFuenteInscripcionCatastral').attr('disabled', 'disabled');
+        $('#CodigoCargaRegistral').attr('disabled', 'disabled');
+        $('#CodgiUsoPredio').attr('disabled', 'disabled');
+        $('#CodigoClasificacionPredio').attr('disabled', 'disabled');
+        $('#CodigoEstadoConstruccion').attr('disabled', 'disabled');
+        $('#CodigoDepartamentoPredio').attr('disabled', 'disabled');
+
+
+
+        $('#btnBuscarEstatico').click(function () {
+
+
+            var codSect = $('#FiltrarCodigoSector').val();
+            var codManz = $('#FiltrarCodigoManzana').val();
+            var codLote = $('#FiltrarCodigoLote').val();
+            var codEdif = $('#FiltrarEd').val();
+            var codEntr = $('#FiltrarEntrada').val();
+            var codPiso = $('#FiltrarPiso').val();
+            var codUnid = $('#FiltrarUnidad').val();
+            var cont;
+
+            if (!$('#FiltrarCodigoSector').val()) {
+                $('#msgErrores').append("<li>Ingrese el código del sector</li>"); cont = true;
+            }
+            if (!$('#FiltrarCodigoManzana').val()) {
+                $('#msgErrores').append("<li>Ingrese el código de la manzana</li>"); cont = true;
+            }
+            if (!$('#FiltrarCodigoLote').val()) {
+                $('#msgErrores').append("<li>Ingrese el código del lote</li>"); cont = true;
+            }
+            if (!$('#FiltrarEd').val()) {
+                $('#msgErrores').append("<li>Ingrese el código del Edificación</li>"); cont = true;
+            }
+
+            if (!$('#FiltrarEntrada').val()) {
+                $('#msgErrores').append("<li>Ingrese el código del Entrada</li>"); cont = true;
+            }
+            if (!$('#FiltrarPiso').val()) {
+                $('#msgErrores').append("<li>Ingrese el código del Piso</li>"); cont = true;
+            }
+            if (!$('#FiltrarUnidad').val()) {
+                $('#msgErrores').append("<li>Ingrese el código del Unidad</li>"); cont = true;
+            }
+
+            if (!cont) {
+                $.LoadingOverlay("show");
+                $('#msgErrores').html("");
+                $.ajax({
+                    url: ROOT + "ConsultaHistoricaUnidades/BuscarSolicitudHistoricoEstatico", type: "POST", dataType: "json",
+                    data: {
+                        FiltrarCodigoSector: codSect, FiltrarCodigoManzana: codManz, FiltrarCodigoLote: codLote,
+                        FiltrarEd: codEdif, FiltrarEntrada: codEntr, FiltrarPiso: codPiso, FiltrarUnidad: codUnid, Estatico: true
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            $('#TabUC').hide();
+                            $('.tabs').trigger('show', '#tab-1');
+                            tablaHistoricaUnidadCatastralEstatico.ajax.reload(function (res) {
+                                //console.log('2', res.data)
+                                tablaHistoricaUnidadCatastralEstatico.columns.adjust().draw();
+                                var alto = $('#tablaHistoricaUnidadCatastralEstatico_wrapper .dataTables_scrollBody').height();
+                                if (alto < 399) {
+                                    $('#tablaHistoricaUnidadCatastralEstatico_wrapper .dataTables_scrollHead').removeClass('pr-4');
+
+                                } else {
+                                    $('#tablaHistoricaUnidadCatastralEstatico_wrapper .dataTables_scrollHead').addClass('pr-4');
+                                }
+                            });
+                        } else {
+                            $('#tabLotes').hide();
+                            tablaHistoricaUnidadCatastralEstatico.clear().draw();
+                            toastr.error("No se ha encontrado la unidad", "Mensaje del Sistema", { "progressBar": true });
+                        }
+                    },
+                    complete: function (response) {
+                        $.LoadingOverlay("hide");
+                    }
+                });
+            }
+        });
+
+        var tablaHistoricaUnidadCatastralEstatico = $("#tablaHistoricaUnidadCatastralEstatico").DataTable({
+            "ajax": {
+                "url": "@Url.Content("~/ConsultaHistoricaUnidades/BuscarSolicitudHistoricoEstatico")", "type": "POST", "datatype": "json",
+
+            "data": function (d) {
+                d.FiltrarCodigoSector = $('#FiltrarCodigoSector').val();
+                d.FiltrarCodigoManzana = $('#FiltrarCodigoManzana').val();
+                d.FiltrarCodigoLote = $('#FiltrarCodigoLote').val();
+                d.FiltrarEd = $('#FiltrarEd').val();
+                d.FiltrarEntrada = $('#FiltrarEntrada').val();
+                d.FiltrarPiso = $('#FiltrarPiso').val();
+                d.FiltrarUnidad = $('#FiltrarUnidad').val();
+                d.Estatico = true;
+            }
+           },
+          "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+                "processing": true,
+                "serverSide": false,
+                "scrollY": "400px",
+                "scrollCollapse": true,
+                "paging": false,
+                "columns": [
+              { "data": "CodigoDistrito", "className": "text-center" },
+              { "data": "CodigoSector", "className": "text-center" },
+              { "data": "CodigoManzana", "className": "text-center" },
+              { "data": "CodigoLote", "className": "text-center" },
+              { "data": "Ed", "className": "text-center" },
+              { "data": "Entrada", "className": "text-center" },
+              { "data": "Piso", "className": "text-center" },
+              { "data": "Unidad", "className": "text-center" },
+              { "data": "Numversion", "className": "text-center" },
+              { "data": "TipoLlenado", "className": "text-center" },
+
+
+              { "data": "NumeroPrincipal", "className": "text-center" },
+              { "data": "ViaPrincipal", "className": "text-center" },
+
+
+              { "data": "NumPorcentajeBienComun", "name": "Ancho de Vía", "autoWidth": true },
+              { "data": "NumAreaTerrenoVerificada", "name": "Ancho de Vía", "autoWidth": true },
+              { "data": "NumAreaTerrenoComun", "name": "Ancho de Vía", "autoWidth": true },
+              { "data": "NumAreaTerrenoTotal", "name": "Ancho de Vía", "autoWidth": true },
+                { "data": "Inscripcion", "className": "text-center" }
+
+
+                ]
+                });
+
+                $('#FiltrarCodigoSector').change(function () {
+                    var texto;
+                    texto = ZeroIzqCaracter($('#FiltrarCodigoSector').val(), 2);
+                    $('#FiltrarCodigoSector').val(texto);
+                });
+
+                $('#FiltrarCodigoManzana').change(function () {
+                    var texto;
+                    texto = ZeroIzqCaracter($('#FiltrarCodigoManzana').val(), 3);
+                    $('#FiltrarCodigoManzana').val(texto);
+                });
+
+                $('#FiltrarCodigoLote').change(function () {
+                    var texto;
+                    texto = ZeroIzqCaracter($('#FiltrarCodigoLote').val(), 3);
+                    $('#FiltrarCodigoLote').val(texto);
+                });
+
+                $('#FiltrarEd').change(function () {
+                    var texto;
+                    texto = ZeroIzqCaracter($('#FiltrarEd').val(), 2);
+                    $('#FiltrarEd').val(texto);
+                });
+
+                $('#FiltrarEntrada').change(function () {
+                    var texto;
+                    texto = ZeroIzqCaracter($('#FiltrarEntrada').val(), 2);
+                    $('#FiltrarEntrada').val(texto);
+                });
+
+                $('#FiltrarPiso').change(function () {
+                    var texto;
+                    texto = ZeroIzqCaracter($('#FiltrarPiso').val(), 2);
+                    $('#FiltrarPiso').val(texto);
+                });
+
+                $('#FiltrarUnidad').change(function () {
+                    var texto;
+                    texto = ZeroIzqCaracter($('#FiltrarUnidad').val(), 3);
+                    $('#FiltrarUnidad').val(texto);
+                });
+
+
+                $('#tablaHistoricaUnidadCatastralEstatico tbody').on('click', 'tr', function () {
+                    var row = $(this);
+                    var data = tablaHistoricaUnidadCatastralEstatico.row(row).data();
+                    var codcastral = data.CodigoDistrito + "-" + data.CodigoSector + "-" + data.CodigoManzana + "-" + data.CodigoLote + "-" + data.Ed + "-" + data.Entrada + "-" + data.Piso + "-" + data.Unidad
+                    //console.log(data);
+                    $.LoadingOverlay("show");
+                    if ($(this).hasClass('selected')) {
+                        $(this).removeClass('selected');
+                        $('#GenFicha').attr('disabled', 'disabled');
+                        $('#TabUC').hide();
+                        $.LoadingOverlay("hide");
+                    }
+                    else {
+                        $.post("@Url.Content("~/ConsultaHistoricaUnidades/RecuperarHistoricoUnidadCatastralEST")", {
+                            CodUniCat: data.CodigoUni,
+                            NumVersion: data.Numversion
+
+                        },
+                        function (response) {
+                            RecuperarUnidadCatastral(response.resultado);
+                            RecuperandoLineasConstructivas(response.ListLineasConstructivas);
+                        });
+                    }
+                });
+
+
+        function RecuperarUnidadCatastral(resultado) {
+            $("#Cuc").val(resultado.Cuc);
+            $("#CodigoUnidadCatastral").val(resultado.CodigoUnico);
+            $("#CodigoTipoLlenado").val(resultado.codigollenado);
+            $("#CodigoPredial").val(resultado.CodigoPredial);
+            $("#CodigoInscripcionCatastral").val(resultado.CodigoInscripcionCatastral);
+            $("#CodigoCodInscripcionCatastral").val(resultado.CodigoCodInscripcionCatastral);
+            $("#CodigoFuenteInscripcionCatastral").val(resultado.CodigoFuenteInscripcionCatastral);
+            $("#CodigoCargaRegistral").val(resultado.CodigoCargaRegistral);
+            $("#Denominacion").val(resultado.Denominacion);
+            $("#CodgiUsoPredio").val(resultado.CodgiUsoPredio);
+            $("#CodigoClasificacionPredio").val(resultado.CodigoClasificacionPredio);
+            $("#CodigoEstadoConstruccion").val(resultado.CodigoEstadoConstruccion);
+            $("#AvanceConstruccion").val(resultado.AvanceConstruccion);
+            $("#FechaUltimaInspeccion").val(resultado.FechaUltimaInspeccion);
+            $("#FechaActualizacion").val(resultado.FechaActualizacion);
+            $("#NumVersionUnidad").val(resultado.version);
+
+
+            $.LoadingOverlay("hide");
+            $('#TabUC').show();
+
+            tablaMunicipalAsignado.ajax.reload();
+            tablaMunicipalAsignado2.ajax.reload();
+            TipoDepartamentoAction(resultado.CodigoClasificacionPredio, resultado.CodigoDepartamentoPredio);
+
+            CargarImagen();
+
+        };
+
+        function CapturarCodigoUso(element) {
+            var res = element.id.substr(element.id.length - 5, 5);
+            $("#actividad_economica_codigo_" + res).val($("#" + element.id).val());
+            $("#actividad_economica_codigo_" + res).trigger("chosen:updated");
+        }
+
+        $("#CodigoCodInscripcionCatastral").change(function () {
+            $('#CodigoInscripcionCatastral').val($("#CodigoCodInscripcionCatastral").val());
+            $('.chosen-seleccionar').trigger("chosen:updated");
+        });
+
+        $("#CodigoInscripcionCatastral").change(function () {
+            $('#CodigoCodInscripcionCatastral').val($("#CodigoInscripcionCatastral").val());
+            $('.chosen-seleccionar').trigger("chosen:updated");
+        });
+
+        function TipoDepartamentoAction(value, result) {
+            if (value === '010001') {
+                $('#LabelTipoDepartamento').text('Tipo Departamento');
+                $('#DivTipoDepartamento').show();
+                $('#CodigoDepartamentoPredio').val(result);
+            } else if (value === '010003') {
+                $('#LabelTipoDepartamento').text('Tipo Oficina');
+                $('#DivTipoDepartamento').show();
+                $('#CodigoDepartamentoPredio').val(result);
+            } else {
+                $('#LabelTipoDepartamento').text('');
+                $('#CodigoDepartamentoPredio').val('');
+                $('#DivTipoDepartamento').hide();
+            }
+        }
+        function CargarImagen() {
+            var urlAction = "@Url.Action("CargarImagen")?CodigoUnidadCatastral=" + $("#CodigoUnidadCatastral").val() + "&version=" + $("#NumVersionUnidad").val();
+            $.post(urlAction, function (response) {
+                if (response === 'false') {
+                    imagen = '';
+                }
+                $("#imglote").attr("src", response.imagen);
+            });
+
+        };
+
+        tablaMunicipalAsignado = $("#tablaMunicipalAsignado").DataTable({
+            "ajax": {
+                "url": "@Url.Content("~/ConsultaHistoricaUnidades/CargarDireccionHistoricaUnidad")",
+            "type": "POST",
+            "datatype": "json",
+            "data": function (d) {
+                d.CodigoUniCat = $('#CodigoUnidadCatastral').val();
+                d.flgindirec = 1;
+                d.Numversion = $("#NumVersionUnidad").val();
+            }
+        },
+        "columns": [
+            { "data": "Item", "name": "Item", "className": "text-center" },
+            { "data": "NombreAsignacion", "name": "NombreAsignacion", "className": "text-center" },
+            { "data": "NombreVia", "name": "NombreVia", "className": "text-center" },
+            { "data": "NumeroCuadra", "name": "NumeroCuadra", "autoWidth": true, "className": "text-center" },
+            { "data": "NombreTipoEdificacion", "name": "TipoEdificacionNombreTipoEdificacion", "autoWidth": true, "className": "text-center" },
+            { "data": "NumeroPuerta", "name": "NumeroPuerta", "autoWidth": true, "className": "text-center" },
+            { "data": "NombreEstadoInterior", "name": "NombreEstadoInterior", "autoWidth": true, "className": "text-center" },
+            { "data": "NombreTipoInterior", "name": "NombreTipoInterior", "autoWidth": true, "className": "text-center" },
+            { "data": "NumeroInterior", "name": "NumeroPuerta", "autoWidth": true, "className": "text-center" },
+            { "data": "LetraInterior", "name": "LetraInterior", "autoWidth": true, "className": "text-center" },
+            { "data": "NombreInscripcion", "name": "NombreInscripcion", "autoWidth": true, "className": "text-center" },
+            { "data": "txtArea", "name": "txtArea", "autoWidth": true, "className": "text-center" },
+            { "data": "CodigoCorrDirecUnidad", "name": "Codigo", "autoWidth": true, "className": "hide_column" },
+            { "data": "CodigoVia", "name": "Codigo", "autoWidth": true, "className": "hide_column" },
+            { "data": "CodigoCorrManzVia", "name": "Codigo", "autoWidth": true, "className": "hide_column" },
+            { "data": "CodigoCorrLoteDirecc", "name": "Codigo", "autoWidth": true, "className": "hide_column" },
+            { "data": "CodigoLado", "name": "Codigo", "autoWidth": true, "className": "hide_column" }
+        ],
+        "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+                    "processing": true,
+                    "serverSide": false,
+                    "paging": false,
+        });
+
+        tablaMunicipalAsignado2 = $("#tablaMunicipalAsignado2").DataTable({
+            "ajax": {
+                "url": "@Url.Content("~/ConsultaHistoricaUnidades/CargarDireccionHistoricaUnidad")",
+            "type": "POST",
+            "datatype": "json",
+            "data": function (d) {
+                d.CodigoUniCat = $('#CodigoUnidadCatastral').val();
+                d.flgindirec = 2;
+                d.Numversion = $("#NumVersionUnidad").val();
+            }
+        },
+            "columns": [
+                { "data": "Item", "name": "Item", "className": "text-center" },
+                { "data": "NombreAsignacion", "name": "NombreAsignacion", "className": "text-center" },
+                { "data": "NombreVia", "name": "NombreVia", "className": "text-center" },
+                { "data": "NumeroCuadra", "name": "NumeroCuadra", "autoWidth": true, "className": "text-center" },
+                { "data": "NombreTipoEdificacion", "name": "TipoEdificacionNombreTipoEdificacion", "autoWidth": true, "className": "text-center" },
+                { "data": "NumeroPuerta", "name": "NumeroPuerta", "autoWidth": true, "className": "text-center" },
+                { "data": "NombreEstadoInterior", "name": "NombreEstadoInterior", "autoWidth": true, "className": "text-center" },
+                { "data": "NombreTipoInterior", "name": "NombreTipoInterior", "autoWidth": true, "className": "text-center" },
+                { "data": "NumeroInterior", "name": "NumeroPuerta", "autoWidth": true, "className": "text-center" },
+                { "data": "LetraInterior", "name": "LetraInterior", "autoWidth": true, "className": "text-center" },
+                { "data": "NombreInscripcion", "name": "NombreInscripcion", "autoWidth": true, "className": "text-center" },
+                { "data": "txtArea", "name": "txtArea", "autoWidth": true, "className": "text-center" },
+                { "data": "CodigoCorrDirecUnidad", "name": "Codigo", "autoWidth": true, "className": "hide_column" },
+                { "data": "CodigoVia", "name": "Codigo", "autoWidth": true, "className": "hide_column" },
+                { "data": "CodigoCorrManzVia", "name": "Codigo", "autoWidth": true, "className": "hide_column" },
+                { "data": "CodigoCorrLoteDirecc", "name": "Codigo", "autoWidth": true, "className": "hide_column" },
+                { "data": "CodigoLado", "name": "Codigo", "autoWidth": true, "className": "hide_column" }
+            ],
+            "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+                "processing": true,
+                "serverSide": false,
+                "paging": false,
+                });
+
+        function RecuperandoLineasConstructivas(resultado) {
+            //console.log('en metodo');
+            //console.log(resultado);
+
+            for (i = 0; i < resultado.length; i++) {
+                var valorReal = i + 1;
+                if (valorReal != 1) {
+                    CrearCamposUnidadCatastral(1, 'LineasContructivas', '00000', 'lineas_constructivas', 'Carga');
+
+                } else {
+                    $('#LineasContructivas input').attr('disabled', 'disabled');
+                    $('#LineasContructivas select').attr('disabled', 'disabled');
+                    $('#LineasContructivas textarea').attr('disabled', 'disabled');
+                }
+                CargarLineasConstructivas(valorReal, resultado[i]);
+                //$('.numeroTab').number(true, 2, '.', '');
+            }
+
+        }
+        function CargarLineasConstructivas(numero, resultado) {
+
+            $("#lineas_constructivas_txtpiso_" + LeftZero(numero, 5)).val(resultado.txtPiso);
+            $("#lineas_constructivas_mes_" + LeftZero(numero, 5)).val(resultado.Mes);
+            $("#lineas_constructivas_ano_" + LeftZero(numero, 5)).val(resultado.Ano);
+            $("#lineas_constructivas_material_" + LeftZero(numero, 5)).val(resultado.Material);
+            $("#lineas_constructivas_estado_" + LeftZero(numero, 5)).val(resultado.EstadoConst);
+            $("#lineas_constructivas_muro_" + LeftZero(numero, 5)).val(resultado.Muro);
+            $("#lineas_constructivas_techo_" + LeftZero(numero, 5)).val(resultado.Techo);
+            $("#lineas_constructivas_piso_" + LeftZero(numero, 5)).val(resultado.Piso);
+            $("#lineas_constructivas_puerta_" + LeftZero(numero, 5)).val(resultado.Puerta);
+            $("#lineas_constructivas_revest_" + LeftZero(numero, 5)).val(resultado.Revest);
+            $("#lineas_constructivas_bano_" + LeftZero(numero, 5)).val(resultado.Bano);
+            $("#lineas_constructivas_electricas_" + LeftZero(numero, 5)).val(resultado.Electricas);
+            $("#lineas_constructivas_verificada_" + LeftZero(numero, 5)).val(resultado.Verificada);
+            $("#lineas_constructivas_declarada_" + LeftZero(numero, 5)).val(resultado.Declarada);
+            $("#lineas_constructivas_id_" + LeftZero(numero, 5)).val(resultado.CodigoCorrelativo);
+
+        }
+        function ValidarLineasConstructivas(IdItem, ValInicial) {
+            RemoveValidacionLineasConstructivas(IdItem);
+            var cont = true;
+            var contError = 0;
+            if (!$('#lineas_constructivas_txtpiso_' + IdItem).val()) {
+                $('[data-valmsg-for="val_lineas_constructivas_txtpiso_' + IdItem + '"]').html('Ingrese <br> Piso').addClass('field-validation-valid has-error');
+                cont = false;
+                contError++;
+            }
+
+            if (!$('#lineas_constructivas_mes_' + IdItem).val()) {
+                $('[data-valmsg-for="val_lineas_constructivas_mes_' + IdItem + '"]').html('Ingrese <br> Mes').addClass('field-validation-valid has-error');
+                cont = false;
+                contError++;
+            }
+
+            if (!$('#lineas_constructivas_ano_' + IdItem).val()) {
+                $('[data-valmsg-for="val_lineas_constructivas_ano_' + IdItem + '"]').html('Ingrese <br> Año').addClass('field-validation-valid has-error');
+                cont = false;
+                contError++;
+            }
+
+            if (!$('#lineas_constructivas_material_' + IdItem).val()) {
+                $('[data-valmsg-for="val_lineas_constructivas_material_' + IdItem + '"]').html('Ingrese <br> Material').addClass('field-validation-valid has-error');
+                cont = false;
+                contError++;
+            }
+
+            if (!$('#lineas_constructivas_estado_' + IdItem).val()) {
+                $('[data-valmsg-for="val_lineas_constructivas_estado_' + IdItem + '"]').html('Ingrese <br> Estado').addClass('field-validation-valid has-error');
+                cont = false;
+                contError++;
+            }
+
+            if (!$('#lineas_constructivas_muro_' + IdItem).val()) {
+                $('[data-valmsg-for="val_lineas_constructivas_muro_' + IdItem + '"]').html('Ingrese <br> Muro').addClass('field-validation-valid has-error');
+                cont = false;
+                contError++;
+            }
+
+            if (!$('#lineas_constructivas_techo_' + IdItem).val()) {
+                $('[data-valmsg-for="val_lineas_constructivas_techo_' + IdItem + '"]').html('Ingrese <br> Techo').addClass('field-validation-valid has-error');
+                cont = false;
+                contError++;
+            }
+
+            if (!$('#lineas_constructivas_piso_' + IdItem).val()) {
+                $('[data-valmsg-for="val_lineas_constructivas_piso_' + IdItem + '"]').html('Ingrese <br> Piso').addClass('field-validation-valid has-error');
+                cont = false;
+                contError++;
+            }
+
+            if (!$('#lineas_constructivas_puerta_' + IdItem).val()) {
+                $('[data-valmsg-for="val_lineas_constructivas_puerta_' + IdItem + '"]').html('Ingrese <br> Puerta').addClass('field-validation-valid has-error');
+                cont = false;
+                contError++;
+            }
+
+            if (!$('#lineas_constructivas_revest_' + IdItem).val()) {
+                $('[data-valmsg-for="val_lineas_constructivas_revest_' + IdItem + '"]').html('Ingrese <br> Revest.').addClass('field-validation-valid has-error');
+                cont = false;
+                contError++;
+            }
+
+            if (!$('#lineas_constructivas_bano_' + IdItem).val()) {
+                $('[data-valmsg-for="val_lineas_constructivas_bano_' + IdItem + '"]').html('Ingrese <br> Baño').addClass('field-validation-valid has-error');
+                cont = false;
+                contError++;
+            }
+
+            if (!$('#lineas_constructivas_electricas_' + IdItem).val()) {
+                $('[data-valmsg-for="val_lineas_constructivas_electricas_' + IdItem + '"]').html('Ingrese <br> Instalaciones <br> Electicas').addClass('field-validation-valid has-error');
+                cont = false;
+                contError++;
+            }
+
+            if (!$('#lineas_constructivas_verificada_' + IdItem).val()) {
+                $('[data-valmsg-for="val_lineas_constructivas_verificada_' + IdItem + '"]').html('Ingrese <br> Área  <br> Verificada').addClass('field-validation-valid has-error');
+                cont = false;
+                contError++;
+            }
+
+
+            if (contError === 13 && ValInicial === 1) {
+                cont = true;
+                RemoveValidacionLineasConstructivas(IdItem);
+            }
+
+            return cont
+        }
+        function RemoveValidacionLineasConstructivas(IdItem) {
+            $('[data-valmsg-for="val_lineas_constructivas_txtpiso_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+            $('[data-valmsg-for="val_lineas_constructivas_mes_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+            $('[data-valmsg-for="val_lineas_constructivas_ano_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+            $('[data-valmsg-for="val_lineas_constructivas_material_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+            $('[data-valmsg-for="val_lineas_constructivas_estado_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+            $('[data-valmsg-for="val_lineas_constructivas_muro_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+            $('[data-valmsg-for="val_lineas_constructivas_techo_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+            $('[data-valmsg-for="val_lineas_constructivas_piso_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+            $('[data-valmsg-for="val_lineas_constructivas_puerta_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+            $('[data-valmsg-for="val_lineas_constructivas_revest_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+            $('[data-valmsg-for="val_lineas_constructivas_bano_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+            $('[data-valmsg-for="val_lineas_constructivas_electricas_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+            $('[data-valmsg-for="val_lineas_constructivas_verificada_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+            $('[data-valmsg-for="val_lineas_constructivas_declarada_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+        }
+        function CrearCamposUnidadCatastral(tipo, tabla, posactual, focus, opcion) {
+            if (tipo === 1) {
+
+                cont = ValidarLineasConstructivas(posactual, 0);
+                if (cont == true || posactual == '00000') {
+                    contLineasConstructivas++; contIdLineasConstructivas++; var numeroItem = LeftZero(contLineasConstructivas, 5); var idItem = LeftZero(contIdLineasConstructivas, 5);
+                    fieldset = "lineas_constructivas";
+                    var ValCat = 'onKeypress="if (!(event.keyCode >= 65 && event.keyCode <= 73) && !(event.keyCode >= 97 && event.keyCode <= 105)) event.returnValue = false;"'
+                    columnas = lblTd + '<input type="text" disabled value="' + idItem + '"  class="form-control item_lineas_constructivas"></td>' +
+                               lblTd + '<input id="lineas_constructivas_txtpiso_' + idItem + '" type="text" maxlength="2"  class="form-control txtpiso_lineas_constructivas"></td>' +
+                               lblTd + '<select id="lineas_constructivas_mes_' + idItem + '" class="form-control mes_lineas_constructivas"></select></td>' +
+                               lblTd + '<input id="lineas_constructivas_ano_' + idItem + '" type="text" maxlength="4" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"  class="form-control ano_lineas_constructivas"></td>' +
+                               lblTd + '<select id="lineas_constructivas_material_' + idItem + '" class="form-control material_lineas_constructivas"></select></td>' +
+                               lblTd + '<select id="lineas_constructivas_estado_' + idItem + '" class="form-control estado_lineas_constructivas"> </select></td>' +
+                               lblTd + '<input id="lineas_constructivas_muro_' + idItem + '" type="text" maxlength="1" ' + ValCat + ' class="form-control muro_lineas_constructivas" /></td>' +
+                               lblTd + '<input id="lineas_constructivas_techo_' + idItem + '" type="text" maxlength="1" ' + ValCat + ' class="form-control techo_lineas_constructivas" /></td>' +
+                               lblTd + '<input id="lineas_constructivas_piso_' + idItem + '" type="text" maxlength="1" ' + ValCat + ' class="form-control piso_lineas_constructivas" /></td>' +
+                               lblTd + '<input id="lineas_constructivas_puerta_' + idItem + '" type="text" maxlength="1" ' + ValCat + ' class="form-control puerta_lineas_constructivas" /></td>' +
+                               lblTd + '<input id="lineas_constructivas_revest_' + idItem + '" type="text" maxlength="1" ' + ValCat + ' class="form-control revest_lineas_constructivas" /></td>' +
+                               lblTd + '<input id="lineas_constructivas_bano_' + idItem + '" type="text" maxlength="1" ' + ValCat + ' class="form-control bano_lineas_constructivas" /></td>' +
+                               lblTd + '<input id="lineas_constructivas_electricas_' + idItem + '" type="text" maxlength="1" ' + ValCat + ' class="form-control electricas_lineas_constructivas" /></td>' +
+                               lblTd + '<input id="lineas_constructivas_verificada_' + idItem + '" type="text" class="form-control verificada_lineas_constructivas" onkeyup="SumarAreasConstructivas()" style="text-align: right;" /></td>' +
+                               lblTd + '<input id="lineas_constructivas_declarada_' + idItem + '" type="text" class="form-control declarada_lineas_constructivas" onkeyup="SumarAreasConstructivas()" style="text-align: right;" /></td>' +
+                               '<td style="display:none;">' + '<input id="lineas_constructivas_id_' + idItem + '" type="hidden" class="form-control id_lineas_constructivas" /></td>';
+
+                    columnasValidacion = lblTdSpan + '</td>' +
+                                  lblTdSpan + '<span class="" data-valmsg-for="val_lineas_constructivas_txtpiso_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                                  lblTdSpan + '<span class="" data-valmsg-for="val_lineas_constructivas_mes_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                                  lblTdSpan + '<span class="" data-valmsg-for="val_lineas_constructivas_ano_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                                  lblTdSpan + '<span class="" data-valmsg-for="val_lineas_constructivas_material_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                                  lblTdSpan + '<span class="" data-valmsg-for="val_lineas_constructivas_estado_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                                  lblTdSpan + '<span class="" data-valmsg-for="val_lineas_constructivas_muro_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                                  lblTdSpan + '<span class="" data-valmsg-for="val_lineas_constructivas_techo_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                                  lblTdSpan + '<span class="" data-valmsg-for="val_lineas_constructivas_piso_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                                  lblTdSpan + '<span class="" data-valmsg-for="val_lineas_constructivas_puerta_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                                  lblTdSpan + '<span class="" data-valmsg-for="val_lineas_constructivas_revest_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                                  lblTdSpan + '<span class="" data-valmsg-for="val_lineas_constructivas_bano_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                                  lblTdSpan + '<span class="" data-valmsg-for="val_lineas_constructivas_electricas_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                                  lblTdSpan + '<span class="" data-valmsg-for="val_lineas_constructivas_verificada_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                                  lblTdSpan + '<span class="" data-valmsg-for="val_lineas_constructivas_declarada_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                                  '<td style="display:none;"></td>';
+
+                    BotonesTablas(tabla, columnas, tipo, focus, idItem, fieldset, columnasValidacion, opcion);
+
+                    CrearCombobox('lineas_constructivas_estado_' + idItem, ListVBEstadoConservacion);
+                    CrearCombobox('lineas_constructivas_material_' + idItem, ListVBMaterialEstructural);
+                    CrearCombobox('lineas_constructivas_mes_' + idItem, ListVBMes);
+
+                    $('#lineas_constructivas_verificada_' + idItem).number(true, 4, '.', '');
+                    $('#lineas_constructivas_declarada_' + idItem).number(true, 4, '.', '');
+
+
+                }
+            } else if (tipo === 2) {
+                cont = ValidarOtrasInstalaciones(posactual, 0);
+                if (cont == true || posactual == '00000') {
+                    fieldset = "otras_instalaciones"; contOtrasInstalaciones++; contIdOtrasInstalaciones++; var numeroItem = LeftZero(contOtrasInstalaciones, 5); var idItem = LeftZero(contOtrasInstalaciones, 5);
+                    columnas = lblTd + '<input type="text" disabled value="' + numeroItem + '" class="form-control item_' + fieldset + '"></td>' +
+                           lblTd + '<select onchange="CapturarTipoInstalacion(this)" id="' + fieldset + '_codigo_' + idItem + '" class="form-control chosen-seleccionar codigo_' + fieldset + '"> </select></td>' +
+                           lblTd + '<select onchange="CapturarCodigoTipoInstalacion(this)" id="' + fieldset + '_tipoinstalacion_' + idItem + '" class="form-control chosen-seleccionar tipoinstalacion_' + fieldset + '"> </select></td>' +
+                           lblTd + '<input id="' + fieldset + '_unidad_' + idItem + '"  class="form-control  unidad_' + fieldset + '"></td>' +
+                           lblTd + '<input id="' + fieldset + '_capacidad_' + idItem + '" type="text" class="form-control capacidad_' + fieldset + ' numeroTab" style="text-align: right;" ></td>' +
+                           lblTd + '<input id="' + fieldset + '_cantidad_' + idItem + '" type="text" maxlength="4" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" class="form-control cantidad_' + fieldset + '" style="text-align: right;"></td>' +
+                           lblTd + '<select id="' + fieldset + '_mes_' + idItem + '" type="text" class="form-control mes_' + fieldset + '"> </select></td>' +
+                           lblTd + '<input id="' + fieldset + '_ano_' + idItem + '" type="text"  maxlength="4" class="form-control ano_' + fieldset + '"></td>' + //onKeyUp="CargarTipoInstalacion(this)
+                           lblTd + '<select id="' + fieldset + '_estadoconservacion_' + idItem + '" type="text" class="form-control estadoconservacion_' + fieldset + '"> </select></td>' +
+                           '<td style="display:none;">' + '<input id="' + fieldset + '_id_' + idItem + '" type="hidden" class="form-control id_' + fieldset + '" /></td>';
+
+
+                    CrearCombobox(fieldset + '_estadoconservacion_' + idItem, ListVBEstadoConservacion);
+                    CrearCombobox(fieldset + '_tipoinstalacion_' + idItem, ListVBOtrasInstalaciones);
+                    CrearCombobox(fieldset + '_codigo_' + idItem, ListVBCodigoOtrasInstalaciones)
+                    CrearCombobox(fieldset + '_tipoinstalacion_' + idItem, ListVBOtrasInstalaciones);
+                    CrearCombobox(fieldset + '_codigo_' + idItem, ListVBCodigoOtrasInstalaciones)
+                    //CrearCombobox(fieldset + '_unidad_' + idItem, ListVBUnidadMedida);
+                    CrearCombobox(fieldset + '_mes_' + idItem, ListVBMes);
+
+                    $('#' + fieldset + '_capacidad_' + idItem).number(true, 4, '.', '');
+                }
+            } else if (tipo === 3) {
+                cont = ValidarActividadEconomica(posactual, 0);
+                if (cont == true || posactual == '00000') {
+                    fieldset = "actividad_economica"; contActividadEconomica++; contIdActividadEconomica++; var numeroItem = LeftZero(contActividadEconomica, 5); var idItem = LeftZero(contActividadEconomica, 5);
+                    columnas = lblTd + '<input type="text" disabled value="' + numeroItem + '" class="form-control item_' + fieldset + '"></td>' +
+                           lblTd + '<select onchange="CapturarUso(this)" id="' + fieldset + '_codigo_' + idItem + '" class="chosen-seleccionar form-control codigo_' + fieldset + '"> </select></td>' +
+                           lblTd + '<select onchange="CapturarCodigoUso(this)" id="' + fieldset + '_uso_' + idItem + '" class="chosen-seleccionar form-control uso_' + fieldset + '"> </select></td>' +
+                           lblTd + '<input id="' + fieldset + '_metro_' + idItem + '" type="text" class="form-control metro_' + fieldset + '"></td>' +
+                           lblTd + '<input id="' + fieldset + '_fecha_' + idItem + '" maxlength="10" type="text" class="form-control  fecha_' + fieldset + '"></td>' +
+                           lblTd + '<select id="' + fieldset + '_retiro_' + idItem + '" class="form-control retiro_' + fieldset + '"> </select></td>' +
+                           lblTd + '<select onchange="CapturarAnuncio(this)" id="' + fieldset + '_anuncio_' + idItem + '" class="form-control anuncio_' + fieldset + '"> </select></td>' +
+                           lblTd + '<select id="' + fieldset + '_tipoanuncio_' + idItem + '" class="chosen-seleccionar form-control tipoanuncio_' + fieldset + '"> </select></td>' +
+                           '<td style="display:none;">' + '<input id="' + fieldset + '_id_' + idItem + '" type="hidden" class="form-control id_' + fieldset + '" /></td>';
+
+
+                    pickmeup('#' + fieldset + '_fecha_' + idItem, { format: 'd/m/Y' });
+                    $('#' + fieldset + '_fecha_' + idItem).val('');
+                    CrearCombobox(fieldset + '_uso_' + idItem, ListVBUsoPredio);
+                    CrearCombobox(fieldset + '_codigo_' + idItem, ListVBCodigoUsoPredio);
+                    CrearCombobox(fieldset + '_retiro_' + idItem, ListVBTipoSiNo)
+                    CrearCombobox(fieldset + '_anuncio_' + idItem, ListVBTipoSiNo);
+                    CrearCombobox(fieldset + '_tipoanuncio_' + idItem, ListVBTipoAnuncio);
+
+                    //CrearMascaraDecimal(fieldset + '_metro_' + idItem);
+                    $('#' + fieldset + '_metro_' + idItem).number(true, 4, '.', '');
+
+
+                }
+            } else if (tipo === 4) {
+                contLoteDocumRRPP++; contIdLoteDocumRRPP++; var numeroItem = LeftZero(contLoteDocumRRPP, 5); var idItem = LeftZero(contIdLoteDocumRRPP, 5); fieldset = "docum";
+                columnas = lblTd + '<input type="text" disabled value="' + numeroItem + '" class="form-control item_lote_documr"></td>' +
+                        lblTd + '<select id="docum_lote_tipodoc_' + idItem + '" class="form-control tipodoc_lote_docum"></select></td>' +
+                        lblTd + '<input id="docum_lote_partida_' + idItem + '" type="text" class="form-control partida_lote_documr"></td>' +
+                        lblTd + '<input id="docum_lote_tomoficha_' + idItem + '" type="text" class="form-control tomoficha_lote_documr"></td>' +
+                        lblTd + '<input id="docum_lote_folio_' + idItem + '" type="text" class="form-control folio_lote_documr"></td>' +
+                        lblTd + '<input id="docum_lote_asiento_' + idItem + '" type="text" class="form-control asiento_lote_documr"></td>' +
+                        lblTd + '<input id="docum_lote_fechadoc_' + idItem + '" type="text" class="form-control fechadoc_lote_documr"></td>';
+
+
+            } else if (tipo === 5 || tipo === 6) {
+
+
+                if (tipo === 5) { fieldset = "exped"; contLoteExpediente++; contLoteIdExpediente++; var numeroItem = LeftZero(contLoteExpediente, 5); var idItem = LeftZero(contLoteIdExpediente, 5); }
+                else if (tipo === 6) { fieldset = "autor"; contLoteAuto++; contIdLoteAuto++; var numeroItem = LeftZero(contLoteAuto, 5); var idItem = LeftZero(contIdLoteAuto, 5); }
+                columnas = lblTd + '<input type="text" disabled value="' + numeroItem + '" class="form-control item_lote_' + fieldset + '"></td>' +
+                       lblTd + '<input id="' + fieldset + '_lote_solici_' + idItem + '" type="text" class="form-control solici_lote_' + fieldset + '"></td>' +
+                       lblTd + '<input id="' + fieldset + '_lote_documento_' + idItem + '" type="text" class="form-control documento_lote_' + fieldset + '"></td>' +
+                       lblTd + '<input id="' + fieldset + '_lote_numero_' + idItem + '" type="text" class="form-control numero_lote_' + fieldset + '"></td>' +
+                       lblTd + '<input id="' + fieldset + '_lote_fecha_' + idItem + '" type="text" class="form-control fecha_lote_' + fieldset + '"></td>' +
+                       lblTd + '<input id="' + fieldset + '_lote_obser_' + idItem + '" type="text" class="form-control obser_lote_' + fieldset + '"></td>';
+
+            } else if (tipo === 7 || tipo === 8 || tipo === 9) {
+
+
+                if (tipo === 7) { fieldset = "obs_general"; contObservacionGeneral++; contIdObservacionGeneral++; var numeroItem = LeftZero(contObservacionGeneral, 5); var idItem = LeftZero(contIdObservacionGeneral, 5); }
+                else if (tipo === 8) { fieldset = "obs_sunarp"; contObservacionSunarp++; contIdObservacionSunarp++; var numeroItem = LeftZero(contObservacionSunarp, 5); var idItem = LeftZero(contIdObservacionSunarp, 5); }
+                else if (tipo === 9) { fieldset = "obs_carga"; contObservacionCarga++; contIdObservacionCarga++; var numeroItem = LeftZero(contObservacionCarga, 5); var idItem = LeftZero(contIdObservacionCarga, 5); }
+
+                cont = ValidarObservaciones(posactual, 0, fieldset);
+                if (cont == true || posactual == '00000') {
+
+                    columnas = '<td valign="top" class="pr-4"><input type="text" disabled value="' + numeroItem + '" class="form-control mt-2 item_' + fieldset + '"></td>' +
+                           '<td valign="top" class="pr-4"><input id="' + fieldset + '_fecha_' + idItem + '" type="text" maxlength="10" class="form-control mt-2 fecha_' + fieldset + '"></td>' +
+                           '<td valign="top" style="padding-right: 1.5rem !important;">' + '<textarea id="' + fieldset + '_observacion_' + idItem + '" class="form-control mt-2 observacion_' + fieldset + '" rows="3" ></textarea></td>' +
+                           '<td style="display:none;">' + '<input id="' + fieldset + '_id_' + idItem + '" type="hidden" class="form-control id_' + fieldset + '" /></td>';
+
+
+                    columnasValidacion = lblTdSpan + '</td>' +
+                                       lblTdSpan + '<span class="" data-valmsg-for="val_' + fieldset + '_fecha_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                                       lblTdSpan + '<span class="" data-valmsg-for="val_' + fieldset + '_observacion_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+                                       '<td style="display:none;"></td>';
+
+
+                    pickmeup('#' + fieldset + '_fecha_' + idItem, { format: 'd/m/Y' });
+                    $('#' + fieldset + '_fecha_' + idItem).val('');
+                    $('#' + fieldset + '_fecha_' + idItem).attr('disabled', 'disabled');
+                    $('#' + fieldset + '_observacion_' + idItem).attr('disabled', 'disabled');
+
+                } else {
+                    contObservacionGeneral--; contIdObservacionGeneral--;
+                }
+
+            }
+
+
+            $(".chosen-seleccionar").chosen({ width: "100%", placeholder_text_single: "Seleccione una opción" });
+        }
+        function BotonesTablas(tabla, columnas, tipo, focus, idItem, fieldset, columnasValidacion, opcion) {
+            var opcionInicial = 'Nuevo';
+            $('#' + tabla + ' input').attr('disabled', 'disabled');
+            $('#' + tabla + ' select').attr('disabled', 'disabled');
+            $('#' + tabla + ' textarea').attr('disabled', 'disabled');
+            $('#' + tabla).append('<tr style="height:45px">' + columnas + '<td>' +
+                            '<button' + (Consultas != 'False' ? deshabilitar : ' ') + 'onclick=" CrearCamposUnidadCatastral(' + tipo + ',\'' + tabla + '\',\'' + idItem + '\',\'' + focus + '\',\'' + opcionInicial + '\')"  class="btn btn-sm btn-success fa fa-plus"></button> ' +
+                            '<button' + (Consultas != 'False' ? deshabilitar : ' ') + 'onclick="EditarCamposUnidadCatastral(' + tipo + ',\'' + tabla + '\',\'' + idItem + '\',\'' + focus + '\')" class="btn btn-sm btn-success fa fa-edit"></button> ' +
+                            '<button' + (Consultas != 'False' ? deshabilitar : ' ') + 'onclick="EliminarCamposUnidadCatastral(' + tipo + ',this, ' + idItem + ', \'item_lote_' + fieldset + '\')" class="btn btn-sm btn-success fa fa-trash"></button></td></tr>');
+
+            $('#' + tabla).append('<tr name="validacion">' + columnasValidacion + '<td></td></tr>');
+
+            $('#' + focus + '_' + idItem).focus().select();
+
+            if (opcion === 'Carga') {
+                $('#' + tabla + ' input').attr('disabled', 'disabled');
+                $('#' + tabla + ' select').attr('disabled', 'disabled');
+                $('#' + tabla + ' textarea').attr('disabled', 'disabled');
+            }
+        }
+        function CrearCombobox(Combobox, data) {
+
+            $('#' + Combobox).find('option:not(:first)').remove();
+            var items = '<option value="">Seleccione...</option>';
+            $.each(data, function (i, item) {
+                items += "<option value='" + item.Value + "'>" + item.Text + "</option>";
+            });
+            $('#' + Combobox).val('');
+            $('#' + Combobox).html(items);
+            $('.chosen-seleccionar').trigger("chosen:updated");
+
+        }
+        function InicializarValores() {
+
+            InicializarValoresTab1();
+
+
+        }
+        function InicializarValoresTab1() {
+
+            $('#CodigoUnidadCatastral').val('');
+            $('#CodigoDistrito').val('');
+            $('#CodigoSector').val('');
+            $('#CodigoManzana').val('');
+            $('#CodigoLote').val('');
+            $('#CodigoEdificacion').val('');
+            $('#CodigoEntrada').val('');
+            $('#CodigoPiso').val('');
+            $('#CodigoUnidad').val('');
+            tablaMunicipalAsignado.ajax.reload();
+            //tablaMunicipalAsignado2.ajax.reload();
+            //CargarImagen();
+            $("#Cuc").val('');
+            $("#CodigoInscripcionCatastral").val('');
+            $("#CodigoCodInscripcionCatastral").val('');
+            $("#CodigoFuenteInscripcionCatastral").val('');
+            $("#Denominacion").val('');
+            $("#CodigoEstadoConstruccion").val('');
+            $("#CodigoClasificacionPredio").val('');
+            $("#CodigoDepartamentoPredio").val('');
+            $("#CodigoCargaRegistral").val('');
+            $("#CodgiUsoPredio").val('');
+            $("#CodigoPredial").val('');
+            $("#AvanceConstruccion").val('');
+            $("#AreaComunesCalculado").val('');
+
+
+        }
+
+    </script>
+}

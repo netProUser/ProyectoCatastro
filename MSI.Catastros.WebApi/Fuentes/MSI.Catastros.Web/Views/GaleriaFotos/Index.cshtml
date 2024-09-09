@@ -1,0 +1,225 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Lotes.FiltrarLotesViewModel
+@using System.Configuration;
+@{  ViewBag.Title = "Galeria Fotos";  }
+<style>
+    ::-webkit-inner-spin-button {
+        display: none;
+    }
+
+    ::-webkit-calendar-picker-indicator {
+        background: radial-gradient(233,233,233);
+        color: white;
+    }
+</style>
+<div class="row" id="Lotes">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="">
+                            <div class="col-xl-6 ">
+                                <table border="0">
+                                    <tr>
+                                        <td width="12%"><label class="form-label">Dist.</label></td>
+                                        <td width="12%"><label class="form-label">Sec</label></td>
+                                        <td width="12%"><label class="form-label">Mz</label></td>
+                                        <td width="12%"><label class="form-label">Lote</label></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoDistrito, new { @class = "form-control text-center px-3", @readonly = "true", })</td>
+                                        <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoSector, new { @class = "form-control text-center px-3", maxlength = "2", @onkeypress = "if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" })</td>
+                                        <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoManzana, new { @class = "form-control text-center px-3", maxlength = "3", @onkeypress = "if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" })</td>
+                                        <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoLote, new { @class = "form-control text-center px-3", maxlength = "3", @onkeypress = "if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" })</td>
+                                        <td>
+                                            <div class="">
+                                                <button id="btnBuscarEstatico" type="button" value="" class="btn btn-default glyphicon glyphicon-search" style="padding: 6px 35px"></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5">
+                                            <div class="has-error ml-3 mt-2">
+                                                <ul id="msgErrores"></ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <table id="tablaUnidadCatastralEstatico" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th width="15%">Dist</th>
+                                            <th width="15%">Sec</th>
+                                            <th width="15%">Mz</th>
+                                            <th width="15%">Lote</th>
+                                            <th width="15%">Referencia</th>
+                                            <th width="15%">Estado</th>
+                                            <th width="15%">Estado</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                </div>
+                <div id="tabLotes" style="display:none;">
+                    <div class='tabs mt-4'>
+                        <ul>
+                            <li><a href="#tab-7">Foto del Lote</a></li>
+                            <li><a href="#tab-8">Galeria de Imagenes</a></li>
+                        </ul>
+                        <div id="tab-8">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <iframe id="ifGaleriaImagenes" width="100%" height="1000" frameborder="0"></iframe>
+                                </div>
+                             </div>
+                        </div>
+                        <div id='tab-7'>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <img id="imglote" class="img-rounded img-responsive" src="" alt="Responsive image" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+@section datatables{
+<script src="@Url.Content("~/Scripts/dcalendar.picker.js")"></script>
+<script src="@Url.Content("~/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js")"></script>
+<script>
+    var ROOT = '@Url.Content("~")';
+    $('#FiltrarCodigoDistrito').val('31');
+    $('.tabs').tabslet();
+    $('#CodigoCatastralMask').change(function () {
+        $('#FiltrarCodigoSector').val(replaceAll(this.value.substring(3, 5), "_", ""));
+        $('#FiltrarCodigoManzana').val(replaceAll(this.value.substring(6, 9), "_", ""));
+        $('#FiltrarCodigoLote').val(replaceAll(this.value.substring(10, 13), "_", ""));
+        console.log(this.value)
+    });
+    $('#FiltrarCodigoSector').change(function () {
+        var texto;
+        texto = ZeroIzqCaracter($('#FiltrarCodigoSector').val(), 2);
+        $('#FiltrarCodigoSector').val(texto);
+    });
+    $('#FiltrarCodigoManzana').change(function () {
+        var texto;
+        texto = ZeroIzqCaracter($('#FiltrarCodigoManzana').val(), 3);
+        $('#FiltrarCodigoManzana').val(texto);
+    });
+    $('#FiltrarCodigoLote').change(function () {
+        var texto;
+        texto = ZeroIzqCaracter($('#FiltrarCodigoLote').val(), 3);
+        $('#FiltrarCodigoLote').val(texto);
+    });
+
+    $('#btnBuscarEstatico').click(function () {
+        var codSect = $('#FiltrarCodigoSector').val();
+        var codManz = $('#FiltrarCodigoManzana').val();
+        var codLote = $('#FiltrarCodigoLote').val();
+        var cont;
+        if (!$('#FiltrarCodigoSector').val()) { $('#msgErrores').append("<li>Ingrese el código del sector</li>"); cont = true; }
+        if (!$('#FiltrarCodigoManzana').val()) { $('#msgErrores').append("<li>Ingrese el código de la manzana</li>"); cont = true; }
+        //if (!$('#FiltrarCodigoLote').val()) { $('#msgErrores').append("<li>Ingrese el código del lote</li>"); cont = true; }
+   
+        if (!cont) {
+            $('#msgErrores').html("");
+            $.ajax({
+                url: ROOT + "Lotes/BuscarSolicitudEstatico", type: "POST", dataType: "json",
+                data: { FiltrarCodigoSector: codSect, FiltrarCodigoManzana: codManz, FiltrarCodigoLote: codLote, Estatico: true },
+                success: function (response) {
+                    if (response.success) {
+                        $('#CodDist').val(response.ProcedimientoNuevo.CodigoDistrito);
+                        $('#CodSect').val(response.ProcedimientoNuevo.CodigoSector);
+                        $('#CodManz').val(response.ProcedimientoNuevo.CodigoManzana);
+                        $('#CodLote').val(response.ProcedimientoNuevo.CodigoLote);
+
+                        $('#tabLotes').hide(); $('.tabs').trigger('show', '#tab-7');
+                        tablaUnidadCatastralEstatico.ajax.reload(function (res) {
+                            
+                            var alto = $('#tablaUnidadCatastralEstatico_wrapper .dataTables_scrollBody').height();
+                            if (alto < 399) {
+                                $('#tablaUnidadCatastralEstatico_wrapper .dataTables_scrollHead').removeClass('pr-4');
+                            } else {
+                                $('#tablaUnidadCatastralEstatico_wrapper .dataTables_scrollHead').addClass('pr-4');
+                            }
+                        });
+                    } else {
+                     
+                        $('#tabLotes').hide();
+                        tablaUnidadCatastralEstatico.rows().remove().draw();
+                        toastr.error("No se ha encontrado el lote", "Mensaje del Sistema", { "progressBar": true });
+                    }
+                },
+                complete: function (response) {
+                }
+            });
+        }
+    });
+    var tablaUnidadCatastralEstatico = $("#tablaUnidadCatastralEstatico").DataTable({
+        "ajax": {
+            "url": ROOT + "Lotes/CargarSolUnidadEstatico", "type": "POST", "datatype": "json",
+            "data": function (d) {
+                d.FiltrarCodigoDistrito = $('#FiltrarCodigoDistrito').val();
+                d.FiltrarCodigoSector = $('#FiltrarCodigoSector').val();
+                d.FiltrarCodigoManzana = $('#FiltrarCodigoManzana').val();
+                d.FiltrarCodigoLote = $('#FiltrarCodigoLote').val();
+                d.Estatico = true;
+            }
+        },
+        "language": { "lengthMenu": "", "info": "", "emptyTable": "" }, "processing": true, "serverSide": false,
+        "scrollY": "400px",
+        "scrollCollapse": true,
+        "paging": false,
+        "columns": [
+            { "data": "CodigoDistrito", "className": "text-center", "width": "15%" }, { "data": "CodigoSector", "className": "text-center" },
+            { "data": "CodigoManzana", "className": "text-center" }, { "data": "CodigoLote", "className": "text-center" },
+            { "data": "Referencia", "className": "text-center" }, { "data": "EstadoUnidad", "className": "text-center" },
+            { "data": "FlagTrabajo", "className": "hide_column" }
+        ]
+    });
+    $('#tablaUnidadCatastralEstatico tbody').on('click', 'tr', function () {
+        var row = $(this); var data = tablaUnidadCatastralEstatico.row(row).data();
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+            $('#tabLotes').hide();
+          
+        }
+        else {
+            if (tablaUnidadCatastralEstatico.rows('.selected').data().length === 1) {
+                tablaUnidadCatastralEstatico.rows().every(function () {
+                    this.nodes().to$().removeClass('selected')
+                })
+            }
+            Estatico = true;
+            RecuperarLote(Estatico);
+
+            $('#tabLotes').show();
+            //});
+        }
+    });
+    function RecuperarLote(estatico) {
+        CargarImagen(estatico);
+        CargarGaleriaImagenes();
+    }
+    function CargarGaleriaImagenes (){
+        var urlAction = "@ConfigurationManager.AppSettings["urlGaleriaFotografias"]" + $('#FiltrarCodigoDistrito').val() + $('#FiltrarCodigoSector').val() + $('#FiltrarCodigoManzana').val() + $('#FiltrarCodigoLote').val() + "&usuario=" + "@VariablesWeb.IdUsuarioIntento";
+        $("#ifGaleriaImagenes").attr("src",urlAction);
+            
+    };
+    function CargarImagen(estatico) {
+        var urlAction = "@Url.Action("CargarImagen")?CodigoDistrito=" + $("#FiltrarCodigoDistrito").val() + "&CodigoLote=" + $('#FiltrarCodigoLote').val() + "&CodigoManzana=" + $('#FiltrarCodigoManzana').val() + '&Estatico=' + Estatico + "&CodigoSector=" + $('#FiltrarCodigoSector').val();
+        $.post(urlAction, function (response) {
+            if (response === 'false') {
+                imagen = '';
+            }
+            $("#imglote").attr("src", response.imagen);
+        });
+    }
+</script>
+}

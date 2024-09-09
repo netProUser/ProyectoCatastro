@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="FichaLoteCatas" targetNamespace="http://tempuri.org/FichaLoteCatas.xsd" xmlns:mstns="http://tempuri.org/FichaLoteCatas.xsd" xmlns="http://tempuri.org/FichaLoteCatas.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="FichaLoteCatas" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="FichaLoteCatas" msprop:Generator_UserDSName="FichaLoteCatas">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Lote" msprop:Generator_TableClassName="LoteDataTable" msprop:Generator_TableVarName="tableLote" msprop:Generator_RowChangedName="LoteRowChanged" msprop:Generator_TablePropName="Lote" msprop:Generator_RowDeletingName="LoteRowDeleting" msprop:Generator_RowChangingName="LoteRowChanging" msprop:Generator_RowEvHandlerName="LoteRowChangeEventHandler" msprop:Generator_RowDeletedName="LoteRowDeleted" msprop:Generator_RowClassName="LoteRow" msprop:Generator_UserTableName="Lote" msprop:Generator_RowEvArgName="LoteRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodigoLote" msprop:Generator_ColumnVarNameInTable="columnCodigoLote" msprop:Generator_ColumnPropNameInRow="CodigoLote" msprop:Generator_ColumnPropNameInTable="CodigoLoteColumn" msprop:Generator_UserColumnName="CodigoLote" type="xs:string" minOccurs="0" />
+              <xs:element name="NombreLote" msprop:Generator_ColumnVarNameInTable="columnNombreLote" msprop:Generator_ColumnPropNameInRow="NombreLote" msprop:Generator_ColumnPropNameInTable="NombreLoteColumn" msprop:Generator_UserColumnName="NombreLote" type="xs:string" minOccurs="0" />
+              <xs:element name="DataColumn1" msprop:Generator_ColumnVarNameInTable="columnDataColumn1" msprop:Generator_ColumnPropNameInRow="DataColumn1" msprop:Generator_ColumnPropNameInTable="DataColumn1Column" msprop:Generator_UserColumnName="DataColumn1" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

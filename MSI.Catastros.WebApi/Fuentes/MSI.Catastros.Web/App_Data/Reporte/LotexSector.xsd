@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="LotexSector" targetNamespace="http://tempuri.org/LotexSector.xsd" xmlns:mstns="http://tempuri.org/LotexSector.xsd" xmlns="http://tempuri.org/LotexSector.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="LotexSector" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="LotexSector" msprop:Generator_UserDSName="LotexSector">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="DatosLotexSector" msprop:Generator_TableClassName="DatosLotexSectorDataTable" msprop:Generator_TableVarName="tableDatosLotexSector" msprop:Generator_TablePropName="DatosLotexSector" msprop:Generator_RowDeletingName="DatosLotexSectorRowDeleting" msprop:Generator_RowChangingName="DatosLotexSectorRowChanging" msprop:Generator_RowEvHandlerName="DatosLotexSectorRowChangeEventHandler" msprop:Generator_RowDeletedName="DatosLotexSectorRowDeleted" msprop:Generator_UserTableName="DatosLotexSector" msprop:Generator_RowChangedName="DatosLotexSectorRowChanged" msprop:Generator_RowEvArgName="DatosLotexSectorRowChangeEvent" msprop:Generator_RowClassName="DatosLotexSectorRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CODSECTOR" msprop:Generator_ColumnVarNameInTable="columnCODSECTOR" msprop:Generator_ColumnPropNameInRow="CODSECTOR" msprop:Generator_ColumnPropNameInTable="CODSECTORColumn" msprop:Generator_UserColumnName="CODSECTOR" type="xs:string" minOccurs="0" />
+              <xs:element name="CONTADOR" msprop:Generator_ColumnVarNameInTable="columnCONTADOR" msprop:Generator_ColumnPropNameInRow="CONTADOR" msprop:Generator_ColumnPropNameInTable="CONTADORColumn" msprop:Generator_UserColumnName="CONTADOR" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

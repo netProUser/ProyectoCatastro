@@ -1,0 +1,187 @@
+﻿<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <b>Programación de Inspeccion</b>
+            <button id="btnPopupCancel" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <label style="color:red;"><b>ROJO</b></label>  : Fecha Vencida para la Inspección <br />
+            <label style="color:green;"><b>VERDE</b></label>  : Inspeccion realizada <br />
+            <label style="color:blue;"><b>AZUL</b></label>   : Inspecciones dentro de plazo para la Inspección <br />
+            <div id='calendar' style="width:100%"></div>
+        </div>
+    </div>
+</div>
+<link href="~/Content/fullcalendar.css" rel="stylesheet" />
+<script src="~/Scripts/fullcalendar.js"></script>
+<script>
+
+    $(document).ready(function () {
+        var sourceFullView = { url: "@Url.Content("~/StatusInspeccion/GetDiaryEvents/")" };
+        var sourceSummaryView = { url: "@Url.Content("~/StatusInspeccion/GetDiarySummary/")" };
+        var CalLoading = true;
+
+        $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaDay'
+            },
+            //locale: 'es',
+            weekends: false, // will hide Saturdays and Sundays
+            //defaultView: 'agendaDay',
+            //editable: false,
+            //allDaySlot: false,
+            //selectable: true,
+            //slotMinutes: 15,
+            //defaultDate: '2018-07-12',
+            //navLinks: true, // can click day/week names to navigate views
+            //editable: true,
+            //eventLimit: true, // allow "more" link when too many events
+            events: "@Url.Content("~/StatusInspeccion/GetDiaryEvents")",
+            eventRender: function (event, element) {
+                element.find('.fc-event-title').append("<br/>" + event.description);
+                element.find('.fc-event-time').text('');
+            },
+            //eventClick: function (calEvent, jsEvent, view) {
+            //    debugger;
+            //    alert('You clicked on event id: ' + calEvent.id
+            //        + "\nSpecial ID: " + calEvent.someKey
+            //        + "\nAnd the title is: " + calEvent.title);
+
+            //},
+
+            //eventDrop: function (event, dayDelta, minuteDelta, allDay, revertFunc) {
+            //    if (confirm("Confirm move?")) {
+            //        UpdateEvent(event.id, event.start);
+            //    }
+            //    else {
+            //        revertFunc();
+            //    }
+            //},
+
+            //eventResize: function (event, dayDelta, minuteDelta, revertFunc) {
+
+            //    if (confirm("Confirm change appointment length?")) {
+            //        UpdateEvent(event.id, event.start, event.end);
+            //    }
+            //    else {
+            //        revertFunc();
+            //    }
+            //},
+
+
+
+            //dayClick: function (date, allDay, jsEvent, view) {
+            //    $('#eventTitle').val("");
+            //    $('#eventDate').val($.fullCalendar.formatDate(date, 'dd/MM/yyyy'));
+            //    $('#eventTime').val($.fullCalendar.formatDate(date, 'HH:mm'));
+            //    ShowEventPopup(date);
+            //},
+
+            //viewRender: function (view, element) {
+            //    //debugger;
+            //    //if (!CalLoading) {
+            //    //    if (view.name == 'month') {
+            //    //        $('#calendar').fullCalendar('removeEventSource', sourceFullView);
+            //    //        $('#calendar').fullCalendar('removeEvents');
+            //    //        $('#calendar').fullCalendar('addEventSource', sourceSummaryView);
+            //    //    }
+            //    //    else {
+            //    //        $('#calendar').fullCalendar('removeEventSource', sourceSummaryView);
+            //    //        $('#calendar').fullCalendar('removeEvents');
+            //    //        $('#calendar').fullCalendar('addEventSource', sourceFullView);
+            //    //    }
+            //    //}
+            //}
+
+        });
+
+        CalLoading = false;
+
+        //debugger;
+    });
+
+    $('#btnInit').click(function () {
+        $.ajax({
+            type: 'POST',
+            url: "@Url.Content("~/Home/Init")",
+            success: function (response) {
+                if (response == 'True') {
+                    $('#calendar').fullCalendar('refetchEvents');
+                    alert('Database populated! ');
+                }
+                else {
+                    alert('Error, could not populate database!');
+                }
+            }
+        });
+    });
+
+    $('#btnPopupCancel').click(function () {
+        ClearPopupFormValues();
+        $('#popupEventForm').hide();
+    });
+
+    $('#btnPopupSave').click(function () {
+
+        $('#popupEventForm').hide();
+
+        var dataRow = {
+            'Title': $('#eventTitle').val(),
+            'NewEventDate': $('#eventDate').val(),
+            'NewEventTime': $('#eventTime').val(),
+            'NewEventDuration': $('#eventDuration').val()
+        }
+
+        ClearPopupFormValues();
+
+        $.ajax({
+            type: 'POST',
+            url: "@Url.Content("~/Home/SaveEvent")",
+            data: dataRow,
+            success: function (response) {
+                if (response == 'True') {
+                    $('#calendar').fullCalendar('refetchEvents');
+                    alert('New event saved!');
+                }
+                else {
+                    alert('Error, could not save event!');
+                }
+            }
+        });
+    });
+
+    function ShowEventPopup(date) {
+        ClearPopupFormValues();
+        $('#popupEventForm').show();
+        $('#eventTitle').focus();
+    }
+
+    function ClearPopupFormValues() {
+        $('#eventID').val("");
+        $('#eventTitle').val("");
+        $('#eventDateTime').val("");
+        $('#eventDuration').val("");
+    }
+
+    function UpdateEvent(EventID, EventStart, EventEnd) {
+
+        var dataRow = {
+            'ID': EventID,
+            'NewEventStart': EventStart,
+            'NewEventEnd': EventEnd
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: "@Url.Content("~/Home/UpdateEvent")",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(dataRow)
+        });
+    }
+
+</script>

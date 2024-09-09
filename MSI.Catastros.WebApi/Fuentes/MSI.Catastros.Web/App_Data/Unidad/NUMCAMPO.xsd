@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="NUMCAMPO" targetNamespace="http://tempuri.org/NUMCAMPO.xsd" xmlns:mstns="http://tempuri.org/NUMCAMPO.xsd" xmlns="http://tempuri.org/NUMCAMPO.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="NUMCAMPO" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="NUMCAMPO" msprop:Generator_UserDSName="NUMCAMPO">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="CAMPO" msprop:Generator_TableClassName="CAMPODataTable" msprop:Generator_TableVarName="tableCAMPO" msprop:Generator_TablePropName="CAMPO" msprop:Generator_RowDeletingName="CAMPORowDeleting" msprop:Generator_RowChangingName="CAMPORowChanging" msprop:Generator_RowEvHandlerName="CAMPORowChangeEventHandler" msprop:Generator_RowDeletedName="CAMPORowDeleted" msprop:Generator_UserTableName="CAMPO" msprop:Generator_RowChangedName="CAMPORowChanged" msprop:Generator_RowEvArgName="CAMPORowChangeEvent" msprop:Generator_RowClassName="CAMPORow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CODVIA" msprop:Generator_ColumnVarNameInTable="columnCODVIA" msprop:Generator_ColumnPropNameInRow="CODVIA" msprop:Generator_ColumnPropNameInTable="CODVIAColumn" msprop:Generator_UserColumnName="CODVIA" type="xs:string" minOccurs="0" />
+              <xs:element name="NOMBREVIA" msprop:Generator_ColumnVarNameInTable="columnNOMBREVIA" msprop:Generator_ColumnPropNameInRow="NOMBREVIA" msprop:Generator_ColumnPropNameInTable="NOMBREVIAColumn" msprop:Generator_UserColumnName="NOMBREVIA" type="xs:string" minOccurs="0" />
+              <xs:element name="CUADRA" msprop:Generator_ColumnVarNameInTable="columnCUADRA" msprop:Generator_ColumnPropNameInRow="CUADRA" msprop:Generator_ColumnPropNameInTable="CUADRAColumn" msprop:Generator_UserColumnName="CUADRA" type="xs:string" minOccurs="0" />
+              <xs:element name="LADO" msprop:Generator_ColumnVarNameInTable="columnLADO" msprop:Generator_ColumnPropNameInRow="LADO" msprop:Generator_ColumnPropNameInTable="LADOColumn" msprop:Generator_UserColumnName="LADO" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTTIPOPUERTA" msprop:Generator_ColumnVarNameInTable="columnTXTTIPOPUERTA" msprop:Generator_ColumnPropNameInRow="TXTTIPOPUERTA" msprop:Generator_ColumnPropNameInTable="TXTTIPOPUERTAColumn" msprop:Generator_UserColumnName="TXTTIPOPUERTA" type="xs:string" minOccurs="0" />
+              <xs:element name="NUMEDIF" msprop:Generator_ColumnVarNameInTable="columnNUMEDIF" msprop:Generator_ColumnPropNameInRow="NUMEDIF" msprop:Generator_ColumnPropNameInTable="NUMEDIFColumn" msprop:Generator_UserColumnName="NUMEDIF" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTNUMEROPUERTA" msprop:Generator_ColumnVarNameInTable="columnTXTNUMEROPUERTA" msprop:Generator_ColumnPropNameInRow="TXTNUMEROPUERTA" msprop:Generator_ColumnPropNameInTable="TXTNUMEROPUERTAColumn" msprop:Generator_UserColumnName="TXTNUMEROPUERTA" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTLETRAPUERTA" msprop:Generator_ColumnVarNameInTable="columnTXTLETRAPUERTA" msprop:Generator_ColumnPropNameInRow="TXTLETRAPUERTA" msprop:Generator_ColumnPropNameInTable="TXTLETRAPUERTAColumn" msprop:Generator_UserColumnName="TXTLETRAPUERTA" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTTIPOINTERIOR" msprop:Generator_ColumnVarNameInTable="columnTXTTIPOINTERIOR" msprop:Generator_ColumnPropNameInRow="TXTTIPOINTERIOR" msprop:Generator_ColumnPropNameInTable="TXTTIPOINTERIORColumn" msprop:Generator_UserColumnName="TXTTIPOINTERIOR" type="xs:string" minOccurs="0" />
+              <xs:element name="CODTIPOINTE" msprop:Generator_ColumnVarNameInTable="columnCODTIPOINTE" msprop:Generator_ColumnPropNameInRow="CODTIPOINTE" msprop:Generator_ColumnPropNameInTable="CODTIPOINTEColumn" msprop:Generator_UserColumnName="CODTIPOINTE" type="xs:string" minOccurs="0" />
+              <xs:element name="NUMINT" msprop:Generator_ColumnVarNameInTable="columnNUMINT" msprop:Generator_ColumnPropNameInRow="NUMINT" msprop:Generator_ColumnPropNameInTable="NUMINTColumn" msprop:Generator_UserColumnName="NUMINT" type="xs:string" minOccurs="0" />
+              <xs:element name="LETRAINT" msprop:Generator_ColumnVarNameInTable="columnLETRAINT" msprop:Generator_ColumnPropNameInRow="LETRAINT" msprop:Generator_ColumnPropNameInTable="LETRAINTColumn" msprop:Generator_UserColumnName="LETRAINT" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

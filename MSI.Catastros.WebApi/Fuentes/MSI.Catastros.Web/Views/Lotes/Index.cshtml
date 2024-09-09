@@ -1,0 +1,1994 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Lotes.FiltrarLotesViewModel
+@using System.Configuration;
+@{  ViewBag.Title = "Lotes";  }
+<style>
+    ::-webkit-inner-spin-button {
+        display: none;
+    }
+
+    ::-webkit-calendar-picker-indicator {
+        background: radial-gradient(233,233,233);
+        color: white;
+    }
+</style>
+<div class="row" id="Lotes">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+            @*<div class="panel-heading" style="overflow: hidden">
+                    <div class="row">
+                        <div class="col-md-6 col-xs-12"><strong>Lote Catastral</strong></div><div class="col-md-4"></div>
+                        <div class="col-md-2 col-xs-12">
+                            <span><button id="GrabarGeneral" type="button" disabled class="btn btn-green mr-2 btn-block" style="float:right" onclick="GrabarLote()"><span class="glyphicon glyphicon-ok mr-2"></span> Grabar</button></span>
+                        </div>
+                    </div>
+                </div>*@
+            @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+            <div class="panel-body">
+                @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                @*<div class="">
+                        <input type="hidden" id="Periodo" />    <input type="hidden" id="CodigoTipSol" />   <input type="hidden" id="CodigoNumSol" />   <input type="hidden" id="CodDist" />
+                        <input type="hidden" id="CodSect" />    <input type="hidden" id="CodManz" />        <input type="hidden" id="CodLote" />        <input type="hidden" id="CodigoTipDoc" />
+                        @Html.ValidationSummary(true)
+                        @if (@Model.Estatico != true)
+                        {
+                            <div class="row">
+                                <div class="col-xl-7 col-sm-9">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.ListTipoSolicitud, htmlAttributes: new { @class = "control-label" })
+                                                @Html.DropDownListFor(m => m.FiltrarCodigoTipoSolicitud, Model.ListTipoSolicitud, "- Seleccione el tipo de solicitud -", new { @class = "form-control" })
+                                                <span class="field-validation-valid inputUtil" data-valmsg-for="FiltrarCodigoTipoSolicitud" data-valmsg-replace="true"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4" id="divTipoDocumento" style="display:none;">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.ListTipoDocumento, htmlAttributes: new { @class = "control-label" })
+                                                @Html.DropDownListFor(m => m.FiltrarCodigoTipoDocumentoReg, Model.ListTipoDocumento, "- Seleccione el tipo de documento -", new { @class = "chosen-seleccionar form-control", autofocus = "true" })
+                                                <span class="field-validation-valid" data-valmsg-for="FiltrarCodigoTipoDocumentoReg" data-valmsg-replace="true"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.FiltrarNumeroSolicitud, htmlAttributes: new { @class = "control-label" })
+                                                @Html.TextBoxFor(model => model.FiltrarNumeroSolicitud, new { @class = "form-control px-2" })
+                                                <span class="field-validation-valid inputUtil" data-valmsg-for="FiltrarNumeroSolicitud" data-valmsg-replace="true"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2 text-center">
+                                            <div class="form-group"><br /><button id="btnBuscar" type="button" value="" class="btn btn-default btn-block glyphicon glyphicon-search" style="margin-top: 5px"></button></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-5 col-sm-3">
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-xl-4 pl-2 col-sm-12">
+
+                                        </div>
+                                        <div class="col-xl-4 pl-2 col-sm-12">
+                                            <span class="icon-add">
+                                                @Ajax.ActionLink(" Nuevo Código", "AgregarLoteNuevo", "Lotes",
+                                            new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "modalRegistrarLoteNuevo", OnComplete = "mostrarModal('RegistrarLoteNuevo', 'Asignacion')" },
+                                            new { @class = "btn btn-default btn-sm btn-block  glyphicon glyphicon-plus", disabled = "true", @id = "btnNuevoLote" })
+                                            </span>
+                                            <button type="button" id="GenFichaManzana" disabled class="btn btn-success btn-sm glyphicon glyphicon-print btn-block" style="display:none;float:right" onclick="GenerarFichaManzana()"><span style="font-family:'Open Sans'"> Generar Ficha Mz.</span></button>
+                                        </div>
+                                        <div class="col-xl-4 pl-2 col-sm-12">
+                                            <button type="button" id="GenFicha" disabled class="btn btn-success btn-sm glyphicon glyphicon-print btn-block" style="float:right" onclick="GenerarFicha()"><span style="font-family:'Open Sans'"> Generar Ficha Preliminar</span></button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <table id="tablaUnidadCatastral" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th width="15%">Dist</th>
+                                                <th width="15%">Sec</th>
+                                                <th width="15%">Mz</th>
+                                                <th width="15%">Lote</th>
+                                                <th width="15%">Referencia</th>
+                                                <th width="15%">Estado</th>
+                                                <th style="display:none"></th>
+                                                <th style="display:none"></th>
+                                                <th style="display:none"></th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                            <label class="control-label">Lote Referencia</label>
+                            <div class="row">
+                                <div class="col-md-12 px-3">
+                                    <table id="tablaUnidadCatastralRef" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th width="15%">Dist</th>
+                                                <th width="15%">Sec</th>
+                                                <th width="15%">Mz</th>
+                                                <th width="15%">Lote</th>
+                                                <th width="15%">Referencia</th>
+                                                <th width="15%">Estado</th>
+                                                <th style="display:none"></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="row">
+                                <div class="col-xl-6 ">
+                                    <table border="0">
+                                        <tr>
+                                            <td width="12%"><label class="form-label">Dist.</label></td>
+                                            <td width="12%"><label class="form-label">Sec</label></td>
+                                            <td width="12%"><label class="form-label">Mz</label></td>
+                                            <td width="12%"><label class="form-label">Lote</label></td>
+                                            <td ></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoDistrito, new { @class = "form-control text-center px-3", @readonly = "true",  })</td>
+                                            <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoSector, new { @class = "form-control text-center px-3", maxlength = "2", @onkeypress = "if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" })</td>
+                                            <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoManzana, new { @class = "form-control text-center px-3", maxlength = "3", @onkeypress = "if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" })</td>
+                                            <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoLote, new { @class = "form-control text-center px-3", maxlength = "3", @onkeypress = "if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" })</td>
+                                            <td>
+                                                <div class="">
+                                                    <button id="btnBuscarEstatico" type="button" value="" class="btn btn-default glyphicon glyphicon-search" style="padding: 6px 35px"></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="5">
+                                                <div class="has-error ml-3 mt-2">
+                                                    <ul id="msgErrores"></ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <table id="tablaUnidadCatastralEstatico" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th width="15%">Dist</th>
+                                                <th width="15%">Sec</th>
+                                                <th width="15%">Mz</th>
+                                                <th width="15%">Lote</th>
+                                                <th width="15%">Referencia</th>
+                                                <th width="15%">Estado</th>
+                                                <th style="display:none"></th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        }
+
+                    </div>*@
+                @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+
+                <div id="tabLotes" style="display:none;">
+                    @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                    <div class="row" id="tabLoteGrilla">
+                        <div class="col-md-2">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table border="0" cellspacing="0" cellpadding="0">
+                                        <tbody>
+                                            <tr>
+                                                <td class="tit-01">FICHA CATASTRAL</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="tit-01">LOTE</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td style="width:100px;" class="td-val-02">N° Ficha:</td>
+                                                <td colspan="2"><input type="text" class="form-control val-03" disabled id="Cuc01" value="001" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td-val-02">Cont. de Ficha Por Lote :</td>
+                                                <td><input type="text" class="form-control val-03" disabled id="Cuc02" value="1" /></td>
+                                                <td><input type="text" class="form-control val-03" disabled id="Cuc03" value="03" /></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            @*<div class="row" style="padding: 10px 200px 0px 200px;">
+                <table class="table-01">
+                    <tbody>
+                        <tr class="table-tr-active-01">
+                            <td class="td-val-01">CODIGO UNICO CATASTRAL - CUC</td>
+                            <td class="td-val-01">CODIGO HOJA CATASTRAL</td>
+                        </tr>
+                        <tr>
+                            <td class="td-val-01"><input type="text" class="form-input-01" disabled id="labCuc" value="46779535-0002" /></td>
+                            <td class="td-val-01"><input type="text" class="form-input-01" disabled id="labChc" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>*@
+                            <div class="row" style="padding: 0px 200px 10px 200px;">
+                                <table class="table-01">
+                                    <tbody>
+                                        <tr class="table-tr-active-01">
+                                            <td colspan="11" class="td-val-01">CODIGO DE REFERENCIA CATASTRAL</td>
+                                        </tr>
+                                        <tr>
+                                            @*<td class="td-val-01 text-center">Dpto.</td>
+                            <td class="td-val-01 text-center">Prov.</td>*@
+                                            <td class="td-val-01 text-center">Dist.</td>
+                                            <td class="td-val-01 text-center">Sector</td>
+                                            <td class="td-val-01 text-center">Mz</td>
+                                            <td class="td-val-01 text-center">Lote</td>
+                                            <td class="td-val-01 text-center">Edifica</td>
+                                            <td class="td-val-01 text-center">Entrada</td>
+                                            <td class="td-val-01 text-center">Piso</td>
+                                            <td class="td-val-01 text-center">Unidad</td>
+                                            @*<td class="td-val-01 text-center">DC</td>*@
+                                        </tr>
+                                        <tr>
+                                            <!--uniciencias-->
+                                            @*<td class="td-val-01"><input type="text" class="form-input-01" disabled id="labDpto" value="15" /></td>
+                            <td class="td-val-01"><input type="text" class="form-input-01" disabled id="labProv" value="01" /></td>*@
+                                            <td class="td-val-01"><input type="text" class="form-input-01" disabled id="labDist" value="31" /></td>
+                                            <td class="td-val-01"><input type="text" class="form-input-01" disabled id="labSect" value="05" /></td>
+                                            <td class="td-val-01"><input type="text" class="form-input-01" disabled id="labMaza" value="075" /></td>
+                                            <td class="td-val-01"><input type="text" class="form-input-01" disabled id="labLote" value="015" /></td>
+                                            <td class="td-val-01"><input type="text" class="form-input-01" disabled id="labEdif" value="01" /></td>
+                                            <td class="td-val-01"><input type="text" class="form-input-01" disabled id="labEntr" value="01" /></td>
+                                            <td class="td-val-01"><input type="text" class="form-input-01" disabled id="labPiso" value="A0" /></td>
+                                            <td class="td-val-01"><input type="text" class="form-input-01" disabled id="labUnid" value="002" /></td>
+                                            @*<td class="td-val-01"><input type="text" class="form-input-01" disabled id="labDc" value="" /></td>*@
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="row">
+                                <div class="col-md-12" style="position: relative;">
+                                    <div style="position: absolute; left: 10px; top: 0px; z-index: 1;">
+                                        <img style="max-width: 92%;" id="imglote" class="img-rounded img-responsive" src="http://192.168.41.149/ACUWeb/FotoLote/31057515/FL-31057515/FLFoto-14.jpg" alt="Responsive image" />
+                                    </div>
+                                    <div style="position: absolute; left: 74%; top: 0px; z-index: 3;">
+                                        <button type="button" style="background: transparent;outline: none;box-shadow: none;"
+                                                class="btn btn-lg">
+                                            <i class="fa fa-search-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>     
+                    </div>
+                    @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                    <div class='tabs mt-4'>
+                        <ul>
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                            @*//Se comenta original*@
+                            @*<li><a href="#tab-1">Información General</a></li>*@
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                            <li><a href="#tab-3">Ubicacion Principal del Predio</a></li>
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                            @*//Se cambio de nombre*@
+                            @*<li><a href="#tab-2">Datos del Predio</a></li>*@
+                            <li><a href="#tab-2">Datos del Terreno</a></li>
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                            @*//Se cambio de nombre*@
+                            @*<li><a href="#tab-3">Numeración</a></li>*@
+                            @*<li><a href="#tab-3">Ubicacion Principal del Predio</a></li>*@
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                            @*//Se cambio de nombre*@
+                            @*<li><a href="#tab-4">Normatividad Urbana</a></li>*@
+                            <li><a href="#tab-4">Datos de la construccion</a></li>
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                            <li><a href="#tab-5">Retiro Municipal y Jardín Aislamiento</a></li>
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                            @*//Se cambio de nombre*@
+                            @*<li><a href="#tab-6">Documentación</a></li>*@
+                            <li><a href="#tab-6">Informacion Adicional</a></li>
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                            <li><a href="#tab-7">Observaciones</a></li>
+                            @if (@Model.Estatico != true)
+                          {
+                            <li><a href="#tab-8">Galeria de Imagenes</a></li>}
+                        </ul>
+                        <!--******************************************************* TAB 1 *******************************************************-->
+                        <div id='tab-1'>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label">CUC</label>
+                                                    <input maxlength="12" type="text" id="Cuc" disabled class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                    @*//Se comenta codigo original*@
+                                    @*<fieldset class="formulario">
+                                        <legend>Habilitación Urbana</legend>
+                                        <div class="row">
+                                            <div class="col-xl-3 col-lg-3 col-md-4">
+                                                <button id="btnAgregrarHabilitacion" type="button" class="btn btn-success mb-2 btn-sm btn-block glyphicon glyphicon-plus-sign">
+                                                    <span style="font-family:'Open Sans'"> Agregar</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <table class="table" style="width:100%;" id="tablaHabilitacionUrbana">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="3%">Acciones</th>
+                                                            <th>Código Habilitacion Urbana</th>
+                                                            <th>Tipo Habilitación Urbana</th>
+                                                            <th>Nombre Habilitación Urbana</th>
+                                                            <th>Manzana Urbana</th>
+                                                            <th></th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </fieldset>*@
+                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                    <fieldset class="formulario">
+                                        <legend>Habilitación Urbana</legend>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Lote Urbano</label>
+                                                        <input maxlength="20" type="text" id="LoteUrbano" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Sub-Lote Urbano</label>
+                                                        <input maxlength="20" type="text" id="SubLoteUrbano" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset class="formulario">
+                                        <legend>Datos Generales</legend>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="">Altura Edificacion Exist.</label>
+                                                    <input id="AlturaEdificacion" type="text" disabled class="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label class="control-label">Lote en Esquina</label>
+                                                    <select id="LoteEsquina" class="form-control"><option value="">- Seleccione -</option><option value="01">Si</option><option value="02">No</option></select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label class="control-label">Tipo Lote</label>
+                                                    <select id="TipoLote" class="form-control"><option value="">- Seleccione -</option><option value="01">Urbana</option><option value="02">Rústico</option></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                        @*//Se comenta codigo original*@
+                                        @*<div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="control-label">Denominación</label>
+                                                    <textarea maxlength="150" style="text-transform: uppercase;" id="Denominacion" type="text" rows="2" class="form-control"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>*@
+                                        @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="control-label">Uso Predominante Predio</label>
+                                                    <textarea id="UsoPredio" class="form-control" disabled rows="3"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label class="control-label">Patrimonio Cultural</label>
+                                                    <select id="MonumentoHistorico" class="form-control"><option value="">- Seleccione -</option><option value="01">Si</option><option value="02">No</option></select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div class="form-group">
+                                                    <label class="control-label">Numero Resolución</label>
+                                                    <input id="NumeroResolucion" disabled type="text" class="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="control-label">Fecha Resolución</label>
+                                                    <input id="FechaResolucion" disabled type="text" maxlength="10" class="form-control" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                    @*//Se comenta codigo original*@
+                                    @*<fieldset class="formulario">
+                                        <legend>Sectorización Vecinal</legend>
+                                        <div class="row form-group">
+                                            <div class="col-md-4">Código Sectorización</div>
+                                            <div class="col-md-4">Código Sub-Sectorización</div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col-md-4"><input disabled maxlength="5" id="SectorVecinal" type="text" class="form-control" /></div>
+                                            <div class="col-md-4"><input disabled maxlength="5" id="SubSectorVecinal" type="text" class="form-control" /></div>
+                                        </div>
+                                    </fieldset>*@
+                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                </div>
+                                @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                @*<div class="col-md-6">
+                                    <img id="imglote" class="img-rounded img-responsive" src="" alt="Responsive image" />
+
+                                </div>*@
+                                @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                            </div>
+                        </div>
+                        <!--------------------------------------------------------- FIN TAB 1 ----------------------------------------------------->
+                        <!--******************************************************* TAB 2 *******************************************************-->
+                        <div id='tab-2'>
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                            @*//Se comenta codigo original*@
+                            @*<div class="row">
+                                <div class="col-md-2">
+                                    <label>Área Terreno Campo</label>
+                                    <input class="form-control numero text-right" type="text" id="AreaTerrenoCampo" />
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Área Terreno Oficial</label>
+                                    <input class="form-control numero text-right" type="text" id="AreaTerrenoOficial" />
+                                </div>
+                                <div class="col-md-3">
+                                    <br class="visible-md-block" />
+                                    <label>Fuente</label>
+                                    <select id="CodigoFuente" class="form-control"><option value="">- Seleccione la fuente -</option></select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Área Construida Total</label>
+                                    <input class="form-control numero text-right" disabled type="text" id="AreaConstruidaTotal" />
+                                </div>
+                            </div>*@
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+
+                            <fieldset class="formulario">
+                                @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                @*//Se comenta original*@
+                                @*<legend>Linderos</legend>*@
+                                @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                
+                                @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <div class="form-group">
+                                                <label class="control-label tit-label-01">LINDEROS DEL LOTE</label><hr class="hr-01" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                <div class="row">
+                                    <div class="col-xl-2 col-lg-2 col-md-3">
+                                        <div class="btn-group">
+                                            <button class="btn dropdown-toggle btn-success" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span class="pl-3">Agregar Lindero </span> <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="javascript:void(0)" onclick="RegistrarLindero('03')">Frente</a></li>
+                                                <li><a href="javascript:void(0)" onclick="RegistrarLindero('04')">Izquierda</a></li>
+                                                <li><a href="javascript:void(0)" onclick="RegistrarLindero('05')">Fondo</a></li>
+                                                <li><a href="javascript:void(0)" onclick="RegistrarLindero('06')">Derecha</a></li>
+                                            </ul>
+                                        </div>
+                                        @*<span class="icon-add">
+                                                @Ajax.ActionLink(" Agregar Linderos", "AgregarLinderos", "Lotes"
+                                                , new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "modalRegistrarLinderos", OnComplete = "mostrarModal('RegistrarLinderos', 'Asignacion')" }
+                                                , new { @class = "btn btn-success btn-sm btn-block  glyphicon glyphicon-plus-sign", @id = "btnAgregarLinderos" })
+                                            </span>*@
+                                    </div>
+                                    <div class="col-md-12">
+                                        <table id="tablaLinderos" style="width:100%;" class="table responsive display mt-3 table-striped table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th width="3%">Acciones</th>
+                                                    <th>Lado</th>
+                                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                                    @*//Se comenta codigo original*@
+                                                    @*<th>Nro. Lado</th>*@
+                                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                                    <th>Medida Lado Campo</th>
+                                                    <th>Medida Lado Oficial</th>
+                                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                                    @*//Se comenta codigo original*@
+                                                    @*<th>Fuente Lindero</th>*@
+                                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                                    @*<th>Tipo Colindante</th>*@
+                                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                                    <th>Cod.Via</th>
+                                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                                    <th>Colindante</th>
+                                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                                    @*//Se comenta codigo original*@
+                                                    @*<th>Altura</th>*@
+                                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                                    <th>Parque</th>
+                                                    <th>Avenida</th>
+                                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                                    <th style="display:none;"></th>
+                                                    <th style="display:none;"></th>
+                                                    <th style="display:none;"></th>
+                                                    <th style="display:none;"></th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </fieldset>
+
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Lote en Esquina</label>
+                                        <select id="LoteEsquina" class="form-control"><option value="">- Seleccione -</option><option value="01">Si</option><option value="02">No</option></select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="">Nª Pisos</label>
+                                        <input id="NumeroPisos" type="text" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label class="control-label tit-label-01">AREA DEL TERRENO</label><hr class="hr-01" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label>Área Terreno Campo</label>
+                                    <input class="form-control numero text-right" type="text" id="AreaTerrenoCampo" />
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Área Terreno Oficial</label>
+                                    <input class="form-control numero text-right" type="text" id="AreaTerrenoOficial" />
+                                </div>
+                                @*<div class="col-md-3">
+                                    <br class="visible-md-block" />
+                                    <label>Fuente</label>
+                                    <select id="CodigoFuente" class="form-control"><option value="">- Seleccione la fuente -</option></select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Área Construida Total</label>
+                                    <input class="form-control numero text-right" disabled type="text" id="AreaConstruidaTotal" />
+                                </div>*@
+                            </div>
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+
+                            @*<fieldset class="formulario">
+                                    <legend>Linderos</legend>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table id="LoteLinderos">
+                                                <tr>
+                                                    <td width="10%">Lado</td>
+                                                    <td width="7%">Nro. Lado</td>
+                                                    <td width="10%">Medida Lado Campo</td>
+                                                    <td width="10%">Medida Lado Oficial</td>
+                                                    <td width="10%">Fuente Colindante</td>
+                                                    <td width="15%">Tipo Colindante</td>
+                                                    <td width="32%">Colindante</td>
+                                                    <td style="display:none;"></td>
+                                                    <td style="display:none;"></td>
+                                                    <td width="60px"></td>
+                                                </tr>
+                                                <tr id="filaFrente" class="filaFrente" style="height:40px">
+                                                    <td class="pr-4"><select id="lindero_lado_00001" class="form-control lindero_lado ladoColindante" disabled><option>- Seleccione -</option></select></td>
+                                                    <td class="pr-4"><input id="lindero_numlado_00001" disabled value="0001" type="text" class="form-control text-center lindero_numlado" /></td>
+                                                    <td class="pr-4"><input id="lindero_medcam_00001" type="text" class="form-control lindero_medcam numero text-right" /></td>
+                                                    <td class="pr-4"><input id="lindero_medofi_00001" type="text" class="form-control lindero_medofi numero text-right" /></td>
+                                                    <td class="pr-4"><select id="lindero_fuente_00001" class="form-control lindero_fuente"><option value=""> - Seleccione - </option></select></td>
+                                                    <td class="pr-4"><select id="lindero_tipcol_00001" onchange="CargarColindante(this)" class="form-control lindero_tipcol tipoColindante"><option value="">- Seleccione -</option></select></td>
+                                                    <td class="pr-4">
+                                                        <select id="lindero_colin_00001" onchange="ActualizarCodigo(this)" class="form-control lindero_colin"><option value=""> - Seleccione el colindante - </option></select>
+                                                    </td>
+                                                    <td style="display:none;"><select style="display:none;" id="lindero_colin2_00001" class="form-control lindero_colin2"><option value=""> - Seleccione el colindante - </option></select></td>
+                                                    <td style="display:none;"><input id="lindero_correl_00001" type="hidden" value="0001" class="lindero_correl" /></td>
+                                                    <td>
+                                                        <button data-toggle="tooltip" title="Agregar" onclick="CrearLoteLinderos('03')" class="btn btn-sm btn-green px-2 py-1 glyphicon glyphicon-plus"></button>
+                                                        <button data-toggle="tooltip" title="Editar" onclick="EditarLoteLinderos('00001')" class="btn btn-sm btn-success px-2 py-1 glyphicon glyphicon-edit"></button>
+                                                    </td>
+                                                </tr>
+                                                <tr id="filaIzquierda" class="filaIzquierda" style="height:40px">
+                                                    <td class="pr-4"><select id="lindero_lado_00002" class="form-control lindero_lado ladoColindante" disabled><option>- Seleccione -</option></select></td>
+                                                    <td class="pr-4"><input id="lindero_numlado_00002" disabled value="0001" type="text" class="form-control text-center lindero_numlado" /></td>
+                                                    <td class="pr-4"><input id="lindero_medcam_00002" type="text" class="form-control lindero_medcam numero text-right" /></td>
+                                                    <td class="pr-4"><input id="lindero_medofi_00002" type="text" class="form-control lindero_medofi numero text-right" /></td>
+                                                    <td class="pr-4"><select id="lindero_fuente_00002" class="form-control lindero_fuente"><option value=""> - Seleccione - </option></select></td>
+                                                    <td class="pr-4"><select id="lindero_tipcol_00002" onchange="CargarColindante(this)" class="form-control lindero_tipcol tipoColindante"><option value="">- Seleccione -</option></select></td>
+                                                    <td class="pr-4">
+                                                        <select id="lindero_colin_00002" onchange="ActualizarCodigo(this)" class="form-control lindero_colin"><option value=""> - Seleccione el colindante - </option></select>
+                                                    </td>
+                                                    <td style="display:none;"><select style="display:none;" id="lindero_colin2_00002" class="form-control lindero_colin2"><option value=""> - Seleccione el colindante - </option></select></td>
+                                                    <td style="display:none;"><input id="lindero_correl_00002" type="hidden" value="0001" class="lindero_correl" /></td>
+                                                    <td>
+                                                        <button data-toggle="tooltip" title="Agregar" onclick="CrearLoteLinderos('04')" class="btn btn-sm btn-green px-2 py-1 glyphicon glyphicon-plus"></button>
+                                                        <button data-toggle="tooltip" title="Editar" onclick="EditarLoteLinderos('00002')" class="btn btn-sm btn-success px-2 py-1 glyphicon glyphicon-edit"></button>
+                                                    </td>
+                                                </tr>
+                                                <tr id="filaFondo" class="filaFondo" style="height:40px">
+                                                    <td class="pr-4"><select id="lindero_lado_00003" class="form-control lindero_lado ladoColindante" disabled><option>- Seleccione -</option></select></td>
+                                                    <td class="pr-4"><input id="lindero_numlado_00003" disabled value="0001" type="text" class="form-control text-center lindero_numlado" /></td>
+                                                    <td class="pr-4"><input id="lindero_medcam_00003" type="text" class="form-control lindero_medcam numero text-right" /></td>
+                                                    <td class="pr-4"><input id="lindero_medofi_00003" type="text" class="form-control lindero_medofi numero text-right" /></td>
+                                                    <td class="pr-4"><select id="lindero_fuente_00003" class="form-control lindero_fuente"><option value=""> - Seleccione - </option></select></td>
+                                                    <td class="pr-4"><select id="lindero_tipcol_00003" onchange="CargarColindante(this)" class="form-control lindero_tipcol tipoColindante"><option value="">- Seleccione -</option></select></td>
+                                                    <td class="pr-4">
+                                                        <select id="lindero_colin_00003" onchange="ActualizarCodigo(this)" class="form-control lindero_colin"><option value=""> - Seleccione el colindante - </option></select>
+                                                    </td>
+                                                    <td style="display:none;"><select style="display:none;" id="lindero_colin2_00003" class="form-control lindero_colin2"><option value=""> - Seleccione el colindante - </option></select></td>
+                                                    <td style="display:none;"><input id="lindero_correl_00003" type="hidden" value="0001" class="lindero_correl" /></td>
+                                                    <td>
+                                                        <button data-toggle="tooltip" title="Agregar" onclick="CrearLoteLinderos('05')" class="btn btn-sm btn-green px-2 py-1 glyphicon glyphicon-plus"></button>
+                                                        <button data-toggle="tooltip" title="Editar" onclick="EditarLoteLinderos('00003')" class="btn btn-sm btn-success px-2 py-1 glyphicon glyphicon-edit"></button>
+                                                    </td>
+                                                </tr>
+                                                <tr id="filaDerecha" class="filaDerecha" style="height:40px">
+                                                    <td class="pr-4"><select id="lindero_lado_00004" class="form-control ladoColindante lindero_lado" disabled><option value="">- Seleccione -</option></select></td>
+                                                    <td class="pr-4"><input id="lindero_numlado_00004" disabled value="0001" type="text" class="form-control text-center lindero_numlado" /></td>
+                                                    <td class="pr-4"><input id="lindero_medcam_00004" type="text" class="form-control lindero_medcam numero text-right" /></td>
+                                                    <td class="pr-4"><input id="lindero_medofi_00004" type="text" class="form-control lindero_medofi numero text-right" /></td>
+                                                    <td class="pr-4"><select id="lindero_fuente_00004" class="form-control lindero_fuente"><option value=""> - Seleccione - </option></select></td>
+                                                    <td class="pr-4"><select id="lindero_tipcol_00004" onchange="CargarColindante(this)" class="form-control lindero_tipcol tipoColindante"><option value="">- Seleccione -</option></select></td>
+                                                    <td class="pr-4">
+                                                        <select id="lindero_colin_00004" onchange="ActualizarCodigo(this)" class="form-control lindero_colin"><option value=""> - Seleccione el colindante - </option></select>
+                                                    </td>
+                                                    <td style="display:none;"><select style="display:none;" id="lindero_colin2_00004" class="form-control lindero_colin2"><option value=""> - Seleccione el colindante - </option></select></td>
+                                                    <td style="display:none;"><input id="lindero_correl_00004" type="hidden" value="0001" class="lindero_correl" /></td>
+                                                    <td>
+                                                        <button data-toggle="tooltip" title="Agregar" onclick="CrearLoteLinderos('06')" class="btn btn-sm btn-green px-2 py-1 glyphicon glyphicon-plus"></button>
+                                                        <button data-toggle="tooltip" title="Editar" onclick="EditarLoteLinderos('00004')" class="btn btn-sm btn-success px-2 py-1 glyphicon glyphicon-edit"></button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="col-md-2">
+
+                                        </div>
+                                    </div>
+                                </fieldset>*@
+
+                        </div>
+                        <!--------------------------------------------------------- FIN TAB 2 ----------------------------------------------------->
+                        <!--******************************************************* TAB 3 *******************************************************-->
+                        <div id='tab-3'>
+                            <fieldset class="formulario">
+                                @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                @*//Se comenta Original*@
+                                @*<legend>Numeración de Lote</legend>*@
+                                @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+
+                                @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <div class="form-group">
+                                                <label class="control-label tit-label-01">INFORMACION OFICIAL</label><hr class="hr-01" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+
+                                <div class="row">
+                                    <div class="col-xl-2 col-lg-2 col-md-3">
+                                        <span class="icon-add">
+                                            @Ajax.ActionLink(" Agregar", "AgregarMunicipalAsignado", "Lotes"
+                                            , new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "modalRegistrarDirecMunicipal", OnComplete = "mostrarModal('RegistrarDirecMunicipal', 'Asignacion')" }
+                                            @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                            @*//Se agrego la clase style para que se agrande el boton*@
+                                            , new { @class = "btn btn-success btn-sm btn-block  glyphicon glyphicon-plus-sign", @id = "btnAgregarDirecMun", @style = "width:100% !important" })
+                                            @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                        </span>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table id="tablaMunicipalAsignado" style="width:100%;" class="table responsive display  table-striped table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th width="3%">Acciones</th>
+                                                    <th>Nro</th>
+                                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                                    <th>Cod.Via</th>
+                                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                                    <th>Via</th>
+                                                    <th>Cuadra</th>
+                                                    <th>Lado</th>
+                                                    <th>Tipo Edificación</th>
+                                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                                    @*se comenta original*@
+                                                    @*<th>Número Edificación</th>*@
+                                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                                    <th>Tipo Puerta</th>
+                                                    <th>Número Puerta</th>
+                                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                                    <th>Nª Munic.</th>
+                                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                                    <th>Letra Puerta</th>
+                                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                                    <th>Ex-Mza</th>
+                                                    <th>Ex-Lote</th>
+                                                    <th>Sub-Lote</th>
+                                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                                    @*//Se cambio de posicion a la columna*@
+                                                    <th>Tipo Numeración</th>
+                                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                            @*//Se cambia de posicion del tab-1 al tab-3*@
+                            <fieldset class="formulario">
+                                @*<legend>Habilitación Urbana</legend>*@
+                                @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <div class="form-group">
+                                                <label class="control-label tit-label-01">HABILITACION URBANA</label><hr class="hr-01" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                <div class="row">
+                                    <div class="col-xl-3 col-lg-3 col-md-4">
+                                        <button id="btnAgregrarHabilitacion" type="button" class="btn btn-success mb-2 btn-sm btn-block glyphicon glyphicon-plus-sign">
+                                            <span style="font-family:'Open Sans'"> Agregar</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table class="table" style="width:100%;" id="tablaHabilitacionUrbana">
+                                            <thead>
+                                                <tr>
+                                                    <th width="3%">Acciones</th>
+                                                    <th>Código Habilitacion Urbana</th>
+                                                    <th>Tipo Habilitación Urbana</th>
+                                                    <th>Nombre Habilitación Urbana</th>
+                                                    <th>Manzana Urbana</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                            @*//Se cambia de posicion del tab-1 al tab-3*@
+                            <fieldset class="formulario">
+                                @*<legend>Habilitación Urbana</legend>*@
+                                @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <div class="form-group">
+                                                <label class="control-label tit-label-01">REFERENCIA</label><hr class="hr-01" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                @*<div class="row">
+                                    <div class="col-xl-3 col-lg-3 col-md-4">
+                                        <button id="btnAgregrarHabilitacion" type="button" class="btn btn-success mb-2 btn-sm btn-block glyphicon glyphicon-plus-sign">
+                                            <span style="font-family:'Open Sans'"> Agregar</span>
+                                        </button>
+                                    </div>
+                                </div>*@
+                                <div class="row">
+                                    <div class="col-xl-2 col-lg-2 col-md-3">
+                                        <span class="icon-add">
+                                            @Ajax.ActionLink(" Agregar", "AgregarMunicipalAsignado", "Lotes"
+                                            , new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "modalRegistrarLoteReferenciaNew", OnComplete = "mostrarModal('RegistrarDirecMunicipal', 'Asignacion')" }
+                                            , new { @class = "btn btn-success btn-sm btn-block  glyphicon glyphicon-plus-sign", @id = "btnAgregarDirecMun", @style = "width:100% !important" })
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table class="table" style="width:100%;" id="tablaLoteReferenciaNew">
+                                            <thead>
+                                                <tr>
+                                                    <th width="3%">Acciones</th>
+                                                    <th>Nro</th>
+                                                    <th>Lado</th>
+                                                    <th>Cod.Via</th>
+                                                    <th>Via</th>
+                                                    <th>Nª Municipal</th>
+                                                </tr>
+                                            </thead>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                        </div>
+                        <!--------------------------------------------------------- FIN TAB 3 ----------------------------------------------------->
+                        <!--******************************************************* TAB 4 *******************************************************-->
+                        <div id='tab-4'>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label tit-label-01">DENOMINACION DEL INMUEBLE</label><hr class="hr-01" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                @*<label class="control-label">Denominación del Inmueble</label>*@
+                                                <textarea maxlength="150" style="text-transform: uppercase;" id="Denominacion" type="text" rows="2" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+
+                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+
+                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label tit-label-01">USO GENERAL DEL INMUEBLE</label><hr class="hr-01" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="">Cod. De Uso</label>
+                                                <input id="CodigoUso" type="text" disabled class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label class="control-label">Descripcion del Uso General</label>
+                                                <select id="CboUsoGeneral" class="form-control"><option value="00">- Seleccione -</option><option value="01">Vivienda</option><option value="02">Negocio</option></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+
+                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label tit-label-01">AREA CONSTRUIDA TOTAL</label><hr class="hr-01" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            @*<label>Área Construida Total</label>*@
+                                            <input class="form-control numero text-right" type="text" id="AreaConstruidaTotal" />
+                                        </div>
+                                    </div>
+                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+
+                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                    @*<fieldset class="formulario" style="padding: 2em 0em 0em 0em !important;">*@
+                                    <fieldset class="formulario" style="padding: 2em 0em 0em 0em !important;">
+                                        @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                        @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                        @*//Se comenta original*@
+                                        @*<legend>Zonificación Urbana</legend>*@
+                                        @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                        @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <div class="form-group">
+                                                        <label class="control-label tit-label-01">PARAMETROS URBANISTICOS</label><hr class="hr-01" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <table id="Zonificacion" style="width:100%">
+                                                    <tr>
+                                                        <th width="30%"><label>Código Zonificación Uso Suelo</label></th>
+                                                        <th><label>Descripción Zonificación Uso Suelo</label></th>
+                                                        <th></th>
+                                                    </tr>
+                                                    <tr id="lotePrimeraFilaZon" style="height:45px">
+                                                        <td class="pr-4">
+                                                            <select disabled id="lotezon_cod_00001" onchange="CargarDescripcionZonificacion(this)" class="form-control lotezon_cod"><option value=""> - Seleccione la zonificación - </option></select>
+                                                        </td>
+                                                        <td class="pr-4">
+                                                            <select disabled id="lotezon_des_00001" onchange="CambiarDescripcion(this);" class="form-control lotezon_desc"><option value=""> - Seleccione la zonificación - </option></select>
+                                                        </td>
+                                                        <td class="pr-4">
+                                                            <button onclick="CrearCamposZonificacion()" class="btn btn-sm btn-success mr-1 px-2 py-1 glyphicon glyphicon-plus"></button>
+                                                            <button onclick="EditarCampoZonificacion('00001')" class="btn btn-sm btn-success mr-1 px-2 py-1 glyphicon glyphicon-edit"></button>
+                                                            <button onclick="EliminarCampoZonificacion(this, '00001')" class="btn btn-sm btn-success px-2 py-1 glyphicon glyphicon-trash"></button>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        @*<fieldset class="formulario">
+                                            <legend>Sectorización Vecinal</legend>
+                                            <div class="row form-group">
+                                                <div class="col-md-4">Código Sectorización</div>
+                                                <div class="col-md-4">Código Sub-Sectorización</div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-md-4"><input disabled maxlength="5" id="SectorVecinal" type="text" class="form-control" /></div>
+                                                <div class="col-md-4"><input disabled maxlength="5" id="SubSectorVecinal" type="text" class="form-control" /></div>
+                                            </div>
+                                        </fieldset>*@
+                                        <div class="row pt-3">
+                                            <div class="col-md-12">
+                                                <div class="row form-group">
+                                                    <div class="col-md-4">Código Sectorización</div>
+                                                    <div class="col-md-4">Código Sub-Sectorización</div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <div class="col-md-4"><input disabled maxlength="5" id="SectorVecinal" type="text" class="form-control" /></div>
+                                                    <div class="col-md-4"><input disabled maxlength="5" id="SubSectorVecinal" type="text" class="form-control" /></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                    @*//Se comenta el codigo original*@
+                                    @*<fieldset class="formulario">
+                                        <legend>Normatividad</legend>
+                                        <div class="row">
+                                            <div class="col-md-4"><label class="control-label">Nombre de la Vía</label></div>
+                                            <div class="col-md-3"><label class="control-label">Zonificación</label> </div>
+                                            <div class="col-md-3"><label class="control-label">Altura</label> </div>
+                                        </div>
+                                        <div id="LoteNormatividad">
+
+                                        </div>
+                                    </fieldset>*@
+                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                </div>
+                            </div>
+                        </div>
+                        <!--------------------------------------------------------- FIN TAB 4 ----------------------------------------------------->
+                        <!--******************************************************* TAB 5 *******************************************************-->
+                        <div id='tab-5'>
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                            @*//Se comento codigo original*@
+                            @*<div class="row">
+                                <div class="col-xl-2 col-lg-2 col-md-3">
+                                    <span class="icon-add">
+                                        @Ajax.ActionLink(" Agregar", "AgregarRetiroMunicipal", "Lotes"
+                                        , new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "modalRegistrarRetiroMunicipal", OnComplete = "mostrarModal('RegistrarRetiroMunicipal', 'CodigoViaRet')" }
+                                        , new { @class = "btn btn-success btn-sm btn-block  glyphicon glyphicon-plus-sign", @id = "btnAgregarRetiro"})
+                                    </span>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <table id="tablaRetiroMunicipal" style="width:100%;border-top: 0;border-left:0;" class="table responsive display  table-striped table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th style="border: 0;border-left:0;background:white;"></th>
+                                                <th style="border: 0;border-left:0;background:white;"></th>
+                                                <th style="border: 0;border-left:0;background:white;"></th>
+                                                <th style="border: 0;border-left:0;background:white;"></th>
+                                                <th style="border: 0;border-left:0;background:white;"></th>
+                                                <th colspan="4" style="border-bottom: 0;">Retiro</th>
+                                                <th colspan="4" style="border-bottom: 0;">Jardín</th>
+                                            </tr>
+                                            <tr>
+                                                <th></th>
+                                                <th>Nro</th>
+                                                <th>Via</th>
+                                                <th>Cda.</th>
+                                                <th>Lado</th>
+                                                <th>Retiro Oficial</th>
+                                                <th>Retiro Campo</th>
+                                                <th>Ocupación</th>
+                                                <th>Descripción</th>
+                                                <th>Medida</th>
+                                                <th>Ocupación</th>
+                                                <th>Descripción</th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>*@
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                            @*//GRILLA DE RETIRO MUNICIPAL NUEVO*@
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label class="control-label tit-label-01">RETIRO MUNICIPAL</label><hr class="hr-01" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xl-2 col-lg-2 col-md-3">
+                                    <span class="icon-add">
+                                        @Ajax.ActionLink(" Agregar", "AgregarRetiroMunicipal", "Lotes"
+                                        , new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "modalRegistrarRetiroMunicipalNew", OnComplete = "mostrarModal('RegistrarRetiroMunicipal', 'CodigoViaRet')" }
+                                        @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                        @*//Se agrego la clase style para que se agrande el boton*@
+                                        , new { @class = "btn btn-success btn-sm btn-block  glyphicon glyphicon-plus-sign", @id = "btnAgregarRetiro", @style = "width:100% !important" })
+                                        @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                    </span>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <table id="tablaRetiroMunicipalNew" style="width:100%;border-top: 0;border-left:0;" class="table responsive display  table-striped table-bordered table-hover">
+                                        <thead>
+                                            @*<tr>
+                                                <th style="border: 0;border-left:0;background:white;"></th>
+                                                <th style="border: 0;border-left:0;background:white;"></th>
+                                                <th style="border: 0;border-left:0;background:white;"></th>
+                                                <th style="border: 0;border-left:0;background:white;"></th>
+                                                <th style="border: 0;border-left:0;background:white;"></th>
+                                                <th colspan="4" style="border-bottom: 0;">Retiro</th>
+                                                <th colspan="4" style="border-bottom: 0;">Jardín</th>
+                                            </tr>*@
+                                            <tr>
+                                                <th></th>
+                                                <th>Nro</th>
+                                                <th>Cod. Via</th>
+                                                <th>Via</th>
+                                                @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                                @*//Se comenta original*@
+                                                @*<th>Cda.</th>
+                                                  <th>Lado</th>*@
+                                                @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                                <th>Retiro Oficial</th>
+                                                <th>Retiro Campo</th>
+                                                @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                                @*//Se comenta original*@
+                                                @*<th>Ocupación</th>*@
+                                                @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                                @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                                <th>Cod.Ocup.</th>
+                                                @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                                <th>Descripción</th>
+                                                @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                                @*//Se comenta original*@
+                                                @*<th>Medida</th>
+                                                <th>Ocupación</th>
+                                                <th>Descripción</th>*@
+                                                @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                                @*<th></th>
+                                                <th></th>
+                                                <th></th>*@
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                            @*//GRILLA DE JARDIN AISLAMIENTO NUEVO*@
+                            <div class="row">
+                                <div class="col-md-12 pt-4">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label class="control-label tit-label-01">JARDIN DE AISLAMIENTO</label><hr class="hr-01" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-2 col-lg-2 col-md-3">
+                                    <span class="icon-add">
+                                        @Ajax.ActionLink(" Agregar", "AgregarRetiroMunicipal", "Lotes"
+                                        , new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "modalRegistrarRetiroMunicipalNew", OnComplete = "mostrarModal('RegistrarRetiroMunicipal', 'CodigoViaRet')" }
+                                        @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                        @*//Se agrego la clase style para que se agrande el boton*@
+                                        , new { @class = "btn btn-success btn-sm btn-block  glyphicon glyphicon-plus-sign", @id = "btnAgregarRetiro", @style = "width:100% !important" })
+                                        @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                    </span>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <table id="tablaJardinAislamientoNew" style="width:100%;border-top: 0;border-left:0;" class="table responsive display  table-striped table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>Nro</th>
+                                                <th>Cod. Via</th>
+                                                <th>Via</th>
+                                                @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                                @*//Se comenta original*@
+                                                @*<th>Cda.</th>
+                                                  <th>Lado</th>*@
+                                                @*<th>Retiro Oficial</th>
+                                                <th>Retiro Campo</th>*@
+                                                @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                                @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                                @*//Se comenta original*@
+                                                @*<th>Ocupación</th>*@
+                                                @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                                @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                                @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                                @*<th>Descripción</th>*@
+                                                <th>Medida</th>
+                                                <th>Cod.Ocup.</th>
+                                                <th>Descripción</th>
+                                                @*<th></th>
+                                                <th></th>
+                                                <th></th>*@
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                            @*//GRILLA DE AREA PUBLICA NUEVO*@
+                            <div class="row">
+                                <div class="col-md-12 pt-4">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label class="control-label tit-label-01">AREA PUBLICA</label><hr class="hr-01" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-2 col-lg-2 col-md-3">
+                                    <span class="icon-add">
+                                        @Ajax.ActionLink(" Agregar", "AgregarRetiroMunicipal", "Lotes"
+                                        , new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "modalRegistrarRetiroMunicipalNew", OnComplete = "mostrarModal('RegistrarRetiroMunicipal', 'CodigoViaRet')" }
+                                        @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                        @*//Se agrego la clase style para que se agrande el boton*@
+                                        , new { @class = "btn btn-success btn-sm btn-block  glyphicon glyphicon-plus-sign", @id = "btnAgregarRetiro", @style = "width:100% !important" })
+                                        @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                    </span>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table id="tablaAreaPublicaNew" style="width:100%;border-top: 0;border-left:0;" class="table responsive display  table-striped table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>Nro</th>
+                                                <th>Cod. Via</th>
+                                                <th>Via</th>
+                                                <th>Oficial</th>
+                                                <th>Campo</th>
+                                                <th>Cod.Ocup.</th>
+                                                <th>Descripción</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                            @*//GRILLA DE ANCHO VIA NUEVO*@
+                            <div class="row">
+                                <div class="col-md-12 pt-4">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label class="control-label tit-label-01">ANCHO DE VIA</label><hr class="hr-01" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-2 col-lg-2 col-md-3">
+                                    <span class="icon-add">
+                                        @Ajax.ActionLink(" Agregar", "AgregarRetiroMunicipal", "Lotes"
+                                        , new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "modalRegistrarRetiroMunicipalNew", OnComplete = "mostrarModal('RegistrarRetiroMunicipal', 'CodigoViaRet')" }
+                                        @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                        @*//Se agrego la clase style para que se agrande el boton*@
+                                        , new { @class = "btn btn-success btn-sm btn-block  glyphicon glyphicon-plus-sign", @id = "btnAgregarRetiro", @style = "width:100% !important" })
+                                        @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                    </span>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table id="tablaAnchoViaNew" style="width:100%;border-top: 0;border-left:0;" class="table responsive display  table-striped table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>Nro</th>
+                                                <th>Cod. Via</th>
+                                                <th>Via</th>
+                                                <th>Oficial</th>
+                                                <th>Campo</th>
+                                                <th>Cod.Ocup.</th>
+                                                <th>Descripción</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                        </div>
+                        <!--------------------------------------------------------- FIN TAB 5 ----------------------------------------------------->
+                        <!--******************************************************* TAB 6 *******************************************************-->
+                        <div id='tab-6'>
+                                @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                @*//Se comenta original*@
+                                @*<fieldset class="formulario">*@
+                                <fieldset class="formulario hidden">
+                                    @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                    <legend>Documentos RRPP</legend>
+                                    <div class="relative">
+                                        <button data-toggle="collapse" href="#panel1" class="btn btn-xs btn-success fa fa-caret-down absolute"></button>
+                                        <div class="row collapse in m-2" id="panel1">
+                                            <div class="col-md-12 px-0">
+                                                <table id="DocumentosRrpp">
+                                                    <tr>
+                                                        <td width="7%">Item</td>
+                                                        <td width="27%">Tipo Documento</td>
+                                                        <td width="20%">Partida Electrónica</td>
+                                                        <td width="8%">Tomo - Ficha</td>
+                                                        <td width="8%">Folio</td>
+                                                        <td width="10%">Asiento</td>
+                                                        <td width="10%">Fecha Documento RRPP</td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr id="loteDocumRRPPPrimeraFila" style="height:45px">
+                                                        <td class="pr-4"><input id="docum_lote_item_00001" value="00001" disabled type="text" class="form-control item_lote_documr" /></td>
+                                                        <td class="pr-4"><select id="docum_lote_tipodoc_00001" disabled class=" form-control tipodoc_lote_docum chosen-seleccionar"><option value="">- Seleccione -</option></select></td>
+                                                        <td class="pr-4"><input id="docum_lote_partida_00001" disabled type="text" class="form-control partida_lote_documr" /></td>
+                                                        <td class="pr-4"><input id="docum_lote_tomoficha_00001" style="text-align:center;" disabled type="text" class="form-control tomoficha_lote_documr" /></td>
+                                                        <td class="pr-4"><input id="docum_lote_folio_00001" style="text-align:center;" disabled type="text" class="form-control folio_lote_documr" /></td>
+                                                        <td class="pr-4"><input id="docum_lote_asiento_00001" disabled type="text" class="form-control asiento_lote_documr" /></td>
+                                                        <td class="pr-4">
+                                                            <input id="docum_lote_fechadoc_00001" style="text-align:center;" maxlength="10" disabled type="text" class="form-control fechadoc_lote_documr" />
+                                                        </td>
+                                                        <td style="display:none;"><input id="docum_lote_id_00001" type="hidden" class="form-control id_lote_documr" /></td>
+                                                        <td style="display:none;"><input id="docum_lote_ruta_00001" type="hidden" class="form-control ruta_lote_documr" /></td>
+                                                        <td align="right">
+                                                            <div style="width:150px">
+                                                                <button onclick="CrearCamposDocumentacion(1, 'DocumentosRrpp', 'docum_lote_tipodoc','','')" class="btn btn-sm btn-success mr-1 px-2 py-1 glyphicon glyphicon-plus"></button>
+                                                                <button onclick="EditarCampoDocumentacion(1, 'DocumentosRrpp', '00001', 'docum_lote_tipodoc')" class="btn btn-sm btn-success mr-1 px-2 py-1 glyphicon glyphicon-edit"></button>
+                                                                <button onclick="EliminarCampoDocumentacion(1, this, '00001', 'item_lote_obser')" class="btn btn-sm btn-success px-2 py-1 glyphicon glyphicon-trash"></button>
+                                                                <form class="form-cell" enctype="multipart/form-data" id="formima_00001">
+                                                                    <label id="docum_subir_00001" class="btn btn-sm btn-success buttonup px-2 py-1 glyphicon glyphicon-folder-open">
+                                                                        <input name="Archivo" id="docum_lote_archivo_00001" class="form-control archivo_lote_documr" type="file" />
+                                                                    </label>
+                                                                </form>
+                                                                <button id="docum_descargar_00001" disabled onclick="DescargarArchivo('00001')" class="btn btn-sm btn-success docum_descargar px-2 py-1 glyphicon glyphicon-search"></button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                            @*//Se comenta codigo original*@
+                            @*// <fieldset class="formulario">*@
+                                <fieldset class="formulario hidden">
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label class="control-label tit-label-01">INFORMACION GENERAL DEL LOTE</label><hr class="hr-01" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-2 col-lg-2 col-md-3">
+                                            <span class="icon-add">
+                                                @Ajax.ActionLink(" Agregar", "AgregarDocumentoAsignado", "Lotes"
+                                            , new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "modalRegistrarDocumentosExpediente", OnComplete = "mostrarModal('RegistrarDocumentosExpediente', 'Asignacion')" }
+                                            , new { @class = "btn btn-success btn-sm btn-block  glyphicon glyphicon-plus-sign", @id = "btnAgregarDocumentos", @style = "width:100% !important" })
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <br />
+
+                                    <div class="relative">
+                                        <button data-toggle="collapse" href="#panel2" class="btn btn-xs btn-success fa fa-caret-down absolute"></button>
+                                        <div class="row collapse in m-2" id="panel2">
+                                            <div class="col-md-12 px-0">
+                                                <table id="ExpedientesDoc" style="width:100%;">
+                                                    <tr>
+                                                        <td width="7%">Item</td>
+                                                        <td width="21%">Solicitante</td>
+                                                        <td width="14%">Documento</td>
+                                                        <td width="10%">Número</td>
+                                                        <td width="10%">Fecha</td>
+                                                        <td width="28%">Observacion</td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr id="loteDocumPrimeraFila" style="height:45px">
+                                                        <td class="pr-4"><input value="00001" disabled type="text" class="form-control item_lote_exped" /></td>
+                                                        <td class="pr-4"><input disabled id="exped_lote_solici_00001" type="text" class="form-control solici_lote_exped" /></td>
+                                                        <td class="pr-4"><input disabled id="exped_lote_documento_00001" type="text" class="form-control documento_lote_exped" /></td>
+                                                        <td class="pr-4"><input disabled id="exped_lote_numero_00001" type="text" class="form-control numero_lote_exped" /></td>
+                                                        <td class="pr-4"><input disabled id="exped_lote_fecha_00001" type="date" class="form-control fecha_lote_exped" /></td>
+                                                        <td class="pr-4"><input id="exped_lote_obser_00001" autocomplete="off" type="text" class="form-control obser_lote_exped" /></td>
+                                                        <td style="display:none;"><input id="exped_lote_id_00001" type="hidden" class="id_lote_exped" /></td>
+                                                        <td style="display:none;"><input id="exped_lote_correl_00001" type="hidden" class="correl_lote_exped" /></td>
+                                                        <td style="display:none;"><input id="exped_lote_flag_00001" type="hidden" class="flag_lote_exped" /></td>
+                                                        <td style="display:none;"><input id="exped_lote_codsoli_00001" type="hidden" class="codsoli_lote_exped" /></td>
+                                                        <td align="right">
+                                                            <div style="width:150px">
+                                                                <button onclick="EliminarCampoDocumentacionExpediente(2,$('#exped_lote_correl_00001').val(), this, '00001', 'item_lote_obser')" class="btn btn-sm btn-success mr-2 px-2 py-1 glyphicon glyphicon-trash"></button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                            <fieldset class="formulario">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <div class="form-group">
+                                                <label class="control-label tit-label-01">INFORMACION GENERAL DEL LOTE</label><hr class="hr-01" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+
+                                @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                @*//Se comenta codigo original*@
+                                @*<legend>Otros Documentos</legend>*@
+                                @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                <div class="row">
+                                    <div class="col-xl-2 col-lg-2 col-md-3">
+                                        <span class="icon-add">
+                                            @Ajax.ActionLink(" Agregar", "AgregarOtrosDocumentoAsignado", "Lotes"
+                                            , new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "modalRegistrarOtrosDocumentos", OnComplete = "mostrarModal('RegistrarOtrosDocumentos', 'Asignacion')" }
+                                            @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                                            @*//Se agrego linea de codigo estilos al boton*@
+                                            /*, new { @class = "btn btn-success btn-sm btn-block  glyphicon glyphicon-plus-sign", @id = "btnAgregarOtrosDocumentos"})*/
+                                            , new { @class = "btn btn-success btn-sm btn-block  glyphicon glyphicon-plus-sign", @id = "btnAgregarOtrosDocumentos", @style = "width:100% !important" })
+                                            @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                        </span>
+                                    </div>
+                                    <div hidden="hidden">
+                                        <text id="nombre_otro_documento"></text>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="relative">
+                                    <button data-toggle="collapse" href="#panel5" class="btn btn-xs btn-success fa fa-caret-down absolute"></button>
+                                    <div class="row collapse in m-2" id="panel5">
+                                        <div class="col-md-12 px-0">
+                                            <table id="tablaOtrosDocumentos" style="width:100%;" class="table responsive display  table-striped table-bordered table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th width="5%">Nro</th>
+                                                        <th width="15%">Tipo Documento</th>
+                                                        <th width="10%">Nro Documento</th>
+                                                        <th width="15%">Observación</th>
+                                                        <th width="10%">Fecha Documento</th>
+                                                        <th></th>
+                                                        <th></th>
+                                                        <th width="10%"></th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                            @*//Se comenta original*@
+                            @*<fieldset class="formulario">*@
+                              <fieldset class="formulario hidden">
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                    <legend>Obras Privadas</legend>
+                                    <div class="relative">
+                                        <button data-toggle="collapse" href="#panel3" class="btn btn-xs btn-success fa fa-caret-down absolute"></button>
+                                        <div class="row collapse in m-2" id="panel3">
+                                            <div class="col-md-12 px-0">
+                                                <table id="tablaObras" style="width:100%;" class="table responsive display  table-striped table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="80px">Nro</th>
+                                                            <th>Numero Licencia</th>
+                                                            <th width="25%">Solicitante</th>
+                                                            <th width="25%">Beneficiario</th>
+                                                            <th>Tipo Obra</th>
+                                                            <th>Fecha Licencia</th>
+                                                            <th></th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                            @*//Se comenta original*@
+                            @*<fieldset class="formulario">*@
+                                <fieldset class="formulario hidden">
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                    <legend>Licencias de Funcionamiento</legend>
+                                    <div class="relative">
+                                        <button data-toggle="collapse" href="#panel4" class="btn btn-xs btn-success fa fa-caret-down absolute"></button>
+                                        <div class="row collapse in m-2" id="panel4">
+                                            <div class="col-md-12 px-0">
+                                                <table id="tablaLicencias" style="width:100%;" class="table responsive display  table-striped table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="80px">Nro</th>
+                                                            <th>Numero Licencia</th>
+                                                            <th width="25%">Solicitante</th>
+                                                            <th width="25%">Beneficiario</th>
+                                                            <th>Giros</th>
+                                                            <th>Fecha Licencia</th>
+                                                            <th></th>
+                                                            <th></th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+                            @*//Se comenta original*@
+                            @*<fieldset class="formulario">*@
+                                <fieldset class="formulario hidden">
+                            @*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+                                    <legend>Inspecciones</legend>
+                                    <div class="relative">
+                                        <button data-toggle="collapse" href="#panel5" class="btn btn-xs btn-success fa fa-caret-down absolute"></button>
+                                        <div class="row collapse in m-2" id="panel5">
+                                            <div class="col-md-12 px-0">
+                                                <table id="tablaInspecciones" style="width:100%;" class="table responsive display  table-striped table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="80px">Nro</th>
+                                                            <th>Fecha Inspección</th>
+                                                            <th>Código Unidad Catastral</th>
+                                                            <th>Inspector Responsable</th>
+                                                            <th>Inspectores</th>
+                                                            <th>Observación</th>
+                                                            <th></th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+</div>
+                        <!--------------------------------------------------------- FIN TAB 6 ----------------------------------------------------->
+                        <!--******************************************************* TAB 7 *******************************************************-->
+                        <div id='tab-7'>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table id="LoteObservacion" style="width:100%;">
+                                        <tr>
+                                            <td width="6%">Item</td>
+                                            <td width="10%">Fecha</td>
+                                            <td width="">Observacion</td>
+                                            <td width="100px"></td>
+                                        </tr>
+                                        <tr id="lotePrimeraFila" style="height:45px">
+                                            <td valign="top" class="pr-4"><input disabled id="obs_lote_item_00001" value="00001" type="text" style="text-align:center;" class="form-control px-1 text-center item_lote_obser" /></td>
+                                            <td valign="top" class="pr-4"><input disabled id="obs_lote_fecha_00001" maxlength="10" style="text-align:center;" type="text" class="form-control fecha_lote_obser" /></td>
+                                            <td style="padding-right: 1.5rem !important;"><textarea disabled id="obs_lote_observacion_00001" style="" class="form-control obser_lote_obser" rows="3"></textarea></td>
+                                            @*<input disabled id="obs_lote_observacion_00001" type="text" class="form-control obser_lote_obser" />*@
+                                            <td style="display:none;">
+                                                <input type="hidden" class="id_lote_obser" id="ob_lote_id_00001" />
+                                            </td>
+                                            <td valign="top" width="100px">
+                                                <button onclick="CrearLoteObservacion()" class="btn btn-sm btn-success mr-1 px-2 py-1 glyphicon glyphicon-plus"></button>
+                                                <button onclick="EditarLoteObservacion('00001')" class="btn btn-sm btn-success mr-1 px-2 py-1 glyphicon glyphicon-edit "></button>
+                                                <button disabled onclick="EliminarLoteObservacion(this, '00001')" class="btn btn-sm btn-success px-2 py-1 glyphicon glyphicon-trash"></button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!--------------------------------------------------------- FIN TAB 7 ----------------------------------------------------->
+                        @if (@Model.Estatico != true)
+                       {
+                            <div id="tab-8">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <iframe id="ifGaleriaImagenes" width="100%" height="1000" frameborder="0"></iframe>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                       }
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Large modal -->
+<div id="modalRegistrarLoteNuevo" class="modal fade" tabindex="-1" role="dialog"></div>
+<div id="modalRegistrarLindero" class="modal fade" tabindex="-1" role="dialog"></div>
+<div id="modalRegistrarOtrosDocumentos" class="modal fade" tabindex="-1" role="dialog"></div>
+<div id="modalRegistrarDocumentosExpediente" class="modal fade" tabindex="-1" role="dialog"></div>
+<div id="modalRegistrarDirecMunicipal" class="modal fade" tabindex="-1" role="dialog"></div>
+<div id="modalRegistrarRetiroMunicipal" class="modal fade" tabindex="-1" role="dialog"></div>
+<div id="modalRegistrarHabilitacion" class="modal fade" tabindex="-1" role="dialog"></div>
+<div id="modalPorcentajeBienComun" class="modal fade" tabindex="-1" role="dialog"></div>
+@*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+<div id="modalRegistrarRetiroMunicipalNew" class="modal fade" tabindex="-1" role="dialog"></div>
+<div id="modalRegistrarRetiroMunicipalNew" class="modal fade" tabindex="-1" role="dialog"></div>
+<div id="modalRegistrarAreaPublicaNew" class="modal fade" tabindex="-1" role="dialog"></div>
+<div id="modalRegistrarAnchoViaNew" class="modal fade" tabindex="-1" role="dialog"></div>
+<div id="modalRegistrarLoteReferenciaNew" class="modal fade" tabindex="-1" role="dialog"></div>
+@*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+
+@*//CAMBIOS NUEVOS CATASTRO GJLR-INI*@
+<!-- Modal -->
+<div class="modal fade" id="miModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<h5 class="modal-title" id="modalLabel">Título del Modal</h5>*@
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row" id="Lotes">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" style="overflow: hidden">
+                                <div class="row">
+                                    <div class="col-md-6 col-xs-12"><h3><strong>Ficha Lote</strong></h3></div><div class="col-md-4"></div>
+                                    @*<div class="col-md-2 col-xs-12">
+                                        <span><button id="GrabarGeneral" type="button" disabled class="btn btn-green mr-2 btn-block" style="float:right" onclick="GrabarLote()"><span class="glyphicon glyphicon-ok mr-2"></span> Grabar</button></span>
+                                    </div>*@
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="">
+                                    <input type="hidden" id="Periodo" />    <input type="hidden" id="CodigoTipSol" />   <input type="hidden" id="CodigoNumSol" />   <input type="hidden" id="CodDist" />
+                                    <input type="hidden" id="CodSect" />    <input type="hidden" id="CodManz" />        <input type="hidden" id="CodLote" />        <input type="hidden" id="CodigoTipDoc" />
+                                    @Html.ValidationSummary(true)
+                                    @if (@Model.Estatico != true)
+                                    {
+                                        <div class="row">
+                                            <div class="col-xl-7 col-sm-9">
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            @Html.LabelFor(model => model.ListTipoSolicitud, htmlAttributes: new { @class = "control-label" })
+                                                            @Html.DropDownListFor(m => m.FiltrarCodigoTipoSolicitud, Model.ListTipoSolicitud, "- Seleccione el tipo de solicitud -", new { @class = "form-control" })
+                                                            <span class="field-validation-valid inputUtil" data-valmsg-for="FiltrarCodigoTipoSolicitud" data-valmsg-replace="true"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4" id="divTipoDocumento" style="display:none;">
+                                                        <div class="form-group">
+                                                            @Html.LabelFor(model => model.ListTipoDocumento, htmlAttributes: new { @class = "control-label" })
+                                                            @Html.DropDownListFor(m => m.FiltrarCodigoTipoDocumentoReg, Model.ListTipoDocumento, "- Seleccione el tipo de documento -", new { @class = "chosen-seleccionar form-control", autofocus = "true" })
+                                                            <span class="field-validation-valid" data-valmsg-for="FiltrarCodigoTipoDocumentoReg" data-valmsg-replace="true"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <div class="form-group">
+                                                            @Html.LabelFor(model => model.FiltrarNumeroSolicitud, htmlAttributes: new { @class = "control-label" })
+                                                            @Html.TextBoxFor(model => model.FiltrarNumeroSolicitud, new { @class = "form-control px-2" })
+                                                            <span class="field-validation-valid inputUtil" data-valmsg-for="FiltrarNumeroSolicitud" data-valmsg-replace="true"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-2 text-center">
+                                                        <div class="form-group"><br /><button id="btnBuscar" type="button" value="" class="btn btn-default btn-block glyphicon glyphicon-search" style="margin-top: 5px"></button></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-5 col-sm-3">
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-xl-4 pl-2 col-sm-12">
+                                                        @*<button disabled type="button" class="btn btn-default btn-sm btn-block glyphicon glyphicon-plus" id="btnNuevoLote">
+                                                    <span style="font-family:'Open Sans'">Nuevo Lote</span>
+                                                </button>*@
+
+                                                    </div>
+                                                    @*<div class="col-xl-4 pl-2 col-sm-12">
+                                                <button disabled type="button" class="btn btn-default btn-sm btn-block" id="btnBienComun">% Bien Común</button>
+                                            </div>*@
+                                                    <div class="col-xl-4 pl-2 col-sm-12">
+                                                        <span class="icon-add">
+                                                            @Ajax.ActionLink(" Nuevo Código", "AgregarLoteNuevo", "Lotes",
+                                        new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "modalRegistrarLoteNuevo", OnComplete = "mostrarModal('RegistrarLoteNuevo', 'Asignacion')" },
+                                        new { @class = "btn btn-default btn-sm btn-block  glyphicon glyphicon-plus", disabled = "true", @id = "btnNuevoLote" })
+                                                        </span>
+                                                        <button type="button" id="GenFichaManzana" disabled class="btn btn-success btn-sm glyphicon glyphicon-print btn-block" style="display:none;float:right" onclick="GenerarFichaManzana()"><span style="font-family:'Open Sans'"> Generar Ficha Mz.</span></button>
+                                                    </div>
+                                                    <div class="col-xl-4 pl-2 col-sm-12">
+                                                        <button type="button" id="GenFicha" disabled class="btn btn-success btn-sm glyphicon glyphicon-print btn-block" style="float:right" onclick="GenerarFicha()"><span style="font-family:'Open Sans'"> Generar Ficha Preliminar</span></button>
+                                                    </div>
+                                                </div>
+                                                @*<button disabled class="btn btn-default mx-2">Visualizar Ficha</button>*@
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-md-12">
+                                                <table id="tablaUnidadCatastral" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="15%">Dist</th>
+                                                            <th width="15%">Sec</th>
+                                                            <th width="15%">Mz</th>
+                                                            <th width="15%">Lote</th>
+                                                            <th width="15%">Referencia</th>
+                                                            <th width="15%">Estado</th>
+                                                            <th style="display:none"></th>
+                                                            <th style="display:none"></th>
+                                                            <th style="display:none"></th>
+                                                            <th>Acciones</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <label class="control-label">Lote Referencia</label>
+                                        <div class="row">
+                                            <div class="col-md-12 px-3">
+                                                <table id="tablaUnidadCatastralRef" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="15%">Dist</th>
+                                                            <th width="15%">Sec</th>
+                                                            <th width="15%">Mz</th>
+                                                            <th width="15%">Lote</th>
+                                                            <th width="15%">Referencia</th>
+                                                            <th width="15%">Estado</th>
+                                                            <th style="display:none"></th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="row">
+                                            <div class="col-xl-6 ">
+                                                <table border="0">
+                                                    <tr>
+                                                        <td width="12%"><label class="form-label">Dist.</label></td>
+                                                        <td width="12%"><label class="form-label">Sec</label></td>
+                                                        <td width="12%"><label class="form-label">Mz</label></td>
+                                                        <td width="12%"><label class="form-label">Lote</label></td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoDistrito, new { @class = "form-control text-center px-3", @readonly = "true", })</td>
+                                                        <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoSector, new { @class = "form-control text-center px-3", maxlength = "2", @onkeypress = "if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" })</td>
+                                                        <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoManzana, new { @class = "form-control text-center px-3", maxlength = "3", @onkeypress = "if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" })</td>
+                                                        <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoLote, new { @class = "form-control text-center px-3", maxlength = "3", @onkeypress = "if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" })</td>
+                                                        <td>
+                                                            <div class="">
+                                                                <button id="btnBuscarEstatico" type="button" value="" class="btn btn-default glyphicon glyphicon-search" style="padding: 6px 35px"></button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="5">
+                                                            <div class="has-error ml-3 mt-2">
+                                                                <ul id="msgErrores"></ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-md-12">
+                                                <table id="tablaUnidadCatastralEstatico" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="15%">Dist</th>
+                                                            <th width="15%">Sec</th>
+                                                            <th width="15%">Mz</th>
+                                                            <th width="15%">Lote</th>
+                                                            <th width="15%">Referencia</th>
+                                                            <th width="15%">Estado</th>
+                                                            <th style="display:none"></th>
+                                                            <th>Acciones</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                @*<button type="button" class="btn btn-primary">Guardar Cambios</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+@*//CAMBIOS NUEVOS CATASTRO GJLR-FIN*@
+
+@section datatables {
+
+    <script>
+
+    var ROOT = '@Url.Content("~")';
+    var Estatico = false;
+    var Consultas = '@Model.Consultas';
+
+        var deshabilitar = '';
+        if (Consultas != 'False') {
+            $('button').attr('disabled', 'disabled');
+            $('textarea').attr('disabled', 'disabled');
+            //$('input').attr('disabled', 'disabled');
+            $('a').attr('disabled', 'disabled');
+            $('#btnAgregarDirecMun').click(function () { return false; });
+            $('#btnAgregarRetiro').click(function () { return false; });
+            $('select').attr('disabled', 'disabled');
+            $('.glyphicon-folder-open').attr('disabled', 'disabled');
+            deshabilitar = ' disabled ';
+
+            $('#FiltrarCodigoSector').removeAttr('disabled');
+            $('#FiltrarCodigoManzana').removeAttr('disabled');
+            $('#FiltrarCodigoLote').removeAttr('disabled');
+            $('#btnBuscarEstatico').removeAttr('disabled');
+        } else {
+            //$('#page-wrapper').removeClass('pt-5').addClass('pt-1'); $('#periodoGlobal').show();
+        }
+        var ListVBTipoDocRRPP = @Html.Raw(Json.Encode(ViewBag.TipoDocRRPP));
+
+        //CAMBIOS NUEVOS CATASTRO GJLR-INI
+        $("#miModal").modal("show");
+        //CAMBIOS NUEVOS CATASTRO GJLR-FIN
+    </script>
+    @*<script src="~/msisicdes/Scripts/dcalendar.picker.js"></script>*@
+    <script src="@Url.Content("~/Scripts/dcalendar.picker.js")"></script>
+    <script src="@Url.Content("~/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js")"></script>
+
+    <script src="@Url.Content("~/assets/msisic/Lotes/LotesInicial.js")"></script>
+    <script src="@Url.Content("~/assets/msisic/Lotes/LotesTab01.js")"></script>
+    <script src="@Url.Content("~/assets/msisic/Lotes/LotesTab02.js")"></script>
+    <script src="@Url.Content("~/assets/msisic/Lotes/LotesTab03.js")"></script>
+    <script src="@Url.Content("~/assets/msisic/Lotes/LotesTab04.js")"></script>
+    <script src="@Url.Content("~/assets/msisic/Lotes/LotesTab05.js")"></script>
+    <script src="@Url.Content("~/assets/msisic/Lotes/LotesTab06.js")"></script>
+    <script src="@Url.Content("~/assets/msisic/Lotes/LotesTab07.js")"></script>
+
+    <script>
+    function CargarGaleriaImagenes (){
+        var urlAction = "@ConfigurationManager.AppSettings["urlGaleriaFotografias"]" + $('#CodDist').val()+ $('#CodSect').val()+ $('#CodManz').val()+$('#CodLote').val() + "&usuario=" + "@VariablesWeb.IdUsuarioIntento";
+        $("#ifGaleriaImagenes").attr("src",urlAction);
+            
+    };
+
+    function CargarImagen(estatico) {
+        //var urlAction = "@Url.Action("CargarImagen")?CodigoUnidadCatastral=" + $("#CodigoUnidadCatastral").val();
+        var urlAction = "@Url.Action("CargarImagen")?CodigoDistrito=" + $("#CodDist").val() + "&CodigoLote=" + $('#CodLote').val() + "&CodigoManzana=" + $('#CodManz').val() + '&Estatico=' + Estatico + "&CodigoSector=" + $('#CodSect').val();
+        $.post(urlAction, function (response) {
+            if (response === 'false') {
+                imagen = '';
+            }
+            $("#imglote").attr("src", response.imagen);
+        });
+    }
+        $('#FiltrarCodigoSector').change(function () {
+            var texto;
+            texto = ZeroIzqCaracter($('#FiltrarCodigoSector').val(), 2);
+            $('#FiltrarCodigoSector').val(texto);
+        });
+
+        $('#FiltrarCodigoManzana').change(function () {
+            var texto;
+            texto = ZeroIzqCaracter($('#FiltrarCodigoManzana').val(), 3);
+            $('#FiltrarCodigoManzana').val(texto);
+        });
+
+        $('#FiltrarCodigoLote').change(function () {
+            var texto;
+            texto = ZeroIzqCaracter($('#FiltrarCodigoLote').val(), 3);
+            $('#FiltrarCodigoLote').val(texto);
+        });
+
+        $('#FiltrarCodigoSector').keyup(function (e) {
+            if ((e.keyCode > 36 && e.keyCode <= 40) || e.keyCode == 9 || e.keyCode == 16 || e.keyCode == 17) return;
+            if ($(this).val().length > 1) {
+                $('#FiltrarCodigoManzana').focus().select();
+            }
+        });
+        $('#FiltrarCodigoManzana').on('keyup', function (e) {
+            if ((e.keyCode > 36 && e.keyCode <= 40) || e.keyCode == 9 || e.keyCode == 16 || e.keyCode == 17) return;
+            if (e.keyCode === 8 && !this.value) {
+                $('#FiltrarCodigoSector').focus().select();
+            }
+            if ($(this).val().length > 2) {
+                $('#FiltrarCodigoLote').focus().select();
+            }
+        });
+        $('#FiltrarCodigoLote').on('keyup', function (e) {
+            if ((e.keyCode > 36 && e.keyCode <= 40) || e.keyCode == 9 || e.keyCode == 16 || e.keyCode == 17) return;
+            if (e.keyCode === 8 && !this.value) {
+                $('#FiltrarCodigoManzana').focus().select();
+            }
+            if ($(this).val().length > 2) {
+                $('#btnBuscarEstatico').focus();
+            }
+        });
+
+
+    @*function CargarImagen(estatico) {
+            var urlAction = "@Url.Action("CargarImagen")?CodigoDistrito=" + $("#CodDist").val() + "&CodigoLote=" + $('#CodLote').val() + "&CodigoManzana=" + $('#CodManz').val() + '&Estatico=' + Estatico + "&CodigoSector=" + $('#CodSect').val();
+            var imagen = '<img src="@Url.Action("CargarImagen")?CodigoDistrito=' + $("#CodDist").val() + '&CodigoLote=' + $('#CodLote').val() + '&CodigoManzana=' + $('#CodManz').val() +
+                    '&Estatico=' + Estatico +
+                    '&CodigoSector=' + $('#CodSect').val() + '" class="file-preview-image kv-preview-data rotate-1" />';
+            $.get(urlAction, function (response) {
+                if (response === 'false') {
+                    imagen = '';
+                }
+                $("#file-0a").fileinput('destroy').fileinput({
+                    language: "es",
+                    uploadUrl: "@Url.Content("~/Lotes/GrabarImagen")",
+                    initialPreview: imagen,
+                    uploadExtraData: function (previewId, index) {
+                        var model = { CodigoDistrito: $('#CodDist').val(), CodigoLote: $('#CodLote').val(), CodigoManzana: $('#CodManz').val(), CodigoSector: $('#CodSect').val(), Estatico: estatico };
+                        return model;
+                    },
+                    maxFileCount: 1,
+                    allowedFileExtensions: ["jpg", "png", "gif"],
+                });
+            });
+
+        }*@
+    </script>
+}
+
+
+
+
+
+
+
+

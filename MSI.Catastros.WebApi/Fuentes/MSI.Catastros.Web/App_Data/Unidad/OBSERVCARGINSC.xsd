@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="OBSERVCARGINSC" targetNamespace="http://tempuri.org/OBSERVCARGINSC.xsd" xmlns:mstns="http://tempuri.org/OBSERVCARGINSC.xsd" xmlns="http://tempuri.org/OBSERVCARGINSC.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="OBSERVCARGINSC" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="OBSERVCARGINSC" msprop:Generator_UserDSName="OBSERVCARGINSC">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="OBSERVCARG" msprop:Generator_TableClassName="OBSERVCARGDataTable" msprop:Generator_TableVarName="tableOBSERVCARG" msprop:Generator_TablePropName="OBSERVCARG" msprop:Generator_RowDeletingName="OBSERVCARGRowDeleting" msprop:Generator_RowChangingName="OBSERVCARGRowChanging" msprop:Generator_RowEvHandlerName="OBSERVCARGRowChangeEventHandler" msprop:Generator_RowDeletedName="OBSERVCARGRowDeleted" msprop:Generator_UserTableName="OBSERVCARG" msprop:Generator_RowChangedName="OBSERVCARGRowChanged" msprop:Generator_RowEvArgName="OBSERVCARGRowChangeEvent" msprop:Generator_RowClassName="OBSERVCARGRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ITEM" msprop:Generator_ColumnVarNameInTable="columnITEM" msprop:Generator_ColumnPropNameInRow="ITEM" msprop:Generator_ColumnPropNameInTable="ITEMColumn" msprop:Generator_UserColumnName="ITEM" type="xs:string" minOccurs="0" />
+              <xs:element name="FECREG" msprop:Generator_ColumnVarNameInTable="columnFECREG" msprop:Generator_ColumnPropNameInRow="FECREG" msprop:Generator_ColumnPropNameInTable="FECREGColumn" msprop:Generator_UserColumnName="FECREG" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTOBSERVACION" msprop:Generator_ColumnVarNameInTable="columnTXTOBSERVACION" msprop:Generator_ColumnPropNameInRow="TXTOBSERVACION" msprop:Generator_ColumnPropNameInTable="TXTOBSERVACIONColumn" msprop:Generator_UserColumnName="TXTOBSERVACION" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

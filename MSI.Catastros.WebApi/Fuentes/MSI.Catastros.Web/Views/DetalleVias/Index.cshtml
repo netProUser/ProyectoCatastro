@@ -1,0 +1,202 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.DetalleVias.FiltrarDetalleViasViewModel
+@{
+    ViewBag.Title = "Mantenimiento Vias";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="overflow: hidden">
+                
+                <label class="fonts14 mt-2">Mantenimiento de Vías Detalle</label>
+                <span class="icon-add">
+                    @Ajax.ActionLink(" Registrar", "Registrar", "DetalleVias"
+                                                                              , new { }
+                                                                              , new AjaxOptions
+                                                                                       {
+                                                                                           HttpMethod = "Get",
+                                                                                           InsertionMode = InsertionMode.Replace,
+                                                                                           UpdateTargetId = "modalDetalleVias"
+                                                                                       }
+                                                                              ,
+                                                                              new
+                                                                              {
+                                                                                  @class = "btn btn-create glyphicon glyphicon-plus-sign",
+                                                                                  @type = "button",
+                                                                                  data_toggle = "modal",
+                                                                                  data_target = "#modalDetalleVias"
+
+                                                                              }
+                                                                              )
+                </span>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        @using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "SeccionListaDetalleVias" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true)
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.ParamDistritoVia, htmlAttributes: new { @class = "control-label" })
+                                        @Html.TextBoxFor(model => model.ParamDistritoVia, new { @class = "form-control", @readonly = "readonly" })
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.ParamSelectVia, htmlAttributes: new { @class = "control-label" })
+                                        @Html.DropDownListFor(model => model.ParamSelectVia, new SelectList(Model.listVia, "Value", "Text"), "Seleccione...",
+                          new { @class = "chosen-seleccionar form-control", style = "width:100%;" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.ParamCuadra, htmlAttributes: new { @class = "control-label" })
+                                        @Html.TextBoxFor(model => model.ParamCuadra, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-md-8 pr-0"><input id="btnBuscar" type="button" value="Buscar" class="btn btn-block btn-primary" style="margin-top:5px" /></div>
+                                            <div class="col-md-4 pl-0"><button id="btnLimpiar" type="button" class="btn btn-default py-3 fa fa-refresh mx-3" style="margin-top:5px"></button></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @*<div id="SeccionListaDetalleVias">
+                                    @Html.Partial("_ListarDetalleVias", Model)
+                                </div>*@
+
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="tablaDetalleVias" class="table table-striped table-bordered table-hover display responsive" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th width="100px">Acciones</th>
+                                                <th>Código de Detalle</th>
+                                                <th>Código de Vía</th>
+                                                <th>Vía</th>
+                                                <th>Cuadra</th>
+                                                <th>Medida Vía Normativa</th>
+                                                <th>Ancho Vía Campo</th>
+                                                <th>Medida Vía</th>
+
+                                            </tr>
+                                        </thead>
+
+                                    </table>
+                                </div>
+                            </div>
+
+
+                        }
+                    </div>
+
+                </div>
+                <!-- /.row (nested) -->
+            </div>
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
+<!-- Modal -->
+<div id="modalDetalleVias"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="EditarDistritolabel"
+     aria-hidden="true">
+</div>
+
+<!-- Modal -->
+<div id="modalEliminarDetalleVias"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="labelEliminarDetalleVias"
+     aria-hidden="true">
+</div>
+
+@section datatables {
+    <script>
+        $(document).ready(function () {
+            $(".chosen-seleccionar").chosen({ width: "100%", placeholder_text_single: "Seleccione una opción" });
+
+            $('#ParamCuadra').maskWeight({
+                integerDigits: 4,
+                decimalDigits: 0,
+                decimalMark: '.',
+                initVal: '',//'000,000',
+                roundingZeros: true,
+                digitsCount: 4,
+                callBack: null,
+                doFocus: true
+            });
+
+            // -- Modificar el nombre la entidad
+            var nombreEntidad = "DetalleVias";
+            var table = $("#tabla" + nombreEntidad).DataTable({
+                "ajax": {
+                   // "url": "/" + nombreEntidad + "/CargarGrid",
+                    "url": "@Url.Content("~/DetalleVias/CargarGrid")",
+                    "type": "POST",
+                    "datatype": "json",
+                    "data": function (d) {
+                        // -- Agregar campos de busqueda
+                        d.ParamSelectVia = $('#ParamSelectVia').val();
+                        d.ParamCuadra = $('#ParamCuadra').val();
+                    }
+                },
+                "columns": [
+                    {
+                        "render": function (data, type, full, meta) {
+                            // -- Reemplazar los codigos de los hrefs
+                            return '<a data-toggle="tooltip" title="Editar" class="btn btn-default glyphicon glyphicon-edit" href="' + nombreEntidad + '/Editar?idDetalle=' + full.CodigoDetalleVia + '&idVia=' + full.CodigoVia + '"></a>' +
+                            ' <a data-toggle="tooltip" title="Eliminar" class="btn btn-danger glyphicon glyphicon-remove" href="' + nombreEntidad + '/Eliminar?idDetalle=' + full.CodigoDetalleVia + '&idVia=' + full.CodigoVia + '"></a>'
+                            ;
+                        }, "className": "text-center",
+                    },
+
+                    { "data": "CodigoDetalleVia", "name": "Código1", "autoWidth": true, "className": "text-center" },
+                    { "data": "CodigoVia", "name": "Código de Vía", "autoWidth": true, "className": "text-center" },
+                    { "data": "DescVia", "name": "Nombre de Via", "autoWidth": true },
+                    { "data": "NumCuadra", "name": "Cuadra", "autoWidth": true, "className": "text-center" },
+                    { "data": "txtMedidaViaNormativa", "name": "Medida de Vía Normativa", "autoWidth": true, "className": "text-right" },
+                    { "data": "AnchoVia", "name": "Ancho de Vía", "autoWidth": true, "className": "text-center" },
+                    { "data": "txtMedidaVia", "name": "Ancho de Vía", "autoWidth": true, "className": "text-right" },
+
+                ]
+            });
+            $("#tabla" + nombreEntidad + " tbody").on('click', 'a', function (event) {
+                event.preventDefault();
+                var enlace = $(this).attr('href');
+                $.get(enlace, function (response) {
+                    var id = "#modal".concat((enlace.indexOf("Editar") !== -1) ? nombreEntidad : "Eliminar" + nombreEntidad);
+                    $(id).modal().html(response);
+
+                });
+            });
+            $('#btnBuscar').click(function () {
+                console.log($(this).val());
+                table.ajax.reload();
+            });
+
+            $('#btnLimpiar').click(function () {
+                $('#ParamSelectVia').val('');
+                $('#ParamSelectVia').trigger("chosen:updated");
+                $('#ParamCuadra').val('0');
+                table.ajax.reload();
+
+            });
+
+        });
+    </script>
+}

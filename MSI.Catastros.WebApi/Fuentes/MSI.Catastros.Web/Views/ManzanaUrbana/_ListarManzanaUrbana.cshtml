@@ -1,0 +1,65 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.ManzanaUrbana.FiltrarManzanaUrbanaViewModel
+
+@if (Model.listManzanaUrbana != null || Model.listManzanaUrbana.Count() > 0)
+{
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Acciones</th>
+                    <th>Tipo de habilitación urbana</th>
+                    <th>Nombre Habilitación Urbana</th>
+                    <th>Manzana urbana</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.listManzanaUrbana)
+                {
+                    <tr>
+                        @*<td align="center">
+                            @Ajax.ActionLink(" ", "Editar", "ManzanaUrbana"
+                                , new { id = item.TipoHabilitacionUrbana }
+                                , new AjaxOptions
+                                        {
+                                            HttpMethod = "Get",
+                                            InsertionMode = InsertionMode.Replace,
+                                            UpdateTargetId = "modalManzanaUrbana"
+                                        }
+                                ,
+                                new
+                                {
+                                    @class = "btn btn-default glyphicon glyphicon-edit",
+                                    @type = "button",
+                                    data_toggle = "modal",
+                                    data_target = "#modalManzanaUrbana"
+
+                                }
+                           )
+                            @Ajax.ActionLink(" ", "Eliminar", "ManzanaUrbana"
+                                , new { id = item.TipoHabilitacionUrbana }
+                                , new AjaxOptions
+                                        {
+                                            HttpMethod = "Get",
+                                            UpdateTargetId = "modalEliminarManzanaUrbana"
+                                        }
+                                ,
+                                new
+                                {
+                                    @class = "btn btn-danger glyphicon glyphicon-remove",
+                                    @type = "button",
+                                    data_toggle = "modal",
+                                    data_target = "#modalEliminarManzanaUrbana"
+
+                                }
+                           )
+                        </td>
+                        <td align="center">@Html.DisplayFor(modelItem => item.TipoHabilitacionUrbana)</td>
+                        <td>@item.NombreHabilitacionUrbana</td>
+                        <td>@item.ManzanaUrbana</td>*@
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+

@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="RECAPBC" targetNamespace="http://tempuri.org/RECAPBC.xsd" xmlns:mstns="http://tempuri.org/RECAPBC.xsd" xmlns="http://tempuri.org/RECAPBC.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="RECAPBC" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="RECAPBC" msprop:Generator_UserDSName="RECAPBC">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="RECAPBC" msprop:Generator_TableClassName="RECAPBCDataTable" msprop:Generator_TableVarName="tableRECAPBC" msprop:Generator_TablePropName="_RECAPBC" msprop:Generator_RowDeletingName="RECAPBCRowDeleting" msprop:Generator_RowChangingName="RECAPBCRowChanging" msprop:Generator_RowEvHandlerName="RECAPBCRowChangeEventHandler" msprop:Generator_RowDeletedName="RECAPBCRowDeleted" msprop:Generator_UserTableName="RECAPBC" msprop:Generator_RowChangedName="RECAPBCRowChanged" msprop:Generator_RowEvArgName="RECAPBCRowChangeEvent" msprop:Generator_RowClassName="RECAPBCRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ITEM" msprop:Generator_ColumnVarNameInTable="columnITEM" msprop:Generator_ColumnPropNameInRow="ITEM" msprop:Generator_ColumnPropNameInTable="ITEMColumn" msprop:Generator_UserColumnName="ITEM" type="xs:short" minOccurs="0" />
+              <xs:element name="CODCATASTRAL" msprop:Generator_ColumnVarNameInTable="columnCODCATASTRAL" msprop:Generator_ColumnPropNameInRow="CODCATASTRAL" msprop:Generator_ColumnPropNameInTable="CODCATASTRALColumn" msprop:Generator_UserColumnName="CODCATASTRAL" type="xs:string" minOccurs="0" />
+              <xs:element name="PORCBC" msprop:Generator_ColumnVarNameInTable="columnPORCBC" msprop:Generator_ColumnPropNameInRow="PORCBC" msprop:Generator_ColumnPropNameInTable="PORCBCColumn" msprop:Generator_UserColumnName="PORCBC" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ORIGEN" msprop:Generator_ColumnVarNameInTable="columnORIGEN" msprop:Generator_ColumnPropNameInRow="ORIGEN" msprop:Generator_ColumnPropNameInTable="ORIGENColumn" msprop:Generator_UserColumnName="ORIGEN" type="xs:string" minOccurs="0" />
+              <xs:element name="AREATERRENO" msprop:Generator_ColumnVarNameInTable="columnAREATERRENO" msprop:Generator_ColumnPropNameInRow="AREATERRENO" msprop:Generator_ColumnPropNameInTable="AREATERRENOColumn" msprop:Generator_UserColumnName="AREATERRENO" type="xs:decimal" minOccurs="0" />
+              <xs:element name="AREACONSTRUIDA" msprop:Generator_ColumnVarNameInTable="columnAREACONSTRUIDA" msprop:Generator_ColumnPropNameInRow="AREACONSTRUIDA" msprop:Generator_ColumnPropNameInTable="AREACONSTRUIDAColumn" msprop:Generator_UserColumnName="AREACONSTRUIDA" type="xs:decimal" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

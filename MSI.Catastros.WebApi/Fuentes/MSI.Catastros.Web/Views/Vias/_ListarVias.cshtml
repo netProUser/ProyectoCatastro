@@ -1,0 +1,115 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Vias.FiltrarViasViewModel
+
+@if (Model.listVias != null || Model.listVias.Count() > 0)
+{
+    <div class="table-responsive">
+        <table id="tablaVias" class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Acciones</th>
+                    <th>Código</th>
+                    <th>Nombre Vias</th>
+                </tr>
+            </thead>
+            @*<tbody>
+                @if (Model.listVias.Count() > 0)
+                {
+                    foreach (var item in Model.listVias)
+                    {
+                        <tr>
+                            <td align="center">
+                                @Ajax.ActionLink(" ", "Editar", "Vias"
+                             , new { id = item.CodigoVia }
+                                , new AjaxOptions
+                                        {
+                                            HttpMethod = "Get",
+                                            InsertionMode = InsertionMode.Replace,
+                                            UpdateTargetId = "EditarViasForm"
+                                        }
+                                ,
+                                new
+                                {
+                                    @class = "btn btn-default glyphicon glyphicon-edit",
+                                    @type = "button",
+                                    data_toggle = "modal",
+                                    data_target = "#EditarViasForm"
+
+                                }
+                           )
+                                @Ajax.ActionLink(" ", "Eliminar", "Vias"
+                                , new { id = item.CodigoVia }
+                                , new AjaxOptions
+                                        {
+                                            HttpMethod = "Get",
+                                            UpdateTargetId = "modalEliminarTipoHabilitacion"
+                                        }
+                                ,
+                                new
+                                {
+                                    @class = "btn btn-danger glyphicon glyphicon-remove",
+                                    @type = "button",
+                                    data_toggle = "modal",
+                                    data_target = "#modalEliminarTipoHabilitacion"
+
+                                }
+                           )
+                            </td>
+                            <td>@Html.DisplayFor(modelItem => item.CodigoVia)</td>
+                            <td>@item.NombreVia</td>
+
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td class="text-left" colspan="3">No hay registros</td>
+                    </tr>
+                }
+            </tbody>*@
+        </table>
+    </div>
+}
+
+@section datatables {
+<script type="text/javascript">
+    alert('a');
+    $(document).ready(function () {
+        var table = $('#tablaVias').DataTable({
+            responsive: true,
+            dom: 'Bfrtip',
+            "language": {
+                "lengthMenu": "Mostrando _MENU_ registros por página",
+                "zeroRecords": "No se encontro información",
+                "info": "Mostrando página _PAGE_ de _PAGES_",
+                "infoEmpty": "No se encontró información",
+                "infoFiltered": "(filtrado de _MAX_ total de registros)",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Último",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                },
+                //"search": "Buscar Nro Asiento"
+            },
+            //"pageLength": [10],
+            "searching": false,
+            "ordering": false,
+            "pageLength": 5,
+            "processing": true, // for show progress bar
+            "serverSide": true, // for process server side
+            "ajax": {
+                "url": "@Url.Content("~/Vias/LoadData")",
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columns": [
+                { "data": "CodigoVia", "name": "Código", "autoWidth": true },
+                { "data": "NombreVia", "name": "Nombre Vias", "autoWidth": true },
+                { "data": "NombreVia", "name": "Acciones", "autoWidth": true }
+            ]
+        });
+    });
+        
+</script>
+}

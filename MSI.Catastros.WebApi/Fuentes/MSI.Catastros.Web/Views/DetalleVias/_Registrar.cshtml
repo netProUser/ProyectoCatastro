@@ -1,0 +1,230 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.DetalleVias.RegistroDetalleViaViewModel
+
+<div id="RegistrarViasContainer">
+    @*@using (Ajax.BeginForm("Registrar", "Vias", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "frmVias" }))*@
+    @using (Html.BeginForm("Registrar", "DetalleVias", FormMethod.Post, new { id = "frmDetalleVias", name = "frmVias" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4>Registrando Vías Detalle</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-horizontal">
+                        @Html.HiddenFor(model => model.CodigoDetalleVia)
+                        @*@Html.HiddenFor(model => model.MedidaViaNormativa, new { @id = "HidenViaNormativa" })
+                            @Html.HiddenFor(model => model.MedidaInicial, new { @id = "HidenMedidaInicial" })
+                            @Html.HiddenFor(model => model.MedidaFinal, new { @id = "HidenMedidaFinal" })*@
+                        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+                        <div class="form-group">
+
+                            @Html.LabelFor(model => model.Distrito, new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.Distrito, new { @class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.Distrito)
+                            </div>
+                        </div>
+                        @Html.TextBoxFor(model => model.Estado, new { type = "hidden", @class = "form-control" })
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CodigoVia, new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.DropDownListFor(model => model.CodigoVia, new SelectList(ViewBag.listVias, "Value", "Text"), "Seleccione una vía",
+                                new { @class = "chosen-seleccionar form-control", style = "width:100%;" })
+                                @Html.ValidationMessageFor(model => model.CodigoVia)
+                            </div>
+                        </div>
+                        @if (@Model.Estado != 2)
+                        {
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NumCuadra, new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.DropDownListFor(model => model.NumCuadra, new SelectList(ViewBag.ListNumeroCuadras, "Value", "Text"), "Seleccione una Cuadra",
+                                new { @class = "chosen-seleccionar form-control", style = "width:100%;" })
+                                @Html.ValidationMessageFor(model => model.NumCuadra)
+                            </div>
+                        </div>
+                        }
+                        @if (@Model.Estado == 2)
+                        {
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.NumCuadra, new { @class = "control-label col-md-3" })
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.NumCuadra, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.NumCuadra)
+                                </div>
+                            </div>
+                        }
+
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.MedidaViaNormativa, new { @class = "control-label col-md-3" })
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.MedidaViaNormativa, new { @class = "form-control numero text-right", placeholder = "0.0000" })
+                                @Html.ValidationMessageFor(model => model.MedidaViaNormativa)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.AnchoVia, new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.DropDownListFor(model => model.CodAnchoVia, new SelectList(ViewBag.listAnchoVia, "CodigoParametro", "Descripcion"), "Seleccione...",
+                                        new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CodAnchoVia)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.MedidaInicial, new { @class = "control-label col-md-3", @id = "lblMedidaInicial", style = "display: none;" })
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.MedidaInicial, new { @class = "form-control numero text-right", placeholder = "0.0000", style = "display: none;" })
+                                @Html.ValidationMessageFor(model => model.MedidaInicial)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.MedidaFinal, new { @class = "control-label col-md-3", @id = "lblMedidaFinal", style = "display: none;" })
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.MedidaFinal, new { @class = "form-control numero text-right", placeholder = "0.0000", style = "display: none;" })
+                                @Html.ValidationMessageFor(model => model.MedidaFinal)
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input id="btnSubmit" type="submit" value="Grabar" class="btn btn-success" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('input').keyup(function () { this.value = this.value.toLocaleUpperCase() });
+        $(".chosen-seleccionar").chosen({ width: "100%", placeholder_text_single: "Seleccione una opción" });
+        $('.numero').number(true, 4, '.', '');
+
+
+        if ($('#CodigoDetalleVia').val() !== "") {
+            $("#CodigoVia").chosen().chosenReadonly(true);
+            $("#NumCuadra").prop("disabled", true);
+        }
+
+        /*$('#MedidaViaNormativa').maskWeight({
+            integerDigits: 2,
+            decimalDigits: 4,
+            decimalMark: '.',
+            initVal: '',//'000,000',
+            roundingZeros: true,
+            digitsCount: 4,
+            callBack: null,
+            doFocus: true
+        });*/
+
+        /*$('#MedidaInicial').maskWeight({
+            integerDigits: 2,
+            decimalDigits: 4,
+            decimalMark: '.',
+            initVal: '',//'000,000',
+            roundingZeros: true,
+            digitsCount: 4,
+            callBack: null,
+            doFocus: true
+        });*/
+
+        /*$('#MedidaFinal').maskWeight({
+            integerDigits: 2,
+            decimalDigits: 4,
+            decimalMark: '.',
+            initVal: '',//'000,000',
+            roundingZeros: true,
+            digitsCount: 4,
+            callBack: null,
+            doFocus: true
+        });*/
+
+        $("#frmDetalleVias").on("submit", function (event) {
+            validarFormulario(event, $('#btnSubmit'), "DetalleVias");
+        });
+
+        $("#CodAnchoVia").change(function () {
+            var t = $(this).val();
+            if (t === "010001") {
+                $("#MedidaInicial").css("display", "block");
+                $("#MedidaFinal").css("display", "none");
+                $("#lblMedidaInicial").css("display", "block");
+                $("#lblMedidaFinal").css("display", "none");
+                $('#lblMedidaInicial').text('Medida Vía');
+                $("#MedidaInicial").val('0.0000');
+                $("#MedidaFinal").val('0.0000');
+                //$("#MedidaVia").removeAttr("readonly");
+            } else if (t === "010002") {
+                //$("#MedidaVia").removeAttr("readonly").attr("readonly", "readonly");
+                $("#MedidaInicial").css("display", "block");
+                $("#MedidaFinal").css("display", "block");
+                $("#lblMedidaInicial").css("display", "block");
+                $("#lblMedidaFinal").css("display", "block");
+                $('#lblMedidaInicial').text('Medida Inicial');
+                $("#MedidaInicial").val('0.0000');
+                $("#MedidaFinal").val('0.0000');
+            } else {
+                $("#MedidaInicial").css("display", "none");
+                $("#MedidaFinal").css("display", "none");
+                $("#lblMedidaInicial").css("display", "none");
+                $("#lblMedidaFinal").css("display", "none");
+                $("#MedidaInicial").val('0.0000');
+                $("#MedidaFinal").val('0.0000');
+            }
+        });
+
+        if ($("#CodAnchoVia").val() === "010001") {
+            $("#MedidaInicial").css("display", "block");
+            $("#MedidaFinal").css("display", "none");
+            $("#lblMedidaInicial").css("display", "block");
+            $("#lblMedidaFinal").css("display", "none");
+            $('#lblMedidaInicial').text('Medida Vía');
+            //$("#MedidaInicial").val('0.00');
+            $("#MedidaFinal").val('');
+            //$("#MedidaVia").removeAttr("readonly");
+        } else if ($("#CodAnchoVia").val() === "010002") {
+            //$("#MedidaVia").removeAttr("readonly").attr("readonly", "readonly");
+            $("#MedidaInicial").css("display", "block");
+            $("#MedidaFinal").css("display", "block");
+            $("#lblMedidaInicial").css("display", "block");
+            $("#lblMedidaFinal").css("display", "block");
+            $('#lblMedidaInicial').text('Medida Inicial');
+            //$("#MedidaInicial").val('0.00');
+            //$("#MedidaFinal").val('0.00');
+        } else {
+                $("#MedidaInicial").css("display", "none");
+                $("#MedidaFinal").css("display", "none");
+                $("#lblMedidaInicial").css("display", "none");
+                $("#lblMedidaFinal").css("display", "none");
+                $("#MedidaInicial").val('0.0000');
+                $("#MedidaFinal").val('0.0000');
+        }
+
+        if ($("#CodigoDetalleVia").val() !== "") {
+            $('#MedidaViaNormativa').val('@Model.MedidaViaNormativa');
+            $("#MedidaInicial").val('@Model.MedidaInicial');
+            $("#MedidaFinal").val('@Model.MedidaFinal');
+        }
+
+
+    });
+
+</script>

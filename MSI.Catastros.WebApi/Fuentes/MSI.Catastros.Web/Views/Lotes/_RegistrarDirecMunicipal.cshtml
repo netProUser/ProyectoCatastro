@@ -1,0 +1,197 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Lotes.RegistrarDirecMunicipalViewModel
+modalRegistrarDirecMunicipal
+<div id="RegistrarDirecMunicipalContainer">
+    @Html.AntiForgeryToken()
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-hidden="true">
+                    &times;
+                </button>
+                <h4 id="tituloModalDirec">Registrar Numeración del Lote</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row fonts12">
+                    <div class="col-md-12">
+                        <input id="Codigo" type="hidden" />
+                        <input id="Estado" type="hidden" />
+                        <table>
+                            <tr>
+                                <td width="12%"><label><br />Tipo Numeración</label></td>
+                                <td width="29%"><label><br /> Vía</label></td>
+                                <td width="14%"><label><br />Tipo Edificación</label></td>
+                                <td width="7%"><label>Edificación</label></td>
+                                
+                                <td width="12%"><label><br />Tipo Puerta</label></td>
+                                <td width="7%"><label>Número<br /> Puerta</label></td>
+                                <td width="7%"><label>Letra<br /> Puerta</label></td>
+                            </tr>
+                            <tr>
+                                <td class="pr-4"><select autofocus class="form-control px-2" id="Asignacion"><option value=""> - Seleccione -</option></select></td>
+                                <td class="pr-4"> 
+                                    <select class="form-control" id="CodigoViaAnt" style="display:none;"><option value=""> - Seleccione una vía- </option></select>
+                                    <select class="form-control" id="CodigoVia"><option value=""> - Seleccione una vía- </option></select>
+                                </td>
+                                <td class="pr-4"><select class="form-control px-2" id="TipoEdificacion"><option value=""> - Seleccione -</option></select></td>
+                                <td class="pr-4"><input type="text" class="form-control text-center px-2" id="NumEdificacion"></td>
+                                <td class="pr-4"><select class="form-control px-2" id="TipoPuerta"><option value=""> - Seleccione - </option></select></td>
+                                <td class="pr-4"><input type="text" maxlength="4" class="form-control px-2 text-center" id="NumeroPuerta" /></td>
+                                <td><input type="text" class="form-control text-center px-2" id="LetraPuerta" /></td>
+
+                            </tr>
+                            <tr>
+                                <td colspan="9">
+                                    <div class="has-error">
+                                        <ul id="msgErrores"></ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <br />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button id="btnSubmit" type="button" class="btn btn-green" >Grabar</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        if ('@Model.Codigo') {
+            $('#NumEdificacion').val('@Model.NumTipoEdificacion');
+            $('#Asignacion').val('@Model.CodigoAsignacion');
+            $('#NumeroPuerta').val('@Model.NumeroPuerta');
+            $('#LetraPuerta').val('@Model.LetraPuerta');
+            $('#Codigo').val('@Model.Codigo');
+            console.log(Estatico)
+            if (!Estatico) { 
+                $('#CodigoVia').attr('disabled', 'disabled');
+            }
+        }
+        $('#Estado').val('@Model.Estado');
+        $('#tituloModalDirec').text('Registrar Numeración de Lote: ' + $('#CodDist').val() + '-' + $('#CodSect').val() + '-' + $('#CodManz').val() + '-' + $('#CodLote').val());
+        CargarVias('@Model.CodigoVia');
+        CargarTipoEdificacion('@Model.TipoEdificacion');
+        CargarTipoPuerta('@Model.CodigoTipoPuerta');
+        CargarAsignacionRetiro('@Model.CodigoAsignacion');
+        //CargarVias();
+        //$('.numero').number(true, 2, '.', '');
+        $('input').keyup(function () { this.value = this.value.toLocaleUpperCase() });
+
+        $("#btnSubmit").on("click", function (event) {
+            var cont = 0;
+            $('#msgErrores').html("");
+            if (!$('#CodigoVia').val()) { $('#msgErrores').append("<li>Seleccione la vía</li>"); cont++; }
+            //if (!$('#TipoEdificacion').val()) { $('#msgErrores').append("<li>Seleccione el tipo de Edificación</li>"); cont++; }
+            //if (!$('#NumEdificacion').val()) { $('#msgErrores').append("<li>Ingrese el número de edificación</li>"); cont++; }
+            if (!$('#Asignacion').val()) { $('#msgErrores').append("<li>Seleccione el código de asignación</li>"); cont++; }
+            if (!$('#TipoPuerta').val()) { $('#msgErrores').append("<li>Seleccione el tipo de puerta</li>"); cont++; }
+            //if (!$('#NumeroPuerta').val()) { $('#msgErrores').append("<li>Ingrese el número de puerta</li>"); cont++; }
+            //if (!$('#LetraPuerta').val()) { $('#msgErrores').append("<li>Ingrese la letra de la puerta</li>"); cont++; }
+            var codvia = $('#CodigoVia').val();
+            console.log('CODVIA', codvia.substring(codvia.length - 2));
+            //if (codvia.substring(codvia.length - 2) == '01' && $('#NumeroPuerta').val() % 2 == 1) {
+            //    $('#msgErrores').append("<li>El número de puerta ingresado es un número impar</li>"); cont++;
+            //};
+            //if (codvia.substring(codvia.length - 2) == '02' && $('#NumeroPuerta').val() % 2 == 0) {
+            //    $('#msgErrores').append("<li>El número de puerta ingresado es un número par</li>"); cont++;
+            //};
+            console.log('CONT', cont);
+            if (cont === 0) {
+                $('#msgErrores').html("");
+                var model = {
+                    "Codigo": $('#Codigo').val(), "Estado": $('#Estado').val(), "CodigoVia": $('#CodigoVia').val(), "CodigoViaAnt": $('#CodigoViaAnt').val(), "RetiroOficial": $('#RetiroOfic').val(), "JardinOfic": $('#JardinOficial').val(),
+                    "TipoEdificacion": $('#TipoEdificacion').val(), "NumTipoEdificacion": $('#NumEdificacion').val(), "CodigoAsignacion": $('#Asignacion').val(),
+                    "CodigoTipoPuerta": $('#TipoPuerta').val(), "NumeroPuerta": $('#NumeroPuerta').val(), "LetraPuerta": $('#LetraPuerta').val(),Estatico: Estatico,
+                    CodigoDistrito: $('#CodDist').val(), CodigoLote: $('#CodLote').val(), CodigoManzana: $('#CodManz').val(), CodigoSector: $('#CodSect').val()
+                };
+                $.post(ROOT + "Lotes/BuscarLoteSolicitud", {
+                    CodigoDistrito: $('#CodDist').val(), FiltrarCodigoLote: $('#CodLote').val(), FiltrarCodigoManzana: $('#CodManz').val(), FiltrarCodigoSector: $('#CodSect').val()
+                },function (response) {
+                    console.log(response.Lotes);
+                    if (response.Lotes && Estatico && $('#CodigoViaAnt').val() != $('#CodigoVia').val() && $('#Estado').val() == "2") {
+                        var solicitudes = "";
+                        (response.Lotes).forEach(function (item) {
+                            solicitudes = solicitudes + "," + item.CodigoNumeroSolicitud
+                        });
+                        mensaje = "No se puede modificar la vía mientras la(s) siguiente(s) solicitud(es) no se encuentren cerrada(s) " + solicitudes.substring(1) + "? ";
+                        toastr.warning(mensaje, "Mensaje del Sistema", { "progressBar": true });
+                    } else {
+                        $.post("@Url.Content("~/Lotes/GrabarLoteDirecMunicipal")", { model: model }, function (response) {
+                            tablaMunicipalAsignado.ajax.reload();
+                            $('#modalRegistrarDirecMunicipal').modal('hide');
+                            toastr.success("Númeración registrada correctamente", "Mensaje del Sistema", { "progressBar": true });
+                        });
+                    }
+                });
+            }
+        });
+
+        function CargarTipoEdificacion(valor) {
+            $('#TipoEdificacion').children('option:not(:first)').remove();
+            $.post("@Url.Content("~/Lotes/ListarTipoEdificacion")", function (data) {
+                $.each(data, function (i, obj) {
+                    $('#TipoEdificacion').append($('<option>').text(obj.Text).attr('value', obj.Value));
+                });
+                if (valor) {
+                    $('#TipoEdificacion').val(valor);
+                }
+            });
+        }
+        function CargarTipoPuerta(valor) {
+
+            $('#TipoPuerta').children('option:not(:first)').remove();
+            $.post("@Url.Content("~/Lotes/ListarTipoPuerta")", function (data) {
+                $.each(data, function (i, obj) {
+                    $('#TipoPuerta').append($('<option>').text(obj.Text).attr('value', obj.Value));
+                });
+                if (valor) {
+                    $('#TipoPuerta').val(valor);
+                }
+            });
+        }
+
+        function CargarAsignacionRetiro(valor1) {
+            $('#Asignacion').children('option:not(:first)').remove();
+            $.post("@Url.Content("~/Lotes/ListarAsignacionRetiro")", function (data) {
+                $.each(data, function (i, obj) {
+                    $('#Asignacion').append($('<option>').text(obj.Text).attr('value', obj.Value));
+                });
+                if (valor1) {
+                    $('#Asignacion').val(valor1);
+                }
+            });
+        }
+
+        function CargarVias(valor) {
+            console.log('CargarVias', valor)
+            $('#CodigoVia').children('option:not(:first)').remove();
+            $('#CodigoViaAnt').children('option:not(:first)').remove();
+            $.post("@Url.Content("~/Lotes/ListarViasMuni")", { CodigoDistrito: $('#CodDist').val(), CodigoLote: $('#CodLote').val(), CodigoManzana: $('#CodManz').val(), CodigoSector: $('#CodSect').val(), Estatico: Estatico }, function (data) {
+                $.each(data, function (i, obj) {
+                    $('#CodigoVia').append($('<option>').text(obj.Text).attr('value', obj.Value));
+                    $('#CodigoViaAnt').append($('<option>').text(obj.Text).attr('value', obj.Value));
+                });
+                if (valor) {
+                    
+                    $('#CodigoVia').val(valor); $('#CodigoViaAnt').val(valor);
+                }
+            });
+        }
+    });
+</script>
+
+

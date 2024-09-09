@@ -1,0 +1,210 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.ConsultaCertificados.ConsultaCertificadosViewModel
+@{
+    ViewBag.Title = "ConsultaCertificados";
+}
+<div class="row" id="Certificados">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="overflow: hidden">
+                <div class="row">
+                    <div class="col-md-6 col-xs-12"><strong>Consulta de Certificados</strong></div><div class="col-md-4"></div>
+                    <div class="col-md-2 col-xs-12">
+                        <span><button id="btnBuscarCertificado" type="button"  class="btn btn-green mr-2 btn-block" style="float:right"><span class="glyphicon glyphicon-search mr-2"></span> Buscar Certificados</button></span>
+                    </div>
+                </div>
+            </div>
+            <div  class="panel-body">
+                <input type="hidden" id="FiltrarCodigoPeriodo" />
+                <input type="hidden" id="FiltrarCodigoCertificado" />
+                <input type="hidden" id="CodigoOficina" />
+                <fieldset class="formulario p-3">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ListTipoInforme, htmlAttributes: new { @class = "control-label" })
+                                @Html.DropDownListFor(m => m.FiltrarCodigoTipoCertificado, Model.ListTipoInforme, "- Seleccione el tipo de certificado -", new { @class = "form-control SearchFilter" })
+                                <span class="field-validation-valid inputUtil" data-valmsg-for="ListTipoInforme" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label class="control-label">Codigo Catastral</label>
+                                <input type="text" class="form-control" id="txtCodigoCatastral" maxlength="30">
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ListTipoSolicitud, htmlAttributes: new { @class = "control-label" })
+                                @Html.DropDownListFor(m => m.FiltrarCodigoTipoSolicitud, Model.ListTipoSolicitud, "- Seleccione el tipo de solicitud -", new { @class = "form-control SearchFilter" })
+                                <span class="field-validation-valid inputUtil" data-valmsg-for="FiltrarCodigoTipoSolicitud" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-3" id="divTipoDocumento" style="display:none;">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ListTipoDocumento, htmlAttributes: new { @class = "control-label" })
+                                @Html.DropDownListFor(m => m.FiltrarCodigoTipoDocumentoReg, Model.ListTipoDocumento, "- Seleccione el tipo de documento -", new { @class = "chosen-seleccionar form-control SearchFilter", autofocus = "true" })
+                                <span class="field-validation-valid" data-valmsg-for="FiltrarCodigoTipoDocumentoReg" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.FiltrarNumeroSolicitud, htmlAttributes: new { @class = "control-label" })
+                                @Html.TextBoxFor(model => model.FiltrarNumeroSolicitud, new { @class = "form-control SearchFilter px-2" })
+                                <span class="field-validation-valid inputUtil" data-valmsg-for="FiltrarNumeroSolicitud" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <label class="control-label">Fecha Inicio</label>
+                                <input type="text" autocomplete="off" class="form-control" id="FechaInicio" maxlength="10">
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <label class="control-label">Fecha Fin</label>
+                                <input type="text" autocomplete="off" class="form-control" id="FechaFin" maxlength="10">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label class="control-label">Documento</label>
+                            <table id="tablaCertificados" style="width: 100%" class="table responsive display table-striped table-bordered table-hover">
+                                <thead>
+                                    <tr>
+
+                                        <th data-priority="1" width="10px">Item</th>
+                                        <th>Tipo Certificado</th>
+                                        <th>N° Certificado</th>
+                                        <th width="50px">Fecha de Generación</th>
+                                        <th>Codigo Catastral</th>
+                                        <th>Ubicación</th>
+                                        <th>Tipo Documento</th>
+                                        <th>N° Solicitud</th>
+                                        <th style="display:none"></th>
+                                        <th style="display:none"></th>
+                                        <th style="display:none"></th>
+                                        <th style="display:none"></th>
+                                        <th style="display:none"></th>
+                                        <th style="display:none"></th>
+                                        <th style="display:none"></th>
+                                        <th width="30px"></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>
+@section datatables{
+    <script src="@Url.Content("~/Scripts/dcalendar.picker.js")"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+<script>
+    var ROOT = '@Url.Content("~")';
+    $('#txtCodigoCatastral').inputmask('31-99-999-999-**-**-**-999',);
+        pickmeup('#FechaInicio', { format: 'd/m/Y', max: new Date() + 1 });
+        $('#FechaInicio').val('');
+
+        pickmeup('#FechaFin', { format: 'd/m/Y', max: new Date() + 1 });
+        $('#FechaFin').val('');
+        val1 = false;
+        val2 = true;
+     $('#FiltrarCodigoTipoSolicitud').change(function () {
+            if (this.value === "010003") {
+                $('#divTipoDocumento').hide(); $('#FiltrarCodigoTipoDocumentoReg').find('option:not(:first)').remove();
+            } else {
+                $('#divTipoDocumento').show();
+                var URL = (this.value === "010001") ? "@Url.Content("~/RecepcionDocumentos/DocExterno")" : "@Url.Content("~/RecepcionDocumentos/DocInterno")";
+                $.post(URL, function (data) {
+                $('#FiltrarCodigoTipoDocumentoReg').find('option:not(:first)').remove(); var items = '<option value="">Seleccione el tipo de documento</option>';
+                $.each(data, function (i, item) {
+                items += "<option value='" + item.Value + "'>" + item.Text + "</option>";
+                });
+                $('#FiltrarCodigoTipoDocumentoReg').html(items).trigger("chosen:updated");
+                });
+                }
+     });
+    $('#btnBuscarCertificado').click(function () {
+        numVal = $('#FiltrarNumeroSolicitud').val();
+        tipDoc = $('#FiltrarCodigoTipoDocumentoReg').val();
+        codSol = $('#FiltrarCodigoTipoSolicitud').val();
+        TipoCertificado = $('#FiltrarCodigoTipoCertificado').val();
+
+        table.rows().remove().draw();
+
+        table.ajax.reload(function (tableDet) {
+            if (tableDet.data.length == 0) {
+                val1 = true;
+                validarNull();
+            }
+        });
+    });
+    var table = $("#tablaCertificados").DataTable({
+        "ajax": {
+            "url": "@Url.Content("~/ConsultaCertificados/CargarGrillaCertificados")", "type": "POST", "datatype": "json",
+        "data": function (d) {
+            d.FiltrarCodigoTipoCertificado = $('#FiltrarCodigoTipoCertificado').val();
+            d.FiltrarCodigoTipoSolicitud = $('#FiltrarCodigoTipoSolicitud').val();
+            d.FiltrarCodigoTipoDocumentoReg = $('#FiltrarCodigoTipoDocumentoReg').val();
+            d.FiltrarNumeroSolicitud = $('#FiltrarNumeroSolicitud').val();
+            d.FecInicio = $('#FechaInicio').val();
+            d.FecFin = $('#FechaFin').val();
+            d.txtCodigoCatastral  = $('#txtCodigoCatastral').val(); 
+        }
+    },
+     //   "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+    //"processing": true,
+   // "paging": true,
+    "columns": [
+        { "data": "Nro", "name": "Nro", "className": "text-center" },
+        { "data": "NombreTipoCertificado", "name": "AreaSolicitante", "className": "text-center" },
+        { "data": "CodigoCorrelativoTramite", "name": "Asunto", "className": "text-center" },
+        { "data": "FechaRegistro", "className": "text-center" },
+        { "data": "CodigoCatastral", "name": "CodigoCatastral", "className": "text-center" },
+        { "data": "Ubicacion", "name": "Ubicacion", "className": "text-center" },
+        { "data": "CodigoDocumento", "name": "CodigoDocumento", "className": "text-center" },
+        { "data": "NumeroSolicitud", "name": "NroSolicitud", "className": "text-center" },
+        { "data": "NombreTipoSolicitud", "className": "hide_column" },
+        { "data": "CodigoAnioCertificado", "className": "hide_column" },
+        { "data": "CodigoCertificado", "className": "hide_column" },
+        { "data": "CodigoTipoCertificado", "className": "hide_column" },
+        { "data": "Ruta", "className": "hide_column" },
+        { "data": "FlagTrabajo", "className": "hide_column" },
+        { "data": "FlagReporte", "className": "hide_column" },
+
+        
+        {   "responsivePriority": -2,
+            "render": function (data, type, full, meta) {
+                var disable = full.FlagReporte = null ? "disabled" : "";
+              
+                return '<button data-toggle="tooltip"' + disable + '  title="Recepcionar" class="btn btn-default  btnImprimirCertificado glyphicon glyphicon-print" type="button" ></button>';
+            }, "className": "text-center", "responsivePriority": -2,
+
+
+        },
+    ]
+    });
+    function validarNull() {
+        console.log('val', val1, val2)
+        if (val1 && val2) {
+             toastr.error("No se ha encontrado la solicitud", "Mensaje del Sistema", { "progressBar": true });
+        }
+    };
+    $("#tablaCertificados tbody").on('click', 'button.btnImprimirCertificado', function (event) {
+
+        var cell = $(this);
+        var data = table.row($(this).parents('tr')).data();
+        var RutaImagen = "Reporte";
+
+        urlFICHA = "@Url.Content("~/Reportes/Reports.aspx?CodigoCertificado=")" + data.CodigoCertificado + '&CodigoAnhoCertificado=' + data.CodigoAnioCertificado + '&CodigoReporte=' + data.CodigoTipoCertificado;
+        window.open(urlFICHA);
+
+       
+    });
+
+    </script>
+    }

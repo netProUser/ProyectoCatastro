@@ -1,0 +1,111 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Reporte.ReporteViewModel
+@{
+    ViewBag.Title = "xFicha Urbana";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="overflow: hidden">
+                <div class="row">
+                    <div class="col-md-6 col-xs-12"><strong>Ficha Habilitacion Urbana</strong></div>
+                    <div class="col-md-6 col-xs-12">
+
+                        <div class="col-md-3 col-md-offset-6 col-sm-3">
+                            <button class="btn btn-green btn-block mr-3" id="" onclick="Limpiar()"><span class=" glyphicon glyphicon-ok mr-2"></span> Nueva Busqueda </button>
+                        </div>
+                        <div class="col-md-3 col-sm-3">
+                            <button type="button" id="GenFicha" class="btn btn-create py-2 glyphicon glyphicon-plus-sign" style="float:right" onclick="GenerarFicha()"><span style="font-family:'Open Sans'"> Generar Ficha</span></button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-10">
+                        <div class="row">
+                            <div class="col-sm-3 px-3">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.CodigoTipoHabilitacion, htmlAttributes: new { @class = "control-label" })
+                                    @Html.DropDownListFor(model => model.CodigoTipoHabilitacion, new SelectList(Model.TipoHabilitacion, "CodigoTipoHabilitacion", "NombreTipoHabilitacion"), "Seleccione el tipo de habilitación",
+                                    new { @class = "form-control" })
+                                    <span class="field-validation-valid" data-valmsg-for="CodigoTipoHabilitacion" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 px-3">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.CodigoHabilitacionUrbana, htmlAttributes: new { @class = "control-label" })
+                                    @Html.DropDownList("CodigoHabilitacionUrbana", new SelectList(Model.HabilitacionUrbana, "CodigoHabilitacionUrbana", "NombreHabilitacionUrbana"), "Seleccione una habilitación urbana", new { @class = "chosen-seleccionar form-control", style = "width:100%;" })
+                                    <span class="field-validation-valid" data-valmsg-for="CodigoHabilitacionUrbana" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section datatables {
+    <script>
+
+        $("#CodigoTipoHabilitacion").change(function () {
+            var URL = "@Url.Content("~")" + "ManzanaUrbana/HabilitacionUrbana/".concat($('#CodigoTipoHabilitacion').val());
+            $.post(URL, function (data) {
+                $('#CodigoHabilitacionUrbana').find('option:not(:first)').remove();
+                var items = '<option value="">Seleccione una habilitación urbana</option>';
+                $.each(data, function (i, item) {
+                    items += "<option value='" + item.CodigoHabilitacionUrbana + "'>" + item.NombreHabilitacionUrbana + "</option>";
+                });
+                $('#CodigoHabilitacionUrbana').html(items);
+                if ('@Model.CodigoHabilitacionUrbana') {
+                    $('#CodigoHabilitacionUrbana').val('@Model.CodigoHabilitacionUrbana');
+                }
+                $('#CodigoHabilitacionUrbana').trigger("chosen:updated");
+            });
+        });
+
+        function GenerarFicha() {
+            cont = Validar();
+
+            if (cont == true) {
+                urlFICHA = "@Url.Content("~/Reportes/Reports.aspx")" + "?CodigoHu=" + $('#CodigoHabilitacionUrbana').val() + '&CodigoReporte=05';
+                window.open(urlFICHA);
+            }
+        }
+
+        function Validar() {
+            var cont = true;
+
+            RemoveValidacion();
+
+            if (!$('#CodigoTipoHabilitacion').val()) {
+                $('[data-valmsg-for="CodigoTipoHabilitacion"]').html('Seleccione el Tipo de Habilitacion Urbana').addClass('field-validation-valid has-error');
+                cont = false;
+            }
+
+            if (!$('#CodigoTipoHabilitacion').val()) {
+                $('[data-valmsg-for="CodigoHabilitacionUrbana"]').html('Seleccione la Habilitacion Urbana').addClass('field-validation-valid has-error');
+                cont = false;
+            }
+
+            return cont
+
+        }
+
+        function RemoveValidacion() {
+            $('[data-valmsg-for="CodigoTipoHabilitacion"]').html('').removeClass('field-validation-valid has-error');
+            $('[data-valmsg-for="CodigoHabilitacionUrbana"]').html('').removeClass('field-validation-valid has-error');
+        }
+
+        function Limpiar() {
+            RemoveValidacion();
+            $('#CodigoTipoHabilitacion').val('');
+            $('#CodigoHabilitacionUrbana').html('<option value="">Seleccione una habilitación urbana</option>');
+            $('#CodigoHabilitacionUrbana').val('');
+        }
+
+</script>
+
+}

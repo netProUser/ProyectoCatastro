@@ -1,0 +1,151 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Lotes.RegistrarHabilitacionViewModel
+
+<div id="RegistrarLotesContainer">
+    @using (Html.BeginForm("RegistrarHabilitacion", "Lotes", FormMethod.Post, new { id = "frmHabilitacion", name = "frmHabilitacion" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4><strong>Registro de Habilitación Urbana</strong></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        @Html.ValidationSummary(true)
+                        @Html.TextBoxFor(m => m.CodigoTipoHabilitacion, new { type="hidden" })
+                        @Html.TextBoxFor(m => m.CodigoDistrito, new { type = "hidden" })
+                        @Html.TextBoxFor(m => m.CodigoSector, new { type = "hidden" })
+                        @Html.TextBoxFor(m => m.CodigoManzana, new { type = "hidden" })
+                        @Html.TextBoxFor(m => m.CodigoLote, new { type = "hidden" })
+                        @Html.TextBoxFor(m => m.Estado, new { type = "hidden" })
+                        <input type="hidden" id="ModalEstatico" name="ModalEstatico" />
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+
+                                @Html.LabelFor(model => model.NombreTipoHabilitacion, htmlAttributes: new { @class = "control-label" })
+                                @*@Html.TextBoxFor(m => m.NombreTipoHabilitacion, new { @class = "form-control"})*@
+                                @Html.DropDownListFor(m => m.NombreTipoHabilitacion, Model.ListTipoHabilitacionUrbana, "- Seleccione el tipo de habilitacion -", new { @class = "form-control", @onchange = "CargarManzanaUrbana()" })
+                                @Html.ValidationMessageFor(model => model.NombreTipoHabilitacion)
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ListHabilitacionUrbana, htmlAttributes: new { @class = "control-label" })
+                                @Html.DropDownListFor(m => m.CodigoHabilitacionUrbana, Model.ListHabilitacionUrbana, "- Seleccione el nombre de habilitacion -", new { @class = "form-control", @onchange = "CargarManzanaUrbana()" })
+                                @Html.ValidationMessageFor(model => model.ListHabilitacionUrbana)
+                            </div>
+
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ListManzanaUrbana, htmlAttributes: new { @class = "control-label" })
+                                @Html.DropDownListFor(m => m.CodigoManzanaUrbana, Model.ListHabilitacionUrbana, "- Seleccione el nombre de habilitacion -", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ListManzanaUrbana)
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input id="btnSubmit" type="submit" value="Grabar" class="btn btn-green" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script type="text/javascript">
+    $('#CodigoDistrito').val($('#CodDist').val());
+    $('#CodigoSector').val($('#CodSect').val());
+    $('#CodigoManzana').val($('#CodManz').val());
+    $('#CodigoLote').val($('#CodLote').val());
+    $('#CodigoTipoHabilitacion').val('@Model.NombreTipoHabilitacion');
+    $('#NombreTipoHabilitacion').val('@Model.NombreTipoHabilitacion');
+    $('#ModalEstatico').val(Estatico);
+    console.log('1.', '@Model.NombreTipoHabilitacion');
+    var CodigoTipoHab = '@Model.NombreTipoHabilitacion';
+    if ('@Model.NombreTipoHabilitacion') {
+        CargarHabilitacionUrbana('@Model.CodigoHabilitacionUrbana', '@Model.CodigoManzanaUrbana');
+    } else {
+        CargarHabilitacionUrbana();
+    }
+
+
+    $('#NombreTipoHabilitacion').change(function () {
+        CodigoTipoHab = this.value;
+        $('#CodigoTipoHabilitacion').val(this.value);
+        CargarHabilitacionUrbana();
+    });
+
+    function CargarHabilitacionUrbana(valor, codigomanzana) {
+        var URL2 = "@Url.Content("~/HabilitacionUrbana/HabilitacionUrbana/")" + CodigoTipoHab;
+        //var URL2 = "/HabilitacionUrbana/HabilitacionUrbana/" + $('#CodigoTipoHabilitacion').val();
+        $.post(URL2, function (data) {
+            $('#CodigoHabilitacionUrbana').children('option:not(:first)').remove();
+            $.each(data, function (i, obj) {
+                $('#CodigoHabilitacionUrbana').append($('<option>').text(obj.Text).attr('value', obj.Value));
+            });
+            if (valor) {
+                $('#CodigoHabilitacionUrbana').val(valor);
+                CargarManzanaUrbana(codigomanzana);
+            }
+        });
+    }
+    function CargarManzanaUrbana(valor) {
+        var URL3 = "@Url.Content("~/ManzanaUrbana/ListarManzanaUrbana?CodigoTipoHabilitacionReg=")" + CodigoTipoHab + "&CodigoHabilitacionUrbanaReg=" + $('#CodigoHabilitacionUrbana').val();
+        $.post(URL3, function (data) {
+            $('#CodigoManzanaUrbana').children('option:not(:first)').remove();
+            $.each(data, function (i, obj) {
+                $('#CodigoManzanaUrbana').append($('<option>').text(obj.Text).attr('value', obj.Value));
+            });
+            if (valor) {
+                $('#CodigoManzanaUrbana').val(valor);
+            }
+        });
+    }
+
+    $("#frmHabilitacion").on("submit", function (event) {
+        validarFormularioHabilitacion(event, $('#btnSubmit'));
+    });
+    function validarFormularioHabilitacion(event, button) {
+        event.preventDefault();
+        button.attr('disabled', 'disabled');
+        var url = $('#frmHabilitacion').attr("action");
+        var formData = $('#frmHabilitacion').serialize();
+        $.ajax({
+            url: url, type: "POST", data: formData, dataType: "json",
+            success: function (response) {
+                if (response.success) {
+                    $('#modalRegistrarHabilitacion').modal('toggle');
+                    $('#tablaHabilitacionUrbana').DataTable().ajax.reload();
+                    //var mensaje = ($('#frm' + entidad).find("#Estado").val() == 1) ? response.responseText : "Registro modificado correctamente";
+                    var mensaje = response.responseText;
+                    toastr.success(mensaje, "Mensaje del Sistema", { "progressBar": true });
+                } else {
+                    toastr.error(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                }
+            },
+            error: function (response) {
+                var modelStateErrors = response.responseJSON;
+                for (var i = 0; i < modelStateErrors.length; i++) {
+                    $('span[data-valmsg-for="' + modelStateErrors[i].key + '"]').text(modelStateErrors[i].errors[0]).addClass('has-error');
+                }
+                //toastr.error("Se encontro un problema al momento de registrar", "Mensaje del Sistema", { "progressBar": true });
+            },
+            complete: function () {
+                button.removeAttr('disabled');
+            }
+        });
+    }
+
+
+</script>

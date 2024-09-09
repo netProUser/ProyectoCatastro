@@ -1,0 +1,478 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Consultas.FiltrarConsultasViewModel
+@{
+    ViewBag.Title = "Consultas";
+}
+<style>
+    table.dataTable tbody tr {
+        background-color: #ffffff;
+    }
+
+    table.dataTable.display tbody tr.odd {
+        background-color: #ffffff;
+    }
+    table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
+        background-color: #f6f6f6;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button.disabled, 
+    .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover, 
+    .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active {
+        border:1px solid #b3b3b3;
+        border-radius:0px;
+    }
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+        border:1px solid #b3b3b3;
+        border-radius:0px;
+        margin-left:0px;
+    }
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover{
+        color:white !important;
+        background: linear-gradient(to bottom, #05a769 0%, #025a39 100%);
+    }
+    .dataTables_wrapper .dataTables_paginate .paginate_button:active{
+        background:white;color:black !important;
+    }
+    .dataTables_wrapper .dataTables_paginate .paginate_button:hover{
+        background:white;color:black !important;
+    }
+    .hideous {
+        /*display:none;*/
+    }
+    .btn-info {
+        color: #fff;
+        background-color: #23c6c8;
+        border-color: #23c6c8;
+    }
+    .btn-info:hover, .btn-info:focus, .btn-info.focus {
+        color: #fff;
+        background-color: #21b9bb;
+        border-color: #21b9bb;
+    }
+    .btn:focus {
+        outline: none !important;
+    }
+    button.dim {
+        display: inline-block;
+        text-decoration: none;
+        text-transform: uppercase;
+        text-align: center;
+        padding-top: 6px;
+        margin-right: 10px;
+        position: relative;
+        cursor: pointer;
+        border-radius: 5px;
+        font-weight: 600;
+        margin-bottom: 20px !important;
+    }
+    .btn-outline {
+        color: inherit;
+        background-color: transparent;
+        transition: all .5s;
+    }
+    button.btn-info.dim {
+        box-shadow: inset 0 0 0 #1eacae, 0 5px 0 0 #1eacae, 0 10px 5px #999999 !important;
+    }
+</style>
+<div class="row Consultas" id="Consultas">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="overflow: hidden">
+                <div class="row">
+                    <div class="col-md-6 col-xs-12"><strong>Consultas</strong></div><div class="col-md-4"></div>
+                    <div class="col-md-2 col-xs-12">
+                        @*<span><button id="GrabarGeneral" type="button" disabled class="btn btn-green mr-2 btn-block" style="float:right" onclick="GrabarCertificados()">
+                            Nueva Búsqueda
+                        </button></span>*@
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-7">
+                        <fieldset class="formulario p-3">
+                            <legend>Búsqueda</legend>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label class="radio-inline control-label mt-3" style="line-height:22px;font-weight:bold;"><input type="radio" class="NivelRadio" name="NivelRadio" value="1" checked>LOTE</label>
+                                    <br />
+                                    <label class="radio-inline control-label mt-2" style="line-height:21px;font-weight:bold;"><input type="radio" class="NivelRadio" name="NivelRadio" value="2">UNIDAD</label>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        <div class="col-md-12 pb-2">
+                                            <input type="hidden" id="Nivel" value="01" />
+                                            <table>
+                                                <tr>
+                                                    <td width="12%"><label class="form-label">Dist.</label></td>
+                                                    <td width="12%"><label class="form-label">Sec</label></td>
+                                                    <td width="12%"><label class="form-label">Mz</label></td>
+                                                    <td width="12%"><label class="form-label">Lote</label></td>
+                                                    <td width="12%"><label class="form-label"><span class="hideous">Ed</span></label></td>
+                                                    <td width="12%"><label class="form-label"><span class="hideous">Entr</span></label></td>
+                                                    <td width="12%"><label class="form-label"><span class="hideous">Piso</span></label></td>
+                                                    <td width="12%"><label class="form-label"><span class="hideous">Unidad</span></label></td>
+                                                    <td width=""></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoDistrito, new { @class = "form-control text-center px-3", @readonly = "true" })</td>
+                                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoSector, new { @class = "form-control clSect text-center px-3", maxlength = 2, @onkeypress = "if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" })</td>
+                                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoManzana, new { @class = "form-control clManza text-center px-3", maxlength = 3, @onkeypress = "if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" })</td>
+                                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoLote, new { @class = "form-control clLote text-center px-3", maxlength = 3, @onkeypress = "if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" })</td>
+                                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarEd, new { @class = "form-control text-center hideous clEdif block px-3", disabled = "true", maxlength = 2 })</td>
+                                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarEntrada, new { @class = "form-control text-center hideous clEntr block px-3", disabled = "true", maxlength = 2 })</td>
+                                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarPiso, new { @class = "form-control text-center hideous clPiso block px-3", disabled = "true", maxlength = 2 })</td>
+                                                    <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarUnidad, new { @class = "form-control text-center hideous clUnid block px-3", disabled = "true", maxlength = 3 })</td>
+                                                    <td>
+                                                        <div class="">
+                                                            <button id="btnModalBuscar" type="button" class="btn btnModalBuscar btnBuscar btn-default  " style="padding: 6px 35px">Buscar</button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="9">
+                                                        <div class="has-error">
+                                                            <ul id="msgErrores"></ul>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div>
+                        <br /><br /><br /><br />
+                        <button id="btnAgregarUnidades" class="btn btn-info btn-outline dim px-5 mt-1" ><i class="fa fa-print"></i> Impresión Masiva</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-9">
+                        <fieldset class="formulario p-3">
+                            <legend>Filtros</legend>
+                            <div class="relative">
+                                <button data-toggle="collapse" href="#panel1" class="btn btn-xs px-3 py-2 btn-success fa fa-caret-down absolute"></button>
+                                <div class="collapse pl-3" id="panel1">
+                                    <div class="row mb-2 divOculto">
+                                        <div class="col-md-3">
+                                            <div class="checkbox checkbox-success my-0">
+                                                <input type="checkbox" class="FiltroCheck" id="FiltroCheckTitular" name="FiltroCheck" value="1">
+                                                <label class="checkbox-inline control-label mt-3" for="FiltroCheckTitular">
+                                                    Nombre Titular
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            @*<select id="selTitular" disabled class=" form-control"><option value="asd"> - Seleccione - </option></select>*@
+                                            @Html.DropDownListFor(model => model.NombreTitular, new SelectList(Model.ListNombreTitulares, "Value", "Text"), " - Seleccione - ",
+                                        new { @class = "chosen-seleccionar form-control", style = "width:100%;" })
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2 divOculto">
+                                        <div class="col-md-3">
+                                            <div class="checkbox checkbox-success my-0">
+                                                <input type="checkbox" class="FiltroCheck" id="FiltroCheckTipoDocumento" name="FiltroCheck" value="1">
+                                                <label class="checkbox-inline control-label mt-3" for="FiltroCheckTipoDocumento">Tipo Documento</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            @*<select id="selTipoDocumento" disabled class=" form-control"><option value="xxs"> - </option></select>*@
+                                            @Html.DropDownListFor(model => model.CodigoTipoDocumento, new SelectList(Model.ListTipoDocumento, "Value", "Text"), " - Seleccione - ",
+                                        new { @class = "chosen-seleccionar form-control", style = "width:100%;" })
+                                        </div>
+                                    </div>
+                                    @*<div class="row mb-2 divOculto">
+                                        <div class="col-md-3">
+                                            <input type="checkbox" class="FiltroCheck" id="FiltroCheckNroDocTitular" name="FiltroCheck" value="1">
+                                            <label class="checkbox-inline control-label mt-3" for="FiltroCheckNroDocTitular" >Nro. Documento Titular</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            @Html.TextBoxFor(model => model.NumeroDocumento, new { @class = "form-control", disabled = true })
+                                        </div>
+                                    </div>*@
+                                    <div class="row mb-2 divVisible">
+                                        <div class="col-md-3">
+                                            <div class="checkbox checkbox-success my-0">
+                                                <input type="checkbox" class="FiltroCheck" id="FiltroCheckVia" name="FiltroCheck" value="1">
+                                                <label class="checkbox-inline control-label mt-3" for="FiltroCheckVia" style="line-height:20px">Vía</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            @Html.DropDownListFor(model => model.CodigoVia, new SelectList(Model.ListCodigoVia, "Value", "Text"), " - Seleccione - ",
+                                        new { @class = "chosen-seleccionar form-control", style = "width:100%;" })
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2 divVisible">
+                                        <div class="col-md-3">
+                                            <div class="checkbox checkbox-success my-0">
+                                                <input type="checkbox" class="FiltroCheck" id="FiltroCheckTipoHabil" name="FiltroCheck" value="1">
+                                                <label class="checkbox-inline control-label mt-3" for="FiltroCheckTipoHabil" style="line-height:20px">Tipo de Habilitación</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            @Html.DropDownListFor(model => model.CodigoTipoHabilitacion, new SelectList(Model.ListTipoHabilitacion, "Value", "Text"), " - Seleccione - ",
+                                        new { @class = "chosen-seleccionar form-control", style = "width:100%;" })
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2 divVisible">
+                                        <div class="col-md-3">
+                                            <div class="checkbox checkbox-success my-0">
+                                                <input type="checkbox" class="FiltroCheck" id="FiltroCheckHabil" name="FiltroCheck" value="1">
+                                                <label class="checkbox-inline control-label mt-3" for="FiltroCheckHabil" style="line-height:20px">Habilitación</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            @Html.DropDownListFor(model => model.CodigoHabilitacion, new SelectList(Model.ListHabilitacion, "Value", "Text"), " - Seleccione - ",
+                                        new { @class = "chosen-seleccionar form-control", style = "width:100%;" })
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2 divOculto">
+                                        <div class="col-md-3">
+                                            <div class="checkbox checkbox-success my-0">
+                                                <input type="checkbox" class="FiltroCheck" id="FiltroCheckUsoPred" name="FiltroCheck" value="1">
+                                                <label class="checkbox-inline control-label mt-3" for="FiltroCheckUsoPred" style="line-height:20px">Uso Predio CIIU</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            @*<select id="selPredio" disabled class="form-control"><option value=""> - </option></select>*@
+                                            @*@Html.TextBoxFor(model => model.UsoPredio, new { @class = "form-control", disabled = true })*@
+                                            @Html.DropDownListFor(model => model.UsoPredio, new SelectList(Model.ListUsoPredio, "Value", "Text"), " - Seleccione - ",
+                                        new { @class = "chosen-seleccionar form-control", style = "width:100%;" })
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2 divOculto">
+                                        <div class="col-md-3">
+                                            <div class="checkbox checkbox-success my-0">
+                                                <input type="checkbox" class="FiltroCheck" id="FiltroCheckClasi" name="FiltroCheck" value="1">
+                                                <label class="checkbox-inline control-label mt-3" for="FiltroCheckClasi" style="line-height:20px">Clasificación</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            @Html.DropDownListFor(model => model.Clasificacion, new SelectList(Model.ListClasificacion, "Value", "Text"), " - Seleccione - ",
+                                        new { @class = "chosen-seleccionar form-control", style = "width:100%;" })
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2 divOculto">
+                                        <div class="col-md-3">
+                                            <div class="checkbox checkbox-success my-0">
+                                                <input type="checkbox" class="FiltroCheck" id="FiltroCheckEstadoCons" name="FiltroCheck" value="1">
+                                                <label class="checkbox-inline control-label mt-3" for="FiltroCheckEstadoCons" style="line-height:20px">Estado Construcción</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            @Html.DropDownListFor(model => model.EstadoConstruccion, new SelectList(Model.ListEstadoConstruccion, "Value", "Text"), " - Seleccione - ",
+                                        new { @class = "chosen-seleccionar form-control", style = "width:100%;" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                @*<fieldset class="formulario p-3">*@
+                    @*<legend>Resultado de Búsqueda</legend>*@
+                    <div class="table-responsive unidad">
+                        <table id="tablaConsulta" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th width="110px">Código Catastral</th>
+                                    <th >Titular(es)</th>
+                                    <th>Ubicación</th>
+                                    <th>Urbanización</th>
+                                    <th width="100px">Ficha Lote/Ficha Catastral</th>
+                                    <th style="display:none;"></th>
+                                </tr>
+                            </thead>
+
+                        </table>
+                    </div>
+                @*</fieldset>*@
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modalImpresionMasiva" class="modal fade" tabindex="-1" role="dialog"></div>
+
+
+@section datatables {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    <script>
+        var tablaConsulta;
+        var tablaSimple;
+        var TablaNull = false;
+        $('input').keyup(function () { this.value = this.value.toLocaleUpperCase() });
+        //$('.hideous').hide();
+        $(".divOculto").hide(); $('#FiltrarCodigoDistrito').val('31'); $('#Nivel').val('01');
+        $('#panel1 select').attr('disabled', 'disabled').trigger("chosen:updated");
+        $('.NivelRadio').click(function () {
+            if (this.value === "1") {
+                $(".block").attr('disabled', 'disabled'); $(".divOculto").hide(); $('#Nivel').val('01');
+                //$('.hideous').hide();
+            }
+            else {
+                $(".block").removeAttr('disabled'); $(".divOculto").show(); $('#Nivel').val('02');
+                //$('.hideous').show();
+            }
+            $('#FiltrarCodigoSector').focus().select();
+            $('input.form-control').val('');
+            $('select.form-control').val('');
+            $('#FiltrarCodigoDistrito').val('31');
+            if (tablaConsulta) {
+                TablaNull = false;
+                tablaConsulta.rows().remove().draw('false');
+            }
+        });
+        $('#btnAgregarUnidades').click(function () {
+            $.get("@Url.Content("~")" + "Consultas/AgregarUnidades", function (response) {
+                $("#modalImpresionMasiva").modal().html(response);
+            });
+        });
+        $('.FiltroCheck').click(function () {
+            var divParent = $(this).parents("#panel1 .row"); var selectElement = divParent.find(".form-control");
+            var isChecked = $(this).is(':checked') ? selectElement.removeAttr('disabled').trigger("chosen:updated") : selectElement.attr('disabled', 'disabled').val('').trigger("chosen:updated");
+        });
+        $(".chosen-seleccionar").chosen({ width: "100%", placeholder_text_single: "Seleccione una opción" });
+
+        tablaConsulta = $("#tablaConsulta").DataTable({
+            "ajax": {
+                "url": "@Url.Content("~/Consultas/CargarGrid")", "type": "POST", "datatype": "json",
+                "data": function (d) {
+                    d.FiltrarCodigoDistrito = $('#FiltrarCodigoDistrito').val(); d.FiltrarCodigoSector = $('#FiltrarCodigoSector').val();
+                    d.FiltrarCodigoManzana = $('#FiltrarCodigoManzana').val(); d.FiltrarCodigoLote = $('#FiltrarCodigoLote').val();
+                    d.FiltrarEd = $('#FiltrarEd').val(); d.FiltrarEntrada = $('#FiltrarEntrada').val();
+                    d.FiltrarPiso = $('#FiltrarPiso').val(); d.FiltrarUnidad = $('#FiltrarUnidad').val();
+                    d.CodigoVia = $('#CodigoVia').val(); d.CodigoTipoHabilitacion = $('#CodigoTipoHabilitacion').val();
+                    d.CodigoHabilitacion = $('#CodigoHabilitacion').val();
+                    d.NombreTitular = $('#NombreTitular').val();
+                    d.CodigoTipoDocumento = $('#CodigoTipoDocumento').val();
+                    d.NumeroDocumento = $('#NumeroDocumento').val();
+                    d.UsoPredio = $('#UsoPredio').val();
+                    d.Clasificacion = $('#Clasificacion').val();
+                    d.EstadoConstruccion = $('#EstadoConstruccion').val();
+                    d.Nivel = $('#Nivel').val();
+                    d.TablaNull = TablaNull;
+                }
+            },
+            "pageLength": 20,
+            "columns": [
+                { "data": "CodigoCatastral", "className": "text-center", "width": "15%" }, { "data": "Titulares", "className": "text-center" },
+                { "data": "Ubicacion", "className": "text-center" }, { "data": "Urbanizacion", "className": "text-center" },
+                {
+                    'render': function (data, type, full, meta) {
+                        return '<button data-toggle="tooltip" title="Imprimir" class="btn mr-1 text-center btnPrint btn-default btn-xs glyphicon glyphicon-print" type="button" ></button>';
+                    }, "className": "text-center"
+                },
+                { "data": "CodigoUnico", "className": "hide_column" }
+            ]
+
+        });
+        $("#tablaConsulta tbody").on('click', 'button.btnPrint', function (event) {
+            event.stopPropagation(); var data = tablaConsulta.row($(this).parents('tr')).data();
+            var ruta = "";
+            if ($('#Nivel').val() == '01') {
+                    var codigo = data.CodigoCatastral;
+                    urlFICHA = "@Url.Content("~/Reportes/Reports.aspx")" + "?CodigoDistrito=" + codigo.substring(0, 2) + '&CodigoSector=' + codigo.substring(2, 4) + '&CodigoManzana=' + codigo.substring(4, 7) + '&CodigoLote=' + codigo.substring(7, 10) + '&CodigoReporte=01' + '&CodigoEsq=02' + '&Catastro=02' ;
+                    ruta = urlFICHA
+                    //window.open(urlFICHA);
+                } else {
+                    if (data.CodigoCatastral.toUpperCase().includes("X")) {
+                        urlFICHA = "@Url.Content("~/Reportes/Reports.aspx")" + "?CodigoUnico=" + data.CodigoUnico + '&CodigoReporte=04' + '&CodigoEsq=02' + '&Catastro=02';
+                        ruta = urlFICHA
+                        //window.open(urlFICHA);
+                    } else {
+                        urlFICHA = "@Url.Content("~/Reportes/Reports.aspx")" + "?CodigoUnico=" + data.CodigoUnico + '&CodigoReporte=02' + '&CodigoEsq=02' + '&Catastro=02';
+                        ruta = urlFICHA;
+                        //window.open(urlFICHA);
+                    }
+            }
+
+            impresionRuta(ruta);
+        });
+
+        $('#btnModalBuscar').click(function () {
+            if ($('#Nivel').val() == '02') {
+                console.log('a');
+                if ($('#FiltrarCodigoLote').val() || $('#FiltrarEd').val() || $('#FiltrarEntrada').val() || $('#FiltrarPiso').val() || $('#FiltrarUnidad').val()) {
+                    if (!$('#FiltrarCodigoSector').val()) {
+                        toastr.error("Ingrese el sector", "Mensaje del Sistema", { "progressBar": true });
+                        return;
+                    }
+                    if (!$('#FiltrarCodigoManzana').val()) {
+                        toastr.error("Ingrese la manzana", "Mensaje del Sistema", { "progressBar": true });
+                        return;
+                    }
+                }
+            }
+            TablaNull = true;
+            $.post("@Url.Content("~/Consultas/Buscar")", {
+                FiltrarCodigoDistrito: $('#FiltrarCodigoDistrito').val(), FiltrarCodigoSector: $('#FiltrarCodigoSector').val(),
+                FiltrarCodigoManzana: $('#FiltrarCodigoManzana').val(), FiltrarCodigoLote: $('#FiltrarCodigoLote').val(),
+                FiltrarEd: $('#FiltrarEd').val(), FiltrarEntrada: $('#FiltrarEntrada').val(),
+                FiltrarPiso: $('#FiltrarPiso').val(), FiltrarUnidad: $('#FiltrarUnidad').val(),
+                CodigoVia: $('#CodigoVia').val(), CodigoTipoHabilitacion: $('#CodigoTipoHabilitacion').val(),
+                CodigoHabilitacion: $('#CodigoHabilitacion').val(),
+                NombreTitular: $('#NombreTitular').val(),
+                CodigoTipoDocumento: $('#CodigoTipoDocumento').val(),
+                NumeroDocumento: $('#NumeroDocumento').val(),
+                UsoPredio: $('#UsoPredio').val(),
+                Clasificacion: $('#Clasificacion').val(),
+                EstadoConstruccion: $('#EstadoConstruccion').val(),
+                Nivel: $('#Nivel').val()
+            },
+            function (r) {
+                if (r.success !== false) {
+                    console.log(r.data);
+                    tablaSimple = r.data;
+                }
+            });
+            tablaConsulta.ajax.reload();
+
+
+        });
+
+        //$('#FiltrarCodigoSector').change(function () {
+        //    var texto;
+        //    texto = ZeroIzqCaracter($('#FiltrarCodigoSector').val(), 2);
+        //    $('#FiltrarCodigoSector').val(texto);
+        //});
+        //$('#FiltrarCodigoManzana').change(function () {
+        //    var texto;
+        //    texto = ZeroIzqCaracter($('#FiltrarCodigoManzana').val(), 3);
+        //    $('#FiltrarCodigoManzana').val(texto);
+        //});
+        //$('#FiltrarCodigoLote').change(function () {
+        //    var texto;
+        //    texto = ZeroIzqCaracter($('#FiltrarCodigoLote').val(), 3);
+        //    $('#FiltrarCodigoLote').val(texto);
+        //});
+        //$('#FiltrarEd').change(function () {
+        //    var texto;
+        //    texto = ZeroIzqCaracter($('#FiltrarEd').val(), 2);
+        //    $('#FiltrarEd').val(texto);
+        //});
+        //$('#FiltrarEntrada').change(function () {
+        //    var texto;
+        //    texto = ZeroIzqCaracter($('#FiltrarEntrada').val(), 2);
+        //    $('#FiltrarEntrada').val(texto);
+        //});
+        //$('#FiltrarPiso').change(function () {
+        //    var texto;
+        //    texto = ZeroIzqCaracter($('#FiltrarPiso').val(), 2);
+        //    $('#FiltrarPiso').val(texto);
+        //});
+
+        //$('#FiltrarUnidad').change(function () {
+        //    var texto;
+        //    texto = ZeroIzqCaracter($('#FiltrarUnidad').val(), 3);
+        //    $('#FiltrarUnidad').val(texto);
+        //});
+        function LimpiarForm() {
+            $('#tabInforme input').val('').removeAttr('disabled'); $('#tabInforme textarea').val('');
+            $('#legInforme').val();
+            $('#GrabarGeneral').attr('disabled', 'disabled'); $('#GenFicha').attr('disabled', 'disabled');
+            $('#NombreAnio').val('"Año del Diálogo y Reconciliación Nacional"'); $('#CodigoOficina').val('@System.Configuration.ConfigurationManager.AppSettings["CODAREA"]'); $('#FiltrarCodigoPeriodo').val((new Date()).getFullYear());
+        }
+
+    </script>
+}

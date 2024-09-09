@@ -1,0 +1,556 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.MobiliarioUrbanoFormulario.MobiliarioUrbanoFormularioViewModel
+
+@{
+    ViewBag.Title = "Mobiliario Urbano - Formulario";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="overflow: hidden">
+                <div class="row">
+                    <div class="col-md-6 col-xs-12"><strong>Mobiliario Urbano - Formulario</strong></div>
+                    
+                </div>
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <fieldset class="formulario" style="display: block;">
+                        <legend>Clase</legend>
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Clase)
+                                @Html.DropDownListFor(m => m.codClase, Model.Clase, "- Seleccione -", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.codClase)
+
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label style="width:100%">&nbsp;</label>
+                            <a class="btn btn-default" id="btnNuevoClase">
+                                <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                            </a>
+                            @*<a class="btn btn-default" id="btnNuevoClase">
+                                    <i class="glyphicon glyphicon-pencil" aria-hidden="true"></i>
+                                </a>*@
+                        </div>
+                    </fieldset>
+                    <fieldset id="panelSubClase" class="formulario" style="display:none">
+                        <legend>SubClase</legend>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.SubClase)
+                                    @Html.DropDownListFor(m => m.codSubClase, Model.SubClase, "- Seleccione -", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.codSubClase)
+
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label style="width:100%">&nbsp;</label>
+                                <a class="btn btn-default" id="btnNuevoSubClase">
+                                    <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                                </a>
+                                @*<a class="btn btn-default" id="btnNuevoClase">
+                                        <i class="glyphicon glyphicon-pencil" aria-hidden="true"></i>
+                                    </a>*@
+                            </div>
+                        </div>
+                        <fieldset id="panelSubClaseDetalle" class="formulario" style="display:none">
+                            <legend>Formulario-SubClase</legend>
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    @Html.LabelFor(model => model.FormularioSubClase.Descripcion)
+                                    @Html.TextBoxFor(m => m.FormularioSubClase.Descripcion, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.FormularioSubClase.Descripcion)
+                                </div>
+                                <div class="col-sm-3">
+                                    @Html.LabelFor(model => model.FormularioSubClase.TipoCampo)
+                                    @Html.DropDownListFor(m => m.FormularioSubClase.codTipoCampo, Model.FormularioSubClase.TipoCampo, "- Seleccione -", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.FormularioSubClase.codTipoCampo)
+                                </div>
+                                <div class="col-sm-2">
+                                    @Html.LabelFor(model => model.FormularioSubClase.TamanioCampo)
+                                    @Html.TextBoxFor(m => m.FormularioSubClase.TamanioCampo, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.FormularioSubClase.TamanioCampo)
+                                </div>
+                                <div class="col-sm-4">
+                                    @Html.LabelFor(model => model.FormularioSubClase.OpcionDesplegable)
+                                    @Html.TextBoxFor(m => m.FormularioSubClase.OpcionDesplegable, new { @class = "form-control", data_role = "tagsinput", disabled = "disabled" })
+                                    @Html.ValidationMessageFor(model => model.FormularioSubClase.OpcionDesplegable)
+                                </div>
+                                <div class="col-sm-1">
+                                    <label style="width:100%">&nbsp;</label>
+                                    <a class="btn btn-default" id="btnRegistrarFormSubClase">
+                                        <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                                    </a>
+                                    @*<a class="btn btn-default" id="">
+                                            <i class="glyphicon glyphicon-pencil" aria-hidden="true"></i>
+                                        </a>*@
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="TablaConfSubClase" class="table table-bordered" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Descripción</th>
+                                                <th>Tipo Campo</th>
+                                                <th>Tamaño Campo</th>
+                                                <th>Opciones Despegable</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </fieldset>
+
+                    <fieldset id="panelObjeto" class="formulario" style="display: none;">
+                        <legend>Objeto</legend>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Objeto)
+                                    @Html.DropDownListFor(m => m.codObjeto, Model.Objeto, "- Seleccione -", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.codObjeto)
+
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label style="width:100%">&nbsp;</label>
+                                <a class="btn btn-default" id="btnNuevoObejecto">
+                                    <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                                </a>
+                                @*<a class="btn btn-default" id="btnNuevoClase">
+                                        <i class="glyphicon glyphicon-pencil" aria-hidden="true"></i>
+                                    </a>*@
+                            </div>
+                        </div>
+
+                        <fieldset id="panelObjetoDetalle" class="formulario" style="display:none">
+                            <legend>Formulario-Objeto</legend>
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    @Html.LabelFor(model => model.FormularioObjeto.Descripcion)
+                                    @Html.TextBoxFor(m => m.FormularioObjeto.Descripcion, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.FormularioObjeto.Descripcion)
+                                </div>
+                                <div class="col-sm-3">
+                                    @Html.LabelFor(model => model.FormularioObjeto.TipoCampo)
+                                    @Html.DropDownListFor(m => m.FormularioObjeto.codTipoCampo, Model.FormularioObjeto.TipoCampo, "- Seleccione -", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.FormularioObjeto.codTipoCampo)
+                                </div>
+                                <div class="col-sm-2">
+                                    @Html.LabelFor(model => model.FormularioObjeto.TamanioCampo)
+                                    @Html.TextBoxFor(m => m.FormularioObjeto.TamanioCampo, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.FormularioObjeto.TamanioCampo)
+                                </div>
+                                <div class="col-sm-4">
+                                    @Html.LabelFor(model => model.FormularioObjeto.OpcionDesplegable)
+                                    @Html.TextBoxFor(m => m.FormularioObjeto.OpcionDesplegable, new { @class = "form-control", data_role = "tagsinput", disabled = "disabled" })
+                                    @Html.ValidationMessageFor(model => model.FormularioObjeto.OpcionDesplegable)
+                                </div>
+                                <div class="col-sm-1">
+                                    <label style="width:100%">&nbsp;</label>
+                                    <a class="btn btn-default" id="btnRegistrarFormObjeto">
+                                        <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                                    </a>
+                                    @*<a class="btn btn-default" id="">
+                                            <i class="glyphicon glyphicon-pencil" aria-hidden="true"></i>
+                                        </a>*@
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="TablaConfObjeto" class="table table-bordered" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Descripción</th>
+                                                <th>Tipo Campo</th>
+                                                <th>Tamaño Campo</th>
+                                                <th>Opciones Despegable</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </fieldset>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<!--MODAL-->
+<div id="modalClase" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="true">
+    <div class="modal-dialog" role="document">
+
+    </div>
+</div>
+
+<!--MODAL-->
+<div id="modalSubClase" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="true">
+    <div class="modal-dialog" role="document">
+
+    </div>
+</div>
+
+<!--MODAL-->
+<div id="modalObjeto" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="true">
+    <div class="modal-dialog" role="document">
+
+    </div>
+</div>
+@Styles.Render("~/tagsinput/css")
+
+@section scripts {
+@Scripts.Render("~/bundles/tagsinput")  
+    <script>
+    $(function () {
+        /*
+         * INIT
+         */
+        var CodigoClaseFormulario;
+        var NombreClaseFormulario;
+        var CodigoSubClaseFormulario;
+        var NombreSubClaseFormulario;
+        $('input').keyup(function () { this.value = this.value.toLocaleUpperCase() });
+        LoadClase();
+        $("#panelSubClase").hide();
+        $("#panelObjeto").hide();
+        /*
+         * CONGIFURAR DATA TABLE
+         */
+        tablaConfSubClase = $("#TablaConfSubClase").DataTable({
+            "processing": false,
+            "serverSide": false,
+            "paging": false,
+            //"language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+            'columnDefs': [
+                { "width": "7%", "targets": 0 },
+                { "width": "7%", "targets": 1 },
+                { "width": "7%", "targets": 2 },
+                { "width": "7%", "targets": 3 }
+                //{ 'targets': 9, 'checkboxes': { 'selectRow': true } }
+            ],
+            "columns": [
+                { "data": "Descripcion", "className": "text-center" },
+                { "data": "codTipoCampo", "className": "text-center" },
+                { "data": "TamanioCampo", "className": "text-center" },
+                { "data": "OpcionDesplegable", "className": "text-center" }
+                //{ "data": "Indice", "name": "Indice", "autoWidth": true, "className": "text-center" },
+            ]
+        });
+        tablaConfObjeto = $("#TablaConfObjeto").DataTable({
+            "processing": false,
+            "serverSide": false,
+            "paging": false,
+            //"language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+            'columnDefs': [
+                { "width": "7%", "targets": 0 },
+                { "width": "7%", "targets": 1 },
+                { "width": "7%", "targets": 2 },
+                { "width": "7%", "targets": 3 }
+                //{ 'targets': 9, 'checkboxes': { 'selectRow': true } }
+            ],
+            "columns": [
+                { "data": "Descripcion", "className": "text-center" },
+                { "data": "codTipoCampo", "className": "text-center" },
+                { "data": "TamanioCampo", "className": "text-center" },
+                { "data": "OpcionDesplegable", "className": "text-center" }
+                //{ "data": "Indice", "name": "Indice", "autoWidth": true, "className": "text-center" },
+            ]
+        });
+
+
+        /*
+         * MODALS
+         */
+        $("#btnNuevoClase").click(function () {
+            $.get("@Url.Content("~/MobiliarioUrbanoFormulario/RegistarClase")",
+                    null,
+                    function (response) {
+                        $("#modalClase").html(response);
+                        $("#modalClase").modal();
+                    });
+        });
+        $("#btnNuevoSubClase").click(function () {
+            $.get("@Url.Content("~/MobiliarioUrbanoFormulario/RegistarSubClase")",
+                    null,
+                    function (response) {
+                        $("#modalSubClase").html(response);
+                        $("#modalSubClase").modal();
+                        CodigoClaseFormulario = $("#codClase").val();
+                        NombreClaseFormulario = $("#codClase").find('option:selected').text();
+                        $("#codigoClaseFormulario").val(CodigoClaseFormulario);
+                        $("#nombreClaseFormulario").val(NombreClaseFormulario);
+                        
+                        
+                    });
+        });
+        $("#btnNuevoObejecto").click(function () {
+            $.get("@Url.Content("~/MobiliarioUrbanoFormulario/RegistrarObjeto")",
+                    null,
+                    function (response) {
+                        $("#modalObjeto").html(response);
+                        $("#modalObjeto").modal();
+                        CodigoClaseFormulario = $("#codClase").val();
+                        NombreClaseFormulario = $("#codClase").find('option:selected').text();
+                        CodigoSubClaseFormulario = $("#codSubClase").val();
+                        NombreSubClaseFormulario = $("#codSubClase").find('option:selected').text();
+                        $("#codigoClaseFormulario").val(CodigoClaseFormulario);
+                        $("#nombreClaseFormulario").val(NombreClaseFormulario);
+                        $("#codigoSubClaseFormulario").val(CodigoSubClaseFormulario);
+                        $("#nombreSubClaseFormulario").val(NombreSubClaseFormulario);
+                    });
+        });
+        /*
+         * ACCION COMBOS
+         */
+        $("#codClase").change(function () {
+            LoadSubClase();
+
+        });
+        $("#codSubClase").change(function () {
+            if ($('#codSubClase').val() == "0") {
+                $("#panelSubClaseDetalle").hide();
+                $("#panelObjeto").hide();
+                $("#panelObjetoDetalle").hide();
+            } else {
+                $("#panelSubClaseDetalle").show();
+                $("#panelObjeto").show();
+            }
+            LoadConfiguracionSubClase();
+            LoadObjeto();
+        });
+        $("#codObjeto").change(function () {
+            if ($('#codObjeto').val() == "0") {
+                $("#panelObjetoDetalle").hide();
+            } else {
+                $("#panelObjetoDetalle").show();
+            }
+
+            LoadConfiguracionObjeto();
+        });
+
+        $("#FormularioSubClase_codTipoCampo").change(function () {
+            if ($(this).val() == "COMBOBOX" || $(this).val() == "CHECKBOX") {
+                $("#FormularioSubClase_OpcionDesplegable").attr("disabled", false);
+            } else {
+                $("#FormularioSubClase_OpcionDesplegable").attr("disabled", true);
+            }
+        });
+        $("#FormularioObjeto_codTipoCampo").change(function () {
+            if ($(this).val() == "COMBOBOX" || $(this).val() == "CHECKBOX") {
+                $("#FormularioObjeto_OpcionDesplegable").attr("disabled", false);
+            } else {
+                $("#FormularioObjeto_OpcionDesplegable").attr("disabled", true);
+            }
+        });
+
+        /*
+         * REGISTRO FORMULARIO SUB CLASE
+         */
+        $("#btnRegistrarFormSubClase").click(function () {
+            var _modelo = new Object();
+            _modelo.CodClase = $("#codClase").val();
+            _modelo.CodSubClase = $("#codSubClase").val();
+            _modelo.Descripcion = $("#FormularioSubClase_Descripcion").val();
+            _modelo.codTipoCampo = $("#FormularioSubClase_codTipoCampo").val();
+            _modelo.TamanioCampo = $("#FormularioSubClase_TamanioCampo").val();
+            _modelo.OpcionDesplegable = $("#FormularioSubClase_OpcionDesplegable").val();
+            _modelo.Estado = 1;
+            $.ajax({
+                url: "@Url.Content("~/MobiliarioUrbanoFormulario/RegistrarFormSubClase")",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: _modelo,
+                    success: function (response) {
+                        if (response.success) {
+                            toastr.success(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                        } else {
+                            toastr.error(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                        }
+                    },
+                    error: function (response) {
+                        var modelStateErrors = response.responseJSON;
+                        for (var i = 0; i < modelStateErrors.length; i++) {
+                            $('span[data-valmsg-for="FormularioSubClase.' + modelStateErrors[i].key + '"]').text(modelStateErrors[i].errors[0]).addClass('has-error');
+                        }
+                    },
+                    complete: function (response) {
+                        if (response.success) {
+                            LoadConfiguracionSubClase();
+                            limpiarCajas();
+                        }
+                    }
+                });
+            });
+
+            /*
+             * REGISTRO FORMULARIO OBJETO
+             */
+            $("#btnRegistrarFormObjeto").click(function () {
+                var _modelo = new Object();
+                _modelo.CodClase = $("#codClase").val();
+                _modelo.CodSubClase = $("#codSubClase").val();
+                _modelo.CodObjeto = $("#codObjeto").val();
+                var CoObjeto = $("#codObjeto").val();
+                _modelo.Descripcion = $("#FormularioObjeto_Descripcion").val();
+                _modelo.codTipoCampo = $("#FormularioObjeto_codTipoCampo").val();
+                _modelo.TamanioCampo = $("#FormularioObjeto_TamanioCampo").val();
+                _modelo.OpcionDesplegable = $("#FormularioObjeto_OpcionDesplegable").val();
+                _modelo.Estado = 1;
+                $.ajax({
+                    url: "@Url.Content("~/MobiliarioUrbanoFormulario/RegistrarFormObjeto")",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: _modelo,
+                    success: function (response) {
+                        if (response.success) {
+                            toastr.success(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                        } else {
+                            toastr.error(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                        }
+                    },
+                    error: function (response) {
+                        var modelStateErrors = response.responseJSON;
+                        for (var i = 0; i < modelStateErrors.length; i++) {
+                            $('span[data-valmsg-for="FormularioObjeto.' + modelStateErrors[i].key + '"]').text(modelStateErrors[i].errors[0]).addClass('has-error');
+                        }
+                    },
+                    complete: function (response) {
+                        if (response.success) {
+                            LoadConfiguracionObjeto();
+                            $("#codObjeto").val(CoObjeto);
+                            limpiarCajas();
+                        }
+                    }
+                });
+            });
+
+        });
+        /**
+         * LISTAR CLASE
+         */
+        function LoadClase() {
+            $.post("@Url.Action("ListarClase", "MobiliarioUrbanoFormulario")",
+null,
+function (response) {
+    if (response.success) {
+        let dropdown = $('#codClase');
+        dropdown.empty();
+        dropdown.append($('<option></option>').attr('value', 0).text("- Seleccione -"));
+        $.each(response.data, function (key, entry) {
+            dropdown.append($('<option></option>').attr('value', entry.Value).text(entry.Text));
+        });
+        if (response.data.lenght > 0) {
+
+        }
+    }
+});
+        }
+        function limpiarCajas() {
+            $("#FormularioSubClase_Descripcion").val('');
+            $("#FormularioSubClase_codTipoCampo").val('');
+            $("#FormularioSubClase_TamanioCampo").val('');
+            $("#FormularioSubClase_OpcionDesplegable").val('');
+            $("#FormularioObjeto_Descripcion").val('');
+            $("#FormularioObjeto_codTipoCampo").val('');
+            $("#FormularioObjeto_TamanioCampo").val('');
+            $("#FormularioObjeto_OpcionDesplegable").val('');
+        }
+    /**
+     * LISTAR SUB CLASE
+     */
+    function LoadSubClase() {
+        if ($('#codClase').val() == "0") {
+            $("#panelSubClase").hide();
+            $("#panelSubClaseDetalle").hide();
+            $("#panelObjeto").hide();
+            $("#panelObjetoDetalle").hide();
+        } else {
+            $("#panelSubClase").show();
+        }
+
+        var modelo = new Object();
+        modelo.CodClase = $("#codClase").val();
+        $.post("@Url.Action("ListarSubClase", "MobiliarioUrbanoFormulario")",
+            modelo,
+            function (response) {
+                let dropdown = $('#codSubClase');
+                dropdown.empty();
+                dropdown.append($('<option></option>').attr('value', 0).text("- Seleccione -"));
+                $.each(response.data, function (key, entry) {
+                    dropdown.append($('<option></option>').attr('value', entry.Value).text(entry.Text));
+                });
+            });
+
+    }
+    /**
+     * LISTAR OBJETOS
+     */
+    function LoadObjeto() {
+        var modelo = new Object();
+        modelo.CodClase = $("#codClase").val();
+        modelo.CodSubClase = $("#codSubClase").val();
+        $.post("@Url.Action("ListarObejeto", "MobiliarioUrbanoFormulario")",
+            modelo,
+            function (response) {
+                let dropdown = $('#codObjeto');
+                dropdown.empty();
+                dropdown.append($('<option></option>').attr('value', 0).text("- Seleccione -"));
+                $.each(response.data, function (key, entry) {
+                    dropdown.append($('<option></option>').attr('value', entry.Value).text(entry.Text));
+                });
+            });
+    }
+    /*
+    * LISTAR CONFIGURACION OBJETO
+    */
+    function LoadConfiguracionSubClase() {
+        var modelo = new Object();
+        modelo.CodClase = $("#codClase").val();
+        modelo.CodSubClase = $("#codSubClase").val();
+        $.post("@Url.Action("ListarFormularioSubClase", "MobiliarioUrbanoFormulario")",
+            modelo,
+            function (response) {
+                tablaConfSubClase.clear().draw();
+                //console.log(response.data);
+                $.each(response.data, function (i, item) {
+                    item.Item = 0;
+                    tablaConfSubClase.row.add(item).draw();
+                });
+            });
+    }
+    /*
+     * LISTAR CONFIGURACION OBJETO
+     */
+    function LoadConfiguracionObjeto() {
+        var modelo = new Object();
+        modelo.CodClase = $("#codClase").val();
+        modelo.CodSubClase = $("#codSubClase").val();
+        modelo.CodObjeto = $("#codObjeto").val();
+        $.post("@Url.Action("ListarFormularioObjeto", "MobiliarioUrbanoFormulario")",
+            modelo,
+            function (response) {
+                tablaConfObjeto.clear().draw();
+                //console.log(response.data);
+                $.each(response.data, function (i, item) {
+                    item.Item = 0;
+                    tablaConfObjeto.row.add(item).draw();
+                });
+            });
+    }
+</script>
+}

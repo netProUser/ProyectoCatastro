@@ -1,0 +1,323 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.HabilitacionUrbana.RegistroHabilitacionUrbanaViewModel
+@Page ValidateRequest="false"
+<div id="RegistrarHabilitacionUrbanaContainer">
+    @using (Html.BeginForm("Registrar", "HabilitacionUrbana", FormMethod.Post, new { id = "frmHabilitacionUrbana", name = "frmHabilitacionUrbana", enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-hidden="true">
+                        &times;
+                    </button>
+                    @if (@Model.Estado == 2)
+                    {
+                        <h4>Modificando @Model.NombreHabilitacionUrbana</h4>
+                    }
+                    else
+                    {
+                        <h4>Registrar</h4>
+                    }
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true)
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CodigoHabilitacionUrbana, htmlAttributes: new { @class = "control-label col-md-4 pr-0" })
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(model => model.CodigoHabilitacionUrbana, new { @class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.CodigoHabilitacionUrbana)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CodigoTipoHabilitacion, htmlAttributes: new { @class = "control-label col-md-4 pr-0" })
+                            <div class="col-md-8">
+                                @Html.DropDownListFor(model => model.CodigoTipoHabilitacion, new SelectList(Model.TipoHabilitacion, "CodigoTipoHabilitacion", "NombreTipoHabilitacion"), "Seleccione Tipo de Habilitación",
+                                    new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CodigoTipoHabilitacion)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NombreHabilitacionUrbana, htmlAttributes: new { @class = "control-label col-md-4 pr-0" })
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(model => model.NombreHabilitacionUrbana, new { @class = "form-control" , @maxlength = "100" })
+                                @Html.ValidationMessageFor(model => model.NombreHabilitacionUrbana)
+                            </div>
+                        </div>
+                        <div class="form-group" >
+                            <div class="row" >
+                                <div class="col-md-12 px-5">
+                                    <div style="height: 100px;overflow-y:auto;">
+                                        <table id="Observacion" style="width:100%;">
+                                            <tr>
+                                                <td width="33%"></td>
+                                                <td width=""></td>
+                                                <td width="27px"></td>
+                                            </tr>
+                                            <tr id="PrimeraFila" style="height:45px">
+                                                <td align="right"><strong>Observaciones</strong></td>
+                                                <td style="padding-right: 1.5rem !important;padding-left: 1.5rem !important;"><textarea maxlength="4000" disabled id="obs_lote_observacion_00001" style="text-transform: uppercase;" class="form-control obser_lote_obser" rows="3"></textarea></td>
+                                                <td style="display:none;">
+                                                    <input type="hidden" class="id_lote_obser" id="ob_lote_id_00001" />
+                                                </td>
+                                                <td valign="top">
+                                                    <button type="button" onclick="CrearObservacion()" class="btn btn-sm btn-success mb-1 px-2 py-1 glyphicon glyphicon-plus"></button><br />
+                                                    <button type="button" onclick="EditarObservacion('00001')" class="btn btn-sm btn-success mb-1 px-2 py-1 glyphicon glyphicon-edit "></button><br />
+                                                    <button type="button" onclick="EliminarObservacion(this, '00001')" class="btn btn-sm btn-success px-2 py-1 glyphicon glyphicon-trash"></button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NombreDiferenciador, htmlAttributes: new { @class = "control-label col-md-4 pr-0" })
+                            <div class="col-md-8">
+                                @Html.DropDownListFor(m => m.NombreDiferenciador, Model.ListDiferenciador, "- Seleccione el tipo de diferenciador -", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.NombreDiferenciador)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label control-label col-md-4 pr-0" for="FechaAprobacion">Fecha Aprobación</label>
+                            <div class="col-md-8">
+                                @*@Html.TextBoxFor(model => model.FechaAprobacion, new { @class = "form-control", type = "date" })*@
+                                @Html.TextBoxFor(model => model.FechaAprobacion, new { @class = "form-control", @autocomplete = "off", Value = String.Format("{0:dd/MM/yyyy}", Model.FechaAprobacion) })
+                                @Html.ValidationMessageFor(model => model.FechaAprobacion)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label control-label col-md-4 pr-0" for="NumeroDocumento">Nro. Documento Aprobación</label>
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(model => model.NumeroDocumento, new { @class = "form-control" , @maxlength = "100"})
+                                @Html.ValidationMessageFor(model => model.NumeroDocumento)
+                            </div>
+                        </div>
+                        @Html.TextBoxFor(model => model.NombreDocumento, new { type = "hidden" })
+                        @Html.TextBoxFor(model => model.NombreDocumentoRandom, new { type = "hidden" })
+                        @Html.TextBoxFor(model => model.Estado, new { type = "hidden" })
+                        <div class="form-group">
+                            <div class="col-md-9 col-md-offset-3">
+                                @Html.TextBoxFor(model => model.archivo, null, new { type = "file", @class = "form-control" })
+                                <label id="label_detalle" class="form-label" style="font-weight: 200;font-size: 11px;">Subir solamente archivos PDF.</label>
+                                <label id="label_archivo" class="form-label">
+                                    <span class="mt-2 mr-2">Archivo Subido:  </span> 
+                                    <span id="nombre_archivo" class="mr-2"></span> <button type="button" data-toggle="tooltip" title="Borrar Documento" style="padding:2px 5px" id="EliminarArchivoTemp" class="btn btn-danger mb-2 glyphicon glyphicon-remove"></button>
+                                </label>
+                                @Html.ValidationMessageFor(model => model.archivo)
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input id="btnSubmit" type="submit" value="Grabar" class="btn btn-green" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#label_archivo').hide();
+        $("#FechaAprobacion").datepicker({
+            format: "dd/mm/yyyy",
+            language: "es",
+            calendarWeeks: true
+        });
+        var NombreDocumento = '@Model.NombreDocumento';
+        if (NombreDocumento) {
+            $('#NombreDocumento').val('@Model.NombreDocumento');
+            $('#NombreDocumentoRandom').val('@Model.NombreDocumentoRandom');
+            $('#label_archivo').show();
+            $('#archivo').hide();
+            $('#label_detalle').hide();
+            $('#nombre_archivo').html('@Model.NombreDocumento');
+        } else {
+            $('#label_archivo').hide();
+            $('#archivo').show();
+            $('#label_detalle').show();
+        }
+        $('#EliminarArchivoTemp').on("click", function (event) {
+            $('#archivo').show();
+            $('#NombreDocumento').val('');
+            $('#NombreDocumentoRandom').val('');
+            $('#label_detalle').show();
+            $('#label_archivo').hide();
+            var input = $("#archivo");
+
+            input.replaceWith(input.clone(true));
+        });
+        function validarFormularioConArchivoHabilita(event, button, entidad) {
+            event.preventDefault();
+            button.attr('disabled', 'disabled');
+            var url = $('#frm' + entidad).attr("action");
+            var form = $('#frm' + entidad)[0];
+            var dataString = new FormData(form);
+            $.ajax({
+                url: url,  //Server script to process data
+                type: 'POST',
+                xhr: function (response) {  // Custom XMLHttpRequest
+                    var myXhr = $.ajaxSettings.xhr();
+                    if (myXhr.upload) { // Check if upload property exists
+                        myXhr.upload.addEventListener('progress', progressHandlingFunction, false);
+                    }
+                    return myXhr;
+                },
+                success: function (response) {
+                    if (response.success) {
+                        $('#modal' + entidad).modal('toggle');
+                        $('#tabla' + entidad).DataTable().ajax.reload();
+                        var mensaje = ($('#frm' + entidad).find("#Estado").val() == 1) ? "Registro grabado correctamente" : "Registro modificado correctamente";
+                        toastr.success(mensaje, "Mensaje del Sistema", { "progressBar": true });
+
+                        var cod = response.codigo;
+                        $.post('@Url.Content("~")' + "HabilitacionUrbana/GrabarObservacion", { model: GrabarObservacion(), codigo: cod }, function (response) {
+                            if (response.success) { console.log('Grabado_Observacion', response.success); }
+                        });
+
+                    } else {
+                        toastr.error(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                    }
+                },
+                error: function (response) {
+                    var modelStateErrors = response.responseJSON;
+                    if (modelStateErrors) {
+                        for (var i = 0; i < modelStateErrors.length; i++) {
+                            $('span[data-valmsg-for="' + modelStateErrors[i].key + '"]').text(modelStateErrors[i].errors[0]).addClass('has-error');
+                        }
+                    } else {
+                        console.log(response);
+                        alert('Se detecto un problema validando el archivo subido');
+                    }
+
+                },
+                complete: function (response) {
+                    console.log(response)
+                    button.removeAttr('disabled');
+                },
+                data: dataString,
+                dataType: "JSON",
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        }
+        $("#frmHabilitacionUrbana").on("submit", function (event) {
+            var nombreDoc = $('#archivo')[0].files[0]
+            event.preventDefault();
+            if (nombreDoc) {
+                if (nombreDoc.name.substring(nombreDoc.name.length - 4) == ".pdf") {
+                    $("[data-valmsg-for='archivo']").html('');
+                    $("[data-valmsg-for='archivo']").removeClass('field-validation-valid has-error')
+                    validarFormularioConArchivoHabilita(event, $('#btnSubmit'), "HabilitacionUrbana");
+                } else {
+                    event.preventDefault();
+                    $("[data-valmsg-for='archivo']").html('El formato del archivo es incorrecto');
+                    $("[data-valmsg-for='archivo']").addClass('field-validation-valid has-error')
+                }
+            } else {
+                validarFormularioConArchivoHabilita(event, $('#btnSubmit'), "HabilitacionUrbana");
+            }
+            //
+        });
+        //$('input').keyup(function () { this.value = this.value.toLocaleUpperCase() });
+
+    });
+    var contObservacion = 1;
+    var contIdObservacion = 1;
+    RecuperarObservacion();
+
+    function CrearObservacion(detalle, codigo, ultima) {
+        var value_detalle = (!detalle) ? "" : detalle; var value_codigo = (codigo === undefined) ? "" : codigo;
+        contObservacion++; contIdObservacion++;
+        var numeroItem = LeftZero(contObservacion, 5); var idItem = LeftZero(contIdObservacion, 5);
+        $('#Observacion input').attr('disabled', 'disabled');
+        $('#Observacion textarea').attr('disabled', 'disabled');
+        $('#Observacion')
+            .append('<tr style="height:45px">' +
+                    '<td></td>' +
+                    '<td style="padding-right: 1.5rem !important;padding-left: 1.5rem !important;"><textarea id="obs_lote_observacion_' + idItem + '" value="' + value_detalle + '" style="text-transform: uppercase;"  class="form-control mt-3 obser_lote_obser" rows="3" ></textarea>' + '</td>' +
+                    '<td style="display:none;"><input id="obs_lote_id_' + idItem + '" value="' + value_codigo + '" type="hidden" class="id_lote_obser"></td>' +
+                    '<td valign="top">' +
+                        '<div class="mt-3"><button type="button" onclick="CrearObservacion()"  class="btn btn-sm btn-success mb-1 px-2 py-1 glyphicon glyphicon-plus"></button><br>' +
+                        '<button type="button" onclick="EditarObservacion(\'' + idItem + '\')" class="btn btn-sm btn-success mb-1 px-2 py-1 glyphicon glyphicon-edit"></button><br>' +
+                        '<button type="button" onclick="EliminarObservacion(this, ' + idItem + ')" class="btn btn-sm btn-success px-2 py-1 glyphicon glyphicon-trash"></button></div>' +
+                    '</td>' +
+                '</tr>');
+        $('#obs_lote_fecha_' + idItem).focus();
+        console.log('CREAR', idItem, value_detalle);
+        $('#obs_lote_observacion_' + idItem).val(value_detalle);
+        if (ultima) {
+            $('#obs_lote_fecha_' + idItem).attr('disabled', 'disabled');
+            $('#obs_lote_observacion_' + idItem).attr('disabled', 'disabled');
+        }
+    }
+    function EditarObservacion(value) {
+        $('#Observacion input').attr('disabled', 'disabled'); $('#Observacion textarea').attr('disabled', 'disabled');
+        $('#obs_lote_observacion_' + value).removeAttr('disabled'); $('#obs_lote_observacion_' + value).focus();
+    }
+    function EliminarObservacion(element, index) {
+        if (index !== '00001') {
+            contObservacion--; $(element).closest("tr").hide().attr('name', 'delete');
+            var items = $('.item_lote_obser'); ActualizarIndex(items);
+        }
+    }
+    function GrabarObservacion() {
+        var arrayObject = [];
+        $('#Observacion tr').each(function (index, item) {
+            var del = '0';
+            if (index === 0) return true;
+            if ($(item).closest("tr").attr('name') === 'delete') del = '1';
+            var ind, obser;
+            $(item).children("td").each(function () {
+                var input = $(this).children();
+                if (input.hasClass("id_lote_obser")) { ind = input.val(); }
+                else if (input.hasClass("obser_lote_obser")) { obser = input.val(); }
+            });
+            $('#Observacion input').attr('disabled', 'disabled');
+            $('#Observacion textarea').attr('disabled', 'disabled');
+            arrayObject.push({ "Codigo": ind, "Estado": del, "Detalle": obser, "CodigoHabilitacionUrbana": $('#CodigoHabilitacionUrbana').val() });
+        });
+        return arrayObject;
+    }
+    function RecuperarObservacion() {
+        var URLObservacion = '@Url.Content("~")' + "HabilitacionUrbana/BuscarObservacion";
+        $.post(URLObservacion, {
+            CodigoHabilitacionUrbana: $('#CodigoHabilitacionUrbana').val()
+        }, function (r) {
+            contObservacion = 1; contIdObservacion = 1;
+            $('#Observacion tr').each(function (index, item) {
+                if (index === 0) return true;
+                if (index === 1) {
+                    var id = '#PrimeraFila'; $(id + ' .obser_lote_obser').attr('disabled', 'disabled'); $(id + ' .id_lote_obser').attr('disabled', 'disabled');
+                    return true;
+                }
+                item.remove();
+            });
+            $.each(r.Observacion, function (index, item) {
+                if (index === 0) {
+                    var id = '#PrimeraFila'; $(id + ' .obser_lote_obser').val(item.Detalle); $(id + ' .id_lote_obser').val(item.Codigo);
+                } else {
+                    var ultima = false;
+                    if ((index + 1) == r.Observacion.length) { ultima = true; }
+                    CrearObservacion(item.Detalle, item.Codigo, ultima);
+                }
+            });
+        });
+    }
+
+    function ActualizarIndex(objeto) {
+        var indice = 0;
+        objeto.each(function (index, item) {
+            item.value = LeftZero((indice + 1), 5);
+            if ($(item).closest("tr").attr('name') !== 'delete') indice++;
+        });
+    }
+</script>

@@ -1,0 +1,265 @@
+@model MSI.Catastros.Web.Funcionalidad.ProcedimientoInicial.DetalleProcedimientoInspeccion
+
+<div id="RegistrarHabilitacionUrbanaContainer">
+    @using (Html.BeginForm("Registrar", "RegistrarAtencion", FormMethod.Post,
+                   new
+                   {
+                       id = "DetalleProcedimientoInspeccionForm",
+                       @class = "form",
+                       role = "form"
+                   }
+                   ))
+    {
+        @Html.AntiForgeryToken()
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-hidden="true">
+                    &times;
+                </button>
+                <h4>Detalle Procedimiento de Inspeccion</h4>
+            </div>
+            <div class="modal-body">
+                @Html.ValidationSummary(true)
+                <div>
+                    <div class="row">
+                        <div class="col-sm-7">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.NumeroSolicitud)
+                                        <div class="input-group">
+                                            @Html.TextBoxFor(model => model.NumeroSolicitud, new { @class = "form-control" })
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" type="button">
+                                                    <i class="fa fa-search" aria-hidden="true"></i>
+                                                </button>
+                                            </span>
+                                        </div><!-- /input-group -->
+                                        @Html.ValidationMessageFor(model => model.NumeroSolicitud)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Folio)
+                                        @Html.TextBoxFor(model => model.Folio, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Folio)
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.ResponsableActual)
+                                        @Html.TextBoxFor(model => model.ResponsableActual, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.ResponsableActual)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.ListTipoProcedimiento)
+                                        @Html.DropDownListFor(m => m.ListTipoProcedimiento, Model.ListTipoProcedimiento, "- Seleccione el Tipo de Procedimiento -", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.ListTipoProcedimiento, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.ListTipoRequerimiento)
+                                        @Html.DropDownListFor(m => m.ListTipoRequerimiento, Model.ListTipoRequerimiento, "- Seleccione el Tipo de Requerimiento -", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.ListTipoRequerimiento, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.ListTipoLlenado)
+                                        @Html.DropDownListFor(m => m.ListTipoLlenado, Model.ListTipoLlenado, "- Seleccione el tipo de llenado -", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.ListTipoLlenado, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.FechaLimite)
+                                        @Html.TextBoxFor(model => model.FechaLimite, new { @class = "form-control", type = "date" })
+                                        @Html.ValidationMessageFor(model => model.FechaLimite)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.FechaProcesoInspeccion)
+                                        @Html.TextBoxFor(model => model.FechaProcesoInspeccion, new { @class = "form-control", type = "date" })
+                                        @Html.ValidationMessageFor(model => model.FechaProcesoInspeccion)
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.FechaProcesoActualizacion)
+                                        @Html.TextBoxFor(model => model.FechaProcesoActualizacion, new { @class = "form-control", type = "date" })
+                                        @Html.ValidationMessageFor(model => model.FechaProcesoActualizacion)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.FechaProcesoFinal)
+                                        @Html.TextBoxFor(model => model.FechaProcesoFinal, new { @class = "form-control", type = "date" })
+                                        @Html.ValidationMessageFor(model => model.FechaProcesoFinal)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.FechaRemision)
+                                        @Html.TextBoxFor(model => model.FechaRemision, new { @class = "form-control", type = "date" })
+                                        @Html.ValidationMessageFor(model => model.FechaRemision)
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.FechaRecepcion)
+                                        @Html.TextBoxFor(model => model.FechaRecepcion, new { @class = "form-control", type = "date" })
+                                        @Html.ValidationMessageFor(model => model.FechaRecepcion)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.ListAccion)
+                                        @Html.DropDownListFor(m => m.ListAccion, Model.ListAccion, "- Seleccione Participante -", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.ListAccion, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    @Html.LabelFor(model => model.OberservacionRemitente)
+                                    @Html.TextAreaFor(model => model.OberservacionRemitente, new { @class = "form-control", rows = "5" })
+                                    @Html.ValidationMessageFor(model => model.OberservacionRemitente)
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    @Html.LabelFor(model => model.OberservacionRecepcion)
+                                    @Html.TextAreaFor(model => model.OberservacionRecepcion, new { @class = "form-control", rows = "5" })
+                                    @Html.ValidationMessageFor(model => model.OberservacionRecepcion)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.NombreTipoProcedimiento, htmlAttributes: new { @class = "control-label" })
+                                @Html.TextBoxFor(model => model.NombreTipoProcedimiento, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.NombreTipoProcedimiento)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table table-striped table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th width="7.1%">Dist</th>
+                                        <th width="7.1%">Sec</th>
+                                        <th width="7.1%">Mz</th>
+                                        <th width="7.1%">Lote</th>
+                                        <th width="7.1%">Ed</th>
+                                        <th width="7.1%">Entr</th>
+                                        <th width="7.1%">Piso</th>
+                                        <th width="7.1%">Unidad</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                                    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.NombreTipoInspeccion, htmlAttributes: new { @class = "control-label" })
+                                        @Html.TextBoxFor(model => model.NombreTipoInspeccion, new { type = "text", @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.NombreTipoInspeccion)
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    @Html.LabelFor(model => model.SubTipoInspeccion, htmlAttributes: new { @class = "control-label" })
+                                    <br />
+                                    <input type="checkbox">01. Observacion <br>
+                                    <input type="checkbox">02. Registro Fotográfico <br>
+                                    <input type="checkbox">03. Medición Exterior <br>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.DetalleTipoInspeccion, htmlAttributes: new { @class = "control-label" })
+                                @Html.TextAreaFor(model => model.DetalleTipoInspeccion, new { @class = "form-control", rows = "4" })
+                                @Html.ValidationMessageFor(model => model.DetalleTipoInspeccion)
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.NombreTipoInspeccion, htmlAttributes: new { @class = "control-label" })
+                                        @Html.TextBoxFor(model => model.NombreTipoInspeccion, new { type = "text", @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.NombreTipoInspeccion)
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    @Html.LabelFor(model => model.SubTipoInspeccion, htmlAttributes: new { @class = "control-label" })<br />
+                                    <input type="checkbox">04. Lote completo <br>
+                                    <input type="checkbox">05. Unidad catastral <br>
+                                    <input type="checkbox">06. Categorias y estado de conservacion <br>
+                                    <input type="checkbox">07. Muros perimetricos <br>
+                                    <input type="checkbox">08. Medidas de linderos <br>
+                                    <input type="checkbox">09. Áreas comunes <br>
+                                    <input type="checkbox">10. Analisis de manzana <br>
+                                    <input type="checkbox">11. Independización <br>
+                                    <input type="checkbox">12. Otros <br>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.DetalleTipoInspeccion, htmlAttributes: new { @class = "control-label" })
+                                @Html.TextAreaFor(model => model.DetalleTipoInspeccion, new { @class = "form-control", rows = "4" })
+                                @Html.ValidationMessageFor(model => model.DetalleTipoInspeccion)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Grabar" class="btn btn-success" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+</div>

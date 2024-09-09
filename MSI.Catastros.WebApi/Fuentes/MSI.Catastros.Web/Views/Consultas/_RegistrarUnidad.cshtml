@@ -1,0 +1,138 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Consultas.FiltrarConsultasViewModel
+
+<div id="RegistrarUnidadContainer">
+    @using (Html.BeginForm("Registrar", "Unidad", FormMethod.Post, new { id = "frmUnidad", name = "frmUnidad" }))
+    {
+        @Html.AntiForgeryToken()
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>*@
+                <button class="btn btn-default px-5 mr-2" style="margin-top:-2px;float: right;" data-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i> Salir</button>
+                <button id="btnModalAsignar" type="button" class="btn btnModalAsignar px-5 btn-green mr-2" style="margin-top:-2px;float: right;"><i class="fa fa-print"></i> Imprimir</button>
+                <h4 class="modal-title" id="exampleModalLabel" style="font-weight:bold">Unidades</h4>
+
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 unidad">
+                        <table id="tablaUnidadCatastralTemp" style="width:100%;" class="table responsive display  table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th width="4%">Item</th>
+                                    <th width="6%" style="width:65px">Dist</th>
+                                    <th width="6%">Sec</th>
+                                    <th width="6%">Mz</th>
+                                    <th width="6%">Lote</th>
+                                    <th width="6%">Ed</th>
+                                    <th width="6%">Entr</th>
+                                    <th width="2%">Piso</th>
+                                    <th width="6%">Unidad</th>
+                                    <th width="6%"></th>
+                                     <th style="display:none;"></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+</div>
+
+
+<script src="~/assets/vendor/datatables-checkboxes/js/dataTables.checkboxes.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('input').keyup(function () { this.value = this.value.toLocaleUpperCase() });
+        $(".chosen-seleccionar").chosen({ width: "100%", placeholder_text_single: "Seleccione una opción" });
+        var nombreEntidad = "UnidadCatastral";
+        localStorage.setItem('UnidadesSelec', "");
+       
+        
+        var checkbox = "0";
+
+        tablaUnidadCatastralTemp = $("#tablaUnidadCatastralTemp").DataTable({
+            //"scrollY": "800px",
+            //"scrollCollapse": true,
+            "language": { "lengthMenu": "", "info": "", "emptyTable": "" }, "processing": true, "serverSide": false,
+            'columnDefs': [
+                 { "width": "4%", "targets": 0 }, { "width": "7%", "targets": 1 }, { "width": "7%", "targets": 2 },
+                 { "width": "7%", "targets": 3 }, { "width": "7%", "targets": 4 }, { "width": "7%", "targets": 5 },
+                 { "width": "7%", "targets": 6 }, { "width": "7%", "targets": 7 }, { "width": "7%", "targets": 8 },
+                 {
+                     'targets': 9, 'checkboxes': {
+                         'selectRow': true, selectAllPages : false
+                     }
+                 }
+            ],
+            "paging": true,
+            "pageLength": 40,
+            "columns": [
+                { "data": "Item", "name": "Item", "className": "text-center" },
+                { "data": "CodigoDistrito", "name": "CodigoDistrito", "className": "text-center" },
+                { "data": "CodigoSector", "name": "CodigoSector", "className": "text-center" },
+                { "data": "CodigoManzana", "name": "CodigoManzana", "autoWidth": true, "className": "text-center" },
+                { "data": "CodigoLote", "name": "CodigoLote", "autoWidth": true, "className": "text-center" },
+                { "data": "Ed", "name": "Edificacion", "autoWidth": true, "className": "text-center" },
+                { "data": "Entrada", "name": "Entrada", "autoWidth": true, "className": "text-center" },
+                { "data": "Piso", "name": "Piso", "autoWidth": true, "className": "text-center" },
+                { "data": "Unidad", "name": "Unidad", "className": "text-center" },
+                { "data": "Indice", "className": "text-center" },
+                { "data": "CodigoUni", "name": "CodigoUni", "autoWidth": true, "className": "hide_column" },
+            ]
+        });
+       
+        if (tablaSimple) { 
+            tablaSimple.forEach(function (d, index) {
+                tablaUnidadCatastralTemp.row.add({
+                    "CodigoDistrito": "31",
+                    "CodigoSector": d.CodigoCatastral.substring(2, 4),
+                    "CodigoManzana": d.CodigoCatastral.substring(4, 7),
+                    "CodigoLote": d.CodigoCatastral.substring(7, 10),
+                    "Ed": d.CodigoCatastral.substring(10, 12),
+                    "Entrada": d.CodigoCatastral.substring(12, 14),
+                    "Piso": d.CodigoCatastral.substring(14, 16),
+                    "Unidad": d.CodigoCatastral.substring(16, 19),
+                    "Item": index +1,
+                    "Indice": index,
+                    "CodigoUni": d.CodigoUnico
+                });
+            });
+            tablaUnidadCatastralTemp.draw();
+            if (tablaSimple.length > 23) {
+                //$('#tablaUnidadCatastralTemp_wrapper .dataTables_scrollHead').addClass('pr-4');
+            } else {
+                //$('#tablaUnidadCatastralTemp_wrapper .dataTables_scrollHead').removeClass('pr-4');
+            }
+        }
+        $("#btnModalAsignar").on("click", function (event) {
+            var rows_selected = tablaUnidadCatastralTemp.column(9).checkboxes.selected();
+            console.log(rows_selected)
+            var ListaRows = [];
+            var ListaUniRows = [];
+            $.each(rows_selected, function (index, Indice) {
+                var rows = tablaUnidadCatastralTemp.rows(Indice).data()[0];
+                ListaRows.push(rows.CodigoSector + rows.CodigoManzana + rows.CodigoLote);
+                ListaUniRows.push(rows.CodigoUni + "|" + rows.Unidad);
+            });
+            if (rows_selected.length == 0) {
+                toastr.warning("Debe seleccionar una o más unidades para realizar la impresión", "Mensaje del Sistema", { "progressBar": true });
+            } else { 
+                $('#modalNuevoUnidadBC').modal('hide');
+                tablaUnidadCatastralTemp.columns().checkboxes.deselectAll()
+                if ($('#Nivel').val() == '01') {
+                    urlFICHA = "@Url.Content("~/Reportes/Reports.aspx")" + "?ListaCodigos=" + ListaRows + '&CodigoReporte=10' + '&CodigoEsq=03' + '&Catastro=02';
+                } else {
+                    urlFICHA = "@Url.Content("~/Reportes/Reports.aspx")" + "?ListaCodigos=" + ListaUniRows + '&CodigoReporte=10' + '&CodigoEsq=04' + '&Catastro=02';
+                }
+                impresionRuta(urlFICHA);
+                //window.open(urlFICHA);
+            }
+        });
+       
+    });
+</script>

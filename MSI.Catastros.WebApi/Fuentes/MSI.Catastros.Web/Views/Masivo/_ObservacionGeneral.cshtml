@@ -1,0 +1,280 @@
+﻿
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-hidden="true">
+                &times;
+            </button>
+            <h4 id="TituloGeneral">OBSERVACIONES GENERALES</h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="table-responsive">
+                        <table id="TablaUnidadPaso4" class="display table table-bordered" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Dist</th>
+                                    <th>Sec</th>
+                                    <th>Mz</th>
+                                    <th>Lote</th>
+                                    <th>Ed</th>
+                                    <th>Entr</th>
+                                    <th>Piso</th>
+                                    <th>Unidad</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table id="ObservacionGeneral">
+                        <tr>
+                            <td width="20%">Item</td>
+                            <td width="22%">Fecha</td>
+                            <td width="65%">Observacion</td>
+                            <td width="8%"></td>
+                        </tr>
+                        <tr>
+                            <td valign="top" class="pr-4"><input id="obs_general_item_00001" value="00001" disabled type="text" class="form-control item_obs_general" /></td>
+                            <td valign="top" class="pr-4"><input id="obs_general_fecha_00001" type="text" class="form-control fecha_obs_general fechaE" /></td>
+                            <td style="padding-right: 1.5rem !important;"><textarea id="obs_general_observacion_00001" class="form-control observacion_obs_general" rows="3"></textarea></td>
+                            <td style="display:none;"><input id="obs_general_id_00001" type="hidden" class="form-control id_otras_instalaciones" /></td>
+                            <td>
+                                <button onclick="CrearCamposUnidadCatastral(7, 'ObservacionGeneral', '00001', 'obs_general')" class="btn btn-sm btn-success fa fa-plus"></button>
+                                @*<button onclick="EditarCampoUnidadCatastral(7, 'ObservacionGeneral', '00001', 'obs_general')" class="btn btn-sm btn-success fa fa-edit"></button>*@
+                                <button onclick="EliminarCampoUnidadCatastral(7, this, '00001', 'item_obs_general')" class="btn btn-sm btn-success fa fa-trash"></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><span class="" data-valmsg-for="val_obs_general_fecha_00001" data-valmsg-replace="true"></span></td>
+                            <td><span class="" data-valmsg-for="val_obs_general_observacion_00001" data-valmsg-replace="true"></span></td>
+                            <td style="display:none;"></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="col-md-offset-2 col-md-10">
+                <input id="btnGuardarObservacion" type="submit" value="Grabar" class="btn btn-success" />
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        tablaUnidadPaso4 = $("#TablaUnidadPaso4").DataTable({
+            "processing": false,
+            "serverSide": false,
+            "paging": false,
+            "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+            "columns": [
+                { "data": "Distrito", "className": "text-center" },
+                { "data": "Sec", "className": "text-center" },
+                { "data": "Manzana", "className": "text-center" },
+                { "data": "Lote", "className": "text-center" },
+                { "data": "Ed", "className": "text-center" },
+                { "data": "Entr", "className": "text-center" },
+                { "data": "Piso", "className": "text-center" },
+                { "data": "Unidad", "className": "text-center" }
+            ]
+        });
+        debugger;
+        tablaUnidadPaso4.clear().draw();
+        $.each(ListunidadCatastralDireccion, function (index, entry) {
+            tablaUnidadPaso4.row.add(entry).draw();
+        });
+        $(".fechaE").datepicker({
+            format: "dd/mm/yyyy",
+            language: "es",
+            calendarWeeks: true
+        });
+        $("#btnGuardarObservacion").click(function () {
+            var ListaObservacionesGeneral = Observaciones('obs_general', 'ObservacionGeneral');
+            debugger;
+            if (ListaObservacionesGeneral.length === 1) {
+                $.each(ListaObservacionesGeneral, function (i, item) {
+                    if (item.Observacion === "") {
+                        ListaObservacionesGeneral = null;
+                    }
+                });
+            }
+            var UnidadCatastral = {
+                CodigoUnidadCatastral: 0,
+                Estado: 2
+            }
+            $.ajax({
+                url: "@Url.Content("~/UnidadCatastral/RegistrarUnidadCatastral")",
+                type: "POST",
+                data:
+                {
+                    UnidadCatastral: UnidadCatastral,
+                    ListaObservacionesGeneral: ListaObservacionesGeneral
+                },
+                dataType: "json",
+                success: function (response) {
+                    if (response.success) {
+                        //console.log('Ya se Grabo todo');
+                        CagarListadoMasivo();
+                        $('#modalObservacionGeneral').modal('hide');
+                        var mensaje = "Registro grabado correctamente";
+                        toastr.success(mensaje, "Mensaje del Sistema", { "progressBar": true });
+
+                    } else {
+                        toastr.error(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                    }
+                },
+                complete: function () {
+                    $('#btnGuardarObservacion').removeAttr('disabled');
+                }
+            });
+        });
+    });
+    function Load_Page() {
+        $(".fechaE").datepicker({
+            format: "dd/mm/yyyy",
+            language: "es",
+            calendarWeeks: true
+        });
+    }
+    Load_Page();
+    //var contLineasConstructivas, contIdLineasConstructivas, contOtrasInstalaciones, contIdOtrasInstalaciones, contActividadEconomica, contIdActividadEconomica, contLoteDocumRRPP, contIdLoteDocumRRPP,
+    //       contLoteExpediente, contLoteIdExpediente, contLoteAuto, contIdLoteAuto, contObservacionGeneral, contIdObservacionGeneral,
+    //       contObservacionSunarp, contIdObservacionSunarp, contObservacionCarga, contIdObservacionCarga, columnas, fieldset;
+    //contLineasConstructivas = contIdLineasConstructivas = contOtrasInstalaciones = contIdOtrasInstalaciones = contActividadEconomica = contIdActividadEconomica = contLoteDocumRRPP =
+    //    contIdLoteDocumRRPP = contLoteExpediente = contLoteIdExpediente = contLoteAuto = contIdLoteAuto = contObservacionGeneral = contIdObservacionGeneral =
+    //    contObservacionSunarp = contIdObservacionSunarp = contObservacionCarga = contIdObservacionCarga = 1;
+    //var lblTd = '<td class="pr-4">';
+    //var lblTdSpan = '<td>';
+    //function CrearCamposUnidadCatastral(tipo, tabla, posactual, focus, opcion) {
+    //    if (tipo === 7) {
+    //        fieldset = "obs_general";
+    //        contObservacionGeneral++;
+    //        contIdObservacionGeneral++;
+    //        var numeroItem = LeftZero(contObservacionGeneral, 5);
+    //        var idItem = LeftZero(contIdObservacionGeneral, 5);
+
+    //        cont = ValidarObservaciones(posactual, 0, fieldset);
+    //        if (cont == true || posactual == '00000') {
+
+    //            columnas = '<td valign="top" class="pr-4"><input type="text" disabled value="' + numeroItem + '" class="form-control mt-2 item_' + fieldset + '"></td>' +
+    //                   '<td valign="top" class="pr-4"><input id="' + fieldset + '_fecha_' + idItem + '" type="text" class="form-control mt-2 fecha_' + fieldset + ' fechaE"></td>' +
+    //                   '<td valign="top" style="padding-right: 1.5rem !important;">' + '<textarea id="' + fieldset + '_observacion_' + idItem + '" class="form-control mt-2 observacion_' + fieldset + '" rows="3" ></textarea></td>' +
+    //                   '<td style="display:none;">' + '<input id="' + fieldset + '_id_' + idItem + '" type="hidden" class="form-control id_' + fieldset + '" /></td>';
+
+
+    //            columnasValidacion = lblTdSpan + '</td>' +
+    //                               lblTdSpan + '<span class="" data-valmsg-for="val_' + fieldset + '_fecha_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+    //                               lblTdSpan + '<span class="" data-valmsg-for="val_' + fieldset + '_observacion_' + idItem + '" data-valmsg-replace="true"></span></td>' +
+    //                               '<td style="display:none;"></td>';
+
+    //            BotonesTablas(tabla, columnas, tipo, focus, idItem, fieldset, columnasValidacion, opcion);
+    //        } else {
+    //            contObservacionGeneral--; contIdObservacionGeneral--;
+    //        }
+    //    }
+    //    $(".chosen-seleccionar").chosen({ width: "100%", placeholder_text_single: "Seleccione una opción" });
+    //    Load_Page();
+    //}
+    function ValidarObservaciones(IdItem, ValInicial, fieldset) {
+        RemoveValidacionObservaciones(IdItem, fieldset);
+        var cont = true;
+        var contError = 0;
+
+        if (!$('#' + fieldset + '_fecha_' + IdItem).val()) {
+            $('[data-valmsg-for="val_' + fieldset + '_fecha_' + IdItem + '"]').html('Ingrese <br> Fecha').addClass('field-validation-valid has-error');
+            cont = false;
+            contError++;
+        }
+
+        if (!$('#' + fieldset + '_observacion_' + IdItem).val()) {
+            $('[data-valmsg-for="val_' + fieldset + '_observacion_' + IdItem + '"]').html('Ingrese <br> Observación').addClass('field-validation-valid has-error');
+            cont = false;
+            contError++;
+        }
+
+
+        if (contError === 2 && ValInicial === 1) {
+            cont = true;
+            RemoveValidacionObservaciones(IdItem, fieldset);
+        }
+
+        return cont
+    }
+    function RemoveValidacionObservaciones(IdItem, fieldset) {
+        $('[data-valmsg-for="val_' + fieldset + '_fecha_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+        $('[data-valmsg-for="val_' + fieldset + '_observacion_' + IdItem + '"]').html('').removeClass('field-validation-valid has-error');
+
+    }
+    function Observaciones(fieldset, tabla) {
+        var datosParseados = [];
+        var ValBool = [];
+        var cont;
+        $.each(ListunidadCatastralDireccion, function (index, entry) {
+            console.log(entry);
+            $('#' + tabla + ' tr').each(function (index, item) {
+                if (index !== 0 && $(item).closest("tr").attr('name') !== 'validacion' && $(item).closest("tr").attr('name') !== 'delete') {
+                    $(item).children("td").each(function () {
+                        console.log('1');
+                        var input = $(this).children("input");
+                        if (input.hasClass("fecha_" + fieldset)) {
+                            var IdInput = $(input).attr("id");
+                            var indicetext = IdInput.substr(IdInput.length - 5, 5);
+                        }
+                        cont = ValidarObservaciones(indicetext, 1, fieldset);
+                        ValBool.push(cont);
+                    });
+                }
+
+
+                if (cont == true) {
+                    var del = '0';
+                    if (index === 0) return true;
+                    if ($(item).closest("tr").attr('name') === 'delete') del = '1';
+                    if ($(item).closest("tr").attr('name') !== 'validacion') {
+                        var ind, Fecha, Observacion, TipoObservacion;
+                        $(item).children("td").each(function () {
+                            var input = $(this).children("input");
+                            var textarea = $(this).children("textarea");
+                            if (input.hasClass("fecha_" + fieldset)) {
+                                Fecha = input.val();
+                            } else if (textarea.hasClass("observacion_" + fieldset)) {
+                                Observacion = textarea.val();
+                            }
+                            else if (input.hasClass("id_" + fieldset)) {
+                                ind = input.val();
+                            }
+                        });
+                        switch (fieldset) {
+                            case 'obs_general': TipoObservacion = '010001'; break;
+                        }
+                        if (!(!Fecha && !Observacion)) {
+                            console.log('FIELDS', Fecha, Observacion);
+                            datosParseados.push({
+                                "CodigoCorrelativo": ind, "Eliminado": del, "Fecha": Fecha, "Observacion": Observacion, "TipoObservacion": TipoObservacion,
+                                "CodigoUnidadCatastral": entry.CODUNI
+                            });
+                        }
+                    }
+                }
+            });
+
+            for (i = 0; i < ValBool.length; i++) {
+                if (ValBool[i] === false) {
+                    return false;
+                }
+            }
+        });
+        console.log(datosParseados);
+        return datosParseados;
+    }
+</script>

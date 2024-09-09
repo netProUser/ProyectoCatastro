@@ -1,0 +1,85 @@
+﻿model MSI.Catastros.Web.Funcionalidad.Manzana.RegistroManzanaViewModel
+
+<div id="EditManzanaContainer">
+    @using (Html.BeginForm("Editar", "Manzana", FormMethod.Post,
+
+               new
+               {
+                   id = "ManzanaEditForm",
+                   @class = "form-horizontal",
+                   role = "form"
+               }
+               ))
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4>
+                        Editando:<strong>@Model.NombreManzana</strong>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true)
+                        @*<div class="form-group">
+                            @Html.LabelFor(model => model.CodigoManzana, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.CodigoManzana)
+                                @Html.ValidationMessageFor(model => model.CodigoManzana)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NombreManzana, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.NombreManzana)
+                                @Html.ValidationMessageFor(model => model.NombreManzana)
+                            </div>
+                        </div>*@
+                        @*<div class="form-group">
+                            @Html.LabelFor(model => model.CodigoSector, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.CodigoSector)
+                                @Html.ValidationMessageFor(model => model.CodigoSector)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NombreSector, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.NombreSector)
+                                @Html.ValidationMessageFor(model => model.NombreSector)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NombreTematica, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.NombreTematica)
+                                @Html.ValidationMessageFor(model => model.NombreTematica)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NombreManzanaUrbana, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.NombreManzanaUrbana)
+                                @Html.ValidationMessageFor(model => model.NombreManzanaUrbana)
+                            </div>
+                        </div>*@
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Actualizar" class="btn btn-success" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

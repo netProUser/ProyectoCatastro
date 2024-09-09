@@ -1,0 +1,110 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Parametros.FiltrarParametrosViewModel
+
+@{
+    ViewBag.Title = "Mantenimientos Parametros";
+}
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="overflow: hidden">
+                Mantenimiento de Parametros
+                <span> <button type="button" class="btn btn-create" data-toggle="modal" data-target="#ModalDistrito"><i class="fa fa-plus-circle" aria-hidden="true"></i> Crear </button></span>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        @using (Html.BeginForm("ParametrosList", "Parametros"))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            @Html.ValidationSummary(true)
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Parametro, htmlAttributes: new { @class = "control-label" })
+                                        @Html.TextBoxFor(model => model.Parametro, new { @class = "form-control" })
+
+                                        @Html.ValidationMessageFor(model => model.Parametro, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <br />
+                                        <input type="submit" value="Buscar" class="btn btn-default" />
+                                    </div>
+                                </div>
+                            </div>
+                            @*<button type="submit" class="btn btn-default">Submit Button</button>
+                                <button type="reset" class="btn btn-default">Reset Button</button>*@
+
+                            if (Model.listParametros != null || Model.listParametros.Count() > 0)
+                            {
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Codigo</th>
+                                                <th>Nombres Distrito</th>
+                                                <th>Abreviatura</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.listParametros)
+                                            {
+                                                <tr>
+                                                    <td>@item.CodigoParametro</td>
+                                                    <td>@item.Descripcion</td>
+                                                    <td>@item.Abreviatura</td>
+                                                    <td></td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            }
+                        }
+                    </div>
+
+                </div>
+                <!-- /.row (nested) -->
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
+
+
+<!-- Modal -->
+<div id="ModalDistrito" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Registro Distrito</h4>
+            </div>
+            <div class="modal-body">
+                @Html.LabelFor(model => model.Parametro, htmlAttributes: new { @class = "control-label" })
+                @Html.TextBoxFor(model => model.Parametro, new { @class = "form-control" })
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+@*<div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@
+
+

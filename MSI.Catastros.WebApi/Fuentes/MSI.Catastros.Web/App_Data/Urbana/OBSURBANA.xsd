@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="OBSURBANA" targetNamespace="http://tempuri.org/OBSURBANA.xsd" xmlns:mstns="http://tempuri.org/OBSURBANA.xsd" xmlns="http://tempuri.org/OBSURBANA.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="OBSURBANA" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="OBSURBANA" msprop:Generator_UserDSName="OBSURBANA">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="OBSURBANA" msprop:Generator_TableClassName="OBSURBANADataTable" msprop:Generator_TableVarName="tableOBSURBANA" msprop:Generator_TablePropName="_OBSURBANA" msprop:Generator_RowDeletingName="OBSURBANARowDeleting" msprop:Generator_RowChangingName="OBSURBANARowChanging" msprop:Generator_RowEvHandlerName="OBSURBANARowChangeEventHandler" msprop:Generator_RowDeletedName="OBSURBANARowDeleted" msprop:Generator_UserTableName="OBSURBANA" msprop:Generator_RowChangedName="OBSURBANARowChanged" msprop:Generator_RowEvArgName="OBSURBANARowChangeEvent" msprop:Generator_RowClassName="OBSURBANARow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="NUMERO" msprop:Generator_ColumnVarNameInTable="columnNUMERO" msprop:Generator_ColumnPropNameInRow="NUMERO" msprop:Generator_ColumnPropNameInTable="NUMEROColumn" msprop:Generator_UserColumnName="NUMERO" type="xs:string" minOccurs="0" />
+              <xs:element name="OBSERV" msprop:Generator_ColumnVarNameInTable="columnOBSERV" msprop:Generator_ColumnPropNameInRow="OBSERV" msprop:Generator_ColumnPropNameInTable="OBSERVColumn" msprop:Generator_UserColumnName="OBSERV" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,829 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Cartas.CartasViewModel
+@{
+    ViewBag.Title = "Cartas";
+}
+
+<div class="row" id="Informes">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="overflow: hidden">
+                <div class="row">
+                    <div class="col-md-6 col-xs-12"><strong><a href="../MantCartas">-</a>Cartas</strong></div><div class="col-md-4"></div>
+                    <div class="col-md-2 col-xs-12">
+                        <span><button id="GrabarGeneral" type="button" disabled class="btn btn-green mr-2 btn-block" style="float:right" onclick="GrabarCartas()"><span class="glyphicon glyphicon-ok mr-2"></span> Grabar</button></span>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    
+                </div>
+                
+                <input type="hidden" id="FiltrarCodigoPeriodo" />
+                <input type="hidden" id="CodigoOficina" />
+
+                <fieldset class="formulario p-3">
+                    
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ListTipoInforme, htmlAttributes: new { @class = "control-label" })
+                                @Html.DropDownListFor(m => m.FiltrarCodigoTipoInforme, Model.ListTipoInforme, "- Seleccione el tipo de carta -", new { @class = "form-control searchFilter" })
+                                <span class="field-validation-valid inputUtil" data-valmsg-for="ListTipoInforme" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ListTipoSolicitud, htmlAttributes: new { @class = "control-label" })
+                                @Html.DropDownListFor(m => m.FiltrarCodigoTipoSolicitud, Model.ListTipoSolicitud, "- Seleccione el tipo de solicitud -", new { @class = "form-control searchFilter" })
+                                <span class="field-validation-valid inputUtil" data-valmsg-for="FiltrarCodigoTipoSolicitud" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-3" id="divTipoDocumento" style="display:none;">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ListTipoDocumento, htmlAttributes: new { @class = "control-label" })
+                                @Html.DropDownListFor(m => m.FiltrarCodigoTipoDocumentoReg, Model.ListTipoDocumento, "- Seleccione el tipo de documento -", new { @class = "chosen-seleccionar form-control searchFilter", autofocus = "true" })
+                                <span class="field-validation-valid" data-valmsg-for="FiltrarCodigoTipoDocumentoReg" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.FiltrarNumeroSolicitud, htmlAttributes: new { @class = "control-label" })
+                                @Html.TextBoxFor(model => model.FiltrarNumeroSolicitud, new { @class = "form-control searchFilter px-2" })
+                                <span class="field-validation-valid inputUtil" data-valmsg-for="FiltrarNumeroSolicitud" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-2 text-center">
+                            <div class="form-group">
+                                <br />
+                                <button id="btnListarInspec" type="button" value="" class="btn btn-default btn-block" style="margin-top: 5px">Listar Inspecciones</button>
+                                <button id="btnBuscar1" onclick="CargarTabla()" type="button" value="" class="btn btn-default btn-block glyphicon glyphicon-search" style="margin-top: 5px;display:none;"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" id="divInspec">
+                        <div class="col-md-3 col-md-offset-3">
+                            <div class="form-group">
+                                <label>Nro. Inspección</label>
+                                <select id="FiltrarNumeroInspeccion" disabled class="form-control"><option value=""> - Seleccione una inspección - </option></select>
+                            </div>
+                        </div>
+                        <div class="col-sm-1 text-center">
+                            <div class="form-group"><br /><button id="btnBuscar" onclick="CargarTabla()" disabled type="button" value="" class="btn btn-default btn-block glyphicon glyphicon-search" style="margin-top: 5px"></button></div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div id="tabInforme" style="display:none;">
+                    
+                    
+                    <div class="row mt-3">
+                        <div class="col-md-2">
+                            <button id="btnAgregarCarta" type="button" class="btn btn-success mb-2 btn-sm btn-block glyphicon glyphicon-plus-sign">
+                                <span style="font-family:'Open Sans'"> Agregar</span>
+                            </button>
+                        </div>
+                        <div class="col-md-12">
+                            <table id="tablaCarta" style="width:100%" class="table responsive display table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th >Acciones</th>
+                                        <th width="50px">Item</th>
+                                        <th >Nro. Solicitud</th>
+                                        <th> Nro. Carta</th>
+                                        <th >Nro. Inspección</th>
+                                        <th >Codigos Catastrales</th>
+                                        <th >Ubicacion</th>
+                                        <th >Fecha Generación</th>
+                                        <th >Fecha Citacion</th>
+                                        <th> Usuario</th>
+                                        <th >Documento</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div id="cuerpoInforme" class="fonts11 p-3" style="display:none;">
+
+                    </div>
+                    <input type="hidden" id="CodigoUnico" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section datatables {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    
+    <script>
+    //$('#page-wrapper').removeClass('pt-5').addClass('pt-1'); $('#periodoGlobal').show();
+    $('.tabs').tabslet();
+    $('#FiltrarCodigoPeriodo').val((new Date()).getFullYear());
+    //DATA DE PRUEBA
+    //$('#FiltrarCodigoTipoSolicitud').val('010003'); $('#FiltrarNumeroSolicitud').val('000283');
+    $('#FiltrarCodigoTipoInforme').change(function () {
+        if (this.value === 'CITA' || this.value === 'CAPI') {
+            $('#FiltrarNumeroInspeccion').val('');
+            $('#btnBuscar1').show();$('#btnBuscar').hide();$('#btnListarInspec').hide();
+            $('#divInspec').hide();
+        } else {
+            $('#btnBuscar1').hide(); $('#btnBuscar').show(); $('#btnListarInspec').show();
+            $('#divInspec').show();
+        }
+        $('#tabInforme').hide();
+        $('#cuerpoInforme').hide();
+    });
+    $('#FiltrarNumeroInspeccion').change(function () {
+        $('#tabInforme').hide();
+        $('#cuerpoInforme').hide();
+    });
+
+    var codigosTemp = '';
+    var ubicacionTemp = '';
+    var titularesTemp = '';
+
+    var tablaCarta = $("#tablaCarta").DataTable({
+        "ajax": {
+            "url": "@Url.Content("~/Cartas/CargarCartas")", "type": "POST", "datatype": "json",
+            "data": function (d) {
+                d.FiltrarCodigoTipoSolicitud = $('#FiltrarCodigoTipoSolicitud').val();      d.FiltrarNumeroSolicitud = $('#FiltrarNumeroSolicitud').val();
+                d.FiltrarCodigoPeriodo = $('#FiltrarCodigoPeriodo').val();                  d.FiltrarCodigoTipoInforme = $('#FiltrarCodigoTipoInforme').val();
+                d.FiltrarCodigoTipoDocumentoReg = $('#FiltrarCodigoTipoDocumentoReg').val();d.FiltrarNumeroInspeccion = $('#FiltrarNumeroInspeccion').val();
+            }
+        },
+        "language": { "lengthMenu": "", "info": "", "emptyTable": "" },"processing": true,"serverSide": false,"paging": false,
+        "columns": [
+            {
+                'render': function (data, type, full, meta) {
+                    return '<button data-toggle="tooltip" title="Editar" class="btn mr-1 text-center btnEditCarta btn-default btn-xs glyphicon glyphicon-edit" type="button" ></button>' +
+                    '<button data-toggle="tooltip" title="Eliminar" class="btn mr-1 text-center btnDeleteCarta btn-default btn-xs glyphicon glyphicon-trash" type="button" ></button>';
+                }, "className": "text-center", "width": "8%"
+            },
+            { "data": "Item", "className": "text-center", "width": "50px" }, { "data": "FiltrarNumeroSolicitud", "className": "text-center" },
+            { "data": "CodigoCorrelativoTramite", "className": "text-center" },
+            { "data": "FiltrarNumeroInspeccion", "className": "hide_column" },
+
+            { "data": "CodigoCatastral", "className": "text-center" },
+            { "data": "Ubicacion", "className": "text-center" }, { "data": "FechaGeneracion", "className": "text-center" },
+            { "data": "FechaNueva", "className": "text-center" }, { "data": "CodigoUsuario", "className": "text-center" },
+            { 'render': function (data, type, full, meta) {
+                if (full.CodigoDocumentoGenerado) {
+                    return '<button data-toggle="tooltip" title="Imprimir" class="btn mr-1 text-center btnPrint btn-default btn-xs glyphicon glyphicon-print" type="button" ></button>';
+                } else { return ''; } }, "className": "text-center"
+            },
+            { "data": "FiltrarCodigoCorrelativo", "className": "hide_column" },
+            { "data": "CodigoDocumentoGenerado", "className": "hide_column" }
+        ]
+    });
+    $("#tablaCarta tbody").on('click', 'button.btnEditCarta', function (event) {
+        var data = tablaCarta.row($(this).parents('tr')).data();
+        var row = $(this).parents('tr')
+        if (data.CodigoUsuario == '@VariablesWeb.IdUsuarioIntento') {
+            $('#FiltrarCodigoCorrelativo').val(data.FiltrarCodigoCorrelativo);
+            BuscarCartas(data.FiltrarCodigoCorrelativo);
+            tablaCarta.$('tr.selected').removeClass('selected'); row.addClass('selected');
+            $('#cuerpoInforme').fadeOut();
+            $('#cuerpoInforme').fadeIn(2000);
+        } else {
+            toastr.warning("No cuenta con permisos para modificar esta carta", "Mensaje del Sistema", { "progressBar": true });
+        }
+
+    });
+    $("#tablaCarta tbody").on('click', 'button.btnDeleteCarta', function (event) {
+        var data = tablaCarta.row($(this).parents('tr')).data();
+        var enlace = "@Url.Content("~/Cartas/EliminarCarta")";
+        if (data.CodigoUsuario == '@VariablesWeb.IdUsuarioIntento') {
+            bootbox.confirm({
+                title: "Mensaje del Sistema", message: "¿Esta seguro de borrar el registro?",
+                buttons: { confirm: { label: '<i class="fa fa-trash"></i> Eliminar ', className: "btn btn-danger" }, cancel: { label: '<i class="fa fa-times"></i> Cancelar' } },
+                callback: function (result) {
+                    if (result) {
+                        $.post(enlace, { CodigoInforme: data.FiltrarCodigoInforme, FiltrarCodigoTipoInforme: $('#FiltrarCodigoTipoInforme').val(), FiltrarCodigoCorrelativo: data.FiltrarCodigoCorrelativo }, function (response) {
+                            tablaCarta.ajax.reload();
+                        });
+                    }
+                }
+            });
+        } else {
+            toastr.warning("No cuenta con permisos para eliminar esta carta", "Mensaje del Sistema", { "progressBar": true });
+        }
+    });
+    $("#tablaCarta tbody").on('click', 'button.btnPrint', function (event) {
+        event.stopPropagation();
+        var data = tablaCarta.row($(this).parents('tr')).data();
+        // urlFICHA = "/Reportes/Reports.aspx?codigoCarta=" + '0001' + '&codigoTipoInforme=' + $('#FiltrarCodigoTipoInforme').val() + '&CodigoReporte=' + $('#FiltrarCodigoTipoInforme').val() + '&codigoAnio=' + (new Date()).getFullYear() + '&CodigoCorrCarta=' + data.FiltrarCodigoCorrelativo;
+        urlFICHA = "@Url.Content("~/Reportes/Reports.aspx?codigoCarta=")" + '0001' + '&codigoTipoInforme=' + $('#FiltrarCodigoTipoInforme').val() + '&CodigoReporte=' + $('#FiltrarCodigoTipoInforme').val() + '&codigoAnio=' + (new Date()).getFullYear() + '&CodigoCorrCarta=' + data.FiltrarCodigoCorrelativo;
+
+        window.open(urlFICHA);
+    });
+
+    $('#btnAgregarCarta').click(function () {
+        var cont = 0;
+        tablaCarta.rows().every(function () {
+            var data = this.data();
+            if (data.CodigoUsuario == '@VariablesWeb.IdUsuarioIntento') {
+                if (data.Bloqueado) {
+                    contBloq++;
+                }
+                if (!data.CodigoDocumentoGenerado) {
+                    cont++
+                }
+            }
+        });
+        if (cont === 0) {
+            $.post("@Url.Content("~/Cartas/CrearCarta")", {
+                FiltrarCodigoTipoInforme: $('#FiltrarCodigoTipoInforme').val(), FiltrarCodigoTipoSolicitud: $('#FiltrarCodigoTipoSolicitud').val(),
+                FiltrarCodigoTipoDocumentoReg: $('#FiltrarCodigoTipoDocumentoReg').val(), FiltrarNumeroSolicitud: $('#FiltrarNumeroSolicitud').val(),
+                FiltrarNumeroInspeccion: $('#FiltrarNumeroInspeccion').val()
+            }, function (r) {
+                if (r.success) {
+                    console.log('CartaCreada'); tablaCarta.ajax.reload(); $('#cuerpoInforme').hide();
+                } else {
+                    toastr.warning(r.responseText, "Mensaje del Sistema", { "progressBar": true });
+                }
+            });
+        } else {
+            toastr.warning("Se ha detectado una carta que no ha sido grabada", "Mensaje del Sistema", { "progressBar": true });
+        }
+    });
+    $('#TipoPersonas').change(function () {
+        console.log('DET', $('#FiltrarCodigoTipoInforme').val());
+        $('#Solicitante').val(''); if ($('#FiltrarCodigoTipoInforme').val() == 'CITA') { $('#Parrafo1').val(''); }
+        if (this.value == '010003') {
+            var Titulares = ''; var tempTit = "";
+            $('.CamposCatastrales').find('tr').each(function (index) {
+                if ($('#Titular' + ind).val() != tempTit) {
+                    var ind = (index + 1);
+                    if ($('#Check' + ind).is(":checked")) {
+                        Titulares = Titulares + '\n' + $('#Titular' + ind).val();
+                    }
+                }
+                tempTit = $('#Titular' + ind).val();
+            });
+            $('#Solicitante').val(Titulares.substring(1));
+        } else {
+            $.post("@Url.Content("~/Informes/BuscarSolicitudPersona")", { model: RetornarBusqueda() },
+            function (r) {
+
+                if ($('#TipoPersonas').val() === '010001') {
+                    if (r.Solicitud.NombreSolicitante) {
+                        $('#Solicitante').val(r.Solicitud.NombreSolicitante);
+                    }
+                } else {
+                    if (r.Solicitud.NombreRepresentante) {
+                        $('#Solicitante').val(r.Solicitud.NombreRepresentante);
+                    }
+                }
+            });
+        }
+    });
+    $('#btnListarInspec').click(function () {
+        // var URL = "/Cartas/ListarNumeroInspecciones";
+        var URL = "@Url.Content("~/Cartas/ListarNumeroInspecciones")";
+        $('#tabInforme').hide()
+        $.post(URL,{
+            FiltrarCodigoTipoInforme: $('#FiltrarCodigoTipoInforme').val(), FiltrarCodigoTipoSolicitud: $('#FiltrarCodigoTipoSolicitud').val(),
+            FiltrarCodigoTipoDocumentoReg: $('#FiltrarCodigoTipoDocumentoReg').val(), FiltrarNumeroSolicitud: $('#FiltrarNumeroSolicitud').val()
+        }, function (data) {
+            if (data.length !== 0) {
+                $('#FiltrarNumeroInspeccion').children('option:not(:first)').remove();
+                $.each(data, function (i, obj) {    $('#FiltrarNumeroInspeccion').append($('<option>').text(obj.Text).attr('value', obj.Value));    });
+                $('#btnBuscar').removeAttr('disabled');$('#FiltrarNumeroInspeccion').removeAttr('disabled').focus().select();
+            } else {
+                $('#btnBuscar').attr('disabled', 'disabled');$('#FiltrarNumeroInspeccion').attr('disabled','disabled');
+                toastr.warning("No se han encontrado inspecciones programadas.", "Mensaje del Sistema", { "progressBar": true });
+            }
+        });
+    });
+    $('#FiltrarCodigoTipoSolicitud').change(function () {
+        if (this.value === "010003") {
+            $('#divTipoDocumento').hide(); $('#FiltrarCodigoTipoDocumentoReg').find('option:not(:first)').remove();
+        } else {
+            $('#divTipoDocumento').show();
+            //var URL = (this.value === "010001") ? "/RecepcionDocumentos/DocExterno" : "/RecepcionDocumentos/DocInterno";
+            var URL = (this.value === "010001") ? "@Url.Content("~/RecepcionDocumentos/DocExterno")" : "@Url.Content("~/RecepcionDocumentos/DocInterno")";
+            $.post(URL, function (data) {
+                $('#FiltrarCodigoTipoDocumentoReg').find('option:not(:first)').remove();
+                var items = '<option value="">Seleccione el tipo de documento</option>';
+                $.each(data, function (i, item) {
+                    items += "<option value='" + item.Value + "'>" + item.Text + "</option>";
+                }); $('#FiltrarCodigoTipoDocumentoReg').html(items).trigger("chosen:updated");
+            });
+        }
+    });
+    $('.searchFilter').change(function () {
+        $('#FiltrarNumeroInspeccion').val('').attr('disabled', 'disabled');$('#btnBuscar').attr('disabled', 'disabled');$('#tabInforme').hide();$('#cuerpoInforme').hide();
+    });
+    $('input.change').change(function () {
+        $('#GenFicha').attr('disabled', 'disabled')
+    });
+    //$('#FiltrarCodigoTipoInforme').val('CAPI').trigger('change');
+    function CargarTabla() {
+        if ($('#FiltrarCodigoTipoInforme').val() == 'CONV') {
+            if (!$('#FiltrarNumeroInspeccion').val()) {
+                toastr.warning("Seleccione el N° de Inspección", "Mensaje del Sistema", { "progressBar": true });return;
+            }
+        }
+
+        if (validarCamposBusqueda($('#FiltrarCodigoTipoSolicitud').val(), $('#FiltrarNumeroSolicitud').val(), $('#FiltrarCodigoTipoDocumentoReg').val())) {
+            var codSol = $('#FiltrarCodigoTipoSolicitud').val(); var numVal = $('#FiltrarNumeroSolicitud').val(); var codDoc = $('#FiltrarCodigoTipoDocumentoReg').val();
+            $.ajax({
+                url: "@Url.Content("~")" + "Lotes/BuscarSolicitud", type: "POST", dataType: "json",
+                data: { FiltrarCodigoTipoSolicitud: codSol, FiltrarNumeroSolicitud: numVal, FiltrarCodigoTipoDocumentoReg: codDoc },
+                success: function (response) {
+                    if (response.success) {
+                        $('#tabInforme').show(); tablaCarta.ajax.reload();
+                        if ($('#FiltrarCodigoTipoInforme').val() == 'CONV') { $(tablaCarta.column(7).header()).text('Fecha Nueva'); }
+                        else if ($('#FiltrarCodigoTipoInforme').val() == 'CITA') { $(tablaCarta.column(7).header()).text('Fecha Citación'); }
+                        else if ($('#FiltrarCodigoTipoInforme').val() == 'CAPI') { $(tablaCarta.column(7).header()).text('Fecha Nueva'); }
+                        $('#cuerpoInforme').html("").hide();
+                    } else {
+                        toastr.error("No se ha encontrado la solicitud", "Mensaje del Sistema", { "progressBar": true });
+                    }
+                }
+            });
+        }
+    }
+    function validarCamposBusqueda(codSol, numVal, tipDoc) {
+        var validado = false;
+        valiCodTip = $('[data-valmsg-for="FiltrarCodigoTipoSolicitud"]');
+        valiTipDoc = $('[data-valmsg-for="FiltrarCodigoTipoDocumentoReg"]');
+        valiNumSol = $('[data-valmsg-for="FiltrarNumeroSolicitud"]');
+        if (!codSol) {
+            valiCodTip.html('Seleccione el tipo de solicitud').addClass('field-validation-valid has-error');
+            valiNumSol.html('').removeClass('field-validation-valid has-error');
+            $('[data-valmsg-for="FiltrarCodigoTipoDocumentoReg"]').html('').removeClass('field-validation-valid has-error');
+            $('#FiltrarCodigoTipoSolicitud').focus(); //$('#btnDerivar').attr('disabled', 'disabled');
+        } else if (!tipDoc && codSol != '010003') {
+            valiCodTip.html('').removeClass('field-validation-valid has-error');
+            valiNumSol.html('').removeClass('field-validation-valid has-error');
+            $('[data-valmsg-for="FiltrarCodigoTipoDocumentoReg"]').html('Seleccione el tipo de documento').addClass('field-validation-valid has-error');
+            $('#FiltrarCodigoTipoDocumentoReg').focus();
+        } else if (numVal === '-' || !numVal) {
+            valiCodTip.html('').removeClass('field-validation-valid has-error');
+            valiNumSol.html('Ingrese un número de solicitud').addClass('field-validation-valid has-error');
+            $('[data-valmsg-for="FiltrarCodigoTipoDocumentoReg"]').html('').removeClass('field-validation-valid has-error');
+            $('#FiltrarNumeroSolicitud').focus(); //$('#btnDerivar').attr('disabled', 'disabled');
+        } else {
+            valiCodTip.html('').removeClass('field-validation-valid has-error');
+            valiNumSol.html('').removeClass('field-validation-valid has-error');
+            $('[data-valmsg-for="FiltrarCodigoTipoDocumentoReg"]').html('').removeClass('field-validation-valid has-error');
+            validado = true;
+        }
+        return validado;
+    }
+    var diasprog = "";
+    function BuscarCartas(correlativo) {
+        ubicacionTemp = '';
+        titularesTemp = '';
+        $.post("@Url.Content("~/Cartas/BuscarGrabar")", {
+            FiltrarCodigoTipoInforme: $('#FiltrarCodigoTipoInforme').val(), FiltrarCodigoTipoSolicitud: $('#FiltrarCodigoTipoSolicitud').val(),
+            FiltrarCodigoTipoDocumentoReg: $('#FiltrarCodigoTipoDocumentoReg').val(), FiltrarNumeroSolicitud: $('#FiltrarNumeroSolicitud').val(),
+            FiltrarNumeroInspeccion: $('#FiltrarNumeroInspeccion').val(), FiltrarCodigoCorrelativo: correlativo
+        }, function (r) {
+            //console.log(r.success);
+            if (r.success !== false) {
+                $('#cuerpoInforme').html(r);
+                RecuperarCodigoUnidades(); RecuperarSolicitud();
+                if ($('#FiltrarCodigoTipoInforme').val() == 'CONV') {
+                    //RecuperarUbicacion();
+                    RecuperarInspectores();
+                    RecuperarInspeccionesEstado();
+                }
+                if ($('#FiltrarCodigoTipoInforme').val() == 'CAPI') {
+                    RecuperarUbicacion();
+                    //RecuperarDiasProg();
+                    RecuperarInspeccionesEstado();
+                }
+                if ($('#FiltrarCodigoTipoInforme').val() == 'CITA') {
+                    RecuperarUbicacion();
+                    RecuperarInspectores()
+                    RecuperarInspeccionesEstado();
+                }
+                //$('#FiltrarCodigoPeriodo').val(itm.FiltrarCodigoPeriodo);   $('#CodigoOficina').val(itm.CodigoOficina);
+                $('#GrabarGeneral').removeAttr('disabled'); $('#GenFicha').removeAttr('disabled'); $('#tabInforme').show();
+
+            } else {
+                $('#tabInforme').hide();
+                $('#cuerpoInforme').hide();
+            }
+        });
+    }
+    $(document).on('change', '.select-table', function () {
+        CambiarDatosCatastrales();
+    });
+    $(document).on('change', '#TipoPersonas', function () {
+        //$('#TipoPersonas').change(function () {
+        if ( $('#FiltrarCodigoTipoInforme').val() === 'CAPI') { $('#Subtitulo1').val(''); }
+        else { $('#Parrafo1').val('');  }
+        if ($('#TipoPersonas').val() == '010003') {
+            var Titulares = '';
+            $('.CamposCatastrales').find('tr').each(function (index) {
+                var ind = (index + 1);
+                Titulares = Titulares + '\n' + $('#Titular' + ind).val();
+            });
+            if ($('#FiltrarCodigoTipoInforme').val() === 'CAPI') {
+                $('#Subtitulo1').val(Titulares.substring(1));
+            } else {
+                $('#Parrafo1').val(Titulares.substring(1));
+            }
+
+        } else {
+            $.post("@Url.Content("~/Informes/BuscarSolicitudPersona")", { model: RetornarBusqueda() },
+            function (r) {
+
+                if ($('#TipoPersonas').val() === '010001') {
+                    if (r.Solicitud.NombreSolicitante) {
+                        if ($('#FiltrarCodigoTipoInforme').val() === 'CAPI') {
+                            $('#Subtitulo1').val(r.Solicitud.NombreSolicitante);
+                        } else {
+                            $('#Parrafo1').val(r.Solicitud.NombreSolicitante);
+                        }
+                    }
+                } else {
+                    if (r.Solicitud.NombreRepresentante) {
+                        if ($('#FiltrarCodigoTipoInforme').val() === 'CAPI') {
+                            $('#Subtitulo1').val(r.Solicitud.NombreRepresentante);
+                        } else {
+                            $('#Parrafo1').val(r.Solicitud.NombreRepresentante);
+                        }
+                    }
+                }
+            });
+        }
+    });
+
+    function CrearCamposInspecciones(index, numeroinspec, fechainspec, horainspec,estadoinspec,codigo) {
+        $('.CamposInspeccion').append(
+            '<tr id="filaCamposInsp' + index + '">' +
+                '<td>' +
+                    '<input type="text" disabled id="NumeroInspeccion' + index + '" class="form-control text-center input-table" value="' + numeroinspec + '">' +
+                '</td>' +
+                '<td>' +
+                    '<input type="text" disabled id="FechaInspeccion' + index + '" class="form-control text-center input-table" value="' + fechainspec + '">' +
+                '</td>' +
+                '<td>' +
+                    '<input type="text" disabled id="HoraInspeccion' + index + '" class="form-control text-center input-table" value="' + horainspec + '">' +
+                '</td>' +
+                '<td>' +
+                    '<input type="text" disabled id="EstadoInspeccion' + index + '" class="form-control text-center input-table" value="' + estadoinspec + '">' +
+                '</td>' +
+                '<td>' +
+                    '<input type="text" disabled id="CodigoCatastral' + index + '" class="form-control text-center input-table" value="' + codigo + '">' +
+                '</td>' +
+            '</tr>'
+        );
+        if ($('#FiltrarCodigoTipoInforme').val() == 'CAPI') {
+            var sep = ' / '
+            if (index === 1) { sep = ''}
+            $('#Parrafo4').val($('#Parrafo4').val() + sep + fechainspec+ " " + horainspec);
+        }
+    }
+
+    function CrearCamposCatastrales(index, codigo,  titular) {
+        $('.CamposCatastrales').append(
+            '<tr id="filaCampos' + index + '">' +
+                '<td>' +
+                    '<input type="text" disabled id="CodigoCatastral' + index + '" class="form-control text-center input-table" value="' + codigo + '">' +
+                '</td>' +
+                '<td>' +
+                    '<select id="Ubicacion' + index + '" class="form-control select-table" >' +
+                        '<option value=""> - Seleccione la ubicación - </option>' +
+                    '</select>' +
+                '</td>' +
+                '<td>' +
+                    '<input type="text" disabled id="Titular' + index + '" class="form-control input-table" value="' + titular + '">' +
+                '</td>' +
+            '</tr>'
+        );
+        var ubicacion = '';
+        if (codigosTemp) {
+            codigosTemp.forEach(function (valor, indice) {
+
+                if (valor === codigo) { ubicacion = ubicacionTemp[indice];  }
+            });
+        }
+        RecuperarUbicacionSel(codigo, index, ubicacion)
+    }
+    function RecuperarUbicacionSel(codigo, index, ubicacion) {
+        //   var URLObservacion = "/Informes/BuscarUbicacion";
+        var URLObservacion = "@Url.Content("~/Informes/BuscarUbicacion")";
+        $.post(URLObservacion, {
+            FiltrarCodigoTipoInforme: $('#FiltrarCodigoTipoInforme').val(), FiltrarCodigoTipoSolicitud: $('#FiltrarCodigoTipoSolicitud').val(),
+            FiltrarCodigoTipoDocumentoReg: $('#FiltrarCodigoTipoDocumentoReg').val(), FiltrarNumeroSolicitud: $('#FiltrarNumeroSolicitud').val(),
+            CodigoSector: codigo.substring(3, 5), CodigoManzana: codigo.substring(6, 9), CodigoLote: codigo.substring(10, 13),
+            CodigoEdificacion: codigo.substring(14, 16), CodigoEntrada: codigo.substring(17, 19), CodigoPiso: codigo.substring(20, 22), CodigoUnidad: codigo.substring(23, 26),
+
+        },
+        function (r) {
+            $('#Ubicacion' + index).children('option:not(:first)').remove();
+            $.each(r.SolicitudUnidad, function (ind, item) {
+
+                $('#Ubicacion' + index).append($('<option>').text(item.Ubicacion).attr('value', item.Ubicacion));
+            });
+            if (ubicacion) {
+
+                $('#Ubicacion' + index).val(ubicacion)
+                CambiarDatosCatastrales(index);
+            }
+
+        });
+    }
+    function CambiarDatosCatastrales(init) {
+
+        $('#CodigoCatastral').val(''); //$('#CodigoUnico').val('');
+        $('#UbicacionPredio').val(''); $('#TitularCatastral').val('');
+        var codcat = '', coduni = '', ubicac = '', titula = '';
+        if (init) {
+        }
+        $('.CamposCatastrales').find('tr').each(function (index) {
+            var ind = (index + 1);
+            //codcat = codcat + '|' + $('#CodigoCatastral' + ind).val();
+            ubicac = ubicac + '|' + $('#Ubicacion' + ind).val();
+            //titula = titula + '|' + $('#Titular' + ind).val();
+        });
+        //$('#CodigoCatastral').val(codcat.substring(1));
+        if ($('#FiltrarCodigoTipoInforme').val() === 'CAPI') {
+            $('#Subtitulo2').val(ubicac.substring(1));
+        }
+        if ($('#FiltrarCodigoTipoInforme').val() === 'CITA') {
+            $('#Parrafo2').val(ubicac.substring(1));
+        }
+        if ($('#FiltrarCodigoTipoInforme').val() == 'CONV') {
+            $('#Parrafo3').val(ubicac.substring(1));
+        }
+
+        //$('#TitularCatastral').val(titula.substring(1));
+    }
+
+
+    function LimpiarForm() {
+        $('#tabInforme input').val('').removeAttr('disabled'); $('#tabInforme textarea').val('');
+        $('#legInforme').val();
+        $('#GrabarGeneral').attr('disabled', 'disabled'); $('#GenFicha').attr('disabled', 'disabled');
+        $('#NombreAnio').val('"Año del Diálogo y Reconciliación Nacional"'); $('#CodigoOficina').val('@System.Configuration.ConfigurationManager.AppSettings["CODAREA"]');$('#FiltrarCodigoPeriodo').val((new Date()).getFullYear());
+    }
+    function GenerarCarta() {
+        //urlFICHA = "/Reportes/Reports.aspx?codigoCarta=" + $('#FiltrarCodigoCarta').val() + '&codigoTipoInforme=' + $('#FiltrarCodigoTipoInforme').val() + '&CodigoReporte=' + $('#FiltrarCodigoTipoInforme').val() + '&codigoAnio=' + (new Date()).getFullYear() + '&CodigoCorrCarta=' + $('#FiltrarCodigoCorrelativo').val();
+        urlFICHA = "@Url.Content("~/Reportes/Reports.aspx?codigoCarta=")" + $('#FiltrarCodigoCarta').val() + '&codigoTipoInforme=' + $('#FiltrarCodigoTipoInforme').val() + '&CodigoReporte=' + $('#FiltrarCodigoTipoInforme').val() + '&codigoAnio=' + (new Date()).getFullYear() + '&CodigoCorrCarta=' + $('#FiltrarCodigoCorrelativo').val();
+
+        window.open(urlFICHA);
+    }
+    function GrabarCartas() {
+        var contVal = 0;
+        $('.CamposCatastrales').find('tr').each(function (index) {
+            var ind = (index + 1);
+            if (!$('#Ubicacion' + ind).val()) {
+                contVal++;
+            }
+        });
+        if (contVal > 0) {
+            toastr.warning("No se han selecionado todas las ubicaciones", "Mensaje del Sistema", { "progressBar": true });
+            return;
+        }
+        //$.post("/Cartas/Grabar", {
+        $.post("@Url.Content("~/Cartas/Grabar")", {
+            FiltrarCodigoTipoInforme: $('#FiltrarCodigoTipoInforme').val(), FiltrarCodigoTipoSolicitud: $('#FiltrarCodigoTipoSolicitud').val(),
+            FiltrarCodigoTipoDocumentoReg: $('#FiltrarCodigoTipoDocumentoReg').val(), FiltrarNumeroSolicitud: $('#FiltrarNumeroSolicitud').val(),
+            FiltrarCodigoCorrelativo: $('#FiltrarCodigoCorrelativo').val(), FiltrarCodigoCarta: $('#FiltrarCodigoCarta').val(), CodigoOficina: $('#CodigoOficina').val(),
+            Subtitulo1: $('#Subtitulo1').val(), Subtitulo2: $('#Subtitulo2').val(), Subtitulo3: $('#Subtitulo3').val(), Subtitulo4: $('#Subtitulo4').val(),
+            Subtitulo5: $('#Subtitulo5').val(), Subtitulo6: $('#Subtitulo6').val(), Subtitulo7: $('#Subtitulo7').val(),
+            Parrafo1: $('#Parrafo1').val(), Parrafo2: $('#Parrafo2').val(), Parrafo3: $('#Parrafo3').val(), Parrafo4: $('#Parrafo4').val(), Parrafo5: $('#Parrafo5').val(),
+            Parrafo6: $('#Parrafo6').val(), Parrafo7: $('#Parrafo7').val(), Parrafo8: $('#Parrafo8').val(), Parrafo9: $('#Parrafo9').val(), Parrafo10: $('#Parrafo10').val(),
+            Firma1: $('#Firma1').val(), Firma2: $('#Firma2').val(), Firma3: $('#Firma3').val(), Firma4: $('#Firma4').val(), Firma5: $('#Firma5').val(),
+            NombreAnio: $('#NombreAnio').val(), PiePagina: $('#PiePagina').val(), TipoPersonas: $('#TipoPersonas').val(), CodigoUnico: $('#CodigoUnico').val(),
+        }, function (response) {
+            toastr.success("Carta Actualizada Correctamente", "Mensaje del Sistema", { "progressBar": true });
+            tablaCarta.ajax.reload();
+            if (response.success == true) { 
+                var nombreFile = response.ruta;
+                console.log('Carga', response)
+                var urlFICHA = "@Url.Content("~/Reportes/Reports.aspx?codigoCarta=")" + $('#FiltrarCodigoCarta').val() + '&codigoTipoInforme=' + $('#FiltrarCodigoTipoInforme').val() + '&CodigoReporte=' + $('#FiltrarCodigoTipoInforme').val() + '&codigoAnio=' + (new Date()).getFullYear() + '&CodigoCorrCarta=' + $('#FiltrarCodigoCorrelativo').val() + '&rutaFile=' + nombreFile;
+                $.get(urlFICHA);
+            }
+            $('#cuerpoInforme').html('').hide();
+            $('#GenFicha').removeAttr('disabled')
+        });
+
+    }
+    function RecuperarSolicitud() {
+        //var URLObservacion = "/Cartas/BuscarSolicitud";
+        var URLObservacion = "@Url.Content("~/Cartas/BuscarSolicitud")";
+        $.post(URLObservacion, {
+            FiltrarCodigoTipoInforme: $('#FiltrarCodigoTipoInforme').val(), FiltrarCodigoTipoSolicitud: $('#FiltrarCodigoTipoSolicitud').val(),
+            FiltrarCodigoTipoDocumentoReg: $('#FiltrarCodigoTipoDocumentoReg').val(), FiltrarNumeroSolicitud: $('#FiltrarNumeroSolicitud').val(),
+            FiltrarNumeroInspeccion: $('#FiltrarNumeroInspeccion').val()
+        },
+            function (r) {
+                $.each(r.SolicitudUnidad, function (index, item) {
+                    //console.log('TEST',item);
+                    if ($('#FiltrarCodigoTipoInforme').val() == 'CITA') {
+                        $('#Subtitulo1').val($('#FiltrarNumeroSolicitud').val()).attr('disabled', 'disabled');
+                        $('#Subtitulo2').val(item.CalidadVerificacion).removeAttr('disabled');
+                        $('#Subtitulo4').val(item.FechaInspeccion).attr('disabled', 'disabled');
+                        $('#Parrafo3').val(item.FechaCitacion);
+
+                        //$('#Parrafo1').val(item.Solicitante).attr('disabled', 'disabled');
+                    } else if ($('#FiltrarCodigoTipoInforme').val() == 'CONV') {
+                        $('#Subtitulo1').val($('#FiltrarNumeroSolicitud').val()).attr('disabled', 'disabled');
+                        if (!$('#Parrafo1').val()) $('#Parrafo1').val(item.Solicitante).attr('disabled', 'disabled');
+                        $('#Parrafo2').val(item.HoraInspeccion).attr('disabled', 'disabled');
+                        $('#Subtitulo3').val(item.CalidadVerificacion);
+                        $('#FechaInspeccionTemp').val(item.FechaInspeccion);
+                        var fecha_actual = new Date(); fecha_actual.setDate(fecha_actual.getDate() + 1);
+                        var fecha_inspec = new Date(item.FechaInspeccion.substring(6), item.FechaInspeccion.substring(3, 5)-1, item.FechaInspeccion.substring(0, 2));
+                        var fecha_resul = (fecha_actual.getTime() > fecha_inspec.getTime()) ? fecha_actual : fecha_inspec;
+                        $("#Parrafo4").datepicker({ format: "dd/mm/yyyy", language: "es", calendarWeeks: true, startDate: fecha_resul });
+                        $("#Firma4").val(item.FechaInspeccion);
+                        if ($('#FiltrarCodigoTipoSolicitud').val() == '010003') {
+                            $('#Parrafo1').removeAttr('disabled');
+                        }
+
+                    } else if ($('#FiltrarCodigoTipoInforme').val() == 'CAPI') {
+                        if( !$('#Subtitulo1').val() ) $('#Subtitulo1').val(item.Solicitante).attr('disabled', 'disabled');
+                        //Corregir El Nombre
+                        if (!$('#Subtitulo1').val()) {
+                            $('#Subtitulo1').val('Catastro');
+                        }
+                        //$('#Subtitulo4').val('SAN ISIDRO').attr('disabled', 'disabled');
+                        $('#Parrafo2').val($('#FiltrarNumeroSolicitud').val()).attr('disabled', 'disabled');
+                    }
+                });
+            });
+    }
+    function RecuperarInspeccionesEstado() {
+        //  var URLObservacion = "/Cartas/BuscarInspecciones"; var inpecciones = '';
+        var URLObservacion = "@Url.Content("~/Cartas/BuscarInspecciones")"; var inpecciones = '';
+        $('.CamposInspeccion').children('tr').remove();
+        if ($('#FiltrarCodigoTipoInforme').val() == 'CAPI') {
+            $('#Parrafo4').val('');
+        }
+        $.post(URLObservacion, { model: RetornarBusqueda() },
+        function (r) {
+            $.each(r.SolicitudUnidad, function (index, item) {
+
+                if ($('#FiltrarCodigoTipoInforme').val() !== 'CONV') {
+                    inpecciones = inpecciones + '\n' + item.Inspecciones;
+                    CrearCamposInspecciones((index + 1), item.FiltrarNumeroInspeccion, item.FechaInspeccion, item.HoraInspeccion, item.EstadoInspeccion, item.CodigoCatastral);
+                } else if (item.FiltrarNumeroInspeccion == $('#FiltrarNumeroInspeccion').val()) {
+                    inpecciones = inpecciones + '\n' + item.Inspecciones;
+                    CrearCamposInspecciones((index + 1), item.FiltrarNumeroInspeccion, item.FechaInspeccion, item.HoraInspeccion, item.EstadoInspeccion, item.CodigoCatastral);
+                }
+            });
+            $('#Inspecciones1').val(inpecciones.substring(1)).attr('disabled', 'disabled');
+        });
+    }
+    function RecuperarCodigoUnidades() {
+        // var URLObservacion = "/Cartas/BuscarUnidades"; var codigoCatastral = '', codigoCatastralLinea = '';
+        var URLObservacion = "@Url.Content("~/Cartas/BuscarUnidades")"; var codigoCatastral = '', codigoCatastralLinea = '', codigoUni = '';
+        $('.CamposCatastrales').children('tr').remove()
+        $.post(URLObservacion, { model: RetornarBusqueda() },
+        function (r) {
+            //console.log('Buscar', r);
+            if ($('#FiltrarCodigoTipoInforme').val() == 'CITA') {
+                $('#Parrafo1').children('option:not(:first)').remove();
+            }
+            $.each(r.SolicitudUnidad, function (index, item) {
+                codigoCatastral = codigoCatastral + '|' + item.CodigoDistrito + '-' + item.CodigoSector + '-' + item.CodigoManzana + '-' + item.CodigoLote + '-' + item.Ed + '-' + item.Entrada + '-' + item.Piso + '-' + item.Unidad;
+                codigoCatastralLinea = item.CodigoDistrito + '-' + item.CodigoSector + '-' + item.CodigoManzana + '-' + item.CodigoLote + '-' + item.Ed + '-' + item.Entrada + '-' + item.Piso + '-' + item.Unidad;
+                console.log('A.', item.CodigoUni)
+                codigoUni = codigoUni + '|' + item.CodigoUni;
+
+                CrearCamposCatastrales((index + 1), codigoCatastralLinea, item.Titular);
+                if (titularesTemp) {
+                    if ($('#FiltrarCodigoTipoInforme').val() == 'CITA') {
+                        $('#Parrafo1').append($('<option selected>').text(item.Titular).attr('value', item.Titular));
+                    }
+                } else {
+                    if ($('#FiltrarCodigoTipoInforme').val() == 'CITA') {
+                        $('#Parrafo1').append($('<option>').text(item.Titular).attr('value', item.Titular));
+                    }
+                }
+                //$('#Parrafo3').append($('<option>').text(item.Ubicacion).attr('value', item.Ubicacion));
+            });
+
+            $('#CodigoUnico').val(codigoUni.substring(1));
+            console.log(codigoUni.substring(1),$('#CodigoUnico').val())
+            if ($('#FiltrarCodigoTipoInforme').val() == 'CITA') {
+                $('#Subtitulo3').val(codigoCatastral.substring(1)).attr('disabled', 'disabled');
+            } else if ($('#FiltrarCodigoTipoInforme').val() == 'CONV') {
+                $('#Subtitulo2').val(codigoCatastral.substring(1)).attr('disabled', 'disabled');
+                //$('#Parrafo3').val(direccion.substring(1)).attr('disabled', 'disabled');
+            } else {
+                $('#Subtitulo5').val(codigoCatastral.substring(1)).attr('disabled', 'disabled');
+            }
+        });
+
+    }
+    function RecuperarInspectores() {
+        // var URLObservacion = "/Cartas/BuscarInspectores";
+        var URLObservacion = "@Url.Content("~/Cartas/BuscarInspectores")";
+        var CodTipInf = $('#FiltrarCodigoTipoInforme').val();
+        $.post(URLObservacion, {
+            FiltrarCodigoTipoInforme: CodTipInf, FiltrarCodigoTipoSolicitud: $('#FiltrarCodigoTipoSolicitud').val(), FiltrarNumeroSolicitud: $('#FiltrarNumeroSolicitud').val(),
+            FiltrarCodigoTipoDocumentoReg: $('#FiltrarCodigoTipoDocumentoReg').val(), FiltrarNumeroInspeccion: $('#FiltrarNumeroInspeccion').val()
+        },
+        function (r) {
+            if (CodTipInf == 'CONV') { $('#Firma3').children('option:not(:first)').remove(); }
+            else if (CodTipInf == 'CITA') { $('#Firma1').children('option:not(:first)').remove(); }
+            $.each(r.SolicitudUnidad, function (index, item) {
+                if (item.EstadoResul === "1") {
+                    if (CodTipInf == 'CONV') { $('#Firma3').append($('<option selected>').text(item.Inspectores).attr('value', item.Inspectores)); }
+                    else if (CodTipInf == 'CITA') {
+                        $('#Firma1').append($('<option selected>').text(item.Inspectores).attr('value', item.CodigoInspectores + "|" + item.Inspectores));
+                        console.log($('#Firma2').val())
+
+                        var URLInspectores = "@Url.Content("~/Cartas/BuscarTelefono")";
+                        var codUsua = $('#Firma1').val(); var cont = codUsua.indexOf("|");
+                        $.post(URLInspectores, { id: codUsua.substring(0, cont) }, function (r) {
+                            $('#Firma2').val(r.Datos); $('#divFirma2').hide();
+                        });
+
+                    }
+                } else {
+                    if (CodTipInf == 'CONV') { $('#Firma3').append($('<option>').text(item.Inspectores).attr('value', item.Inspectores)); }
+                    else if (CodTipInf == 'CITA') {
+                        $('#Firma1').append($('<option>').text(item.Inspectores).attr('value', item.CodigoInspectores + "|" + item.Inspectores));
+
+                        var URLInspectores = "@Url.Content("~/Cartas/BuscarTelefono")";
+                        var codUsua = $('#Firma1').val(); var cont = codUsua.indexOf("|");
+                        $.post(URLInspectores, { id: codUsua.substring(0, cont) }, function (r) {
+                            $('#Firma2').val(r.Datos);
+                        });
+
+                    }
+                }
+            });
+        });
+    }
+    function RecuperarDiasProg() {
+        //  var URLObservacion = "/Cartas/BuscarDiasProg";
+        var URLObservacion = "@Url.Content("~/Cartas/   ")";
+        $.post(URLObservacion, { model: RetornarBusqueda() },
+        function (r) {
+            $('#Parrafo4').children('option:not(:first)').remove();
+            $.each(r.SolicitudUnidad, function (index, item) {
+                if (ubicacionTemp) {
+                    $('#Parrafo4').append($('<option selected>').text(item.Value).attr('value', item.Text));
+                } else {
+                    $('#Parrafo4').append($('<option>').text(item.Value).attr('value', item.Text));
+                }
+            });
+
+            if (diasprog) {
+                $('#Parrafo4').val(diasprog);
+            }
+        });
+    }
+
+    function RecuperarUbicacion() {
+        //var URLObservacion = "/Cartas/BuscarUbicacion";
+        var URLObservacion = "@Url.Content("~/Cartas/BuscarUbicacion")";
+        $.post(URLObservacion, { model: RetornarBusqueda() },
+        function (r) {
+            if ($('#FiltrarCodigoTipoInforme').val() == 'CONV') {
+                $('#Parrafo3').children('option:not(:first)').remove();
+            } else if ($('#FiltrarCodigoTipoInforme').val() == 'CITA') {
+                $('#Parrafo2').children('option:not(:first)').remove();
+            } else if ($('#FiltrarCodigoTipoInforme').val() == 'CAPI') {
+                $('#Subtitulo2').children('option:not(:first)').remove();
+            }
+            $.each(r.SolicitudUnidad, function (index, item) {
+                if (ubicacionTemp) {
+                    if ($('#FiltrarCodigoTipoInforme').val() == 'CONV') {
+                        $('#Parrafo3').append($('<option selected>').text(item.Ubicacion).attr('value', item.Ubicacion));
+                    } else if ($('#FiltrarCodigoTipoInforme').val() == 'CITA') {
+                        $('#Parrafo2').append($('<option selected>').text(item.Ubicacion).attr('value', item.Ubicacion));
+                    } else if ($('#FiltrarCodigoTipoInforme').val() == 'CAPI') {
+                        $('#Subtitulo2').append($('<option selected>').text(item.Ubicacion).attr('value', item.Ubicacion));
+                    }
+
+                } else {
+                    if ($('#FiltrarCodigoTipoInforme').val() == 'CONV') {
+                        $('#Parrafo3').append($('<option>').text(item.Ubicacion).attr('value', item.Ubicacion));
+                    } else if ($('#FiltrarCodigoTipoInforme').val() == 'CITA') {
+                        $('#Parrafo2').append($('<option>').text(item.Ubicacion).attr('value', item.Ubicacion));
+                    } else if ($('#FiltrarCodigoTipoInforme').val() == 'CAPI') {
+                        $('#Subtitulo2').append($('<option>').text(item.Ubicacion).attr('value', item.Ubicacion));
+                    }
+
+                }
+
+            });
+        });
+    }
+    function RetornarBusqueda() {
+        return {
+            FiltrarCodigoTipoInforme: $('#FiltrarCodigoTipoInforme').val(), FiltrarCodigoTipoSolicitud: $('#FiltrarCodigoTipoSolicitud').val(),
+            FiltrarCodigoTipoDocumentoReg: $('#FiltrarCodigoTipoDocumentoReg').val(), FiltrarNumeroSolicitud: $('#FiltrarNumeroSolicitud').val()
+        }
+    }
+
+</script>
+}

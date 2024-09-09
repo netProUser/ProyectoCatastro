@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="ACTIVIDECONO" targetNamespace="http://tempuri.org/ACTIVIDECONO.xsd" xmlns:mstns="http://tempuri.org/ACTIVIDECONO.xsd" xmlns="http://tempuri.org/ACTIVIDECONO.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="ACTIVIDECONO" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="ACTIVIDECONO" msprop:Generator_UserDSName="ACTIVIDECONO">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ACTECONOMICA" msprop:Generator_TableClassName="ACTECONOMICADataTable" msprop:Generator_TableVarName="tableACTECONOMICA" msprop:Generator_TablePropName="ACTECONOMICA" msprop:Generator_RowDeletingName="ACTECONOMICARowDeleting" msprop:Generator_RowChangingName="ACTECONOMICARowChanging" msprop:Generator_RowEvHandlerName="ACTECONOMICARowChangeEventHandler" msprop:Generator_RowDeletedName="ACTECONOMICARowDeleted" msprop:Generator_UserTableName="ACTECONOMICA" msprop:Generator_RowChangedName="ACTECONOMICARowChanged" msprop:Generator_RowEvArgName="ACTECONOMICARowChangeEvent" msprop:Generator_RowClassName="ACTECONOMICARow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ITEM" msprop:Generator_ColumnVarNameInTable="columnITEM" msprop:Generator_ColumnPropNameInRow="ITEM" msprop:Generator_ColumnPropNameInTable="ITEMColumn" msprop:Generator_UserColumnName="ITEM" type="xs:string" minOccurs="0" />
+              <xs:element name="CODUSOESPE" msprop:Generator_ColumnVarNameInTable="columnCODUSOESPE" msprop:Generator_ColumnPropNameInRow="CODUSOESPE" msprop:Generator_ColumnPropNameInTable="CODUSOESPEColumn" msprop:Generator_UserColumnName="CODUSOESPE" type="xs:string" minOccurs="0" />
+              <xs:element name="TXTUSOESPE" msprop:Generator_ColumnVarNameInTable="columnTXTUSOESPE" msprop:Generator_ColumnPropNameInRow="TXTUSOESPE" msprop:Generator_ColumnPropNameInTable="TXTUSOESPEColumn" msprop:Generator_UserColumnName="TXTUSOESPE" type="xs:string" minOccurs="0" />
+              <xs:element name="NUMMETROS" msprop:Generator_ColumnVarNameInTable="columnNUMMETROS" msprop:Generator_ColumnPropNameInRow="NUMMETROS" msprop:Generator_ColumnPropNameInTable="NUMMETROSColumn" msprop:Generator_UserColumnName="NUMMETROS" type="xs:string" minOccurs="0" />
+              <xs:element name="FECACTI" msprop:Generator_ColumnVarNameInTable="columnFECACTI" msprop:Generator_ColumnPropNameInRow="FECACTI" msprop:Generator_ColumnPropNameInTable="FECACTIColumn" msprop:Generator_UserColumnName="FECACTI" type="xs:string" minOccurs="0" />
+              <xs:element name="USORET" msprop:Generator_ColumnVarNameInTable="columnUSORET" msprop:Generator_ColumnPropNameInRow="USORET" msprop:Generator_ColumnPropNameInTable="USORETColumn" msprop:Generator_UserColumnName="USORET" type="xs:string" minOccurs="0" />
+              <xs:element name="USOANUN" msprop:Generator_ColumnVarNameInTable="columnUSOANUN" msprop:Generator_ColumnPropNameInRow="USOANUN" msprop:Generator_ColumnPropNameInTable="USOANUNColumn" msprop:Generator_UserColumnName="USOANUN" type="xs:string" minOccurs="0" />
+              <xs:element name="CODANUNCIO" msprop:Generator_ColumnVarNameInTable="columnCODANUNCIO" msprop:Generator_ColumnPropNameInRow="CODANUNCIO" msprop:Generator_ColumnPropNameInTable="CODANUNCIOColumn" msprop:Generator_UserColumnName="CODANUNCIO" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

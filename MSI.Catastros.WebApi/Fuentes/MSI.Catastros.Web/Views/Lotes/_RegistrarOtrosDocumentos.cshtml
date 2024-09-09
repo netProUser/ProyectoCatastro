@@ -1,0 +1,125 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Lotes.LoteOtrosDocumentosViewModel
+
+<div id="RegistrarOtrosDocumentosContainer">
+    @Html.AntiForgeryToken()
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-hidden="true">
+                    &times;
+                </button>
+                <h4 id="tituloModalOtroDocumentos">Registrar Otros Documentos</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row fonts12">
+                    <div class="col-md-12">
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <label>Nro</label>
+                                @Html.TextBoxFor(model => model.NroItem, new { @class = "form-control ", disabled = true })
+                            </div>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="form-group">
+                                <label>Tipo Documento</label>
+                                @Html.DropDownListFor(m => m.TipoDocumento, Model.ListTipoDocumento, "- Seleccione -", new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>Nro Documento</label>
+                                @Html.TextBoxFor(model => model.NroDocumento, new { @class = "form-control " })
+                            </div>
+                        </div>                
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>Fecha</label>
+                                @Html.TextBoxFor(model => model.FechaDocumento, new { @class = "form-control " , maxlength = "10" })
+                            </div>
+                        </div>
+                        <div class="col-sm-1" hidden="hidden">
+                            <div class="form-group">
+                                <label>Nro</label>
+                                @Html.TextBoxFor(model => model.Correlativo, new { @class = "form-control ", disabled = true })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Observacion</label>
+                                @Html.TextBoxFor(model => model.Observacion, new { @class = "form-control " })
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button id="btnGuardarOtrosDocumentos" type="button" class="btn btn-green">Grabar</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="@Url.Content("~/Scripts/dcalendar.picker.js")"></script>
+<script src="@Url.Content("~/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js")"></script>
+
+
+<script type="text/javascript">
+    pickmeup('#FechaDocumento', {
+        format: 'd/m/Y'
+    });
+
+   
+
+
+    $("#btnGuardarOtrosDocumentos").on("click", function (event) {
+        var cont = 0;
+
+        $('#msgErroresDet').html("");
+        if (!$('#TipoDocumento').val()) { $('#msgErroresDet').append("<li>Debe de ingresar un Tipo de Documento</li>"); cont++; }
+        if (!$('#NroDocumento').val()) { $('#msgErroresDet').append("<li>Debe de ingresar el N° Documento</li>"); cont++; }
+        if (!$('#FechaDocumento').val()) { $('#msgErroresDet').append("<li>Debe de ingresar la Fecha del Documento</li>"); cont++; }
+
+        if (cont === 0) {
+            $('#msgErroresDet').html("");
+      
+            var model = {
+                "TipoDocumento":   $('#TipoDocumento').val(),
+                "NroDocumento":    $('#NroDocumento').val(),
+                "FechaDocumento":  $('#FechaDocumento').val(),
+                "Observacion":     $('#Observacion').val(),
+                "Correlativo":     $('#Correlativo').val(),
+                Estatico: Estatico,
+                CodigoDistrito:    $('#CodDist').val(),
+                CodigoLote:        $('#CodLote').val(),
+                CodigoManzana:     $('#CodManz').val(),
+                CodigoSector:      $('#CodSect').val(),
+            };
+            $.post("@Url.Content("~/Lotes/GrabarLoteOtrosDocumentos")", {
+                model: model
+            }, function (response) {
+                console.log(response);
+                if (response.success === false) {
+                    toastr.warning(response.responseText, "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+                } else {
+                    $('#Correlativo').val(response.codigo);
+                    toastr.success("Registro grabado correctamente", "Mensaje del Sistema", { "progressBar": true });
+                    tablaOtrosDocumentos.ajax.reload();
+                    $('#modalRegistrarOtrosDocumentos').modal('hide');
+                }
+
+            });
+
+        }
+    });
+
+</script>
+

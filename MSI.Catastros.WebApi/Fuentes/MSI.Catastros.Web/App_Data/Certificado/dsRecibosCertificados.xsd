@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsRecibosCertificados" targetNamespace="http://tempuri.org/dsRecibosCertificados.xsd" xmlns:mstns="http://tempuri.org/dsRecibosCertificados.xsd" xmlns="http://tempuri.org/dsRecibosCertificados.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsRecibosCertificados" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsRecibosCertificados" msprop:Generator_UserDSName="dsRecibosCertificados">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dtRecibosCertificados" msprop:Generator_TableClassName="dtRecibosCertificadosDataTable" msprop:Generator_TableVarName="tabledtRecibosCertificados" msprop:Generator_TablePropName="dtRecibosCertificados" msprop:Generator_RowDeletingName="dtRecibosCertificadosRowDeleting" msprop:Generator_RowChangingName="dtRecibosCertificadosRowChanging" msprop:Generator_RowEvHandlerName="dtRecibosCertificadosRowChangeEventHandler" msprop:Generator_RowDeletedName="dtRecibosCertificadosRowDeleted" msprop:Generator_UserTableName="dtRecibosCertificados" msprop:Generator_RowChangedName="dtRecibosCertificadosRowChanged" msprop:Generator_RowEvArgName="dtRecibosCertificadosRowChangeEvent" msprop:Generator_RowClassName="dtRecibosCertificadosRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="TXTRECIBO" msprop:Generator_ColumnVarNameInTable="columnTXTRECIBO" msprop:Generator_ColumnPropNameInRow="TXTRECIBO" msprop:Generator_ColumnPropNameInTable="TXTRECIBOColumn" msprop:Generator_UserColumnName="TXTRECIBO" type="xs:string" minOccurs="0" />
+              <xs:element name="FECRECIBO" msprop:Generator_ColumnVarNameInTable="columnFECRECIBO" msprop:Generator_ColumnPropNameInRow="FECRECIBO" msprop:Generator_ColumnPropNameInTable="FECRECIBOColumn" msprop:Generator_UserColumnName="FECRECIBO" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

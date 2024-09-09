@@ -1,0 +1,456 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.RecepcionDocumentos.FiltrarRecepcionDocumentosViewModel
+
+@{
+    ViewBag.Title = "Gestión del Documento";
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="overflow: hidden">
+                <div class="row">
+                    <div class="col-xl-11 col-lg-10 col-xs-8 pt-2">
+                        <label class="control-label">Bandeja de Documento</label>
+                    </div>
+                    <div class="col-xl-1 col-lg-2 col-xs-4">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input id="btnBuscar" type="button" value="Buscar " class="btn btn-default btn-block" style="margin-top: 5px">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div>
+                    @using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = "SeccionListaRecepcionDocumentos" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+                        <div class="row">
+                            <div class="col-xs-12 col-md-9">
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="control-label">Estado del Documento</label>
+                                            <select id="cboEstadoBusqueda" class="form-control">
+                                                <option value="">- Selecciona Estado Documento-</option>
+                                                <option value="01">PENDIENTE</option>
+                                                <option value="02">ENTRADA</option>
+                                                <option value="03">SALIENTE</option>
+                                            </select>
+                                            <span class="field-validation-valid" data-valmsg-for="cboEstadoBusqueda" data-valmsg-replace="true"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ListTipoSolicitud, htmlAttributes: new { @class = "control-label" })
+                                            @Html.DropDownListFor(m => m.CodigoTipoSolicitud, Model.ListTipoSolicitud, "- Seleccione el tipo de solicitud -", new { @class = "form-control", autofocus = "true" })
+                                            <span class="field-validation-valid" data-valmsg-for="CodigoTipoSolicitud" data-valmsg-replace="true"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2" id="divTipoDocumento" style="display:none;">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ListTipoDocumento, htmlAttributes: new { @class = "control-label" })
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    @Html.DropDownListFor(m => m.CodigoTipoDocumentoReg, Model.ListTipoDocumento, "- Seleccione el tipo de documento -", new { @class = "chosen-seleccionar form-control" })
+                                                </div>
+                                            </div>
+
+                                            <span class="field-validation-valid" data-valmsg-for="CodigoTipoDocumento" data-valmsg-replace="true"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.NumeroSolicitud, htmlAttributes: new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.NumeroSolicitud, new { @class = "form-control" })
+                                            <span class="field-validation-valid" data-valmsg-for="NumeroSolicitud" data-valmsg-replace="true"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label class="control-label">Fecha Inicio</label>
+                                            <input type="text" autocomplete="off" class="form-control" id="FechaInicio" maxlength="10">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label class="control-label">Fecha Fin</label>
+                                            <input type="text" autocomplete="off" class="form-control" id="FechaFin" maxlength="10">
+                                        </div>
+                                    </div>
+                                    @Html.TextBoxFor(model => model.EstadoInicial, new { type = "hidden" })
+                                    <div class="col-sm-1 text-center">
+                                        <div class="form-group">
+                                            <br />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label">Documento</label>
+                                <table id="tablaDocumentosRecibir" style="width: 100%" class="table responsive display table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th data-priority="1" width="30px">Nro</th>
+                                            <th>Tipo Solicitud</th>
+                                            <th>Tipo Documento</th>
+                                            <th>Nro Solicitud</th>
+                                            <th>Area Solicitante</th>
+                                            <th>Asunto</th>
+                                            <th>Folios</th>
+                                            <th>Puesto Remitente</th>
+                                            <th>Puesto Recepcion</th>
+                                            <th>Usuario Recepcion</th>
+                                            <th width="85px">Fecha Recepción</th>
+                                            <th style="display:none"></th>
+                                            <th style="display:none"></th>
+                                            <th style="display:none"></th>
+                                            <th style="display:none"></th>
+                                            <th style="display:none"></th>
+                                            <th style="display:none"></th>
+                                            <th style="display:none"></th>
+                                            <th style="display:none"></th>
+
+                                            <th style="display:none"></th>
+                                            <th style="display:none"></th>
+                                            <th style="display:none"></th>
+                                            <th style="display:none"></th>
+                                            <th style="display:none"></th>
+                                            <th style="display:none"></th>
+                                            <th style="display:none"></th>
+                                            <th style="display:none"></th>
+                                            <th style="display:none"></th>
+                                            <th style="display:none"></th>
+                                            <th style="display:none"></th>
+                                            <th style="display:none"></th>
+                                            <th style="display:none"></th>
+                                            <th width="85px"></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label">Flujo del Documento</label>
+                                <table id="tablaDocumentosRecibidos" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th width="70px">Nro</th>
+                                            <!--
+                                            <th>Tipo Solicitud</th>
+                                            <th>Nro Solicitud</th>
+                                            <th>Tipo Documento</th>
+                                            <th>Area Solicitante</th>
+                                            <th>Asunto</th>
+                                            -->
+                                            @*<th>Folios</th>*@
+                                            <th>Puesto Remitente</th>
+                                            <th>Usuario Remitente</th>
+                                            <th>Puesto Recepcion</th>
+                                            <th>Usuario Recepcion</th>
+                                            <th width="150px">Fecha Recepción</th>
+
+                                            <th width="35"></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section datatables {
+    <script src="@Url.Content("~/Scripts/dcalendar.picker.js")"></script>
+    <script>
+    var ROOT = '@Url.Content("~")';
+        var EstadoInicialDocumento = "2";
+        var CodigoTipoSolicitudU;
+        var NumeroSolicitudU; 
+        var CodigoTipoDocumentoU; 
+        var CodigoPeriodoSolicitudU; 
+        var PrimeraAsignacion;
+       
+    pickmeup('#FechaInicio', { format: 'd/m/Y', max: new Date() + 1 });
+    $('#FechaInicio').val('');
+
+    pickmeup('#FechaFin', { format: 'd/m/Y', max: new Date() + 1 });
+    $('#FechaFin').val('');
+    $(document).ready(function () {
+        $(".chosen-seleccionar").chosen();
+
+        var table = $("#tablaDocumentosRecibir").DataTable({
+            "ajax": {
+                "url": "@Url.Content("~/GestionDocumentos/CargarGrilla")",
+            "type": "POST", "datatype": "json",
+            "data": function (d) {
+                d.EstadoDocumento = $('#cboEstadoBusqueda').val();
+                d.CodigoTipoSolicitud = $('#CodigoTipoSolicitud').val();
+                d.CodigoTipoDocumentoReg = $('#CodigoTipoDocumentoReg').val();
+                d.NumeroSolicitud = $('#NumeroSolicitud').val();
+                d.FecInicio = $('#FechaInicio').val();
+                d.FecFin = $('#FechaFin').val();
+                }
+             },
+                "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+                "processing": true,
+                "paging": false,
+                "columns": [
+                    { "data": "Indice", "name": "Nro", "className": "text-center" },
+                    { "data": "NombreTipoSolicitud", "name": "TipoSolicitud", "className": "text-center" },
+                    { "data": "NumeroSolicitud", "name": "NroSolicitud", "className": "text-center" },
+                    { "data": "NombreTipoDocumento", "name": "TipoDocumento", "className": "text-center" },
+                    { "data": "NombreAreaSolicitante", "name": "AreaSolicitante", "className": "text-center" },
+                    { "data": "Asunto", "name": "Asunto", "className": "text-center" },
+                    { "data": "Folios", "name": "Folios", "className": "text-center" },
+                    { "data": "PuestoRemitente", "name": "PuestoRemitente", "className": "text-center" },
+                    { "data": "UsuarioEnvia", "name": "UsuarioRecepcion", "className": "text-center" },
+                    { "data": "PuestoRecepcion", "name": "PuestoRecepcion", "className": "text-center" },
+                    { "data": "UsuarioRecepcion", "name": "UsuarioRecepcion", "className": "text-center" },
+                    { "data": "FechaRecepcion", "name": "FechaRecepción", "className": "text-center" },
+                    { "data": "CodigoPeriodoSolicitud", "name": "CodigoPeriodoSolicitud", "className": "hide_column" },
+                    { "data": "CodigoTipoSolicitud", "name": "CodigoTipoSolicitud", "className": "hide_column" },
+                    { "data": "CodigoTipoDocumento", "name": "CodigoTipoDocumento", "className": "hide_column" },
+                    { "data": "CodigoAreaSolicitante", "name": "CodigoAreaSolicitante", "className": "hide_column" },
+                    { "data": "Usuario", "name": "Usuario", "className": "hide_column" },
+                    { "data": "PrimeraRecepcion", "name": "Usuario", "className": "hide_column" },
+                    { "data": "CodigoCorrelativo", "name": "CodigoCorrelativo", "className": "hide_column" },
+                    { "data": "IdRef", "name": "IdRef", "className": "hide_column" },
+
+                    { "data": "CodigoContribuyente", "className": "hide_column" },
+                    { "data": "CodigoRecurrente", "className": "hide_column" },
+                    { "data": "Solicitante", "className": "hide_column" },
+                    { "data": "TipoDocRec", "className": "hide_column" },
+                    { "data": "IdRecurrente", "className": "hide_column" },
+                    { "data": "RepresentanteEl", "className": "hide_column" },
+                    { "data": "CodTipoDocRec", "className": "hide_column" },
+                    { "data": "TipoDocRepl", "className": "hide_column" },
+                    { "data": "CodTipoDocRepl", "className": "hide_column" },
+                    { "data": "IdRepresentante", "className": "hide_column" },
+                    { "data": "CodigoAccion", "className": "hide_column" },
+                    { "data": "CodigoActividad", "className": "hide_column" },
+
+                    {   "responsivePriority": -2,
+                    "render": function (data, type, full, meta) {
+                        var disable = $('#cboEstadoBusqueda').val() != "02" ? "disabled" : "";
+                        var disable2 = $('#cboEstadoBusqueda').val() == "03" ? "disabled" : "";
+                        return '<button data-toggle="tooltip" ' + disable + ' title="Recepcionar" class="btn btn-default  btnRecepcionarDocumentos glyphicon glyphicon-check" type="button" ></button>'+
+                        '<button data-toggle="tooltip" ' + disable2 + ' title="Rechazar Documento" class="btn btn-default  btnRechazarDocumentos glyphicon glyphicon-remove" type="button" ></button>';
+                    }, "className": "text-center", "responsivePriority": -2,
+
+
+                    },
+                ]
+        });
+
+        $("#tablaDocumentosRecibir tbody").on('click', 'button.btnRecepcionarDocumentos', function (event) {
+
+            var cell = $(this);
+            var data = table.row($(this).parents('tr')).data();
+            var enlace = ROOT + 'RecepcionDocumentos/Recepcionar';
+            $.post(enlace,
+                 {
+                     CodigoPeriodoSolicitud: data.CodigoPeriodoSolicitud,
+                     CodigoTipoSolicitud: data.CodigoTipoSolicitud,
+                     NumeroSolicitud: data.NumeroSolicitud,
+                     CodigoTipoDocumento: data.CodigoTipoDocumento,
+                     CodigoAreaSolicitante: data.CodigoAreaSolicitante,
+                     Folios: data.Folios,
+                     NombreAreaSolicitante: data.NombreAreaSolicitante,
+                     Asunto: data.Asunto,
+                     Usuario: data.Usuario,
+                     PrimeraRecepcion: data.PrimeraRecepcion,
+                     CodigoCorrelativo: data.CodigoCorrelativo,
+                     IdRef: data.IdRef,
+                     CodigoContribuyente: data.CodigoContribuyente,
+                     CodigoRecurrente: data.CodigoRecurrente,
+                     Solicitante: data.Solicitante,
+                     TipoDocRec: data.TipoDocRec,
+                     IdRecurrente: data.IdRecurrente,
+                     RepresentanteEl: data.RepresentanteEl,
+                     CodTipoDocRec: data.CodTipoDocRec,
+                     TipoDocRepl: data.TipoDocRepl,
+                     CodTipoDocRepl: data.CodTipoDocRepl,
+                     IdRepresentante: data.IdRepresentante,
+                     CodigoAccion: data.CodigoAccion,
+                     CodigoActividad: data.CodigoActividad
+                 }
+                , function (response) {
+                    toastr.success("Documento recepcionado correctamente", "Mensaje del Sistema", { "progressBar": true });
+                    table.ajax.reload();
+                });
+        });
+        $("#tablaDocumentosRecibir tbody").on('click', 'button.btnRechazarDocumentos', function (event) {
+
+            var cell = $(this);
+            var data = table.row($(this).parents('tr')).data();
+            var enlace = ROOT + 'GestionDocumentos/RechazaraDocumentos';
+            $.post(enlace,
+                 {
+                     CodigoPeriodoSolicitud: data.CodigoPeriodoSolicitud,
+                     CodigoTipoSolicitud: data.CodigoTipoSolicitud,
+                     NumeroSolicitud: data.NumeroSolicitud,
+                     CodigoTipoDocumento: data.CodigoTipoDocumento,
+                     CorrelativoMaximo :data.CorrelativoMaximo,
+                 }
+                , function (response) {
+                    toastr.success("Documento rechazado correctamente", "Mensaje del Sistema", { "progressBar": true });
+                    table.ajax.reload();
+                });
+        });
+
+
+        $("#tablaDocumentosRecibir tbody").on('click', 'tr', function (event) {
+            var row = $(this);
+            var data = table.row(row).data();
+
+  //          console.log(data);
+//            event.preventDefault();
+            $.LoadingOverlay("show");
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+                $.LoadingOverlay("hide");
+            }
+            else {
+                $.LoadingOverlay("hide");
+                EstadoInicialDocumento = "2";
+                
+                if (data.PrimeraRecepcion == "False") {
+                    $.post("@Url.Content("~/GestionDocumentos/RecuperarDatosSolicitud")", {
+                        CodigoPeriodoSolicitud: data.CodigoPeriodoSolicitud,
+                        CodigoTipoSolicitud: data.CodigoTipoSolicitud,
+                        NumeroSolicitud: data.NumeroSolicitud,
+                        CodigoTipoDocumento: data.CodigoTipoDocumento
+                    },
+                   function (response) {
+                       RecuperarSeguimientoSolicitud(response.resultado);
+                   });
+                }
+                else {
+                    EstadoInicialDocumento = "2";
+                    tableRecibidos.ajax.reload();
+                   /// toastr.info("El Documento, esta pendiente de aceptar", "Mensaje del Sistema", { "progressBar": true });
+                }
+            }
+        });
+
+        function RecuperarSeguimientoSolicitud(resultado) {
+            CodigoTipoSolicitudU = (resultado.CodigoTipoSolicitud);
+            NumeroSolicitudU = (resultado.NumeroSolicitud);
+            CodigoTipoDocumentoU = (resultado.CodigoTipoDocumento);
+            CodigoPeriodoSolicitudU = (resultado.CodigoPeriodoSolicitud);
+            PrimeraAsignacion = (resultado.PrimeraRecepcion);
+            if (resultado.PrimeraRecepcion == "") {
+                EstadoInicialDocumento = "2";
+                    }
+            else{
+                EstadoInicialDocumento = "1";
+                }
+            tableRecibidos.ajax.reload();
+        };
+
+
+
+       var tableRecibidos = $("#tablaDocumentosRecibidos").DataTable({
+            "ajax": {
+                "url": "@Url.Content("~/SolicitudSeguimiento/ListarDetalleSeguimiento")", "type": "POST", "datatype": "json",
+            "data": function (d) {
+                d.CodigoTipoSolicitud = CodigoTipoSolicitudU;
+                d.NumeroSolicitud = NumeroSolicitudU;
+                d.CodigoTipoDocumento = CodigoTipoDocumentoU;
+                d.DocumentoPorRecibir = true;
+                d.EstadoInicial = EstadoInicialDocumento;
+                d.PrimeraRecepcion = "";
+                d.CodigoPeriodoSolicitud = CodigoPeriodoSolicitudU;
+            }
+        },
+              "columns": [
+        { "data": "Indice", "name": "Nro", "className": "text-center" },
+        { "data": "PuestoRemitente", "name": "PuestoRemitente", "className": "text-center" },
+        { "data": "UsuarioRemitente", "name": "UsuarioRemitente", "className": "text-center" },
+        { "data": "PuestoRecepcion", "name": "PuestoRecepcion", "className": "text-center" },
+        { "data": "UsuarioRecepcion", "name": "UsuarioRecepcion", "className": "text-center" },
+        { "data": "FechaRecepcion", "name": "FechaRecepción", "className": "text-center" },
+        { "render": function (data, type, full, meta) { return '<span></span>'; }, "className": "text-center" }
+    ]
+
+    });
+
+        $('#btnBuscar').click(function () {
+            $('#EstadoInicial').val("0"); val1 = false; val2 = false;
+            numVal = $('#NumeroSolicitud').val();
+            tipDoc = $('#CodigoTipoDocumentoReg').val();
+            codSol = $('#CodigoTipoSolicitud').val();
+            estadoDoc = $('#cboEstadoBusqueda').val();
+            $('.field-validation-valid').html('').removeClass('has error');
+            table.rows().remove().draw();
+            tableRecibidos.rows().remove().draw();
+            EstadoInicialDocumento = "2";
+            //tableRecibidos.ajax.reload();
+
+            if (!estadoDoc) {
+                $('[data-valmsg-for="cboEstadoBusqueda"]').html('Seleccione el tipo de solicitud').addClass('field-validation-valid has-error'); $('#cboEstadoBusqueda').focus();
+            }
+            else if (!codSol) {
+                $('[data-valmsg-for="CodigoTipoSolicitud"]').html('Seleccione el tipo de solicitud').addClass('field-validation-valid has-error'); $('#CodigoTipoSolicitud').focus();
+            }
+            else if (!tipDoc && codSol != '010003') {
+                $('[data-valmsg-for="CodigoTipoDocumento"]').html('Seleccione el tipo de documento').addClass('field-validation-valid has-error'); $('#CodigoTipoDocumentoReg').focus();
+                // } else if (numVal === '-' || !numVal) {
+                //  $('[data-valmsg-for="NumeroSolicitud"]').html('Ingrese un número de solicitud').addClass('field-validation-valid has-error'); $('#NumeroSolicitud').focus();
+            } else {
+                    table.ajax.reload(function (tableDet) {
+                    if (tableDet.data.length == 0) {
+                        val1 = true;
+                        validarNull();
+                        }
+                    });
+            }
+
+        });
+        function validarNull() {
+            console.log('val', val1, val2)
+            if (val1 && val2) {
+               // toastr.error("No se ha encontrado la solicitud", "Mensaje del Sistema", { "progressBar": true });
+            }
+        }
+
+    });
+        $('#CodigoTipoSolicitud').change(function () {
+
+            if (this.value === "010001") {
+                $('#divTipoDocumento').show();
+                var URL = "@Url.Content("~/RecepcionDocumentos/DocExterno")";
+                $.post(URL, function (data) {
+                    $('#CodigoTipoDocumentoReg').find('option:not(:first)').remove();
+                    var items = '<option value="">Seleccione el tipo de documento</option>';
+                    $.each(data, function (i, item) { items += "<option value='" + item.Value + "'>" + item.Text + "</option>"; });
+                    $('#CodigoTipoDocumentoReg').html(items);
+                    $('#CodigoTipoDocumentoReg').trigger("chosen:updated");
+                });
+            } else if (this.value === "010002") {
+                $('#divTipoDocumento').show();
+                var URL = "@Url.Content("~/RecepcionDocumentos/DocInterno")";
+                $.post(URL, function (data) {
+                    $('#CodigoTipoDocumentoReg').find('option:not(:first)').remove();
+                    var items = '<option value="">Seleccione el tipo de documento</option>';
+                    $.each(data, function (i, item) { items += "<option value='" + item.Value + "'>" + item.Text + "</option>"; });
+                    $('#CodigoTipoDocumentoReg').html(items);
+                    $('#CodigoTipoDocumentoReg').trigger("chosen:updated");
+                });
+            } else {
+                $('#divTipoDocumento').hide();
+                $('#CodigoTipoDocumentoReg').find('option:not(:first)').remove();
+            }
+        });
+
+    </script>
+
+}

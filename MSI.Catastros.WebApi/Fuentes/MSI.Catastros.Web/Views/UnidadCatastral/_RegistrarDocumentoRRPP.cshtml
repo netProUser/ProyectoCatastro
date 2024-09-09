@@ -1,0 +1,134 @@
+﻿
+<div id="DocumentoRRPPContainer">
+    @Html.AntiForgeryToken()
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-hidden="true">
+                    &times;
+                </button>
+                <h4 id="TituloDocumentos">Registrando Documentos RRPP</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12" id="containerTableLoteRRPP" >
+                        <table id="tablaDocumentoRRPPLote" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th width="5%">Nro.</th>
+                                    <th width="30%">Tipo Documento</th>
+                                    <th width="15%">Partida Electronica</th>
+                                    <th width="10%">Tomo Ficha</th>
+                                    <th width="10%">Folio</th>
+                                    <th width="10%">Asiento</th>
+                                    <th width="10%">Fecha Documento RRPP</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-offset-2 col-md-10">
+                    <input id="btnGrabarDocRRPP" type="submit" value="Grabar" class="btn btn-success" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/vendor/datatables-checkboxes/js/dataTables.checkboxes.min.js"></script>
+<script type="text/javascript">
+    
+    $(document).ready(function () {
+        $('#TituloDocumentos').text('Registrando Documentos RRPP - UC: ' + $("#CodigoDistrito").val() + '-' +
+        $("#CodigoSector").val() + '-' +
+        $("#CodigoManzana").val() + '-' +
+        $("#CodigoLote").val() + '-' +
+        $("#CodigoEdificacion").val() + '-' +
+        $("#CodigoEntrada").val() + '-' +
+        $("#CodigoPiso").val() + '-' +
+        $("#CodigoUnidad").val());
+
+        localStorage.setItem('DocumentoRRPPSelec', "");
+        tablaDocumentoRRPPLote = $("#tablaDocumentoRRPPLote").DataTable({
+            "ajax": {
+                "url": "@Url.Content("~/UnidadCatastral/CargarDocumentosRRPPLote")",
+                "type": "POST",
+                "datatype": "json",
+                "data": function (d) {
+                    // -- Agregar campos de busqueda
+                    d.CodigoDistrito = $('#CodigoDistrito').val();
+                    d.CodigoSector = $('#CodigoSector').val();
+                    d.CodigoManzana = $('#CodigoManzana').val();
+                    d.CodigoLote = $('#CodigoLote').val();
+                    d.Estatico = Estatico;
+                }
+            },
+            "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+            "processing": true,
+            "serverSide": false,
+            "scrollY": "400px",
+            "scrollCollapse": true,
+            "initComplete": function (setting, json) {
+                console.log(json)
+                if (json.recordsTotal < 12) {
+                    $('#tablaDocumentoRRPPLote_wrapper .dataTables_scrollHead').removeClass('pr-4');
+                } else {
+                    $('#tablaDocumentoRRPPLote_wrapper .dataTables_scrollHead').addClass('pr-4');
+                }
+                //tablaDocumentoRRPPLote.columns.adjust().draw();
+            },
+
+            "paging": false,
+            'columnDefs': [
+                 { "width": "7%", "targets": 0 },
+                 { "width": "7%", "targets": 1 },
+                 { "width": "7%", "targets": 2 },
+                 { "width": "7%", "targets": 3 },
+                 { "width": "7%", "targets": 4 },
+                 { "width": "7%", "targets": 5 },
+                 { "width": "7%", "targets": 6 },
+                 { 'targets': 7, 'checkboxes': { 'selectRow': true } },
+
+            ],
+            "columns": [
+                { "data": "Item", "name": "Item", "className": "text-center" },
+                { "data": "TipoDocumento", "name": "TipoDocumento", "className": "text-center" },
+                { "data": "PartidaElectronica", "name": "PartidaElectronica", "autoWidth": true, "className": "text-center" },
+                { "data": "TomoFicha", "name": "TomoFicha", "autoWidth": true, "className": "text-center" },
+                { "data": "Folio", "name": "Folio", "autoWidth": true, "className": "text-center" },
+                { "data": "Asiento", "name": "Asiento", "autoWidth": true, "className": "text-center" },
+                { "data": "Fecha", "name": "Fecha", "autoWidth": true, "className": "text-center" },
+                { "data": "Item", "name": "Item", "autoWidth": true, "className": "text-center" },
+                { "data": "CodigoCorrelativoLote", "name": "CodigoCorrelativoLote", "autoWidth": true, "className": "hide_column" },
+                { "data": "CodigoDocumento", "name": "CodigoDocumento", "autoWidth": true, "className": "hide_column" },
+                
+            ]
+        });
+        //tablaUnidadCatastral.columns.adjust().draw();
+        //tablaUnidadCatastral.ajax.reload();
+
+        $("#btnGrabarDocRRPP").on("click", function (event) {
+            var rows_selected = tablaDocumentoRRPPLote.column(7).checkboxes.selected();
+            console.log('rows_selected');
+            console.log(rows_selected);
+            var ListaRows = [];
+            $.each(rows_selected, function (index, Indice) {
+                console.log(Indice);
+                var rows = tablaDocumentoRRPPLote.rows(Indice - 1).data()[0];
+                console.log(rows);
+                ListaRows.push(rows);
+            });
+            localStorage.setItem('DocumentoRRPPSelec', JSON.stringify(ListaRows));
+            $('#modalNuevoDocRRPP').modal('hide');
+        });
+
+    });
+</script>

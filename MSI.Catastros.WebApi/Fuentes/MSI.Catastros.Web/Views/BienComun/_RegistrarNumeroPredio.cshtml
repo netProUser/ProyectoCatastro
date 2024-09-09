@@ -1,0 +1,212 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.BienComun.NumeracionPredioViewModel
+
+<div id="RegistrarViasContainer">
+
+    @Html.AntiForgeryToken()
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-hidden="true">
+                    &times;
+                </button>
+                <h4 id="TituloGeneral">Registrando Vías Detalle</h4>
+            </div>
+            <div class="modal-body">
+                @Html.HiddenFor(m => m.CodigoCorrDirecUnidad)
+                <div class="row">
+
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label class="control-label">Asignación</label>
+                            @Html.DropDownListFor(m => m.Asignacion, Model.ListarTipoDireccion, "- Seleccione...", new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="col-sm-9">
+                        <div class="form-group">
+                            <label class="control-label">Direccción de Lote</label>
+                            <select class="form-control" id="CodigoVia"></select>
+                            <span class="" data-valmsg-for="CodigoVia" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label class="control-label">Estado de Interior</label>
+                            @*<select class="form-control" id="EstadoInterior"></select>*@
+                            @Html.DropDownListFor(m => m.EstadoInterior, Model.ListEstadoInterior, "- Seleccione...", new { @class = "form-control" })
+                            <span class="" data-valmsg-for="EstadoInterior" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label class="control-label">Tipo de Interior</label>
+                            @*<input type="text" class="form-control" id="Lado" />*@
+                            @Html.DropDownListFor(m => m.TipoInterior, Model.ListTipoInterior, "- Seleccione...", new { @class = "form-control" })
+                            <span class="" data-valmsg-for="Cuadra" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label class="control-label">Número de Interior</label>
+                            @*<input id="NumeroInterior" class="form-control" maxlength="4"/>*@
+                            @Html.TextBoxFor(m => m.NumeroInterior, new { @class = "form-control", maxlength = 4 })
+                            <span class="" data-valmsg-for="Numero" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label class="control-label">Letra de Interior</label>
+                            @Html.TextBoxFor(m => m.LetraInterior, new { @class = "form-control" })
+                            <span class="" data-valmsg-for="Letra" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-offset-2 col-md-10">
+                    <input id="btnSubmit" type="submit" value="Grabar" class="btn btn-success" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="@Url.Content("~/assets/vendor/datatables-checkboxes/js/dataTables.checkboxes.min.js")">
+   
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".chosen-seleccionar").chosen({ width: "100%", placeholder_text_single: "Seleccione una opción" });
+        //CargarInteriores();
+
+
+        @*$("#NumeroInterior").val(@Model.NumeroInterior);*@
+
+        $('#TituloGeneral').text('Registrando Vías Detalle - UC: ' + $("#CodigoDistrito").val() + '-' +
+        $("#CodigoSector").val() + '-' +
+        $("#CodigoManzana").val() + '-' +
+        $("#CodigoLote").val() + '-' +
+        $("#CodigoEdificacion").val() + '-' +
+        $("#CodigoEntrada").val() + '-' +
+        $("#CodigoPiso").val() + '-' +
+        $("#CodigoUnidad").val())
+
+        if ('@Model.CodigoCorrDirecUnidad') {
+            $('#Asignacion').val('@Model.Asignacion');
+            CargarVias();
+
+        }
+
+        $("#Asignacion").change(function () {
+            CargarVias();
+        });
+
+
+        $("#btnSubmit").on("click", function (event) {
+
+            var NumeracionPredio = {
+                CodigoUni: $("#CodigoUnidadCatastral").val(),
+                CodigoDistrito: $("#CodigoDistrito").val(),
+                CodigoSector: $("#CodigoSector").val(),
+                CodigoManzana: $("#CodigoManzana").val(),
+                CodigoLote: $("#CodigoLote").val(),
+                Asignacion: $("#Asignacion").val(),
+                CodigoVia: $("#CodigoVia").val(),
+                EstadoInterior: $("#EstadoInterior").val(),
+                TipoInterior: $("#TipoInterior").val(),
+                NumeroInterior: $("#NumeroInterior").val(),
+                LetraInterior: $("#LetraInterior").val(),
+               // TipoInscripcion: $("#TipoInscripcion").val(),
+                CodigoCorrDirecUnidad: $("#CodigoCorrDirecUnidad").val(),
+                Estatico: Estatico
+            };
+
+            $.ajax({
+               // url: "/BienComun/RegistrarNumeroPredio",
+                url: "@Url.Content("~/BienComun/RegistrarNumeroPredio")",
+                type: "POST",
+                data: { NumeracionPredio: NumeracionPredio },
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                    if (response.success) {
+                        $('#modalNuevoPredio').modal('hide');
+                        tablaMunicipalAsignado.ajax.reload();
+                        var mensaje = "Registro grabado correctamente";
+                        toastr.success(mensaje, "Mensaje del Sistema", { "progressBar": true });
+
+
+
+
+                    } else {
+
+                    }
+                },
+                complete: function () {
+                }
+            });
+
+
+
+
+        });
+
+
+        function CargarVias() {
+
+            var Unidad = {
+                CodigoDistrito: $("#CodigoDistrito").val(),
+                CodigoSector: $("#CodigoSector").val(),
+                CodigoManzana: $("#CodigoManzana").val(),
+                CodigoLote: $("#CodigoLote").val(),
+                Estatico: Estatico
+            };
+
+            $.ajax({
+               // url: "/BienComun/CargarListasNumeroPredio",
+                url: "@Url.Content("~/BienComun/CargarListasNumeroPredio")",
+                type: "POST",
+                data: { Unidad: Unidad, Asignacion: $("#Asignacion").val(), Estatico: Estatico },
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                    if (response.success) {
+                        ListarLoteVia = response.ListarLoteVia;
+                        ListarTipoInterior = response.ListarTipoInterior;
+                        ListarEstadoInterior = response.ListarEstadoInterior;
+
+                        $('#CodigoVia').find('option:not(:first)').remove();
+                        var items = '<option value="">Seleccione una Dirección del Lote</option>';
+                        $.each(ListarLoteVia, function (i, item) {
+                            items += "<option value='" + item.Value + "'>" + item.Text + "</option>";
+                        });
+                        $('#CodigoVia').html(items);
+                        $('#CodigoVia').val('@Model.CodigoVia');
+
+                        $('#EstadoInterior').find('option:not(:first)').remove();
+                        var itemsEstado = '<option value="">Seleccione...</option>';
+                        $.each(ListarEstadoInterior, function (i, item) {
+                            itemsEstado += "<option value='" + item.Value + "'>" + item.Text + "</option>";
+                        });
+                        $('#EstadoInterior').html(itemsEstado);
+                        $('#EstadoInterior').val('@Model.EstadoInterior');
+
+                    } else {
+
+                    }
+                },
+                complete: function () {
+                }
+            });
+        }
+
+    });
+</script>

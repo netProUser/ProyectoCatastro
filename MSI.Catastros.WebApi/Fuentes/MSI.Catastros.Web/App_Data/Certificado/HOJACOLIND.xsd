@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="HOJACOLIND" targetNamespace="http://tempuri.org/HOJACOLIND.xsd" xmlns:mstns="http://tempuri.org/HOJACOLIND.xsd" xmlns="http://tempuri.org/HOJACOLIND.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="HOJACOLIND" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="HOJACOLIND" msprop:Generator_UserDSName="HOJACOLIND">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="HOJACOLIND" msprop:Generator_TableClassName="HOJACOLINDDataTable" msprop:Generator_TableVarName="tableHOJACOLIND" msprop:Generator_RowChangedName="HOJACOLINDRowChanged" msprop:Generator_TablePropName="_HOJACOLIND" msprop:Generator_RowDeletingName="HOJACOLINDRowDeleting" msprop:Generator_RowChangingName="HOJACOLINDRowChanging" msprop:Generator_RowEvHandlerName="HOJACOLINDRowChangeEventHandler" msprop:Generator_RowDeletedName="HOJACOLINDRowDeleted" msprop:Generator_RowClassName="HOJACOLINDRow" msprop:Generator_UserTableName="HOJACOLIND" msprop:Generator_RowEvArgName="HOJACOLINDRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="TEXTO" msprop:Generator_ColumnVarNameInTable="columnTEXTO" msprop:Generator_ColumnPropNameInRow="TEXTO" msprop:Generator_ColumnPropNameInTable="TEXTOColumn" msprop:Generator_UserColumnName="TEXTO" type="xs:string" minOccurs="0" />
+              <xs:element name="MEDIDA" msprop:Generator_ColumnVarNameInTable="columnMEDIDA" msprop:Generator_ColumnPropNameInRow="MEDIDA" msprop:Generator_ColumnPropNameInTable="MEDIDAColumn" msprop:Generator_UserColumnName="MEDIDA" type="xs:string" minOccurs="0" />
+              <xs:element name="TOTAL" msprop:Generator_ColumnVarNameInTable="columnTOTAL" msprop:Generator_ColumnPropNameInRow="TOTAL" msprop:Generator_ColumnPropNameInTable="TOTALColumn" msprop:Generator_UserColumnName="TOTAL" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,294 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Lotes.RegistrarLoteNuevoViewModel
+
+<div id="RegistrarLotesNuevoContainer">
+    
+    @Html.AntiForgeryToken()
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times;</button>
+                <h4><strong>Nuevo Lote</strong></h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="row">
+                        <div id="filaMotivo" class="col-md-12">
+                            <fieldset class="formulario">
+                                <legend>Seleccionar Motivo de Generación</legend>
+                                <div class="row mx-3 pb-3">
+                                    <div class="col-md-12">
+                                        <label class="" style="line-height:22px"><input type="radio" class="FiltroCheck" name="FiltroCheck" style=" vertical-align: top;" value="1"> Acumulación</label>
+                                    </div>
+                                </div>
+                                <div class="row mx-3 pb-4">
+                                    <div class="col-md-3">
+                                        <br />
+                                        <label class="" style="margin-top:7px"><input type="radio" class="FiltroCheck" name="FiltroCheck" style="margin-top: -2px;vertical-align: middle" value="2"> Sub-División</label>
+                                    </div>
+                                    <div class="col-md-3 numeroLote" style="display:none;">
+                                        <label>Total</label>
+                                        <input type="number" min="2" id="NumeroLote" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="row mx-3 pb-3">
+                                    <div class="col-md-3">
+                                        <br />
+                                        <label class="" style="line-height:22px"><input type="radio" class="FiltroCheck" name="FiltroCheck" style=" vertical-align: top;" value="3"> Nuevo Código</label>
+                                    </div>
+                                    <div class="col-md-3 numeroLoteNuevo" style="display:none;">
+                                        <label>Cod. Sector</label>
+                                        <input type="text" maxlength="2" id="CodigoSectorNuevo" class="form-control" style="text-align:center;" />
+                                    </div>
+                                    <div class="col-md-3 numeroLoteNuevo" style="display:none;">
+                                        <label>Cod. Manzana</label>
+                                        <input type="text" maxlength="3" id="CodigoManzanaNuevo" class="form-control" style="text-align:center;" />
+                                    </div>
+                                    <div class="col-md-3 numeroLoteNuevo" style="display:none;">
+                                        <label>Total</label>
+                                        <input type="number" min="2" id="NumeroLoteNuevo" class="form-control" style="width:50%;text-align:center;" />
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                        
+                    @*<fieldset class="formulario" id="GenerarNuevoCodigo" style="display:none;">
+                        <legend>Generar Nuevo Código</legend>
+                        <div class="row">
+                            <div class="col-md-12 pb-2">
+                                <table>
+                                    <tr>
+                                        <td width="7%"><label class="form-label">Dist.</label></td>
+                                        <td width="7%"><label class="form-label">Sec</label></td>
+                                        <td width="7%"><label class="form-label">Mz</label></td>
+                                        <td width="7%"><label class="form-label">Lote</label></td>
+                                        <td width="7%"><label class="form-label">Ed</label></td>
+                                        <td width="7%"><label class="form-label">Entr</label></td>
+                                        <td width="7%"><label class="form-label">Piso</label></td>
+                                        <td width="7%"><label class="form-label">Unidad</label></td>
+                                        <td width=""></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoDistrito, new { @class = "form-control text-center px-3", @disabled = "true" })</td>
+                                        <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoSector, new { @class = "form-control text-center px-3", @maxlength = "2" })</td>
+                                        <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoManzana, new { @class = "form-control text-center px-3", @maxlength = "3" })</td>
+                                        <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarCodigoLote, new { @class = "form-control text-center px-3", @maxlength = "3" })</td>
+                                        <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarEd, new { @class = "form-control text-center px-3", @maxlength = "2" })</td>
+                                        <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarEntrada, new { @class = "form-control text-center px-3", @maxlength = "2" })</td>
+                                        <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarPiso, new { @class = "form-control text-center px-3", @maxlength = "2" })</td>
+                                        <td style="padding-right:5px;">@Html.TextBoxFor(model => model.FiltrarUnidad, new { @class = "form-control text-center px-3", @maxlength = "3" })</td>
+                                        <td>
+                                            <div class="">
+                                                <button style="display:none;" id="btnModalBuscar" type="button" class="btn btnModalBuscar btn-warning glyphicon glyphicon-search"></button>
+                                                <button id="btnModalAgregar" type="button" class="btn btn-green glyphicon glyphicon-plus"></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="9">
+                                            <div class="has-error ml-3 mt-2">
+                                                <ul id="msgErrores"></ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table id="tablaUnidadCatastralNueva" style="width:100%;" class="table responsive display  table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th width="6%" style="width:65px">Dist</th>
+                                            <th width="6%">Sec</th>
+                                            <th width="6%">Mz</th>
+                                            <th width="6%">Lote</th>
+                                            <th width="6%">Ed</th>
+                                            <th width="6%">Entr</th>
+                                            <th width="2%">Piso</th>
+                                            <th width="6%">Unidad</th>
+                                            <th width="">Referencia</th>
+                                            <th width="">Estado</th>
+                                            <th width="">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </fieldset>*@
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Cerrar</button>
+                    <button id="btnSubmitLoteNuevo" type="button" class="btn btn-green">Generar Nuevo Lote</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+<script type="text/javascript">
+    $('input').keyup(function () { this.value = this.value.toLocaleUpperCase() });
+
+    var tablaUnidadCatastralNueva;
+
+    $('#FiltrarCodigoDistrito').val('31');
+    var inpRadio = '0';
+    $('.FiltroCheck').click(function () {
+        if (this.value === '2') {
+            $('.numeroLoteNuevo').hide(); $('.numeroLote').show();
+        } else if (this.value === '3') {
+            var tablaUnidadCatastralTemp = tablaUnidadCatastral.data(); var contEst = 0;
+            $.each(tablaUnidadCatastralTemp, function (index, Item) { if (Item.EstadoUnidad == 'T') { contEst++; } });
+            if (tablaUnidadCatastral.data().count() !== 0) {
+                if (contEst != tablaUnidadCatastral.data().count()) {
+                    toastr.warning("No deben existir lotes en la solcititud", "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+                    $(".FiltroCheck").removeAttr("checked");
+                } else { $('.numeroLoteNuevo').show(); $('.numeroLote').hide(); }
+            } else { $('.numeroLoteNuevo').show();$('.numeroLote').hide(); }
+        } else if (this.value === '1') { $('.numeroLoteNuevo').hide(); $('.numeroLote').hide(); }
+        inpRadio  = this.value;
+    });
+    $("#btnSubmitLoteNuevo").on("click", function (event) {
+        var cont = 0;
+        var contEstado = 0, contLote = 0, contTabla = 0, tempSector = "", tempManzana = "";
+        tablaUnidadCatastral.rows().every(function () {
+            var data = this.data();
+            if (contTabla != 0) {
+                if (data.CodigoSector != tempSector || data.CodigoManzana != tempManzana) { contLote++; }
+            }
+            if (data.EstadoUnidad != 'H') { contEstado++; }
+            tempSector = data.CodigoSector; tempManzana = data.CodigoManzana;
+            contTabla++;
+        });
+        console.log('ra', inpRadio);
+        if (inpRadio == '0') {
+            toastr.warning("Seleccione una opción", "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+            return;
+        }
+        switch (inpRadio) {
+            case "1":
+                //Validaciones: Mas de 1 registro
+                if (tablaUnidadCatastral.data().count() < 2) {
+                    toastr.warning("Deben existir al menos 2 lotes por trabajar", "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+                    //} else if (contEstado !== 0) {
+                } else if (contEstado > 0) {
+                    console.log('a');
+                    toastr.warning("Todos los lotes deben encontrarse habilitados", "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+                } else if (contLote !== 0) {
+                    toastr.warning("Todos los lotes deben pertenecer al mismo sector y manzana", "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+                } else {
+                    var arrayObject = [];
+                    var tablaUnidadCatastralTemp = tablaUnidadCatastral.data();
+                    console.log(tablaUnidadCatastralTemp);
+                    $.each(tablaUnidadCatastralTemp, function (index, Item) {
+                        arrayObject.push({
+                            "TipoLote": inpRadio, "NumeroLote" : $('#NumeroLote').val(),
+                            "CodigoDistrito": Item.CodigoDistrito, "CodigoSector": Item.CodigoSector, "CodigoManzana": Item.CodigoManzana, "CodigoLote": Item.CodigoLote,
+                            "CodigoNumeroSolicitud": $('#FiltrarNumeroSolicitud').val(), "CodigoTipoSolicitud": $('#FiltrarCodigoTipoSolicitud').val(),
+                            "CodigoTipoDocumento": $('#FiltrarCodigoTipoDocumentoReg').val(),
+                            "CodigoPeriodo": $('#Periodo').val(),
+
+
+                        });
+                    });
+                    $.post("@Url.Content("~/Lotes/GrabarLoteNuevo")", { model: arrayObject }, function (response) {
+                        if (response.success === false) { toastr.warning(response.responseText, "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", }); }
+                        else {
+                            console.log('Grabado');
+                            tablaUnidadCatastral.ajax.reload();
+                            tablaUnidadCatastralRef.ajax.reload();
+                            $('#modalRegistrarLoteNuevo').modal('hide');
+                            toastr.success("Lotes Acumulados Correctamente", "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+                        }
+                    });
+                }
+                break;
+            case "2":
+                if (tablaUnidadCatastral.data().count() !== 1) {
+                    toastr.warning("La solicitud tiene mas de un lote registrado", "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+                } else if (contEstado > 0) {
+                    toastr.warning("El lote debe encontrarse habilitado", "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+                } else if ($('#NumeroLote').val() < 2) {
+                    toastr.warning("El total de nuevos códigos debe ser mayor a 1", "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+                } else if (!$('#NumeroLote').val()) {
+                    toastr.warning("No se ha ingresado la cantidad de lotes", "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+                } else {
+                    var arrayObject = [];
+                    var tablaUnidadCatastralTemp = tablaUnidadCatastral.data();
+                    console.log(tablaUnidadCatastralTemp);
+                    $.each(tablaUnidadCatastralTemp, function (index, Item) {
+                        arrayObject.push({
+                            "TipoLote": inpRadio,
+                            "NumeroLote": $('#NumeroLote').val(),
+                            "CodigoDistrito": Item.CodigoDistrito,
+                            "CodigoSector": Item.CodigoSector,
+                            "CodigoManzana": Item.CodigoManzana,
+                            "CodigoLote": Item.CodigoLote,
+                            "CodigoNumeroSolicitud": $('#FiltrarNumeroSolicitud').val(),
+                            "CodigoTipoSolicitud": $('#FiltrarCodigoTipoSolicitud').val(),
+                            "CodigoTipoDocumento": $('#FiltrarCodigoTipoDocumentoReg').val(),
+                            "CodigoPeriodo" : $('#Periodo').val(),
+                        });
+                    });
+                    $.post("@Url.Content("~/Lotes/GrabarLoteNuevo")", { model: arrayObject }, function (response) {
+                        if (response.success === false) { toastr.warning(response.responseText, "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", }); }
+                        else {
+                            console.log('Grabado');
+                            tablaUnidadCatastral.ajax.reload();
+                            tablaUnidadCatastralRef.ajax.reload();
+                            $('#modalRegistrarLoteNuevo').modal('hide');
+                            toastr.success("Lote Divido Correctamente", "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+                        }
+                    });
+                }
+                break;
+            case "3":
+
+                if ($('#NumeroLoteNuevo').val() == 0) {
+                    toastr.warning("El total de nuevos códigos no puede ser 0", "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+                } else if (!$('#CodigoSectorNuevo').val()) {
+                    toastr.warning("No se ha ingresado el código del Sector", "Mensaje del Sistema", { "progressBar": true  });
+                } else if (!$('#CodigoManzanaNuevo').val()) {
+                    toastr.warning("No se ha ingresado el código del Manzana", "Mensaje del Sistema", { "progressBar": true });
+                } else if (!$('#NumeroLoteNuevo').val()) {
+                    toastr.warning("No se ha ingresado la cantidad de lotes", "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+                } else {
+                    var arrayObject = [];
+                    arrayObject.push({
+                        "TipoLote": inpRadio,
+                        "NumeroLote": $('#NumeroLoteNuevo').val(),
+                        "CodigoDistrito": $('#FiltrarCodigoDistrito').val(),
+                        "CodigoSector": $('#CodigoSectorNuevo').val(),
+                        "CodigoManzana": $('#CodigoManzanaNuevo').val(), "CodigoLote": "",
+                        "CodigoNumeroSolicitud": $('#FiltrarNumeroSolicitud').val(),
+                        "CodigoTipoSolicitud": $('#FiltrarCodigoTipoSolicitud').val(),
+                        "CodigoTipoDocumento": $('#FiltrarCodigoTipoDocumentoReg').val(),
+                        "CodigoPeriodo": $('#Periodo').val(),
+                    });
+                    
+                    $.post("@Url.Content("~/Lotes/GrabarLoteNuevo")", { model: arrayObject }, function (response) {
+                        if (response.success === false) { toastr.warning(response.responseText, "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", }); }
+                        else {
+                            console.log('Grabado');
+                            tablaUnidadCatastral.ajax.reload();
+                            tablaUnidadCatastralRef.ajax.reload();
+                            $('#modalRegistrarLoteNuevo').modal('hide');
+                            toastr.success("Lotes Nuevo Creados Correctamente", "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", });
+                        }
+                    });
+                }
+                break;
+        }
+        if (cont === 0) {
+            $('#msgErroresDet').html("");
+            var model = {};
+            @*$.post("@Url.Content("~/Lotes/GrabarLoteNuevo")", { model: model}, function (response) {
+            if (response.success === false) { toastr.warning(response.responseText, "Mensaje del Sistema", { "progressBar": true, "showDuration": "600", }); } else { console.log('Grabado'); }
+        });*@
+        }
+    });
+    
+
+</script>

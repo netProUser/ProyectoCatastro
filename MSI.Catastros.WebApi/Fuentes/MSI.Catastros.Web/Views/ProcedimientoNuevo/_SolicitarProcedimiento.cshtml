@@ -1,0 +1,192 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.ProcedimientoNuevo.FiltrarSolicitarProcedimientoViewModel
+
+<!-- Modal -->
+<div id="RegistrarSolicitarProcedimientoContainer">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>*@
+                <button class="btn btn-default mr-2 px-5" style="margin-top:-2px;float: right;" data-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i> Salir</button>
+                <button id="btnModalSolicitarGrabar" type="button" class="btn btnModalSolicitarGrabar bloqueado btn-green mr-2 px-5" style="margin-top:-2px;float: right;"><i class="fa fa-save"></i> Grabar</button>
+                <h4 class="modal-title" id="exampleModalLongTitle" style="font-weight:bold">Asignacion de Tareas</h4>
+                @*<div class="modal-footer">
+
+                    </div>*@
+            </div>
+            <input type="hidden" id="CargoResponsable" />
+            <input type="hidden" id="CodigoEstadoActual" />
+            <input type="hidden" id="NombreEstadoActual" />
+            <div class="modal-body" id="formEstado">
+                <div class="row">
+                    <div class="col-sm-6">
+                        @Html.LabelFor(model => model.CodigoNumeroSolicitud, htmlAttributes: new { @class = "control-label" })
+                        @Html.TextBoxFor(model => model.CodigoNumeroSolicitud, new { @class = "form-control", @readonly = "true" })
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.LabelFor(model => model.Responsable, htmlAttributes: new { @class = "control-label" })
+                        @Html.TextBoxFor(model => model.Responsable, new { @class = "form-control", @readonly = "true" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        @Html.LabelFor(model => model.AsuntoProcedimiento, htmlAttributes: new { @class = "control-label" })
+                        @Html.TextBoxFor(model => model.AsuntoProcedimiento, new { @class = "form-control", @readonly = "true" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        @Html.LabelFor(model => model.EstadoAtencionPrevia, htmlAttributes: new { @class = "control-label" })
+                        @Html.TextBoxFor(model => model.EstadoAtencionPrevia, new { @class = "form-control", @readonly = "true" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 validarInput">
+                        @Html.LabelFor(model => model.ListTipoProcedimiento, htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownListFor(m => m.CodigoTipoProcedimiento, Model.ListTipoProcedimiento, "- Seleccione el tipo de procedimiento -", new { @class = "form-control bloqueado" })
+                        <span id="Tipo Procedimiento" class="field-validation-valid has-error"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 validarInput">
+                        @Html.LabelFor(model => model.ListTipoRequerimiento, htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownListFor(m => m.CodigoTipoRequerimiento, Model.ListTipoRequerimiento, "- Seleccione el tipo de requerimiento -", new { @class = "form-control", disabled = "true" })
+                        <span id="Tipo Requerimiento" class="field-validation-valid has-error"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 validarInput">
+                        @Html.LabelFor(model => model.ListAsignarResponsable, htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownListFor(m => m.CodigoAsignarResponsable, Model.ListAsignarResponsable, "- Seleccione al responsable -", new { @class = "form-control bloqueado" })
+                        <span id="Asignar Responsable" class="field-validation-valid has-error"></span>
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.LabelFor(model => model.PuestoResponsable, htmlAttributes: new { @class = "control-label" })
+                        @Html.TextBoxFor(model => model.PuestoResponsable, new { @class = "form-control", @readonly = "true" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        @Html.LabelFor(model => model.ListTipoLlenado, htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownListFor(m => m.CodigoTipoLlenado, Model.ListTipoLlenado, "- Seleccione el tipo de llenado -", new { @class = "form-control bloqueado" })
+                        <span id="Tipo Llenado"  class="field-validation-valid has-error"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        @Html.LabelFor(model => model.FechaDerivacionPrevia, htmlAttributes: new { @class = "control-label" })
+                        @Html.TextBoxFor(model => model.FechaDerivacionPrevia, new { @class = "form-control", @readonly = "true" })
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.LabelFor(model => model.FechaRecepcion, htmlAttributes: new { @class = "control-label" })
+                        @Html.TextBoxFor(model => model.FechaRecepcion, new { @class = "form-control", @readonly = "true" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        @Html.LabelFor(model => model.ListAccion, htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownListFor(m => m.CodigoAccion, Model.ListAccion, "- Seleccione la acción a realizar -", new { @class = "form-control chosen-seleccionar bloqueado" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        @Html.LabelFor(model => model.ObservacionRemitente, htmlAttributes: new { @class = "control-label" })
+                        @Html.TextAreaFor(model => model.ObservacionRemitente, new { @class = "form-control", rows = "3", @readonly = "true" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        @Html.LabelFor(model => model.ObservacionRecepcion, htmlAttributes: new { @class = "control-label" })
+                        @Html.TextAreaFor(model => model.ObservacionRecepcion, new { @class = "form-control bloqueado", @maxlength = "200", @style = "text-transform: uppercase;", rows = "3" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $.post("@Url.Content("~/ProcedimientoNuevo/CargarTipoLLenado")", { CodigoPeriodo: $('#Periodo').val(),CodigoTipoSolicitud: $('#CodigoTipSol').val(), CodigoNumeroSolicitud: $('#CodigoNumSol').val()}
+    , function (response) {
+        $('#CodigoTipoLlenado').val(response.responseText)
+    });
+    $(".chosen-seleccionar").chosen({ width: "100%", placeholder_text_single: "Seleccione una opción" });
+    $('textarea').keyup(function () { this.value = this.value.toLocaleUpperCase() });
+    $('#CodigoTipoRequerimiento').val($('#CodigoReq').val());
+    if (localStorage.getItem('DatosSolicitarProcedimiento') && '@Model.ModoApertura' != 'Ver') {
+        var Datos = JSON.parse(localStorage.getItem('DatosSolicitarProcedimiento'));
+        $('#CodigoNumeroSolicitud').val(Datos.NroSolicitud);
+        $('#Responsable').val(Datos.ResponsableActual);
+        $('#EstadoAtencionPrevia').val(Datos.NombreEstadoAtencionPrevia);
+        $('#FechaDerivacionPrevia').val(Datos.SolFechaEnvio);
+        $('#FechaRecepcion').val(Datos.SolFechaRecepcion);
+        $('#ObservacionRemitente').val(Datos.ObservacionRemitente);
+        $('#AsuntoProcedimiento').val(Datos.AsuntoSolicitud);
+        $('.bloqueado').removeAttr('disabled');
+    } else {
+        $('#CodigoAccion').attr('disabled', 'disabled').val('').trigger("chosen:updated");
+        $('.bloqueado').attr('disabled', 'disabled');
+    }
+    $('#CodigoTipoProcedimiento').change(function () {
+        var URL = "@Url.Content("~")" + "ProcedimientoNuevo/CargarReponsables?Estado=" + $('#EstadoPrevio').val() + "&TipoProcedimiento=" + this.value + "&CodigoTipoSolicitud=" + $('#CodigoTipSol').val() + "&NumeroSolicitud=" + $('#CodigoNumSol').val() + "&CodigoPeriodo=" + $('#Periodo').val();
+        $.post(URL, function (data) {
+            $('#CodigoAsignarResponsable').empty();
+            $('#CodigoAsignarResponsable').append($('<option  value="">').text("- Seleccione al responsable -"));
+            var selec;
+            $.each(data, function (i, obj) {
+                console.log(obj);
+                $('#CodigoAsignarResponsable').append($('<option>').text(obj.Text).attr('value', obj.Value));
+                if (obj.Selected) {
+                    selec = obj;
+                }
+            });
+            if (selec) {
+                $('#CodigoAsignarResponsable').val(selec.Value).trigger('change');
+            }
+            $('#PuestoResponsable').val('');
+            $('#CargoResponsable').val('');
+            $('#CodigoEstadoActual').val('');
+            $('#NombreEstadoActual').val('');
+        });
+    })
+
+    $("#CodigoAsignarResponsable").change(function () {
+        var URL = "@Url.Content("~")" +  "ProcedimientoNuevo/EstadoActual?Estado=" + $('#EstadoPrevio').val() + "&usuario=" + $('#CodigoAsignarResponsable').val() + "&tipproced=" + $('#CodigoTipoProcedimiento').val();
+        $.post(URL, function (data) {
+            $('#PuestoResponsable').val(data.NombreCargo);
+            $('#CargoResponsable').val(data.CodigoCargo);
+            $('#CodigoEstadoActual').val(data.CodigoEstado);
+            $('#NombreEstadoActual').val(data.NombreEstado);
+        });
+    });
+    $('#btnModalSolicitarGrabar').click(function () {
+        var valid = 0;
+        $("div .validarInput").each(function (indice, item) {
+            var input = $(this).find("select").val();
+            console.log('VAL',$(this).id, input);
+            var span = $(this).find("span");var nombre = span.attr('id');
+            (!input) ? span.html("El campo " + nombre + " es requerido") : span.html("");
+            if (!input) { valid++; }
+        });
+        if (valid == 0) {
+            var LocalModalSolicitud = {
+                "CodigoTipoProcedimiento": $('#CodigoTipoProcedimiento').val(),
+                "NombreTipoProcedimiento": $('#CodigoTipoProcedimiento').find('option:selected').text(),
+                "CodigoTipoRequerimiento": $('#CodigoTipoRequerimiento').val(),
+                "CodigoAsignarResponsable": $('#CodigoAsignarResponsable').val(),
+                "NombreAsignarResponsable": $('#CodigoAsignarResponsable').find('option:selected').text(),
+                "CodigoTipoLlenado": $('#CodigoTipoLlenado').val(),
+                "CodigoAccion": $('#CodigoAccion').val(),
+                "CargoResponsable": $('#CargoResponsable').val(),
+                "CodigoEstadoActual": $('#CodigoEstadoActual').val(),
+                "NombreEstadoActual": $('#NombreEstadoActual').val(),
+                "ObservacionRecepcion": $('#ObservacionRecepcion').val()
+            }
+            localStorage.setItem('DatosModalSolicitarProcedimiento', JSON.stringify(LocalModalSolicitud));
+            $('#modalSolicitarProcedimiento').modal('hide');
+        }
+
+    })
+
+</script>

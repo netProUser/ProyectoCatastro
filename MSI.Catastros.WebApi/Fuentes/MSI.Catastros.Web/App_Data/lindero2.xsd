@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="lindero2" targetNamespace="http://tempuri.org/FichaLoteCatas.xsd" xmlns:mstns="http://tempuri.org/FichaLoteCatas.xsd" xmlns="http://tempuri.org/FichaLoteCatas.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="lindero2" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="lindero2" msprop:Generator_UserDSName="lindero2">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Lindero" msprop:Generator_TableClassName="LinderoDataTable" msprop:Generator_TableVarName="tableLindero" msprop:Generator_TablePropName="Lindero" msprop:Generator_RowDeletingName="LinderoRowDeleting" msprop:Generator_RowChangingName="LinderoRowChanging" msprop:Generator_RowEvHandlerName="LinderoRowChangeEventHandler" msprop:Generator_RowDeletedName="LinderoRowDeleted" msprop:Generator_UserTableName="Lindero" msprop:Generator_RowChangedName="LinderoRowChanged" msprop:Generator_RowEvArgName="LinderoRowChangeEvent" msprop:Generator_RowClassName="LinderoRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="LADO" msprop:Generator_ColumnVarNameInTable="columnLADO" msprop:Generator_ColumnPropNameInRow="LADO" msprop:Generator_ColumnPropNameInTable="LADOColumn" msprop:Generator_UserColumnName="LADO" type="xs:string" minOccurs="0" />
+              <xs:element name="TRAMO" msprop:Generator_ColumnVarNameInTable="columnTRAMO" msprop:Generator_ColumnPropNameInRow="TRAMO" msprop:Generator_ColumnPropNameInTable="TRAMOColumn" msprop:Generator_UserColumnName="TRAMO" type="xs:string" minOccurs="0" />
+              <xs:element name="NUMMEDIOFIC" msprop:Generator_ColumnVarNameInTable="columnNUMMEDIOFIC" msprop:Generator_ColumnPropNameInRow="NUMMEDIOFIC" msprop:Generator_ColumnPropNameInTable="NUMMEDIOFICColumn" msprop:Generator_UserColumnName="NUMMEDIOFIC" type="xs:string" minOccurs="0" />
+              <xs:element name="NUMMEDICAMP" msprop:Generator_ColumnVarNameInTable="columnNUMMEDICAMP" msprop:Generator_ColumnPropNameInRow="NUMMEDICAMP" msprop:Generator_ColumnPropNameInTable="NUMMEDICAMPColumn" msprop:Generator_UserColumnName="NUMMEDICAMP" type="xs:string" minOccurs="0" />
+              <xs:element name="NUMFUENTE" msprop:Generator_ColumnVarNameInTable="columnNUMFUENTE" msprop:Generator_ColumnPropNameInRow="NUMFUENTE" msprop:Generator_ColumnPropNameInTable="NUMFUENTEColumn" msprop:Generator_UserColumnName="NUMFUENTE" type="xs:string" minOccurs="0" />
+              <xs:element name="COLINDANTE" msprop:Generator_ColumnVarNameInTable="columnCOLINDANTE" msprop:Generator_ColumnPropNameInRow="COLINDANTE" msprop:Generator_ColumnPropNameInTable="COLINDANTEColumn" msprop:Generator_UserColumnName="COLINDANTE" type="xs:string" minOccurs="0" />
+              <xs:element name="ESAV" msprop:Generator_ColumnVarNameInTable="columnESAV" msprop:Generator_ColumnPropNameInRow="ESAV" msprop:Generator_ColumnPropNameInTable="ESAVColumn" msprop:Generator_UserColumnName="ESAV" type="xs:string" minOccurs="0" />
+              <xs:element name="ESPQ" msprop:Generator_ColumnVarNameInTable="columnESPQ" msprop:Generator_ColumnPropNameInRow="ESPQ" msprop:Generator_ColumnPropNameInTable="ESPQColumn" msprop:Generator_UserColumnName="ESPQ" type="xs:string" minOccurs="0" />
+              <xs:element name="ITEM" msprop:Generator_ColumnVarNameInTable="columnITEM" msprop:Generator_ColumnPropNameInRow="ITEM" msprop:Generator_ColumnPropNameInTable="ITEMColumn" msprop:Generator_UserColumnName="ITEM" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

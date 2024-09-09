@@ -1,0 +1,144 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.ManzanaUrbana.RegistroManzanaUrbanaViewModel
+@Styles.Render("~/tagsinput/css")
+
+<div id="RegistrarManzanaUrbanaContainer">
+    @using (Html.BeginForm("Registrar", "ManzanaUrbana", FormMethod.Post, new { id = "frmManzanaUrbana", name = "frmManzanaUrbana" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-hidden="true">
+                        &times;
+                    </button>
+                    @if (@Model.Estado == 2)
+                    {
+                        <h4>Modificando @Model.NombreHabilitacionUrbana</h4>
+                    }
+                    else
+                    {
+                        <h4>Registrar</h4>
+                    }
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true)
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CodigoTipoHabilitacion, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.DropDownListFor(model => model.CodigoTipoHabilitacion, new SelectList(Model.TipoHabilitacion, "CodigoTipoHabilitacion", "NombreTipoHabilitacion"), "Seleccione el tipo de habilitación",
+                                    new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CodigoTipoHabilitacion)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NombreHabilitacionUrbana, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.DropDownList("CodigoHabilitacionUrbana", new SelectList(Model.HabilitacionUrbana, "CodigoHabilitacionUrbana", "NombreHabilitacionUrbana"), "Seleccione una habilitación urbana", new { @class = "chosen-seleccionar form-control", style = "width:100%;" })
+                                @*@Html.DropDownListFor(model => model.CodigoHabilitacionUrbana, new SelectList(Model.HabilitacionUrbana, "CodigoHabilitacionUrbana", "NombreHabilitacionUrbana"), "Seleccione Tipo de Habilitación",
+                                    new { @class = "form-control" })*@
+                                @Html.ValidationMessageFor(model => model.CodigoHabilitacionUrbana)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ListTipoManzanaUrbana, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.DropDownList("CodigoTipoManzanaUrbana", new SelectList(Model.ListTipoManzanaUrbana, "Value", "Text"), "Seleccione un tipo de manzana urbana", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CodigoHabilitacionUrbana)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NombreManzanaUrbana, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                <input type="text" id="NombreManzanaUrbana" name="NombreManzanaUrbana" data-role="tagsinput" value="" />
+                                @Html.ValidationMessageFor(model => model.NombreManzanaUrbana)
+                            </div>
+                        </div>
+                        @Html.TextBoxFor(model => model.CodigoManzanaUrbana, new { type = "hidden", @class = "form-control" })
+                        @Html.TextBoxFor(model => model.Estado, new { type = "hidden", @class = "form-control" })
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input id="btnSubmit" type="submit" value="Grabar" class="btn btn-green" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@Scripts.Render("~/bundles/tagsinput")
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('input').keyup(function () { this.value = this.value.toLocaleUpperCase() });
+        $(".chosen-seleccionar").chosen({ width: "100%", placeholder_text_single: "Seleccione una opción" });
+        $("#CodigoTipoHabilitacion").change(function () {
+            var URL = "@Url.Content("~")" + "ManzanaUrbana/HabilitacionUrbana/".concat($('#CodigoTipoHabilitacion').val());
+            $.post(URL, function (data) {
+                $('#CodigoHabilitacionUrbana').find('option:not(:first)').remove();
+                var items = '<option value="">Seleccione una habilitación urbana</option>';
+                $.each(data, function (i, item) {
+                    items += "<option value='" + item.CodigoHabilitacionUrbana + "'>" + item.NombreHabilitacionUrbana + "</option>";
+                });
+                $('#CodigoHabilitacionUrbana').html(items);
+                if ('@Model.CodigoHabilitacionUrbana') {
+                    $('#CodigoHabilitacionUrbana').val('@Model.CodigoHabilitacionUrbana');
+                }
+                $('#CodigoHabilitacionUrbana').trigger("chosen:updated");
+            });
+        });
+        var CodigoHabilitacionUrbana = '@Model.CodigoHabilitacionUrbana';
+        if (CodigoHabilitacionUrbana) {
+            $("#CodigoTipoHabilitacion").trigger("change")
+        }
+        var NombreManzanaUrbana = '@Model.NombreManzanaUrbana';
+        if (NombreManzanaUrbana) {
+            if ('@Model.Estado' == '2')
+            {
+                $('#CodigoTipoHabilitacion').attr('disabled', 'disabled');
+                $('#CodigoHabilitacionUrbana').chosen().chosenReadonly(true);
+                $('#NombreManzanaUrbana').tagsinput('destroy');
+                $('#NombreManzanaUrbana').val(NombreManzanaUrbana).addClass('form-control col-md-4');
+            }
+        }
+        $("#frmManzanaUrbana").on("submit", function (event) {
+            event.preventDefault();
+            var fin = false;
+            var totalManzanaUrbana = 0;
+            var tag = "";
+            if ('@Model.Estado' == '2') {
+                tag = "";
+                totalManzanaUrbana = 1;
+                fin = false;
+            } else {
+                tag = $('#frmManzanaUrbana').find('[name="NombreManzanaUrbana"]');
+                fin = false;
+                totalManzanaUrbana = tag.tagsinput('items').length;
+            }
+            
+
+            for (var i = 0; i < totalManzanaUrbana; i++) {
+                if (i + 1 == totalManzanaUrbana) {
+                    fin = true;
+                }
+                if ('@Model.Estado' == '2') {
+                    console.log($('#NombreManzanaUrbana').val());
+                } else { 
+                    $('#NombreManzanaUrbana').val(tag.tagsinput('items')[i]);
+                }
+                validarFormularioManzanaUrbana($('#btnSubmit'), "ManzanaUrbana", fin);
+            }
+
+        })
+    });
+    $(document).on("keypress", "form", function (event) {
+        return event.keyCode != 13;
+    });
+</script>
+

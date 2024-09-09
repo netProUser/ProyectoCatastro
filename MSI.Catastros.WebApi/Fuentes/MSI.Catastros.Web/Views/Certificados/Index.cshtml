@@ -1,0 +1,715 @@
+﻿@model MSI.Catastros.Web.Funcionalidad.Certificados.CertificadosViewModel
+@{
+    ViewBag.Title = "Certificados";
+}
+
+<div class="row" id="Certificados">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="overflow: hidden">
+                <div class="row">
+                    <div class="col-md-6 col-xs-12"><strong>Certificados</strong></div><div class="col-md-4"></div>
+                    <div class="col-md-2 col-xs-12">
+                        <span><button id="GrabarGeneral" type="button" disabled class="btn btn-green mr-2 btn-block" style="float:right" onclick="GrabarCertificados()"><span class="glyphicon glyphicon-ok mr-2"></span> Grabar</button></span>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <input type="hidden" id="FiltrarCodigoPeriodo" />
+                <input type="hidden" id="FiltrarCodigoCertificado" />
+                <input type="hidden" id="CodigoOficina" />
+                <input type="hidden" id="FiltrarAnioSolicitud" />
+                <fieldset class="formulario p-3">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ListTipoInforme, htmlAttributes: new { @class = "control-label" })
+                                @Html.DropDownListFor(m => m.FiltrarCodigoTipoCertificado, Model.ListTipoInforme, "- Seleccione el tipo de certificado -", new { @class = "form-control SearchFilter" })
+                                <span class="field-validation-valid inputUtil" data-valmsg-for="ListTipoInforme" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ListTipoSolicitud, htmlAttributes: new { @class = "control-label" })
+                                @Html.DropDownListFor(m => m.FiltrarCodigoTipoSolicitud, Model.ListTipoSolicitud, "- Seleccione el tipo de solicitud -", new { @class = "form-control SearchFilter" })
+                                <span class="field-validation-valid inputUtil" data-valmsg-for="FiltrarCodigoTipoSolicitud" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-3" id="divTipoDocumento" style="display:none;">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ListTipoDocumento, htmlAttributes: new { @class = "control-label" })
+                                @Html.DropDownListFor(m => m.FiltrarCodigoTipoDocumentoReg, Model.ListTipoDocumento, "- Seleccione el tipo de documento -", new { @class = "chosen-seleccionar form-control SearchFilter", autofocus = "true" })
+                                <span class="field-validation-valid" data-valmsg-for="FiltrarCodigoTipoDocumentoReg" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.FiltrarNumeroSolicitud, htmlAttributes: new { @class = "control-label" })
+                                @Html.TextBoxFor(model => model.FiltrarNumeroSolicitud, new { @class = "form-control SearchFilter px-2" })
+                                <span class="field-validation-valid inputUtil" data-valmsg-for="FiltrarNumeroSolicitud" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-2 text-center">
+                            <div class="form-group">
+                                <br />
+                                <button id="btnBuscar" onclick="CargarTabla()" type="button" value="" class="btn btn-default btn-block glyphicon glyphicon-search" style="margin-top: 5px;"></button>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div id="tabInforme" style="display:none;">
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <table id="tablaCertificado" style="width:100%" class="table responsive display table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Acciones</th>
+                                        <th>Item</th>
+                                        <th>Nro. Solicitud</th>
+                                        <th>Tipo de Certificado</th>
+                                        <th>Nro. Certificado</th>
+                                        <th>Codigos Catastrales</th>
+                                        <th>Ubicación</th>
+                                        <th>Fecha Generación</th>
+                                        <th>Documento</th>
+                                        <th style="display:none;"></th>
+                                        <th style="display:none;"></th>
+                                        <th style="display:none;"></th>
+                                        <th style="display:none;"></th>
+                                        <th style="display:none;"></th>
+                                        <th style="display:none;"></th>
+                                        <th style="display:none;"></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="col-md-2 Informes mt-2" style="display:none;">
+                            <button id="btnAgregarCertificado" type="button" class="btn btn-success  mb-2 btn-sm btn-block glyphicon glyphicon-plus-sign">
+                                <span style="font-family:'Open Sans'"> Agregar</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="cuerpoInforme" class="fonts11 px-3 pt-0" style="display:none;">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="modalCertificadosImagen" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-hidden="true">
+                    &times;
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="imgCertificados" class="img-responsive" src="" alt="Alternate Text" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="ModalRecibos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h5 class="modal-title" id="exampleModalLongTitle" style="font-weight:bold;">Agregar Recibo</h5>
+
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Número de Recibo</label>
+                            <input type="text" id="NumeroRecibo" maxlength="20" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>Fecha de Recibo</label>
+                        <input type="text" autocomplete="off" class="form-control" id="FechaRecibo" maxlength="10" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-header">
+                <button type="button" class="btn btn-default px-5" style="margin-top:-2px;float: right;" data-dismiss="modal">Salir</button>
+                <button type="button" class="btn btn-green mr-2 px-5" id="btnGrabarRecibo" style="margin-top:-2px;float: right;">Grabar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section datatables {
+    <script src="@Url.Content("~/Scripts/dcalendar.picker.js")"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    <script>
+        //$('#page-wrapper').removeClass('pt-5').addClass('pt-1'); $('#periodoGlobal').show();
+        //pickmeup('#FechaRecibo', { format: 'd/m/Y', max: new Date() + 1 });
+        $("#FechaRecibo").datepicker({
+            format: "dd/mm/yyyy",
+            language: "es",
+            calendarWeeks: true
+        });
+    $('.tabs').tabslet();
+    $('#FiltrarCodigoPeriodo').val((new Date()).getFullYear());
+    $('#FiltrarCodigoTipoCertificado').change(function () {
+        $('#tabInforme').hide(); $('#cuerpoInforme').hide(); $('#btnAgregarCertificado').hide();
+        $("#GrabarGeneral").attr('disabled', 'disabled')
+    });
+    $('.SearchFilter').change(function () {
+        $('#tabInforme').hide(); $('#cuerpoInforme').hide(); $('#btnAgregarCertificado').hide();
+        $("#GrabarGeneral").attr('disabled', 'disabled')
+    });
+    $('input.change').change(function () {
+        $('#GenFicha').attr('disabled', 'disabled')
+    });
+    $('#NumeroRecibo').keypress(function () {
+        //console.log(event.keyCode);
+        //if (event.keyCode == 45 || event.keyCode == 95) {
+        //}
+        //else if (event.keyCode < 48 || event.keyCode > 57)
+        //{
+        //    event.returnValue = false;
+        //}
+    });
+$('#btnGrabarRecibo').click(function () {
+    if(!$('#NumeroRecibo').val()) {
+        toastr.error("Ingrese el número de recibo", "No se pudo grabar.", { "progressBar": true });
+    } else if(!$('#FechaRecibo').val()) {
+        toastr.error("Ingrese la fecha de recibo", "No se pudo grabar.", { "progressBar": true });
+    } else {
+        $.post("@Url.Content("~/Certificados/RegistrarRecibo")", {
+            FiltrarCodigoTipoCertificado: $('#FiltrarCodigoTipoCertificado').val(), FiltrarCodigoTipoSolicitud: $('#FiltrarCodigoTipoSolicitud').val(),
+            FiltrarCodigoTipoDocumentoReg: $('#FiltrarCodigoTipoDocumentoReg').val(), FiltrarNumeroSolicitud: $('#FiltrarNumeroSolicitud').val(),
+            FiltrarCodigoCertificado: $('#FiltrarCodigoCertificado').val(), FiltrarCodigoPeriodo: $('#AnioCertificado').val(),
+            NumeroRecibo: $('#NumeroRecibo').val(), FechaRecibo: $('#FechaRecibo').val()
+        },
+        function (response) {
+            if (response.success == true) {
+                toastr.success("El recibo se agrego correctamente", "Mensaje del Sistema", { "progressBar": true });
+                tablaRecibo.ajax.reload();
+                $('#ModalRecibos').modal('hide');
+            } else {
+                toastr.warning("Problema en el servidor", "Mensaje del Sistema", { "progressBar": true });
+            }
+        });
+    }
+});
+        $('#FiltrarCodigoTipoSolicitud').change(function () {
+            if (this.value === "010003") {
+                $('#divTipoDocumento').hide(); $('#FiltrarCodigoTipoDocumentoReg').find('option:not(:first)').remove();
+            } else {
+                $('#divTipoDocumento').show(); var URL = (this.value === "010001") ? "@Url.Content("~/RecepcionDocumentos/DocExterno")" : "@Url.Content("~/RecepcionDocumentos/DocInterno")";
+                $.post(URL, function (data) {
+                    $('#FiltrarCodigoTipoDocumentoReg').find('option:not(:first)').remove(); var items = '<option value="">Seleccione el tipo de documento</option>';
+                    $.each(data, function (i, item) {
+                        items += "<option value='" + item.Value + "'>" + item.Text + "</option>";
+                    });
+                    $('#FiltrarCodigoTipoDocumentoReg').html(items).trigger("chosen:updated");
+                });
+            }
+        });
+        var codigosTemp = '';
+        var ubicacionTemp = '';
+        var tablaCamposLotes;
+        var ROOT = '@Url.Content("~")';
+        var tablaNomenclatura; var tablaEntradasMunicipal;
+        var tablaCertificado = $("#tablaCertificado").DataTable({
+            "ajax": {
+                "url": "@Url.Content("~/Certificados/CargarCertificados")", "type": "POST", "datatype": "json",
+                "data": function (d) {
+                    d.FiltrarCodigoTipoSolicitud = $('#FiltrarCodigoTipoSolicitud').val(); d.FiltrarNumeroSolicitud = $('#FiltrarNumeroSolicitud').val();
+                    d.FiltrarCodigoPeriodo = $('#FiltrarCodigoPeriodo').val(); d.FiltrarAnioSolicitud = $('#FiltrarAnioSolicitud').val();
+                    d.FiltrarCodigoTipoCertificado = $('#FiltrarCodigoTipoCertificado').val();d.FiltrarCodigoTipoDocumentoReg = $('#FiltrarCodigoTipoDocumentoReg').val();
+                }
+            },
+            "language": { "lengthMenu": "", "info": "", "emptyTable": "" }, "processing": true, "serverSide": false, "paging": false,
+            "columns": [
+                {
+                    'render': function (data, type, full, meta) {
+                        var Ruta = "", disabled = "";
+                        if (full.Ruta) {
+                            Ruta = 'btn-warning';
+                        } else {
+                            disabled = 'disabled'
+                        }
+                        var dis = "";
+                        if (full.CodigoCertificadoTemp === '0001' && !full.FiltrarCodigoCertificado) {
+                            dis = "disabled"
+                        }
+
+                        if (($('#FiltrarCodigoTipoCertificado').val() == 'CEAC' || $('#FiltrarCodigoTipoCertificado').val() == 'HINF') && full.FiltrarCodigoCertificado != null) {
+                            return '<button data-toggle="tooltip" title="Agregar" ' + dis + ' class="btn mr-1 text-center btnAddCertificado btn-default btn-xs glyphicon glyphicon glyphicon-plus" type="button" ></button>' +
+                                '<button data-toggle="tooltip" title="Editar" class="btn px-2 py-1 mr-1 text-center btnEditCertificado btn-default btn-xs glyphicon glyphicon-edit" type="button" ></button>' +
+                                '<button data-toggle="tooltip" title="Eliminar" class="btn px-2 py-1 mr-1 text-center btnDeleteCertificado btn-default btn-xs glyphicon glyphicon-trash" type="button" ></button>' +
+                                '<form class="form-cell" enctype="multipart/form-data" id="formima_' + full.FiltrarCodigoTipoCertificado + '_' + full.FiltrarCodigoCertificado + '_' + full.FiltrarCodigoPeriodo + '_' + full.FiltrarAnioSolicitud + '">' +
+                                '<label style="width: 24px;font-size: 12px;height: 25px;" id="docum_subir_00001" class="btn btn-success buttonup px-2 py-1 mr-1 glyphicon glyphicon-folder-open ' + Ruta + '" data-toggle="tooltip" title="Cargar Imagen">' +
+                                    ' <input name="Archivo" id="foto_' + full.FiltrarCodigoTipoCertificado + '_' + full.FiltrarCodigoCertificado + '_' + full.FiltrarCodigoPeriodo + '" class="form-control" type="file" accept="image/*" />' +
+                                '</label>' +
+                                '</form>' +
+                                '<button id="docum_descargar_' + full.FiltrarCodigoTipoCertificado + '_' + full.FiltrarCodigoCertificado + '_' + full.FiltrarCodigoPeriodo + '" ' + disabled + ' onclick="DescargarArchivo(\'' + full.Ruta + '\')" class="btn btn-sm btn-success docum_descargar px-2 py-1 glyphicon glyphicon-search" data-toggle="tooltip" title="Ver Imagen"></button>';
+                        } else {
+                            return '<button data-toggle="tooltip" title="Agregar" ' + dis + ' class="btn mr-1 text-center btnAddCertificado btn-default btn-xs glyphicon glyphicon glyphicon-plus" type="button" ></button>' +
+                                '<button data-toggle="tooltip" title="Editar" class="btn mr-1 text-center btnEditCertificado btn-default btn-xs glyphicon glyphicon-edit" type="button" ></button>' +
+                                '<button data-toggle="tooltip" title="Eliminar" class="btn mr-1 text-center btnDeleteCertificado btn-default btn-xs glyphicon glyphicon-trash" type="button" ></button>' +
+                                '<div style="width:24px;display: inline-block;" class="mr-2"></div><div style="width:24px;display: inline-block;"></div>';
+                        }
+                    },
+                    "className": "text-center"
+                },
+                { "data": "Item", "className": "text-center", "width": "15%" }, { "data": "FiltrarNumeroSolicitud", "className": "text-center" },
+                { "data": "FiltrarCodigoTipoCertificado", "className": "text-center" }, { "data": "CodigoCorrelativoTramite", "className": "text-center" },
+                { "data": "CodigoCatastral", "className": "text-center" }, { "data": "Ubicacion", "className": "text-center" }, { "data": "FechaGeneracion", "className": "text-center" },
+                {
+                    'render': function (data, type, full, meta) {
+                        return (full.FiltrarCodigoCertificado) ? '<button data-toggle="tooltip" title="Imprimir" class="btn mr-1 text-center btnPrint btn-default btn-xs glyphicon glyphicon-print" type="button" ></button>' : '';
+                    }, "className": "text-center"
+                },
+                { "data": "FiltrarCodigoCorrelativo", "className": "hide_column" }, { "data": "CodigoUnico", "className": "hide_column" }, { "data": "FiltrarCodigoCertificado", "className": "hide_column" },
+                { "data": "FiltrarCodigoPeriodo", "className": "hide_column" }, { "data": "FiltrarCodigoCertificado", "className": "hide_column" },
+                { "data": "Bloqueado", "className": "hide_column"}, {"data": "CodAnioSolicitud", "className": "hide_column"},
+            ]
+
+            
+        });
+
+
+        
+        $(document).on("change", 'input[type="file"]', function (evt) {
+            if (evt.target.files.length === 0) {
+                toastr.warning("Archivo deseleccionado", "Mensaje del Sistema", { "progressBar": true });
+            } else {
+                //var form = $(this).parent().get(0).tagName[0];
+               
+                var identificador = $(this);
+                var form = $(this).closest('form')
+                var dataString = new FormData(form);
+                //dataString.append('CodigoHabilitacionUrbana', form.attr("id"));
+                dataString.append('FiltrarCodigoTipoCertificado', form.attr("id").split("_")[1]);
+                dataString.append('FiltrarCodigoCertificado', form.attr("id").split("_")[2]);
+                dataString.append('FiltrarCodigoPeriodo', form.attr("id").split("_")[3]);
+                dataString.append('Archivo', evt.target.files[0]);
+
+                $.ajax({
+                    url: ROOT + "Certificados/GrabarCertificadosImagen",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: dataString,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        if (response.success) {
+                            $(identificador).parents('td').children('button').removeAttr('disabled');
+                            $(identificador).closest('label').removeClass('btn-success').addClass('btn-warning');
+                            tablaCertificado.ajax.reload();
+                            toastr.success(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                        } else {
+                            //toastr.warning("Error al Cargar la Imagen, contactar con el administrador del sistema", "Mensaje del Sistema", { "progressBar": true });
+                            toastr.warning(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                        }
+                    }
+                });
+            }
+        });
+
+
+        $("#tablaCertificado tbody").on('click', 'button.btnAddCertificado', function (event) {
+            var data = tablaCertificado.row($(this).parents('tr')).data(), row = $(this).parents('tr')
+            console.log('1.', data);
+            var display = $('#cuerpoInforme').css("display");
+            /*
+            if (data.Bloqueado) {
+                toastr.warning("La solicitud aún no ha sido cerrada", "Mensaje del Sistema", { "progressBar": true });
+                return;
+            }
+            */
+            if (display === "none") {
+                var cont = 0;
+                if (cont === 0) {
+                    $.post("@Url.Content("~/Certificados/CrearCertificado")", {
+                        FiltrarCodigoTipoCertificado: $('#FiltrarCodigoTipoCertificado').val(), FiltrarCodigoTipoSolicitud: $('#FiltrarCodigoTipoSolicitud').val(),
+                        FiltrarCodigoTipoDocumentoReg: $('#FiltrarCodigoTipoDocumentoReg').val(), FiltrarNumeroSolicitud: $('#FiltrarNumeroSolicitud').val(),
+                        FiltrarCodigoPeriodo: $('#FiltrarCodigoPeriodo').val(),CodAnioSolicitud :data.CodAnioSolicitud ,
+                        //FiltrarAnioSolicitud : $('#FiltrarAnioSolicitud').val(),
+                        CodigoUnico: data.CodigoUnico
+                    }, function (r) {
+                        if (r.success) {
+                            console.log('Certificado- Creado'); tablaCertificado.ajax.reload();
+                        } else {
+                            toastr.warning(r.responseText, "Mensaje del Sistema", { "progressBar": true });
+                        }
+                    });
+                } else {
+                    toastr.warning("El certificado no se ha podido grabar", "Mensaje del Sistema", { "progressBar": true });
+                }
+            } else {
+                toastr.warning("No se permite agregar un certificado si se esta editando otro", "Mensaje del Sistema", { "progressBar": true });
+            }
+
+        });
+        $("#tablaCertificado tbody").on('click', 'button.btnEditCertificado', function (event) {
+            var data = tablaCertificado.row($(this).parents('tr')).data(), row = $(this).parents('tr')
+            console.log('1.', data);
+            //if (data.Bloqueado) {
+            //    if (($('#FiltrarCodigoTipoCertificado').val() == 'CEAC' || $('#FiltrarCodigoTipoCertificado').val() == 'HINF')) {
+            //    } else {
+            //        toastr.warning("La solicitud aún no ha sido cerrada", "Mensaje del Sistema", { "progressBar": true });
+            //        return;
+            //    }
+            //}
+            @*if (data.CodigoUsuario == '@VariablesWeb.IdUsuarioIntento') {*@
+            BuscarCertificado(data.FiltrarCodigoCertificado, data.CodigoUnico, data.FiltrarCodigoPeriodo, data.CodAnioSolicitud);
+            $('#FiltrarCodigoCertificado').val(data.FiltrarCodigoCertificado);
+            $('#cuerpoInforme').fadeOut(); $('#cuerpoInforme').fadeIn(2000); $('#btnAgregarCertificado').fadeIn(2000);
+            tablaCertificado.$('tr.selected').removeClass('selected'); row.addClass('selected');
+            //} else {
+            //    toastr.warning("No cuenta con permisos para modificar este certificado", "Mensaje del Sistema", { "progressBar": true });
+            //}
+        });
+        $("#tablaCertificado tbody").on('click', 'button.btnDeleteCertificado', function (event) {
+            var data = tablaCertificado.row($(this).parents('tr')).data();
+            //if (data.Bloqueado) {
+            //    toastr.warning("La solicitud aún no ha sido cerrada", "Mensaje del Sistema", { "progressBar": true });
+            //    return;
+            //}
+            var enlace = "@Url.Content("~/Certificados/EliminarCertificados")";
+            bootbox.confirm({
+                title: "Mensaje del Sistema", message: "¿Esta seguro de borrar el registro?",
+                buttons: { confirm: { label: '<i class="fa fa-trash"></i> Eliminar ', className: "btn btn-danger" }, cancel: { label: '<i class="fa fa-times"></i> Cancelar' } },
+                callback: function (result) {
+                    if (result) {
+                        $.post(enlace, { FiltrarCodigoCertificado: data.FiltrarCodigoCertificado, FiltrarCodigoTipoCertificado: $('#FiltrarCodigoTipoCertificado').val(), FiltrarCodigoCorrelativo: data.FiltrarCodigoCorrelativo, FiltrarCodigoPeriodo : data.FiltrarCodigoPeriodo, CodAnioSolicitud :data.CodAnioSolicitud }, function (response) {
+                            tablaCertificado.ajax.reload();
+                            $('#cuerpoInforme').hide(); $('#btnAgregarCertificado').hide();
+                        });
+                    }
+                }
+            });
+
+        });
+        $("#tablaCertificado tbody").on('click', 'button.btnPrint', function (event) {
+
+            event.stopPropagation(); var data = tablaCertificado.row($(this).parents('tr')).data();
+            //if (data.Bloqueado) {
+            //    toastr.warning("La solicitud aún no ha sido cerrada", "Mensaje del Sistema", { "progressBar": true });
+            //    return;
+            //}
+            //urlFICHA = "@Url.Content("~/Reportes/Reports.aspx?CodigoCertificado=")" + data.FiltrarCodigoCertificado + '&CodigoAnhoCertificado=' + (new Date()).getFullYear() + '&CodigoReporte=' + $('#FiltrarCodigoTipoCertificado').val();
+            urlFICHA = "@Url.Content("~/Reportes/Reports.aspx?CodigoCertificado=")" + data.FiltrarCodigoCertificado + '&CodigoAnhoCertificado=' + data.FiltrarCodigoPeriodo + '&CodigoReporte=' + $('#FiltrarCodigoTipoCertificado').val();
+            window.open(urlFICHA);
+        });
+
+
+        function RecuperarCodigoUnidades() {
+            var URLObservacion = "@Url.Content("~/Certificados/BuscarUnidades")";
+            ubicacionTemp = "";
+            var codigoCatastral = '', codigoCatastralLinea = '';
+            $('.CamposCatastrales').children('tr').remove()
+            $.post(URLObservacion, {
+                FiltrarCodigoTipoCertificado: $('#FiltrarCodigoTipoCertificado').val(), FiltrarCodigoTipoSolicitud: $('#FiltrarCodigoTipoSolicitud').val(),
+                FiltrarCodigoTipoDocumentoReg: $('#FiltrarCodigoTipoDocumentoReg').val(), FiltrarNumeroSolicitud: $('#FiltrarNumeroSolicitud').val(),
+                CodigoDistrito: $('#CodigoCatastral').val().substring(0, 2), CodigoSector: $('#CodigoCatastral').val().substring(2, 4),
+                CodigoManzana: $('#CodigoCatastral').val().substring(4, 7), CodigoLote: $('#CodigoCatastral').val().substring(7, 10),
+                CodigoEdificacion: $('#CodigoCatastral').val().substring(10, 12), CodigoEntrada: $('#CodigoCatastral').val().substring(12, 14),
+                CodigoPiso: $('#CodigoCatastral').val().substring(14, 16), CodigoUnidad: $('#CodigoCatastral').val().substring(16, 19)
+            },
+            function (r) {
+                $.each(r.SolicitudUnidad, function (index, item) {
+                    codigoCatastral = codigoCatastral + '|' + item.CodigoDistrito + '-' + item.CodigoSector + '-' + item.CodigoManzana + '-' + item.CodigoLote + '-' + item.Ed + '-' + item.Entrada + '-' + item.Piso + '-' + item.Unidad;
+                    codigoCatastralLinea = item.CodigoDistrito + '-' + item.CodigoSector + '-' + item.CodigoManzana + '-' + item.CodigoLote + '-' + item.Ed + '-' + item.Entrada + '-' + item.Piso + '-' + item.Unidad;
+                    codigosTemp = (item.Ubicacion != null) ? item.Ubicacion.split("|") : "";
+                    ubicacionTemp = (item.Ubicacion != null) ? item.Ubicacion.split("|") : "";
+                    console.log('a', item);
+                    CrearCamposCatastrales((index + 1), codigoCatastralLinea, item.Titular);
+                });
+            });
+        }
+        function CrearCamposCatastrales(index, codigo, titular) {
+            $('.CamposCatastrales').append(
+                '<tr id="filaCampos' + index + '">' +
+                    '<td>' +
+                        '<input type="text" disabled id="CodigoCatastral' + index + '" class="form-control text-center input-table" value="' + codigo + '">' +
+                    '</td>' +
+                    '<td>' +
+                        '<select id="Ubicacion' + index + '" class="form-control select-table" >' +
+                            '<option value=""> - Seleccione la ubicación - </option>' +
+                        '</select>' +
+                    '</td>' +
+                    '<td>' +
+                        '<input type="text" disabled id="Titular' + index + '" class="form-control input-table" value="' + titular + '">' +
+                    '</td>' +
+                '</tr>'
+            );
+            var ubicacion = '';
+
+            if (codigosTemp) {
+                codigosTemp.forEach(function (valor, indice) {
+                    console.log('codtte1', valor, codigo)
+                    ubicacion = ubicacionTemp[indice]; console.log('codte', ubicacionTemp[indice]);
+                });
+            }
+            RecuperarUbicacionSel(codigo, index, ubicacion)
+        }
+        function RecuperarUbicacionSel(codigo, index, ubicacion) {
+            var URLObservacion = "@Url.Content("~/Certificados/BuscarUbicacion")";
+            $.post(URLObservacion, {
+                FiltrarCodigoTipoInforme: $('#FiltrarCodigoTipoCertificado').val(), FiltrarCodigoTipoSolicitud: $('#FiltrarCodigoTipoSolicitud').val(),
+                FiltrarCodigoTipoDocumentoReg: $('#FiltrarCodigoTipoDocumentoReg').val(), FiltrarNumeroSolicitud: $('#FiltrarNumeroSolicitud').val(),
+                CodigoSector: codigo.substring(2, 4), CodigoManzana: codigo.substring(4, 7), CodigoLote: codigo.substring(7, 10),
+                CodigoEdificacion: codigo.substring(10, 12), CodigoEntrada: codigo.substring(12, 14), CodigoPiso: codigo.substring(14, 16), CodigoUnidad: codigo.substring(16, 19)
+            },
+            function (r) {
+                $('#Ubicacion' + index).children('option:not(:first)').remove();
+                $.each(r.SolicitudUnidad, function (ind, item) {
+                    $('#Ubicacion' + index).append($('<option>').text(item.Ubicacion).attr('value', item.Ubicacion));
+                });
+                if (ubicacion) {
+                    console.log('ubiccc2', ubicacion, index)
+                    $('#Ubicacion' + index).val(ubicacion)
+                    //CambiarDatosCatastrales(index);
+                }
+
+            });
+        }
+        function CargarTabla() {
+            if (!$('#FiltrarCodigoTipoCertificado').val()) {
+                toastr.warning("No ha seleccionado el tipo de certificado", "Mensaje del Sistema", { "progressBar": true });
+            } else {
+                if (validarCamposBusqueda($('#FiltrarCodigoTipoSolicitud').val(), $('#FiltrarNumeroSolicitud').val(), $('#FiltrarCodigoTipoDocumentoReg').val())) {
+
+                    var codSol = $('#FiltrarCodigoTipoSolicitud').val(); var numVal = $('#FiltrarNumeroSolicitud').val(); var codDoc = $('#FiltrarCodigoTipoDocumentoReg').val();
+                    $.ajax({
+                        url: "@Url.Content("~")" + "Lotes/BuscarSolicitud", type: "POST", dataType: "json",
+                        data: { FiltrarCodigoTipoSolicitud: codSol, FiltrarNumeroSolicitud: numVal, FiltrarCodigoTipoDocumentoReg: codDoc },
+                        success: function (response) {
+                            if (response.success) {
+                                $('#tabInforme').show(); tablaCertificado.ajax.reload();
+                                $('#cuerpoInforme').html("").hide(); $('#btnAgregarCertificado').hide();
+                            } else {
+                                toastr.error("No se ha encontrado la solicitud", "Mensaje del Sistema", { "progressBar": true });
+                            }
+                        }
+                    });
+                }
+            }
+        }
+        function validarCamposBusqueda(codSol, numVal, tipDoc) {
+            var validado = false;
+            valiCodTip = $('[data-valmsg-for="FiltrarCodigoTipoSolicitud"]');
+            valiTipDoc = $('[data-valmsg-for="FiltrarCodigoTipoDocumentoReg"]');
+            valiNumSol = $('[data-valmsg-for="FiltrarNumeroSolicitud"]');
+            if (!codSol) {
+                valiCodTip.html('Seleccione el tipo de solicitud').addClass('field-validation-valid has-error');
+                valiNumSol.html('').removeClass('field-validation-valid has-error');
+                $('[data-valmsg-for="FiltrarCodigoTipoDocumentoReg"]').html('').removeClass('field-validation-valid has-error');
+                $('#FiltrarCodigoTipoSolicitud').focus(); //$('#btnDerivar').attr('disabled', 'disabled');
+            } else if (!tipDoc && codSol != '010003') {
+                valiCodTip.html('').removeClass('field-validation-valid has-error');
+                valiNumSol.html('').removeClass('field-validation-valid has-error');
+                $('[data-valmsg-for="FiltrarCodigoTipoDocumentoReg"]').html('Seleccione el tipo de documento').addClass('field-validation-valid has-error');
+                $('#FiltrarCodigoTipoDocumentoReg').focus();
+            } else if (numVal === '-' || !numVal) {
+                valiCodTip.html('').removeClass('field-validation-valid has-error');
+                valiNumSol.html('Ingrese un número de solicitud').addClass('field-validation-valid has-error');
+                $('[data-valmsg-for="FiltrarCodigoTipoDocumentoReg"]').html('').removeClass('field-validation-valid has-error');
+                $('#FiltrarNumeroSolicitud').focus(); //$('#btnDerivar').attr('disabled', 'disabled');
+            } else {
+                valiCodTip.html('').removeClass('field-validation-valid has-error');
+                valiNumSol.html('').removeClass('field-validation-valid has-error');
+                $('[data-valmsg-for="FiltrarCodigoTipoDocumentoReg"]').html('').removeClass('field-validation-valid has-error');
+                validado = true;
+            }
+            return validado;
+        }
+        function BuscarCertificado(correlativo, codigounico, codigoAnioCertificado, codigoAnioSolicitud) {
+            $.post("@Url.Content("~/Certificados/BuscarGrabar")", {
+                FiltrarCodigoTipoCertificado: $('#FiltrarCodigoTipoCertificado').val(), FiltrarCodigoTipoSolicitud: $('#FiltrarCodigoTipoSolicitud').val(),
+                FiltrarCodigoTipoDocumentoReg: $('#FiltrarCodigoTipoDocumentoReg').val(), FiltrarNumeroSolicitud: $('#FiltrarNumeroSolicitud').val(),
+                FiltrarCodigoPeriodo: codigoAnioCertificado, CodAnioSolicitud: codigoAnioSolicitud,
+                CodigoUnico: codigounico, FiltrarCodigoCertificado: correlativo
+            },
+            function (r) {
+                if (r.success !== false) {
+                    $('#cuerpoInforme').html(r);
+                    RecuperarCodigoUnidades();
+                    //RecuperarSolicitud();
+                    $('#GrabarGeneral').removeAttr('disabled'); $('#tabInforme').show();
+                } else {
+                    $('#tabInforme').show(); $('#cuerpoInforme').show(); $('#btnAgregarCertificado').show();
+                }
+            });
+        }
+        function LimpiarForm() {
+            $('#tabInforme input').val('').removeAttr('disabled'); $('#tabInforme textarea').val('');
+            $('#legInforme').val();
+            $('#GrabarGeneral').attr('disabled', 'disabled'); $('#GenFicha').attr('disabled', 'disabled');
+            $('#NombreAnio').val('"Año del Diálogo y Reconciliación Nacional"'); $('#CodigoOficina').val('@System.Configuration.ConfigurationManager.AppSettings["CODAREA"]'); $('#FiltrarCodigoPeriodo').val((new Date()).getFullYear());
+        }
+        function GenerarCarta() {
+            urlFICHA = "@Url.Content("~/Reportes/Reports.aspx?codigoCarta=")" + $('#FiltrarCodigoCarta').val() + '&codigoTipoInforme=' + $('#FiltrarCodigoTipoCertificado').val() + '&CodigoReporte=' + $('#FiltrarCodigoTipoCertificado').val() + '&codigoAnio=' + (new Date()).getFullYear() + '&CodigoCorrCarta=' + $('#FiltrarCodigoCorrelativo').val();
+            window.open(urlFICHA);
+        }
+        function GrabarCertificados() {            
+            var contVal = 0;       
+            if (contVal > 0) {
+                toastr.warning("No se han selecionado todas las ubicaciones", "Mensaje del Sistema", { "progressBar": true });
+                return;
+            }
+            if ($('#FiltrarCodigoTipoCertificado').val() === 'HINF') {
+                if (!$('#CodigoHojaCatastral').val()) {
+                    toastr.warning("No se ha ingresado el código de Hoja Catastral", "Mensaje del Sistema", { "progressBar": true });
+                    $('#CodigoHojaCatastral').focus();
+                    return;
+                } else if ($('#CodigoHojaCatastral').val().length != 10) {
+                    toastr.warning("Completar los 10 dígitos código de Hoja Catastral", "Mensaje del Sistema", { "progressBar": true });
+                    $('#CodigoHojaCatastral').focus();
+                    return;
+                }
+            }            
+            //$.post("/Cartas/Grabar", {
+            $.post("@Url.Content("~/Certificados/Grabar")", {
+                FiltrarCodigoTipoCertificado: $('#FiltrarCodigoTipoCertificado').val(), FiltrarCodigoTipoSolicitud: $('#FiltrarCodigoTipoSolicitud').val(),
+                FiltrarCodigoTipoDocumentoReg: $('#FiltrarCodigoTipoDocumentoReg').val(), FiltrarNumeroSolicitud: $('#FiltrarNumeroSolicitud').val(),
+                FiltrarCodigoCertificado: $('#FiltrarCodigoCertificado').val(), CodigoCatastral: $('#CodigoCatastral').val(), CodigoUnico: $('#CodigoUnico').val(),
+                FechaGeneracion: $('#FechaGeneracion').val(), Urbanizacion: $('#Urbanizacion').val(), Partida: $('#Partida').val(), Direccion: $('#Direccion').val(),
+                ManzanaUrbana: $('#ManzanaUrbana').val(), LoteUrbano: $('#LoteUrbano').val(), SubLoteUrbano: $('#SubLoteUrbano').val(),
+                Nivel: $('#Nivel').val(), NivelDescripcion: $('#NivelDescripcion').val(), Interior: $('#Interior').val(), Anotaciones: $('#Anotaciones').val(),
+                CUC: $('#CUC').val(), TipoPersonas: $('#TipoPersonas').val(), Solicitante: $('#Solicitante').val(), CodigoHojaCatastral: $('#CodigoHojaCatastral').val(),
+                Recibo: $('#Recibo').val(), HojaPlano: $('#HojaPlano').val(), EscalaPlano: $('#EscalaPlano').val(), TipoInscripcion: $('#TipoInscripcion').val(),
+                FechaPago: $('#FechaPago').val(), CodAnioSolicitud: $('#AnioSolicitud').val(), FiltrarCodigoPeriodo: $('#AnioCertificado').val()
+            }, function (response) {
+                toastr.success("Certificado Grabado Correctamente", "Mensaje del Sistema", { "progressBar": true });
+                tablaCertificado.ajax.reload();
+                var arrayObject = [];
+                var tablaTemp; 
+                var data = tablaCertificado.row($(this).parents('tr')).data();
+                if ($('#FiltrarCodigoTipoCertificado').val() === 'CENO') {
+                    tablaNomenclatura.rows().every(function (rowIdx, tableLoop, rowLoop) {
+                        var d = this.data();
+                        arrayObject.push({
+                            "CodigoVia": d.CodigoVia,
+                            "CodigoViaEsq": d.CodigoViaEsq,
+                            "FiltrarCodigoCorrelativo": d.FiltrarCodigoCorrelativo,
+                            "NombreVia": d.NombreVia,
+                            "NombreViaAnt": d.NombreViaAnt,
+                            "NombreViaEsq": d.NombreViaEsq,
+                            "FiltrarCodigoCertificado": response.codigoCorrelativo,
+                            "TipoViaAnt": d.TipoViaAnt,
+                            "NombreTipoVia": d.TipoVia,
+                            "TipoViaEsq": d.TipoViaEsq,
+                            "FiltrarCodigoTipoCertificado": $('#FiltrarCodigoTipoCertificado').val(),
+                            "NombreViaEsqAnt": d.NombreViaEsqAnt,
+                            "TipoViaEsqAnt": d.TipoViaEsqAnt,
+                            "CodAnioSolicitud": $('#AnioSolicitud').val(),
+                            "FiltrarCodigoPeriodo": $('#AnioCertificado').val()
+                        });
+                    });
+                } else if ($('#FiltrarCodigoTipoCertificado').val() === 'RNUM') {
+                    $('.CamposEntradas').find('tr').each(function (index) {
+                        var ind = (index + 1);
+                        arrayObject.push({
+                            "CodigoVia": $('#CodigoVia' + ind).val(), "FiltrarCodigoCorrelativo": $('#FiltrarCodigoCorrelativo' + ind).val(), "NombreVia": $('#NombreVia' + ind).val(),
+                            "TipoInterior": $('#TipoInterior' + ind).val(), "NombreTipoVia": $('#NombreTipoVia' + ind).val(), "NombreViaAnt": $('#NombreViaAnt' + ind).val(),
+                            "TipoPuerta": $('#TipoPuerta' + ind).val(), "DescripcionInscrip": $('#Descripcion' + ind).val(), "Interior": $('#Interior' + ind).val(), "NumeroPuerta": $('#NumeroPuerta' + ind).val(), "Nivel": $('#Nivel' + ind).val(),
+                            "CodigoTipoInterior": $('#CodigoTipoInterior' + ind).val(), "FiltrarCodigoCertificado": response.codigoCorrelativo, "FiltrarCodigoTipoCertificado": $('#FiltrarCodigoTipoCertificado').val()                            
+                        });
+                    });
+                } else if ($('#FiltrarCodigoTipoCertificado').val() === 'CNMU') {
+                    tablaEntradasMunicipal.rows().every(function (rowIdx) {
+                        var row = tablaEntradasMunicipal.row(rowIdx).node();
+                        var checked = $("input:checked", row).length; var d = this.data();
+                        if (checked === 1 || d.FiltrarCodigoCorrelativo) {
+                            console.log('CAT', rowIdx, $('#nivel_' + rowIdx).val());
+                            var idTemp; var viaAnt;
+                            $(".nombrevia").each(function () {
+                                if (this.value.toUpperCase() == d.NombreVia.toUpperCase()) {
+                                    var nomTemp = this.id.indexOf('a') +1;
+                                    idTemp = this.id.substring(nomTemp);
+                                    if ($('#NombreViaAnt' + idTemp).val()) {
+                                        viaAnt = $('#NombreViaAnt' + idTemp).val().join('|');
+                                        if (!viaAnt) {
+                                            viaAnt = d.NombreViaAnt;
+                                        }
+                                    }
+                                    console.log('c', viaAnt);
+                                }
+                            });
+
+                            arrayObject.push({
+                                "CodigoVia": d.CodigoVia, "FiltrarCodigoCorrelativo": d.FiltrarCodigoCorrelativo, "NombreVia": d.NombreVia,
+                                "TipoPuerta": d.TipoPuerta, "TipoInterior": d.Edificacion, "Interior": d.Interior, "NumeroPuerta": d.NumeroPuerta,
+                                "NombreTipoVia": d.NombreTipoVia, "DescripcionInscrip": d.DescripcionInscrip, "Edificacion": d.Edificacion,
+                                "CodigoTipoInterior": d.CodigoTipoInterior, "Marcado": checked, "NombreViaAnt": viaAnt,
+                                "CodigoUni": d.CodigoUni, "CodigoCorrelativoUnidad": d.CodigoCorrelativoUnidad, "Nivel": $('#nivel_' + rowIdx).val(),
+                                "FiltrarCodigoCertificado": response.codigoCorrelativo, "FiltrarCodigoTipoCertificado": $('#FiltrarCodigoTipoCertificado').val(),
+                                "CodAnioSolicitud": $('#AnioSolicitud').val(), "FiltrarCodigoPeriodo": $('#AnioCertificado').val()
+                            });
+                        }
+                    });
+                }
+                if (arrayObject) {                    
+                    console.log('PreGrabar', arrayObject);
+                    $.post("@Url.Content("~/Certificados/GrabarDetalle")", { model: arrayObject }, function (res) {
+                        if (res.success) {                            
+                            var nombreFile = response.ruta;
+                            var urlFICHA = "@Url.Content("~/Reportes/Reports.aspx?CodigoCertificado=")" + response.codigoCorrelativo + '&CodigoAnhoCertificado=' + response.FiltrarCodigoPeriodo + '&CodigoReporte=' + $('#FiltrarCodigoTipoCertificado').val() + '&rutaFile=' + nombreFile;
+                            $.get(urlFICHA);
+                        }
+                    });
+                } else {
+                    if (response.success == true) {
+                        var nombreFile = response.ruta;
+                        var urlFICHA = "@Url.Content("~/Reportes/Reports.aspx?CodigoCertificado=")" + response.codigoCorrelativo + '&CodigoAnhoCertificado=' + response.FiltrarCodigoPeriodo + '&CodigoReporte=' + $('#FiltrarCodigoTipoCertificado').val() + '&rutaFile=' + nombreFile;
+                        $.get(urlFICHA);
+                    }
+                }
+
+
+                $('#cuerpoInforme').html('').hide(); $('#btnAgregarCertificado').hide(); $("#GrabarGeneral").attr('disabled', 'disabled'); $('#GenFicha').removeAttr('disabled')
+            });
+
+        }
+        function RetornarBusqueda() {
+            return {
+                FiltrarCodigoTipoCertificado: $('#FiltrarCodigoTipoCertificado').val(), FiltrarCodigoTipoSolicitud: $('#FiltrarCodigoTipoSolicitud').val(),
+                FiltrarCodigoTipoDocumentoReg: $('#FiltrarCodigoTipoDocumentoReg').val(), FiltrarNumeroSolicitud: $('#FiltrarNumeroSolicitud').val()
+            }
+        }
+    </script>
+    <script>
+        function DescargarArchivo(imagen) {           
+            var ruta = new Object();
+            ruta.imagen = imagen;
+            console.log('Ruta', imagen);
+            $.ajax({
+                url: '@Url.Action("Imagen", "Certificados")',
+                type: 'POST',
+                data: ruta,
+                dataType: 'json',
+                success: function (response) {
+                    if (response.success) {
+                        $("#imgCertificados").attr("src", response.Imagen);
+                        $("#modalCertificadosImagen").modal('show');
+                        //toastr.success(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                    } else {
+                        //toastr.warning("Error al Cargar la Imagen, contactar con el administrador del sistema", "Mensaje del Sistema", { "progressBar": true });
+                        toastr.warning(response.responseText, "Mensaje del Sistema", { "progressBar": true });
+                    }
+                }
+            });
+        }
+    </script>
+}

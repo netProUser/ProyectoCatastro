@@ -1,0 +1,134 @@
+﻿
+<div id="ObrasPrivadasContainer">
+
+    @Html.AntiForgeryToken()
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-hidden="true">
+                    &times;
+                </button>
+                <h4 id="TituloObras">Registrando Obras Privadas</h4>
+            </div>
+            <div class="modal-body">
+                @*@Html.HiddenFor(m => m.CodigoCorrDirecUnidad)*@
+                <div class="row">
+                    <div class="col-md-12" id="containerTableObras" style="display:none;">
+
+                        <table id="tablaObrasPrivadasLote" style="width:100%" class="table responsive display table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th width="5%">Nro.</th>
+                                    <th width="30%">Nro Licencia</th>
+                                    <th width="15%">Solicitante</th>
+                                    <th width="10%">Beneficiario</th>
+                                    <th width="10%">Tipo Obra</th>
+                                    <th width="10%">Fecha Licencia</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-offset-2 col-md-10">
+                    <input id="btnGrabarObrasPrivadas" type="submit" value="Grabar" class="btn btn-success" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/vendor/datatables-checkboxes/js/dataTables.checkboxes.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#TituloObras').text('Registrando Obras Privadas - UC: ' + $("#CodigoDistrito").val() + '-' +
+        $("#CodigoSector").val() + '-' +
+        $("#CodigoManzana").val() + '-' +
+        $("#CodigoLote").val() + '-' +
+        $("#CodigoEdificacion").val() + '-' +
+        $("#CodigoEntrada").val() + '-' +
+        $("#CodigoPiso").val() + '-' +
+        $("#CodigoUnidad").val());
+
+        localStorage.setItem('ObrasPrivadasSelec', "");
+        tablaObrasPrivadasLote = $("#tablaObrasPrivadasLote").DataTable({
+            "ajax": {
+                "url": "@Url.Content("~/Cotitularidad/CargarObrasPublicasLote")",
+                "type": "POST",
+                "datatype": "json",
+                "data": function (d) {
+                    // -- Agregar campos de busqueda
+                    d.CodigoDistrito = $('#CodigoDistrito').val();
+                    d.CodigoSector = $('#CodigoSector').val();
+                    d.CodigoManzana = $('#CodigoManzana').val();
+                    d.CodigoLote = $('#CodigoLote').val();
+                    d.Estatico = Estatico;
+                }
+            },
+            "language": { "lengthMenu": "", "info": "", "emptyTable": "" },
+            "processing": true,
+            "serverSide": false,
+            "scrollY": "400px",
+            "scrollCollapse": true,
+            "initComplete": function (setting, json) {
+                console.log(json)
+                if (json.recordsTotal < 12) {
+                    $('#tablaObrasPrivadasLote_wrapper .dataTables_scrollHead').removeClass('pr-4');
+                } else {
+                    $('#tablaObrasPrivadasLote_wrapper .dataTables_scrollHead').addClass('pr-4');
+                }
+                //tablaObrasPrivadasLote.columns.adjust().draw();
+            },
+            "paging": false,
+            'columnDefs': [
+
+                 { "width": "7%", "targets": 0 },
+                 { "width": "7%", "targets": 1 },
+                 { "width": "7%", "targets": 2 },
+                 { "width": "7%", "targets": 3 },
+                 { "width": "7%", "targets": 4 },
+                 { "width": "7%", "targets": 5 },
+                 { 'targets': 6, 'checkboxes': { 'selectRow': true } },
+
+            ],
+            "columns": [
+                { "data": "Item", "name": "Item", "className": "text-center" },
+                { "data": "NumeroLicencia", "name": "NumeroLicencia", "className": "text-center" },
+                { "data": "Solicitante", "name": "Solicitante", "autoWidth": true, "className": "text-center" },
+                { "data": "Beneficiario", "name": "Beneficiario", "autoWidth": true, "className": "text-center" },
+                { "data": "TipoObra", "name": "TipoObra", "autoWidth": true, "className": "text-center" },
+                { "data": "FechaLicencia", "name": "FechaLicencia", "autoWidth": true, "className": "text-center" },
+                { "data": "Item", "name": "Item", "autoWidth": true, "className": "text-center" },
+                { "data": "CodigoCorrelativoLote", "name": "CodigoCorrelativoLote", "autoWidth": true, "className": "hide_column" },
+                { "data": "Codigo", "name": "Codigo", "autoWidth": true, "className": "hide_column" },
+
+            ]
+        });
+        //tablaUnidadCatastral.columns.adjust().draw();
+        //tablaUnidadCatastral.ajax.reload();
+
+        $("#btnGrabarObrasPrivadas").on("click", function (event) {
+            var rows_selected = tablaObrasPrivadasLote.column(6).checkboxes.selected();
+            console.log('rows_selected');
+            console.log(rows_selected);
+            var ListaRows = [];
+            $.each(rows_selected, function (index, Indice) {
+                console.log(Indice);
+                var rows = tablaObrasPrivadasLote.rows(Indice - 1).data()[0];
+                console.log(rows);
+                ListaRows.push(rows);
+            });
+            localStorage.setItem('ObrasPrivadasSelec', JSON.stringify(ListaRows));
+            $('#modalNuevoObrasPrivadas').modal('hide');
+        });
+
+    });
+</script>
